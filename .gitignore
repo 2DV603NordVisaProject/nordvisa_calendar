@@ -1,0 +1,10 @@
+.gradle
+.idea
+.vagrant
+
+gradle
+gradlew
+gradlew.bat
+build
+
+*.log
