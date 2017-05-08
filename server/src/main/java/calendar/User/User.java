@@ -3,8 +3,11 @@ package calendar.User;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class User
@@ -19,10 +22,33 @@ class User {
     private String password;
     private String role;
 
+    private String resetPasswordLink;
+    private String validateEmailLink;
+
     private DateTime createdAt;
     private DateTime updatedAt;
 
     private ArrayList<String> events;
+
+    public User() {
+
+    }
+
+    User(RegistrationDTO dto) {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        this.email = dto.email;
+        this.password = encoder.encode(dto.password);
+        this.role = "USER";
+
+        this.resetPasswordLink = "";
+        this.validateEmailLink = generateRandomString();
+
+        this.createdAt = DateTime.now();
+        this.updatedAt = DateTime.now();
+
+        this.events = new ArrayList<>();
+    }
 
     String getId() {
         return id;
@@ -54,6 +80,14 @@ class User {
         return roles;
     }
 
+    public String getResetPasswordLink() {
+        return resetPasswordLink;
+    }
+
+    public String getValidateEmailLink() {
+        return validateEmailLink;
+    }
+
     DateTime getCreatedAt() {
         return createdAt;
     }
@@ -68,5 +102,18 @@ class User {
 
     void update(UserUpdateDTO userUpdate) {
         System.out.println("UPDATE IS NOT IMPLEMENTED");
+    }
+
+    private String generateRandomString() {
+        String characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890";
+        int length = 20;
+        Random rnd = new Random();
+
+        char[] text = new char[length];
+        for(int i = 0; i < length; i++) {
+            text[i] = characters.charAt(rnd.nextInt(characters.length()));
+        }
+
+        return new String(text);
     }
 }
