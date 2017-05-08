@@ -6,9 +6,9 @@ package calendar.User;
  * @author Axel Nilsson (axnion)
  */
 class UserUpdateDTO {
-    public String email;
-    public String oldPassword;
-    public String password;
-    public String passwordConfirmation;
-    public String organization;
+    String email;
+    String oldPassword;
+    String password;
+    String passwordConfirmation;
+    String organization;
 }
