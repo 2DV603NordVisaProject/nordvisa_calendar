@@ -80,11 +80,11 @@ class User {
         return roles;
     }
 
-    public String getResetPasswordLink() {
+    String getResetPasswordLink() {
         return resetPasswordLink;
     }
 
-    public String getValidateEmailLink() {
+    String getValidateEmailLink() {
         return validateEmailLink;
     }
 

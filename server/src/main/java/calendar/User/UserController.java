@@ -23,6 +23,7 @@ public class UserController {
         if(error == null) {
             User user = dao.createUser(dto);
             email.sendVerificationEmail(user.getValidateEmailLink());
+            return null;
         }
         else {
             return error;
