@@ -11,6 +11,14 @@ class TopBar extends Component {
           <p>Widget Dashboard</p>
         </div>
         <ResponsiveMenu/>
+        <select>
+          <option selected disabled>Language</option>
+          <option>Swedish</option>
+          <option>English</option>
+          <option>Norwegian</option>
+          <option>Danish</option>
+          <option>Icelandic</option>
+        </select>
       </div>
     );
   }
