@@ -21,13 +21,19 @@ public class VisitorController {
     public void registration(@ModelAttribute RegistrationDTO dto) throws Exception {
         dto.validate();
         User user = dao.createUser(dto);
-        email.sendVerificationEmail(user.getValidateEmailLink());
+        email.sendVerificationEmail(user.getValidateEmailLink().getUrl());
     }
 
     @RequestMapping(value = "/verify_email", method = RequestMethod.GET)
-    public void verifyEmailAddress(HttpServletResponse response, @RequestParam("id") String urlId)
-            throws IOException {
-        dao.verifyEmailAddress(urlId);
+    public String verifyEmailAddress(HttpServletResponse response, @RequestParam("id") String urlId)
+            throws Exception {
+        try {
+            dao.verifyEmailAddress(urlId);
+        }
+        catch (Exception expt) {
+            return expt.getMessage();
+        }
         response.sendRedirect("/");
+        return "";
     }
 }

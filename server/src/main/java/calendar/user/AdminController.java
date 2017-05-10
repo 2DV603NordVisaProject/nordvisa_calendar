@@ -1,8 +1,6 @@
 package calendar.user;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Class AdminController
@@ -12,13 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
-    @RequestMapping(value = "/registrations", method = RequestMethod.GET)
-    public void getPendingRegistrations() {
+    private UserDAO dao = new UserDAO();
 
+    @RequestMapping(value = "/registrations", method = RequestMethod.GET)
+    @ResponseBody
+    public User[] getPendingRegistrations() {
+        return dao.getPendingRegistrations();
     }
 
     @RequestMapping(value = "/registrations", method = RequestMethod.POST)
-    public void registrationDecision() {
-
+    public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) {
+        if (dto.isApproved()) {
+            dao.approveRegistration(dto.getId());
+        } else {
+            dao.removeUser(dto.getId());
+        }
     }
 }

@@ -5,25 +5,21 @@ package calendar.user;
  *
  * @author Axel Nilsson (axnion)
  */
-public class RegistrationDTO {
+class RegistrationDTO {
     private String email;
     private String password;
     private String passwordConfirmation;
     private String organization;
 
-    public String getEmail() {
+    String getEmail() {
         return email;
     }
 
-    public String getPassword() {
+    String getPassword() {
         return password;
     }
 
-    public String getPasswordConfirmation() {
-        return passwordConfirmation;
-    }
-
-    public String getOrganization() {
+    String getOrganization() {
         return organization;
     }
 
@@ -68,6 +64,6 @@ public class RegistrationDTO {
     }
 
     private boolean passwordNotValid() {
-        return password.length() <= 10 && password.length() > 255;
+        return password.length() < 10 || password.length() > 255;
     }
 }
