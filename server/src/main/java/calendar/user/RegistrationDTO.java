@@ -1,4 +1,4 @@
-package calendar.User;
+package calendar.user;
 
 /**
  * Class RegistrationDTO
@@ -44,6 +44,8 @@ public class RegistrationDTO {
     }
 
     void validate() throws Exception {
+        // TODO: Verify email format
+
         if(emailAlreadyRegistered()) {
             throw new Exception("Email address " + email + " is already registered in the system");
         }

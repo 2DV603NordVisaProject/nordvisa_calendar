@@ -1,4 +1,4 @@
-package calendar.User;
+package calendar.user;
 
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;

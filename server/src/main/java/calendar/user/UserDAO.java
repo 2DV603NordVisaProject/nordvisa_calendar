@@ -1,6 +1,6 @@
-package calendar.User;
+package calendar.user;
 
-import calendar.DatabaseConnections.MongoDBClient;
+import calendar.databaseConnections.MongoDBClient;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;

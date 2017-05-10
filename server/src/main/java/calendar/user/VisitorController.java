@@ -1,4 +1,4 @@
-package calendar.User;
+package calendar.user;
 
 import org.springframework.web.bind.annotation.*;
 
