@@ -1,14 +1,14 @@
-.login {
+.register {
   background: #fff;
   border: 1px solid lightgrey;
   border-radius: 3px;
   max-width: 450px;
   min-height: 200px;
-  margin: 150px auto;
+  margin: 80px auto;
   padding: 25px 25px 10px;
 }
 
-.login input {
+.register input {
   display: block;
   height: 20px;
   margin: 0 auto;
@@ -17,16 +17,33 @@
   width: 180px;
 }
 
-.login label {
+.register label {
   margin: 0 0 0 10px;
   color: grey;
 }
 
-.login input:focus {
+.hidden {
+  display: none;
+}
+
+.register input:focus {
   outline: none;
 }
 
-.login button {
+.register select:focus {
+  outline: none;
+}
+
+.register select {
+  background: #fff;
+  height: 30px;
+  display: block;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+  width: 180px;
+}
+
+.register button {
   background: #0d47a1;
   border: none;
   height: 30px;
@@ -37,26 +54,26 @@
   display: block;
 }
 
-.login button:hover {
+.register button:hover {
   cursor: pointer;
 }
 
-.login button:focus {
+.register button:focus {
   outline: none;
 }
 
-.login form {
+.register form {
   width: 200px;
   margin: 0 auto;
 }
 
-.login h2 {
+.register h2 {
   margin: 0 0 10px;
   text-align: center;
   color: #0d47a1;
 }
 
-.login a {
+.register a {
   text-decoration: none;
   color: #0d47a1;
   text-align: center;
@@ -64,6 +81,12 @@
   margin: 10px 0 0;
 }
 
-.login a:hover {
+.register a:hover {
   text-decoration: underline;
+}
+
+.g-recaptcha {
+  margin: 20px 0 0 -45px;
+  width: 300px;
+  display: block;
 }
