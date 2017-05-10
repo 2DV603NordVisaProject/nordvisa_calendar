@@ -5,27 +5,54 @@ package calendar.User;
  *
  * @author Axel Nilsson (axnion)
  */
-class RegistrationDTO {
-    String email;
-    String password;
-    String passwordConfiration;
-    String organization;
+public class RegistrationDTO {
+    private String email;
+    private String password;
+    private String passwordConfirmation;
+    private String organization;
 
-    ErrorResponse validate() {
-        ErrorResponse response = null;
+    public String getEmail() {
+        return email;
+    }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    void validate() throws Exception {
         if(emailAlreadyRegistered()) {
-            response = new ErrorResponse("Email address " + email + " is already registered in the system");
+            throw new Exception("Email address " + email + " is already registered in the system");
         }
         else if (passwordConfirmationDoesNotMatch()) {
-            response = new ErrorResponse("The passwords did not match");
+            throw new Exception("The passwords did not match");
         }
         else if(passwordNotValid()) {
-            response = new ErrorResponse("The password was not valid");
+            throw new Exception("The password was not valid");
         }
-
-        return response;
-
     }
 
     private boolean emailAlreadyRegistered() {
@@ -35,7 +62,7 @@ class RegistrationDTO {
     }
 
     private boolean passwordConfirmationDoesNotMatch() {
-        return password.equals(passwordConfiration);
+        return !password.equals(passwordConfirmation);
     }
 
     private boolean passwordNotValid() {

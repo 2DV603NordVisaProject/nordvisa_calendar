@@ -33,6 +33,6 @@ class UserDAO {
     User getUserByEmail(String email) {
         MongoCollection collection = client.getCollection("users");
 
-        return collection.findOne("{email = \"" + email + "\"}").as(User.class);
+        return collection.findOne("{email: \"" + email + "\"}").as(User.class);
     }
 }

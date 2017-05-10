@@ -33,6 +33,6 @@ buildscript {
 }
 
 jar {
-    baseName = 'calendar_auth'
+    baseName = 'nordvisa_calendar'
     version =  '0.1.0'
 }

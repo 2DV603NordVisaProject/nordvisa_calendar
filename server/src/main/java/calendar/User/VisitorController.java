@@ -11,22 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/user")
-public class UserController {
+public class VisitorController {
     // TODO: Figure out how to do dependency injection into these
     private UserDAO dao = new UserDAO();
     private Email email = new Email();
 
     @RequestMapping("/registration")
-    public ErrorResponse registration(@ModelAttribute RegistrationDTO dto) {
-        ErrorResponse error = dto.validate();
-
-        if(error == null) {
-            User user = dao.createUser(dto);
-            email.sendVerificationEmail(user.getValidateEmailLink());
-            return null;
-        }
-        else {
-            return error;
-        }
+    public void registration(@ModelAttribute RegistrationDTO dto) throws Exception {
+        dto.validate();
+        User user = dao.createUser(dto);
+        email.sendVerificationEmail(user.getValidateEmailLink());
     }
 }

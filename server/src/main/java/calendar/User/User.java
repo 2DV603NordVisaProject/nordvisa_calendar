@@ -25,10 +25,12 @@ class User {
     private String resetPasswordLink;
     private String validateEmailLink;
 
-    private DateTime createdAt;
-    private DateTime updatedAt;
+    private long createdAt;
+    private long updatedAt;
 
     private ArrayList<String> events;
+
+    private Organization organization;
 
     public User() {
 
@@ -37,17 +39,18 @@ class User {
     User(RegistrationDTO dto) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        this.email = dto.email;
-        this.password = encoder.encode(dto.password);
+        this.email = dto.getEmail();
+        this.password = encoder.encode(dto.getPassword());
         this.role = "USER";
 
         this.resetPasswordLink = "";
         this.validateEmailLink = generateRandomString();
 
-        this.createdAt = DateTime.now();
-        this.updatedAt = DateTime.now();
+        this.createdAt = DateTime.now().getMillis();
+        this.updatedAt = DateTime.now().getMillis();
 
         this.events = new ArrayList<>();
+        this.organization = new Organization(dto.getOrganization(), false);
     }
 
     String getId() {
@@ -88,16 +91,20 @@ class User {
         return validateEmailLink;
     }
 
-    DateTime getCreatedAt() {
+    long getCreatedAt() {
         return createdAt;
     }
 
-    DateTime getUpdatedAt() {
+    long getUpdatedAt() {
         return updatedAt;
     }
 
     ArrayList<String> getEvents() {
         return events;
+    }
+
+    Organization getOrganization() {
+        return organization;
     }
 
     void update(UserUpdateDTO userUpdate) {
