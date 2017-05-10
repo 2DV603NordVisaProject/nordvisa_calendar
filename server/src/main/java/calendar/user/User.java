@@ -1,4 +1,4 @@
-package calendar.User;
+package calendar.user;
 
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
@@ -25,10 +25,12 @@ class User {
     private String resetPasswordLink;
     private String validateEmailLink;
 
-    private DateTime createdAt;
-    private DateTime updatedAt;
+    private long createdAt;
+    private long updatedAt;
 
     private ArrayList<String> events;
+
+    private Organization organization;
 
     public User() {
 
@@ -37,17 +39,18 @@ class User {
     User(RegistrationDTO dto) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        this.email = dto.email;
-        this.password = encoder.encode(dto.password);
+        this.email = dto.getEmail();
+        this.password = encoder.encode(dto.getPassword());
         this.role = "USER";
 
         this.resetPasswordLink = "";
         this.validateEmailLink = generateRandomString();
 
-        this.createdAt = DateTime.now();
-        this.updatedAt = DateTime.now();
+        this.createdAt = DateTime.now().getMillis();
+        this.updatedAt = DateTime.now().getMillis();
 
         this.events = new ArrayList<>();
+        this.organization = new Organization(dto.getOrganization(), false);
     }
 
     String getId() {
@@ -88,11 +91,11 @@ class User {
         return validateEmailLink;
     }
 
-    DateTime getCreatedAt() {
+    long getCreatedAt() {
         return createdAt;
     }
 
-    DateTime getUpdatedAt() {
+    long getUpdatedAt() {
         return updatedAt;
     }
 
@@ -100,8 +103,45 @@ class User {
         return events;
     }
 
-    void update(UserUpdateDTO userUpdate) {
-        System.out.println("UPDATE IS NOT IMPLEMENTED");
+    Organization getOrganization() {
+        return organization;
+    }
+
+    void setEmail(String email) {
+        this.email = email;
+    }
+
+    void setPassword(String password) {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
+    }
+
+    void setRole(String role) {
+        this.role = role;
+    }
+
+    void setResetPasswordLink(String resetPasswordLink) {
+        this.resetPasswordLink = this.resetPasswordLink;
+    }
+
+    void setValidateEmailLink(String validateEmailLink) {
+        this.validateEmailLink = validateEmailLink;
+    }
+
+//    void setCreatedAt(long createdAt) {
+//        this.createdAt = createdAt;
+//    }
+
+    void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    void setEvents(ArrayList<String> events) {
+        this.events = events;
+    }
+
+    void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
     private String generateRandomString() {

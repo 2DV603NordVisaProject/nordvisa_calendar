@@ -1,6 +1,4 @@
-package calendar.User;
-
-import org.junit.Test;
+package calendar.user;
 
 /**
  * Class RegistrationDTOTest

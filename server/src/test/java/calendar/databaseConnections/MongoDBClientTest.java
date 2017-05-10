@@ -1,4 +1,4 @@
-package calendar.DatabaseConnections;
+package calendar.databaseConnections;
 
 import org.jongo.Jongo;
 import org.junit.Test;

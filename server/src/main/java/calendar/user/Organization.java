@@ -1,4 +1,4 @@
-package calendar.User;
+package calendar.user;
 
 /**
  * Class Organization
@@ -17,6 +17,7 @@ class Organization {
     Organization(String name, boolean approved) {
         this.name = name;
         this.approved = approved;
+        this.changePending = "";
     }
 
     String getName() {

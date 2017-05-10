@@ -1,4 +1,4 @@
-package calendar.User;
+package calendar.user;
 
 /**
  * Class Email
@@ -7,7 +7,7 @@ package calendar.User;
  */
 class Email {
     void sendVerificationEmail(String id) {
-        System.out.println("http://localhost:8080/email/verify?id=" + id);
+        System.out.println("http://localhost:8080/api/visitor/verify_email?id=" + id);
     }
 
     void sendPasswordResetEmail(String id) {

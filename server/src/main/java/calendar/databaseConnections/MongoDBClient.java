@@ -1,4 +1,4 @@
-package calendar.DatabaseConnections;
+package calendar.databaseConnections;
 
 import com.mongodb.MongoClient;
 import org.jongo.Jongo;
