@@ -3,7 +3,10 @@ import "./ViewContainer.css";
 
 class ViewContainer extends Component {
   render() {
-    return <div className="viewContainer">hello world</div>;
+    return (
+      <div className="view-container">
+      </div>
+    );
   }
 }
 
