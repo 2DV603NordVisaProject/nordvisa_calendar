@@ -107,8 +107,41 @@ class User {
         return organization;
     }
 
-    void update(UserUpdateDTO userUpdate) {
-        System.out.println("UPDATE IS NOT IMPLEMENTED");
+    void setEmail(String email) {
+        this.email = email;
+    }
+
+    void setPassword(String password) {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
+    }
+
+    void setRole(String role) {
+        this.role = role;
+    }
+
+    void setResetPasswordLink(String resetPasswordLink) {
+        this.resetPasswordLink = this.resetPasswordLink;
+    }
+
+    void setValidateEmailLink(String validateEmailLink) {
+        this.validateEmailLink = validateEmailLink;
+    }
+
+//    void setCreatedAt(long createdAt) {
+//        this.createdAt = createdAt;
+//    }
+
+    void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    void setEvents(ArrayList<String> events) {
+        this.events = events;
+    }
+
+    void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
     private String generateRandomString() {

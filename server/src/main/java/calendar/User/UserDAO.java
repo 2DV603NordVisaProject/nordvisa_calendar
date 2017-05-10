@@ -11,6 +11,8 @@ import org.jongo.MongoCollection;
  * @author Axel Nilsson (axnion)
  */
 class UserDAO {
+    // TODO: Create Interface for called UserDAO and change this to UserDAOMongo
+
     private Jongo client;
 
     UserDAO() {
@@ -34,5 +36,13 @@ class UserDAO {
         MongoCollection collection = client.getCollection("users");
 
         return collection.findOne("{email: \"" + email + "\"}").as(User.class);
+    }
+
+    void verifyEmailAddress(String id) {
+        MongoCollection collection = client.getCollection("users");
+        User user = collection.findOne("{validateEmailLink: \"" + id + "\"}").as(User.class);
+
+        user.setValidateEmailLink("");
+        collection.update(new ObjectId(user.getId())).with(user);
     }
 }
