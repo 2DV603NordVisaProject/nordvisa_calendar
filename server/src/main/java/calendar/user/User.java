@@ -43,7 +43,7 @@ class User {
         this.password = encoder.encode(dto.getPassword());
         this.role = "USER";
 
-        this.resetPasswordLink = new AuthenticationLink("", DateTime.now().getMillis());
+        this.resetPasswordLink = new AuthenticationLink("", 0);
         this.validateEmailLink = new AuthenticationLink(generateRandomString(),
                 DateTime.now().getMillis());
 

@@ -25,9 +25,15 @@ public class VisitorController {
     }
 
     @RequestMapping(value = "/verify_email", method = RequestMethod.GET)
-    public void verifyEmailAddress(HttpServletResponse response, @RequestParam("id") String urlId)
+    public String verifyEmailAddress(HttpServletResponse response, @RequestParam("id") String urlId)
             throws Exception {
-        dao.verifyEmailAddress(urlId);
+        try {
+            dao.verifyEmailAddress(urlId);
+        }
+        catch (Exception expt) {
+            return expt.getMessage();
+        }
         response.sendRedirect("/");
+        return "";
     }
 }

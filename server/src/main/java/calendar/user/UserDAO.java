@@ -60,7 +60,7 @@ class UserDAO {
             throw new Exception("This link has expired");
         }
 
-        user.setValidateEmailLink(new AuthenticationLink("", DateTime.now().getMillis()));
+        user.setValidateEmailLink(new AuthenticationLink("", 0));
         collection.update(new ObjectId(user.getId())).with(user);
     }
 
