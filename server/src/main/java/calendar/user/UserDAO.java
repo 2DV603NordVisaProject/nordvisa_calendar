@@ -1,6 +1,7 @@
 package calendar.user;
 
 import calendar.databaseConnections.MongoDBClient;
+import com.mongodb.Mongo;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -30,6 +31,11 @@ class UserDAO {
         return user;
     }
 
+    void removeUser(String id) {
+        MongoCollection collection = client.getCollection("users");
+        collection.remove(new ObjectId(id));
+    }
+
     User getUserById(String id) {
         MongoCollection collection = client.getCollection("users");
 
@@ -54,6 +60,15 @@ class UserDAO {
         MongoCollection collection = client.getCollection("users");
 
         return cursorToArray(collection.find("{organization.approved: false}").as(User.class));
+    }
+
+    void approveRegistration(String id) {
+        MongoCollection collection = client.getCollection("users");
+        User user = getUserById(id);
+
+        user.getOrganization().setApproved(true);
+
+        collection.update(new ObjectId(id)).with(user);
     }
 
     private static User[] cursorToArray(MongoCursor<User> cursor) {

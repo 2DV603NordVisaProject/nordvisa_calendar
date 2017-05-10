@@ -22,6 +22,10 @@ public class AdminController {
 
     @RequestMapping(value = "/registrations", method = RequestMethod.POST)
     public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) {
-
+        if (dto.isApproved()) {
+            dao.approveRegistration(dto.getId());
+        } else {
+            dao.removeUser(dto.getId());
+        }
     }
 }
