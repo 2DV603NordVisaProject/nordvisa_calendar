@@ -53,6 +53,7 @@ class User {
         this.organization = new Organization(dto.getOrganization(), false);
     }
 
+    // TODO: Configure objectmapper on field visibility and change these to packge private
     String getId() {
         return id;
     }
@@ -65,7 +66,11 @@ class User {
         return password;
     }
 
-    String[] getRole() {
+    String getRole() {
+        return role;
+    }
+
+    String[] getAuthorities() {
         String[] roles = null;
 
         if(role.equals("USER")) {

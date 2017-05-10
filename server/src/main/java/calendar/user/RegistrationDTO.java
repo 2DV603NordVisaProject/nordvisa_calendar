@@ -68,6 +68,6 @@ public class RegistrationDTO {
     }
 
     private boolean passwordNotValid() {
-        return password.length() <= 10 && password.length() > 255;
+        return password.length() < 10 || password.length() > 255;
     }
 }

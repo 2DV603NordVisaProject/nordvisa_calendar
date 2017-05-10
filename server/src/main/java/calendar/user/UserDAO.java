@@ -4,6 +4,10 @@ import calendar.databaseConnections.MongoDBClient;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
+import org.jongo.MongoCursor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class UserDAO
@@ -44,5 +48,21 @@ class UserDAO {
 
         user.setValidateEmailLink("");
         collection.update(new ObjectId(user.getId())).with(user);
+    }
+
+    User[] getPendingRegistrations() {
+        MongoCollection collection = client.getCollection("users");
+
+        return cursorToArray(collection.find("{organization.approved: false}").as(User.class));
+    }
+
+    private static User[] cursorToArray(MongoCursor<User> cursor) {
+        List<User> list = new ArrayList<>();
+
+        while(cursor.hasNext()) {
+            list.add(cursor.next());
+        }
+        User[] arr = new User[list.size()];
+        return list.toArray(arr);
     }
 }
