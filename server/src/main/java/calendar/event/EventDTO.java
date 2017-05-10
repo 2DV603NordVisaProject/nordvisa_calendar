@@ -1,14 +1,7 @@
 package calendar.event;
 
-import org.joda.time.DateTime;
-import org.jongo.marshall.jackson.oid.MongoId;
-import org.jongo.marshall.jackson.oid.MongoObjectId;
+class EventDTO {
 
-class Event {
-
-    @MongoId
-    @MongoObjectId
-    private String id;
     private String name;
     private EventLocation location;
     private String description;
@@ -18,43 +11,9 @@ class Event {
     private int recursEvery;
     private long recursUntil;
     private String url;
-    //private List<?> images;
     private long createdAt;
     private long updatedAt;
     private String editedBy;
-
-    Event() {
-    }
-
-    Event(EventDTO dto) {
-        this.name = dto.getName();
-        this.location = dto.getLocation();
-        this.description = dto.getDescription();
-        this.date = dto.getDate();
-        this.duration = dto.getDuration();
-        this.isRecurring = dto.isRecurring();
-        this.recursEvery = dto.getRecursEvery();
-        this.recursUntil = dto.getRecursUntil();
-        this.url = dto.getUrl();
-        this.createdAt = dto.getCreatedAt();
-        this.updatedAt = DateTime.now().getMillis();
-        this.editedBy = dto.getEditedBy();
-    }
-
-    public EventDTO toEventDTO() {
-        EventDTO dto = new EventDTO();
-        dto.setName(this.name);
-        dto.setDescription(this.description);
-        return dto;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
