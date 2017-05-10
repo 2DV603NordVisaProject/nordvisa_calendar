@@ -22,8 +22,8 @@ class User {
     private String password;
     private String role;
 
-    private String resetPasswordLink;
-    private String validateEmailLink;
+    private AuthenticationLink resetPasswordLink;
+    private AuthenticationLink validateEmailLink;
 
     private long createdAt;
     private long updatedAt;
@@ -43,8 +43,9 @@ class User {
         this.password = encoder.encode(dto.getPassword());
         this.role = "USER";
 
-        this.resetPasswordLink = "";
-        this.validateEmailLink = generateRandomString();
+        this.resetPasswordLink = new AuthenticationLink("", DateTime.now().getMillis());
+        this.validateEmailLink = new AuthenticationLink(generateRandomString(),
+                DateTime.now().getMillis());
 
         this.createdAt = DateTime.now().getMillis();
         this.updatedAt = DateTime.now().getMillis();
@@ -88,11 +89,11 @@ class User {
         return roles;
     }
 
-    String getResetPasswordLink() {
+    AuthenticationLink getResetPasswordLink() {
         return resetPasswordLink;
     }
 
-    String getValidateEmailLink() {
+    AuthenticationLink getValidateEmailLink() {
         return validateEmailLink;
     }
 
@@ -129,7 +130,7 @@ class User {
         this.resetPasswordLink = this.resetPasswordLink;
     }
 
-    void setValidateEmailLink(String validateEmailLink) {
+    void setValidateEmailLink(AuthenticationLink validateEmailLink) {
         this.validateEmailLink = validateEmailLink;
     }
 

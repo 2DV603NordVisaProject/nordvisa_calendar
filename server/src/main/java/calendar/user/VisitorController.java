@@ -21,12 +21,12 @@ public class VisitorController {
     public void registration(@ModelAttribute RegistrationDTO dto) throws Exception {
         dto.validate();
         User user = dao.createUser(dto);
-        email.sendVerificationEmail(user.getValidateEmailLink());
+        email.sendVerificationEmail(user.getValidateEmailLink().getUrl());
     }
 
     @RequestMapping(value = "/verify_email", method = RequestMethod.GET)
     public void verifyEmailAddress(HttpServletResponse response, @RequestParam("id") String urlId)
-            throws IOException {
+            throws Exception {
         dao.verifyEmailAddress(urlId);
         response.sendRedirect("/");
     }

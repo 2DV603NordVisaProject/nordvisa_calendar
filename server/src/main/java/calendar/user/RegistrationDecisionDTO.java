@@ -5,15 +5,15 @@ package calendar.user;
  *
  * @author Axel Nilsson (axnion)
  */
-public class RegistrationDecisionDTO {
+class RegistrationDecisionDTO {
     private String id;
     private boolean approved;
 
-    public String getId() {
+    String getId() {
         return id;
     }
 
-    public boolean isApproved() {
+    boolean isApproved() {
         return approved;
     }
 

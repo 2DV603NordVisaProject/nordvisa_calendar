@@ -1,8 +1,8 @@
 package calendar.user;
 
 import calendar.databaseConnections.MongoDBClient;
-import com.mongodb.Mongo;
 import org.bson.types.ObjectId;
+import org.joda.time.DateTime;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -48,11 +48,19 @@ class UserDAO {
         return collection.findOne("{email: \"" + email + "\"}").as(User.class);
     }
 
-    void verifyEmailAddress(String id) {
+    void verifyEmailAddress(String id) throws Exception {
         MongoCollection collection = client.getCollection("users");
-        User user = collection.findOne("{validateEmailLink: \"" + id + "\"}").as(User.class);
+        User user = collection.findOne("{validateEmailLink.url: \"" + id + "\"}").as(User.class);
 
-        user.setValidateEmailLink("");
+        if (user == null) {
+            throw new Exception("This link is invalid");
+        }
+
+        if(user.getValidateEmailLink().hasExpired()) {
+            throw new Exception("This link has expired");
+        }
+
+        user.setValidateEmailLink(new AuthenticationLink("", DateTime.now().getMillis()));
         collection.update(new ObjectId(user.getId())).with(user);
     }
 
@@ -67,7 +75,6 @@ class UserDAO {
         User user = getUserById(id);
 
         user.getOrganization().setApproved(true);
-
         collection.update(new ObjectId(id)).with(user);
     }
 
