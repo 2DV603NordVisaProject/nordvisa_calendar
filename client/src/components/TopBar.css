@@ -32,3 +32,12 @@
 option:hover {
   background-color: black;
 }
+
+@media (max-width: 370px) {
+  .brand {
+    display: none;
+  }
+  .topbar select {
+    float: left;
+  }
+}

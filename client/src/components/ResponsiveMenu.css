@@ -64,3 +64,10 @@
   -webkit-transform: rotate(45deg) translate(-8px, -8px);
   transform: rotate(45deg) translate(-7px, -4px);
 }
+
+
+@media (max-width: 420px) {
+  .responsive-menu.expand {
+    width: 100%;
+  }
+}
