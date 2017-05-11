@@ -1,7 +1,6 @@
 package calendar.user;
 
 import calendar.user.dto.RegistrationDTO;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;

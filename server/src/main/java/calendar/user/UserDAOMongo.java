@@ -66,8 +66,13 @@ class UserDAOMongo implements UserDAO {
         return user;
     }
 
-    public void changePassword(String id, String password, String passwordConfirmation) {
-        System.out.println("UserDAOMongo.changePassword is not implemented");
+    public void changePassword(String id, String password) {
+        MongoCollection collection = client.getCollection("users");
+
+        User user = getUserById(id);
+        user.setPassword(password);
+
+        collection.update(new ObjectId(id)).with(user);
     }
 
     public void verifyEmailAddress(String id) throws Exception {

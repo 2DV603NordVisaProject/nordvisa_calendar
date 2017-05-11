@@ -18,7 +18,7 @@ interface UserDAO {
     void deleteUser(String id) throws Exception;
 
     User updateUserDetails(UserDetailsUpdateDTO dto) throws Exception;
-    void changePassword(String id, String password, String passwordConfirmation) throws Exception;
+    void changePassword(String id, String password) throws Exception;
 
     void verifyEmailAddress(String urlId) throws Exception;
     void changeOrganization(String id, boolean approved) throws Exception;
