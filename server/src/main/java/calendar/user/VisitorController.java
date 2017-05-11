@@ -23,8 +23,7 @@ public class VisitorController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public void registration(@ModelAttribute RegistrationDTO dto) throws Exception {
         informationValidator.validate(dto);
-        User user = new User(dto);
-        dao.createUser(user);
+        User user = dao.createUser(dto);
         email.sendVerificationEmail(user.getValidateEmailLink().getUrl());
     }
 

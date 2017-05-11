@@ -1,6 +1,8 @@
 package calendar.user;
 
 import calendar.databaseConnections.MongoDBClient;
+import calendar.user.dto.ChangePasswordDTO;
+import calendar.user.dto.RegistrationDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
@@ -34,18 +36,36 @@ class UserDAOMongo implements UserDAO {
         return collection.findOne("{email: \"" + email + "\"}").as(User.class);
     }
 
-    public void createUser(User user) {
+    public User createUser(RegistrationDTO dto) {
         MongoCollection collection = client.getCollection("users");
-        collection.insert(user);
-    }
 
-    public void updateUser(UserDetailsUpdateDTO dto) {
-        System.out.println("UserDAOMongo.updateUser is not implemented");
+        User user = new User(dto);
+        collection.insert(user);
+
+        return user;
     }
 
     public void deleteUser(String id) {
         MongoCollection collection = client.getCollection("users");
         collection.remove(new ObjectId(id));
+    }
+
+    public User updateUserDetails(UserDetailsUpdateDTO dto) {
+        MongoCollection collection = client.getCollection("users");
+        User user = collection.findOne(new ObjectId(dto.getId())).as(User.class);
+
+        // TODO: If email is incorrect the user can't log in again and recover. :(
+        user.setEmail(dto.getEmail());
+        user.createValidateEmailLink();
+        user.getOrganization().setChangePending(dto.getOrganization());
+
+        collection.update(new ObjectId(user.getId())).with(user);
+
+        return user;
+    }
+
+    public void changePassword(ChangePasswordDTO dto) {
+        System.out.println("UserDAOMongo.changePassword is not implemented");
     }
 
     public void resetPassword(String password, String passwordConfirmation) {
