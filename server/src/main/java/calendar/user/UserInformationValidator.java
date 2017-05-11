@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
  *
  * @author Axel Nilsson (axnion)
  */
-public class UserInformationValidator {
+class UserInformationValidator {
     private UserDAO dao;
 
     UserInformationValidator(UserDAO dao) {
@@ -50,7 +50,7 @@ public class UserInformationValidator {
     private boolean invalidEmailFormat(String email) {
         Pattern pattern = Pattern.compile(".+@.+\\.[a-z]+");
         Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+        return !matcher.matches();
     }
 
     private boolean emailAlreadyRegistered(String email) throws Exception {
