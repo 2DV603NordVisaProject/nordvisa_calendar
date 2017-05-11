@@ -1,13 +1,7 @@
 package calendar.event;
 
-import org.joda.time.DateTime;
-import org.jongo.marshall.jackson.oid.MongoId;
-import org.jongo.marshall.jackson.oid.MongoObjectId;
+public class GetEventDTO {
 
-class Event {
-
-    @MongoId
-    @MongoObjectId
     private String id;
     private String name;
     private EventLocation location;
@@ -18,59 +12,9 @@ class Event {
     private int recursEvery;
     private long recursUntil;
     private String url;
-    //private List<?> images;
     private long createdAt;
     private long updatedAt;
     private String editedBy;
-
-    Event() {
-    }
-
-    Event(GetEventDTO dto) {
-        this.id = dto.getId();
-        this.name = dto.getName();
-        this.location = dto.getLocation();
-        this.description = dto.getDescription();
-        this.date = dto.getDate();
-        this.duration = dto.getDuration();
-        this.isRecurring = dto.isRecurring();
-        this.recursEvery = dto.getRecursEvery();
-        this.recursUntil = dto.getRecursUntil();
-        this.url = dto.getUrl();
-        this.createdAt = dto.getCreatedAt();
-        this.updatedAt = DateTime.now().getMillis();
-        this.editedBy = dto.getEditedBy();
-    }
-
-    Event(CreateEventDTO dto) {
-        this.name = dto.getName();
-        this.location = dto.getGeoCodedLocation(dto.getAddress());
-        this.description = dto.getDescription();
-        this.date = dto.getDate();
-        this.duration = dto.getDuration();
-        this.isRecurring = dto.isRecurring();
-        this.recursEvery = dto.getRecursEvery();
-        this.recursUntil = dto.getRecursUntil();
-        this.url = dto.getUrl();
-        this.createdAt = dto.getCreatedAt();
-        this.updatedAt = DateTime.now().getMillis();
-        this.editedBy = dto.getEditedBy();
-    }
-
-    public CreateEventDTO toCreateEventDTO() {
-        CreateEventDTO dto = new CreateEventDTO();
-        dto.setName(this.name);
-        dto.setDescription(this.description);
-        return dto;
-    }
-
-    public GetEventDTO toGetEventDTO() {
-        GetEventDTO dto = new GetEventDTO();
-        dto.setId(this.id);
-        dto.setName(this.name);
-        dto.setDescription(this.description);
-        return dto;
-    }
 
     public String getId() {
         return id;

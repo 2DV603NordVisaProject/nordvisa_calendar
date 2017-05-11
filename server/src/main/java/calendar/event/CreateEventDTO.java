@@ -1,9 +1,9 @@
 package calendar.event;
 
-class EventDTO {
+class CreateEventDTO {
 
     private String name;
-    private EventLocation location;
+    private String address;
     private String description;
     private long date;
     private float duration;
@@ -23,12 +23,12 @@ class EventDTO {
         this.name = name;
     }
 
-    public EventLocation getLocation() {
-        return location;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLocation(EventLocation location) {
-        this.location = location;
+    public void setAddress(EventLocation location) {
+        this.address = address;
     }
 
     public String getDescription() {
@@ -109,5 +109,10 @@ class EventDTO {
 
     public void setEditedBy(String editedBy) {
         this.editedBy = editedBy;
+    }
+
+    public EventLocation getGeoCodedLocation(String address) {
+        EventLocation eventLocation = new EventLocation();
+        return eventLocation;
     }
 }
