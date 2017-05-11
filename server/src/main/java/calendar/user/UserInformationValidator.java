@@ -52,7 +52,7 @@ class UserInformationValidator {
     }
 
     void validate(ChangePasswordDTO dto) throws Exception {
-        if(matchOldPassword(dto.getId(), dto.getOldPassword())) {
+        if(incorrectOldPassword(dto.getId(), dto.getOldPassword())) {
             throw new Exception("Incorrect password");
         }
         else if (passwordConfirmationDoesNotMatch(dto.getPassword(),
@@ -93,9 +93,9 @@ class UserInformationValidator {
         return password.length() < 10 || password.length() > 255;
     }
 
-    private boolean matchOldPassword(String id, String oldPassword) throws Exception {
+    private boolean incorrectOldPassword(String id, String oldPassword) throws Exception {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         User user = dao.getUserById(id);
-        return encoder.matches(oldPassword, user.getPassword());
+        return !encoder.matches(oldPassword, user.getPassword());
     }
 }

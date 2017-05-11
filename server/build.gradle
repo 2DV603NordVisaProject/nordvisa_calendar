@@ -5,6 +5,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -36,4 +37,16 @@ buildscript {
 jar {
     baseName = 'nordvisa_calendar'
     version =  '0.1.0'
+}
+
+jacoco {
+    reportsDir = file("$buildDir/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
 }
