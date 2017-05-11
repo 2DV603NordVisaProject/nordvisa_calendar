@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import "./MyAccountView.css";
 
 class MyAccountView extends Component {
   render() {
     return (
-      <div className="my-account">
+      <div className="view">
         <h2>My Account</h2>
         <div className="box">
           <h3>Update Account Details</h3>
@@ -13,7 +12,7 @@ class MyAccountView extends Component {
             <input type="text" name="email"></input>
             <label htmlFor="org">Organization:</label>
             <input type="text" name="org"></input>
-            <button>SAVE</button>
+            <button>save</button>
           </form>
         </div>
         <div className="box">
@@ -25,7 +24,7 @@ class MyAccountView extends Component {
             <input type="password" name="newpassword"></input>
             <label htmlFor="confirmpassword">New Password Again:</label>
             <input type="password" name="confirmpassword"></input>
-            <button>SAVE</button>
+            <button>save</button>
           </form>
         </div>
       </div>

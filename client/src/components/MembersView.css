@@ -1,49 +1,14 @@
-.members {
-  max-width: 900px;
-  margin: 25px auto;
-  background: #fff;
-  border-radius: 3px;
-  height: 100%;
-  border: 1px solid lightgrey;
-  padding: 20px;
-}
-
-.members h2 {
-  text-align: center;
-  color: #0d47a1;
-}
-
-.members select {
-  height: 25px;
-  font-size: 16px;
-  background: #fff;
-  margin: 0 auto;
-  display: block;
+.select-full {
   width: 100%;
-}
-
-.members option {
-  text-align: center;
-}
-
-.members select:focus {
-  outline: none;
-}
-
-.members button {
-  background: #0d47a1;
-  border: none;
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-  color: #fff;
-  height: 30px;
-  margin: 15px auto;
-  display: block;
 }
 
 .members table {
   width: 600px;
   margin: 0 auto;
+}
+
+.members form {
+  width: 100%;
 }
 
 .members th {

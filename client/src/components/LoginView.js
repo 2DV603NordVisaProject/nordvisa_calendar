@@ -4,14 +4,14 @@ import "./LoginView.css";
 class LoginView extends Component {
   render() {
     return (
-      <div className="login">
+      <div className="lightbox login">
         <h2>Login</h2>
         <form>
           <label htmlFor="email">Email:</label>
           <input name="email" type="text"></input>
           <label htmlFor="password">Password:</label>
           <input name="password" type="password"></input>
-          <button>LOGIN</button>
+          <button>login</button>
         </form>
         <a href="/recover-password">Forgot Password?</a>
       </div>

@@ -16,9 +16,9 @@ class RegisterView extends Component {
 
   render() {
     return (
-      <div className="register">
+      <div className="lightbox register">
         <h2>Register</h2>
-        <form>
+        <form className="center">
           <label htmlFor="email">Email:</label>
           <input name="email" type="text"></input>
           <label htmlFor="password">Password:</label>
@@ -36,7 +36,7 @@ class RegisterView extends Component {
             <input name="neworg" type="text"></input>
           </div>
           <div className="g-recaptcha" data-sitekey="6Le13yAUAAAAAC4D1Ml81bW3WlGN83bZo4FzHU7Z"></div>
-          <button>REGISTER</button>
+          <button>register</button>
         </form>
       </div>
     );

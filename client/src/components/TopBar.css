@@ -21,18 +21,6 @@
   font-size: 16px;
 }
 
-.topbar select:focus {
-  outline: none;
-}
-
-.topbar select:focus -> option:checked {
-  background: black !important;
-}
-
-option:hover {
-  background-color: black;
-}
-
 @media (max-width: 370px) {
   .brand {
     display: none;

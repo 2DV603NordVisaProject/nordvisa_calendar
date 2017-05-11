@@ -7,7 +7,7 @@ class MembersView extends Component {
 
   render() {
     return (
-      <div className="members">
+      <div className="members view">
         <h2>Members</h2>
         <form>
           <table>
@@ -18,7 +18,7 @@ class MembersView extends Component {
             <tr>
               <td className="email-cell" >demo@hotmail.com</td>
               <td>
-                <select>
+                <select className="select-full">
                   <option selected>User</option>
                   <option>Admin</option>
                   <option>Superadmin</option>
@@ -28,7 +28,7 @@ class MembersView extends Component {
             <tr>
               <td className="email-cell" >demo@hotmail.com</td>
               <td>
-                <select>
+                <select className="select-full">
                   <option selected>User</option>
                   <option>Admin</option>
                   <option>Superadmin</option>
@@ -38,7 +38,7 @@ class MembersView extends Component {
             <tr>
               <td className="email-cell" >demo@hotmail.com</td>
               <td>
-                <select>
+                <select className="select-full">
                   <option selected>User</option>
                   <option>Admin</option>
                   <option>Superadmin</option>

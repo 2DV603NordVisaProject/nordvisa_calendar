@@ -9,3 +9,116 @@ body {
 html {
   margin: 0;
 }
+
+a:hover {
+  text-decoration: underline;
+}
+
+a {
+  text-decoration: none;
+  color: #0d47a1;
+  text-align: center;
+  display: block;
+  margin: 10px 0 0;
+}
+
+input:focus {
+  outline: none;
+}
+
+label {
+  margin: 0 0 0 10px;
+  color: grey;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+input {
+  display: block;
+  height: 20px;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  width: 180px;
+}
+
+button {
+  background: #0d47a1;
+  border: none;
+  height: 30px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  margin: 15px auto;
+  display: block;
+  text-transform: uppercase;
+}
+
+h2 {
+  text-align: center;
+  color: #0d47a1;
+}
+
+h3 {
+  text-align: center;
+  color: grey;
+}
+
+select {
+  background: #fff;
+  height: 30px;
+  display: block;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+  width: 180px;
+}
+
+select:focus {
+  outline: none;
+}
+
+
+.lightbox {
+  background: #fff;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  max-width: 450px;
+  min-height: 200px;
+  padding: 25px 25px 10px;
+}
+
+form {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.lightbox h2 {
+  margin: 0 0 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.box {
+  border: 1px solid grey;
+  max-width: 600px;
+  border-radius: 3px;
+  margin: 0 auto 20px;
+}
+
+.view {
+  max-width: 900px;
+  margin: 25px auto;
+  background: #fff;
+  border-radius: 3px;
+  height: 100%;
+  border: 1px solid lightgrey;
+  padding: 20px;
+}
