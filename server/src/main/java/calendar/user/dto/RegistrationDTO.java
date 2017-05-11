@@ -1,29 +1,29 @@
-package calendar.user;
+package calendar.user.dto;
 
 /**
  * Class RegistrationDTO
  *
  * @author Axel Nilsson (axnion)
  */
-class RegistrationDTO {
+public class RegistrationDTO {
     private String email;
     private String password;
     private String passwordConfirmation;
     private String organization;
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    String getPasswordConfirmation() {
+    public String getPasswordConfirmation() {
         return passwordConfirmation;
     }
 
-    String getOrganization() {
+    public String getOrganization() {
         return organization;
     }
 

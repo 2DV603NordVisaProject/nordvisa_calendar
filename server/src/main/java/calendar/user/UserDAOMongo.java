@@ -1,6 +1,8 @@
 package calendar.user;
 
 import calendar.databaseConnections.MongoDBClient;
+import calendar.user.dto.RegistrationDTO;
+import calendar.user.dto.UserDetailsUpdateDTO;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -33,13 +35,13 @@ class UserDAOMongo implements UserDAO {
         return collection.findOne("{email: \"" + email + "\"}").as(User.class);
     }
 
-    public void createUser(User user) {
+    public User createUser(RegistrationDTO dto) {
         MongoCollection collection = client.getCollection("users");
-        collection.insert(user);
-    }
 
-    public void updateUser(UserUpdateDTO dto) {
-        System.out.println("UserDAOMongo.updateUser is not implemented");
+        User user = new User(dto);
+        collection.insert(user);
+
+        return user;
     }
 
     public void deleteUser(String id) {
@@ -47,8 +49,30 @@ class UserDAOMongo implements UserDAO {
         collection.remove(new ObjectId(id));
     }
 
-    public void resetPassword(String password, String passwordConfirmation) {
-        System.out.println("UserDAOMongo.resetPassword is not implemented");
+    public User updateUserDetails(UserDetailsUpdateDTO dto) {
+        MongoCollection collection = client.getCollection("users");
+        User user = collection.findOne(new ObjectId(dto.getId())).as(User.class);
+
+        // TODO: If email is incorrect the user can't log in again and recover. :(
+        if (!user.getEmail().equals(dto.getEmail())) {
+            user.setEmail(dto.getEmail());
+            user.createValidateEmailLink();
+        }
+
+        user.getOrganization().setChangePending(dto.getOrganization());
+
+        collection.update(new ObjectId(user.getId())).with(user);
+
+        return user;
+    }
+
+    public void changePassword(String id, String password) {
+        MongoCollection collection = client.getCollection("users");
+
+        User user = getUserById(id);
+        user.setPassword(password);
+
+        collection.update(new ObjectId(id)).with(user);
     }
 
     public void verifyEmailAddress(String id) throws Exception {
@@ -67,10 +91,28 @@ class UserDAOMongo implements UserDAO {
         collection.update(new ObjectId(user.getId())).with(user);
     }
 
-    public User[] getPendingRegistrations() {
+    public void changeOrganization(String id, boolean approved) {
+        User user = getUserById(id);
+
+        if(approved) {
+            user.getOrganization().setName(user.getOrganization().getChangePending());
+        }
+
+        user.getOrganization().setChangePending("");
+    }
+
+    public ArrayList<User> getPendingRegistrations() {
+        String adminsOrg = "my_org"; //TODO: Add parameter email of admin and get org from database
+
         MongoCollection collection = client.getCollection("users");
 
-        return cursorToArray(collection.find("{organization.approved: false}").as(User.class));
+        ArrayList<User> list = new ArrayList<>();
+
+        list = cursorToArray(collection.find("{organization.approved: false}").as(User.class));
+        list.addAll(cursorToArray(collection.find("{organization.changePending: \""
+                + adminsOrg + "\"}").as(User.class)));
+
+        return list;
     }
 
     public void approveRegistration(String id) {
@@ -93,13 +135,13 @@ class UserDAOMongo implements UserDAO {
         System.out.println("UserDAOMongo.makeSuperAdministrator is not implemented");
     }
 
-    private static User[] cursorToArray(MongoCursor<User> cursor) {
-        List<User> list = new ArrayList<>();
+    private static ArrayList<User> cursorToArray(MongoCursor<User> cursor) {
+        ArrayList<User> list = new ArrayList<>();
 
         while(cursor.hasNext()) {
             list.add(cursor.next());
         }
-        User[] arr = new User[list.size()];
-        return list.toArray(arr);
+
+        return list;
     }
 }

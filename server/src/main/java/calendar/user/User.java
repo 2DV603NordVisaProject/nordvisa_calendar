@@ -1,5 +1,6 @@
 package calendar.user;
 
+import calendar.user.dto.RegistrationDTO;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
@@ -54,7 +55,6 @@ class User {
         this.organization = new Organization(dto.getOrganization(), false);
     }
 
-    // TODO: Configure objectmapper on field visibility and change these to packge private
     String getId() {
         return id;
     }
@@ -132,6 +132,16 @@ class User {
 
     void setValidateEmailLink(AuthenticationLink validateEmailLink) {
         this.validateEmailLink = validateEmailLink;
+    }
+
+    void createResetPasswordLink() {
+        this.resetPasswordLink = new AuthenticationLink(generateRandomString(),
+                DateTime.now().getMillis());
+    }
+
+    void createValidateEmailLink() {
+        this.validateEmailLink = new AuthenticationLink(generateRandomString(),
+                DateTime.now().getMillis());
     }
 
 //    void setCreatedAt(long createdAt) {

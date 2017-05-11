@@ -1,7 +1,8 @@
 package calendar.event;
 
-class EventDTO {
+public class GetEventDTO {
 
+    private String id;
     private String name;
     private EventLocation location;
     private String description;
@@ -14,6 +15,14 @@ class EventDTO {
     private long createdAt;
     private long updatedAt;
     private String editedBy;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

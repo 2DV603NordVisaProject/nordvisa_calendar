@@ -1,5 +1,11 @@
 package calendar.user;
 
+import calendar.user.dto.ChangePasswordDTO;
+import calendar.user.dto.RegistrationDTO;
+import calendar.user.dto.UserDetailsUpdateDTO;
+
+import java.util.ArrayList;
+
 /**
  * Interface UserDAO
  *
@@ -8,14 +14,16 @@ package calendar.user;
 interface UserDAO {
     User getUserById(String id) throws Exception;
     User getUserByEmail(String email) throws Exception;
-    void createUser(User user) throws Exception;
-    void updateUser(UserUpdateDTO dto) throws Exception;
+    User createUser(RegistrationDTO dto) throws Exception;
     void deleteUser(String id) throws Exception;
 
-    void resetPassword(String password, String passwordConfirmation) throws Exception;
-    void verifyEmailAddress(String urlId) throws Exception;
+    User updateUserDetails(UserDetailsUpdateDTO dto) throws Exception;
+    void changePassword(String id, String password) throws Exception;
 
-    User[] getPendingRegistrations() throws Exception;
+    void verifyEmailAddress(String urlId) throws Exception;
+    void changeOrganization(String id, boolean approved) throws Exception;
+
+    ArrayList<User> getPendingRegistrations() throws Exception;
     void approveRegistration(String id) throws Exception;
 
     void makeAdministrator(String id) throws Exception;

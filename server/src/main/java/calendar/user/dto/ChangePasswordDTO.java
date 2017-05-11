@@ -1,39 +1,34 @@
-package calendar.user;
+package calendar.user.dto;
 
 /**
- * Class UserUpdateDTO
+ * Class ChangePasswordDTO
  *
  * @author Axel Nilsson (axnion)
  */
-class UserUpdateDTO {
-    private String email;
+public class ChangePasswordDTO {
+    private String id;
     private String oldPassword;
     private String password;
     private String passwordConfirmation;
-    private String organization;
 
-    String getEmail() {
-        return email;
+    public String getId() {
+        return id;
     }
 
-    String getOldPassword() {
+    public String getOldPassword() {
         return oldPassword;
     }
 
-    String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    String getPasswordConfirmation() {
+    public String getPasswordConfirmation() {
         return passwordConfirmation;
     }
 
-    String getOrganization() {
-        return organization;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setOldPassword(String oldPassword) {
@@ -46,9 +41,5 @@ class UserUpdateDTO {
 
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
-    }
-
-    public void setOrganization(String organization) {
-        this.organization = organization;
     }
 }

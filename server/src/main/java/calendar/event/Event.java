@@ -26,7 +26,8 @@ class Event {
     Event() {
     }
 
-    Event(EventDTO dto) {
+    Event(GetEventDTO dto) {
+        this.id = dto.getId();
         this.name = dto.getName();
         this.location = dto.getLocation();
         this.description = dto.getDescription();
@@ -41,10 +42,34 @@ class Event {
         this.editedBy = dto.getEditedBy();
     }
 
-    public EventDTO toEventDTO() {
-        EventDTO dto = new EventDTO();
+    Event(CreateEventDTO dto) {
+        this.name = dto.getName();
+        this.location = dto.getGeoCodedLocation(dto.getAddress());
+        this.description = dto.getDescription();
+        this.date = dto.getDate();
+        this.duration = dto.getDuration();
+        this.isRecurring = dto.isRecurring();
+        this.recursEvery = dto.getRecursEvery();
+        this.recursUntil = dto.getRecursUntil();
+        this.url = dto.getUrl();
+        this.createdAt = dto.getCreatedAt();
+        this.updatedAt = DateTime.now().getMillis();
+        this.editedBy = dto.getEditedBy();
+    }
+
+    public CreateEventDTO toCreateEventDTO() {
+        CreateEventDTO dto = new CreateEventDTO();
         dto.setName(this.name);
         dto.setDescription(this.description);
+        return dto;
+    }
+
+    public GetEventDTO toGetEventDTO() {
+        GetEventDTO dto = new GetEventDTO();
+        dto.setId(this.id);
+        dto.setName(this.name);
+        dto.setDescription(this.description);
+        dto.setLocation(this.location);
         return dto;
     }
 
