@@ -4,6 +4,8 @@ import calendar.user.dto.ChangePasswordDTO;
 import calendar.user.dto.RegistrationDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 
+import java.util.ArrayList;
+
 /**
  * Interface UserDAO
  *
@@ -21,7 +23,7 @@ interface UserDAO {
     void verifyEmailAddress(String urlId) throws Exception;
     void changeOrganization(String id, boolean approved) throws Exception;
 
-    User[] getPendingRegistrations() throws Exception;
+    ArrayList<User> getPendingRegistrations() throws Exception;
     void approveRegistration(String id) throws Exception;
 
     void makeAdministrator(String id) throws Exception;

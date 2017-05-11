@@ -29,7 +29,6 @@ public class UserController {
     @RequestMapping(value = "/change_password", method = RequestMethod.POST)
     public void changePassword(@ModelAttribute ChangePasswordDTO dto) throws Exception {
         informationValidator.validate(dto);
-        dao.changePassword(dto);
-
+        dao.changePassword(dto.getId(), dto.getPassword(), dto.getPasswordConfirmation());
     }
 }

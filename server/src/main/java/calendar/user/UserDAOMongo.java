@@ -54,8 +54,11 @@ class UserDAOMongo implements UserDAO {
         User user = collection.findOne(new ObjectId(dto.getId())).as(User.class);
 
         // TODO: If email is incorrect the user can't log in again and recover. :(
-        user.setEmail(dto.getEmail());
-        user.createValidateEmailLink();
+        if (!user.getEmail().equals(dto.getEmail())) {
+            user.setEmail(dto.getEmail());
+            user.createValidateEmailLink();
+        }
+
         user.getOrganization().setChangePending(dto.getOrganization());
 
         collection.update(new ObjectId(user.getId())).with(user);
@@ -93,10 +96,18 @@ class UserDAOMongo implements UserDAO {
         user.getOrganization().setChangePending("");
     }
 
-    public User[] getPendingRegistrations() {
+    public ArrayList<User> getPendingRegistrations() {
+        String adminsOrg = "my_org"; //TODO: Add parameter email of admin and get org from database
+
         MongoCollection collection = client.getCollection("users");
 
-        return cursorToArray(collection.find("{organization.approved: false}").as(User.class));
+        ArrayList<User> list = new ArrayList<>();
+
+        list = cursorToArray(collection.find("{organization.approved: false}").as(User.class));
+        list.addAll(cursorToArray(collection.find("{organization.changePending: \""
+                + adminsOrg + "\"}").as(User.class)));
+
+        return list;
     }
 
     public void approveRegistration(String id) {
@@ -119,13 +130,13 @@ class UserDAOMongo implements UserDAO {
         System.out.println("UserDAOMongo.makeSuperAdministrator is not implemented");
     }
 
-    private static User[] cursorToArray(MongoCursor<User> cursor) {
-        List<User> list = new ArrayList<>();
+    private static ArrayList<User> cursorToArray(MongoCursor<User> cursor) {
+        ArrayList<User> list = new ArrayList<>();
 
         while(cursor.hasNext()) {
             list.add(cursor.next());
         }
-        User[] arr = new User[list.size()];
-        return list.toArray(arr);
+
+        return list;
     }
 }

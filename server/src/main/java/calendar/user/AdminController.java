@@ -3,6 +3,8 @@ package calendar.user;
 import calendar.user.dto.RegistrationDecisionDTO;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 /**
  * Class AdminController
  *
@@ -15,7 +17,7 @@ public class AdminController {
 
     @RequestMapping(value = "/registrations", method = RequestMethod.GET)
     @ResponseBody
-    public User[] getPendingRegistrations() throws Exception {
+    public ArrayList<User> getPendingRegistrations() throws Exception {
         return dao.getPendingRegistrations();
     }
 
