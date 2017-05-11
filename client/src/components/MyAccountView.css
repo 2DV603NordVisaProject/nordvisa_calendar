@@ -1,0 +1,63 @@
+.my-account {
+  max-width: 900px;
+  margin: 25px auto;
+  background: #fff;
+  border-radius: 3px;
+  height: 100%;
+  border: 1px solid lightgrey;
+  padding: 20px;
+}
+
+.my-account h2 {
+  text-align: center;
+  color: #0d47a1;
+}
+
+.box h3 {
+  text-align: center;
+  color: grey;
+}
+
+.box {
+  border: 1px solid grey;
+  max-width: 600px;
+  border-radius: 3px;
+  margin: 0 auto 20px;
+}
+
+.box input {
+  display: block;
+  margin: 0 auto;
+  width: 180px;
+  height: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.box input:focus {
+  outline: none;
+}
+
+.box button:focus {
+  outline: none;
+}
+
+.box label {
+  margin: 0 0 0 10px;
+  color: grey;
+}
+
+.box form {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.box button {
+  background: #0d47a1;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  color: #fff;
+  height: 30px;
+  margin: 15px auto;
+  display: block;
+}

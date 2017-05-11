@@ -5,6 +5,7 @@ import Match from "react-router/Match";
 import RegisterView from "./RegisterView";
 import RecoverView from "./RecoverView";
 import UpdatePasswordView from "./UpdatePasswordView";
+import MyAccountView from "./MyAccountView";
 
 class ViewContainer extends Component {
   render() {
@@ -14,6 +15,7 @@ class ViewContainer extends Component {
         <Match pattern="/register" component={RegisterView}/>
         <Match pattern="/recover-password" component={RecoverView}/>
         <Match pattern="/update-password" component={UpdatePasswordView}/>
+        <Match pattern="/user/my-account" component={MyAccountView}/>
       </div>
     );
   }

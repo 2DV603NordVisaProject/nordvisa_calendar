@@ -23,7 +23,7 @@ class ResponsiveMenu extends Component {
             <li>Login/Logout</li>
             <li>Register</li>
             <li>Forgot Password</li>
-            <li>2. Object</li>
+            <li>My Account</li>
             <li>1. Object</li>
             <li>2. Object</li>
           </ul>
