@@ -1,6 +1,9 @@
 package calendar.user;
 
+import calendar.user.dto.RegistrationDecisionDTO;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 /**
  * Class AdminController
@@ -10,20 +13,26 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
-    private UserDAO dao = new UserDAO();
+    private UserDAO dao = new UserDAOMongo();
 
     @RequestMapping(value = "/registrations", method = RequestMethod.GET)
     @ResponseBody
-    public User[] getPendingRegistrations() {
+    public ArrayList<User> getPendingRegistrations() throws Exception {
         return dao.getPendingRegistrations();
     }
 
     @RequestMapping(value = "/registrations", method = RequestMethod.POST)
-    public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) {
-        if (dto.isApproved()) {
-            dao.approveRegistration(dto.getId());
-        } else {
-            dao.removeUser(dto.getId());
+    public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) throws Exception {
+        User user = dao.getUserById(dto.getId());
+
+        if(user.getOrganization().getChangePending().equals("")) {
+            if (dto.isApproved())
+                dao.approveRegistration(dto.getId());
+            else
+                dao.deleteUser(dto.getId());
+        }
+        else {
+            dao.changeOrganization(dto.getId(), dto.isApproved());
         }
     }
 }

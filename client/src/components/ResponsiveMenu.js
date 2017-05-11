@@ -20,9 +20,9 @@ class ResponsiveMenu extends Component {
         </div>
         <div className="responsive-menu">
           <ul>
-            <li>1. Object</li>
-            <li>2. Object</li>
-            <li>1. Object</li>
+            <li>Login/Logout</li>
+            <li>Register</li>
+            <li>Forgot Password</li>
             <li>2. Object</li>
             <li>1. Object</li>
             <li>2. Object</li>

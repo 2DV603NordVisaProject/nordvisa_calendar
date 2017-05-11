@@ -8,9 +8,17 @@ class TopBar extends Component {
     return (
       <div className="topbar">
         <div className="brand">
-          <p>Widget Dashboard</p>
+          <p>Event Dashboard</p>
         </div>
         <ResponsiveMenu/>
+        <select>
+          <option selected disabled>Language</option>
+          <option>Swedish</option>
+          <option>English</option>
+          <option>Norwegian</option>
+          <option>Danish</option>
+          <option>Icelandic</option>
+        </select>
       </div>
     );
   }
