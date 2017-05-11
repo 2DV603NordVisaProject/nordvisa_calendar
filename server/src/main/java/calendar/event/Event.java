@@ -69,6 +69,7 @@ class Event {
         dto.setId(this.id);
         dto.setName(this.name);
         dto.setDescription(this.description);
+        dto.setLocation(this.location);
         return dto;
     }
 

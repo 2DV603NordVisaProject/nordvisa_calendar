@@ -16,7 +16,6 @@ public class EventController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public GetEventDTO createEvent(@RequestBody CreateEventDTO createEventDTO) {
         Event event = new Event(createEventDTO);
-
         EventDAO dao = new EventDAOMongo();
         dao.createEvent(event);
         return event.toGetEventDTO();
