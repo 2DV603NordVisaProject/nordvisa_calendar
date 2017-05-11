@@ -13,7 +13,7 @@ class LoginView extends Component {
           <input name="password" type="password"></input>
           <button>LOGIN</button>
         </form>
-        <a href="/reset">Forgot Password?</a>
+        <a href="/recover-password">Forgot Password?</a>
       </div>
     );
   }
