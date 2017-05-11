@@ -1,19 +1,19 @@
-package calendar.user;
+package calendar.user.dto;
 
 /**
  * Class RegistrationDecisionDTO
  *
  * @author Axel Nilsson (axnion)
  */
-class RegistrationDecisionDTO {
+public class RegistrationDecisionDTO {
     private String id;
     private boolean approved;
 
-    String getId() {
+    public String getId() {
         return id;
     }
 
-    boolean isApproved() {
+    public boolean isApproved() {
         return approved;
     }
 

@@ -1,5 +1,6 @@
 package calendar.user;
 
+import calendar.user.dto.RegistrationDecisionDTO;
 import org.springframework.web.bind.annotation.*;
 
 /**

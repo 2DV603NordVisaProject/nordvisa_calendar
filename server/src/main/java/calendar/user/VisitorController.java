@@ -1,5 +1,7 @@
 package calendar.user;
 
+import calendar.user.dto.RegistrationDTO;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +17,8 @@ public class VisitorController {
     // TODO: Figure out how to do dependency injection into these
     private UserDAO dao = new UserDAOMongo();
     private Email email = new Email();
-    private UserInformationValidator informationValidator = new UserInformationValidator(dao);
+    private UserInformationValidator informationValidator =
+            new UserInformationValidator(dao);
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public void registration(@ModelAttribute RegistrationDTO dto) throws Exception {

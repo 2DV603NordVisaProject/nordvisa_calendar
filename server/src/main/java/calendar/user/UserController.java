@@ -1,5 +1,7 @@
 package calendar.user;
 
+import calendar.user.dto.UserDetailsUpdateDTO;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +19,7 @@ public class UserController {
     private UserInformationValidator informationValidator = new UserInformationValidator(dao);
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public void updateUser(@ModelAttribute UserUpdateDTO dto) throws Exception {
+    public void updateUser(@ModelAttribute UserDetailsUpdateDTO dto) throws Exception {
         informationValidator.validate(dto);
         dao.updateUser(dto);
     }

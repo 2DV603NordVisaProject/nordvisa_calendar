@@ -1,5 +1,7 @@
 package calendar.user;
 
+import calendar.user.dto.UserDetailsUpdateDTO;
+
 /**
  * Interface UserDAO
  *
@@ -9,7 +11,7 @@ interface UserDAO {
     User getUserById(String id) throws Exception;
     User getUserByEmail(String email) throws Exception;
     void createUser(User user) throws Exception;
-    void updateUser(UserUpdateDTO dto) throws Exception;
+    void updateUser(UserDetailsUpdateDTO dto) throws Exception;
     void deleteUser(String id) throws Exception;
 
     void resetPassword(String password, String passwordConfirmation) throws Exception;

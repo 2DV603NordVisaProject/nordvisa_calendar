@@ -1,5 +1,6 @@
 package calendar.user;
 
+import calendar.user.dto.RegistrationDTO;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;

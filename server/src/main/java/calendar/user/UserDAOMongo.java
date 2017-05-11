@@ -1,6 +1,7 @@
 package calendar.user;
 
 import calendar.databaseConnections.MongoDBClient;
+import calendar.user.dto.UserDetailsUpdateDTO;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -38,7 +39,7 @@ class UserDAOMongo implements UserDAO {
         collection.insert(user);
     }
 
-    public void updateUser(UserUpdateDTO dto) {
+    public void updateUser(UserDetailsUpdateDTO dto) {
         System.out.println("UserDAOMongo.updateUser is not implemented");
     }
 
