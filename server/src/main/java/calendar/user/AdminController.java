@@ -21,10 +21,16 @@ public class AdminController {
 
     @RequestMapping(value = "/registrations", method = RequestMethod.POST)
     public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) throws Exception {
-        if (dto.isApproved()) {
-            dao.approveRegistration(dto.getId());
-        } else {
-            dao.deleteUser(dto.getId());
+        User user = dao.getUserById(dto.getId());
+
+        if(user.getOrganization().getChangePending().equals("")) {
+            if (dto.isApproved())
+                dao.approveRegistration(dto.getId());
+            else
+                dao.deleteUser(dto.getId());
+        }
+        else {
+            dao.changeOrganization(dto.getId(), dto.isApproved());
         }
     }
 }

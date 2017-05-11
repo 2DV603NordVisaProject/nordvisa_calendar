@@ -1,7 +1,6 @@
 package calendar.user;
 
 import calendar.databaseConnections.MongoDBClient;
-import calendar.user.dto.ChangePasswordDTO;
 import calendar.user.dto.RegistrationDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 import org.bson.types.ObjectId;
@@ -64,12 +63,8 @@ class UserDAOMongo implements UserDAO {
         return user;
     }
 
-    public void changePassword(ChangePasswordDTO dto) {
+    public void changePassword(String id, String password, String passwordConfirmation) {
         System.out.println("UserDAOMongo.changePassword is not implemented");
-    }
-
-    public void resetPassword(String password, String passwordConfirmation) {
-        System.out.println("UserDAOMongo.resetPassword is not implemented");
     }
 
     public void verifyEmailAddress(String id) throws Exception {
@@ -86,6 +81,16 @@ class UserDAOMongo implements UserDAO {
 
         user.setValidateEmailLink(new AuthenticationLink("", 0));
         collection.update(new ObjectId(user.getId())).with(user);
+    }
+
+    public void changeOrganization(String id, boolean approved) {
+        User user = getUserById(id);
+
+        if(approved) {
+            user.getOrganization().setName(user.getOrganization().getChangePending());
+        }
+
+        user.getOrganization().setChangePending("");
     }
 
     public User[] getPendingRegistrations() {
