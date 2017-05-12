@@ -10,18 +10,21 @@ public class Image {
     private String id;
     private String name;
     private byte[] file;
+    private String type;
 
     Image() {}
 
-    Image(String name, byte[] file) {
+    Image(String name, byte[] file, String type) {
         this.name = name;
         this.file = file;
+        this.type = type;
     }
 
-    Image(String id, String name, byte[] file) {
+    Image(String id, String name, byte[] file, String type) {
         this.id = id;
         this.name = name;
         this.file = file;
+        this.type = type;
     }
 
     public String getName() {
@@ -46,5 +49,13 @@ public class Image {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

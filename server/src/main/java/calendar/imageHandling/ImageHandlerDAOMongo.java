@@ -1,14 +1,12 @@
 package calendar.imageHandling;
 
 import calendar.databaseConnections.MongoDBClient;
+import com.mongodb.WriteResult;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
-import org.jongo.Oid;
-import org.jongo.bson.Bson;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 class ImageHandlerDAOMongo implements ImageHandlerDAO {
 
@@ -19,12 +17,7 @@ class ImageHandlerDAOMongo implements ImageHandlerDAO {
     }
 
     @Override
-    public void updateEvent(String eventID, String filename) {
-        MongoCollection collection = client.getCollection("events");
-    }
-
-    @Override
-    public boolean saveImage(String name, MultipartFile file) {
+    public boolean saveImage(String name, MultipartFile file, String type) {
         byte[] imageByteArray;
 
         try {
@@ -34,7 +27,7 @@ class ImageHandlerDAOMongo implements ImageHandlerDAO {
             return false;
         }
 
-        Image image = new Image(name, imageByteArray);
+        Image image = new Image(name, imageByteArray, type);
         MongoCollection collection = client.getCollection("images");
         collection.insert(image);
 
@@ -42,14 +35,22 @@ class ImageHandlerDAOMongo implements ImageHandlerDAO {
     }
 
     @Override
-    public byte[] getImage(String name) {
+    public Image getImage(String name) {
         MongoCollection collection = client.getCollection("images");
         Image image = collection.findOne("{name: '" + name + "'}").as(Image.class);
 
         if(image == null) {
             return null;
         } else {
-            return image.getFile();
+            return image;
         }
+    }
+
+    @Override
+    public boolean deleteImage(String name) {
+        MongoCollection collection = client.getCollection("images");
+        WriteResult r = collection.remove("{name: '" + name + "'}");
+
+        return r.getN() == 1;
     }
 }

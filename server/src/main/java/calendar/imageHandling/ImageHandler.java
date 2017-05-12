@@ -1,19 +1,20 @@
 package calendar.imageHandling;
 
-import com.mongodb.gridfs.GridFS;
-import com.mongodb.gridfs.GridFSDBFile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.Optional;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Image handling class.
@@ -24,50 +25,73 @@ import java.util.Random;
 @RequestMapping("/api/upload")
 public class ImageHandler {
 
+    private static final Set<String> ACCEPTED_FILE_TYPES = new HashSet<>(Arrays.asList(
+           "image/png", "image/jpeg", "image/gif"
+    ));
+
     /**
      * Upload an image to the server. Returns a boolean meaning whether the upload was successful or not.
      * @param file
      * @return
      */
-    // TODO: make sure it's an image!
+    // TODO: better error handling
     @RequestMapping(method = RequestMethod.POST)
     public HttpEntity<byte[]> uploadImage(@RequestParam("file") MultipartFile file) {
         // Gets the original filename. Might be useful later.
         // String name = file.getOriginalFilename();
         ImageHandlerDAO dao = new ImageHandlerDAOMongo();
 
-        String name = getRandomHexString(16);
+        String res;
 
-        dao.saveImage(name, file);
-        /*if(dao.saveImage(name, file)) {
-            dao.updateEvent(eventID, name);
-        }*/
+        try {
+            // TODO: duplicated name checking
+            String name = getRandomHexString(16);
 
-        String resp = "File " + name + " uploaded.";
+            InputStream is = new BufferedInputStream(file.getInputStream());
+            String mimeType = URLConnection.guessContentTypeFromStream(is);
 
-        return new HttpEntity<>(resp.getBytes());
+            if(!ACCEPTED_FILE_TYPES.contains(mimeType)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            dao.saveImage(name, file, mimeType);
+
+            res = "File " + name + " uploaded. File type: " + mimeType;
+        } catch(IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new HttpEntity<>(res.getBytes());
     }
 
     @RequestMapping(path = "/{name:.+}", method = RequestMethod.GET)
     public HttpEntity<byte[]> getImage(@PathVariable("name") String name) {
         ImageHandlerDAO dao = new ImageHandlerDAOMongo();
 
-        byte[] createdImage = dao.getImage(name);
+        Image image = dao.getImage(name);
 
-        if(createdImage != null) {
+        if(image != null) {
             HttpHeaders headers = new HttpHeaders();
-            // TODO: different file types
-            headers.add(HttpHeaders.CONTENT_TYPE, "image/jpeg");
+            headers.add(HttpHeaders.CONTENT_TYPE, image.getType());
 
-            return new HttpEntity<>(dao.getImage(name), headers);
+            return new HttpEntity<>(image.getFile(), headers);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    public boolean deleteImage(String name) {
+    @RequestMapping(path = "/{name:.+}", method = RequestMethod.DELETE)
+    public HttpEntity<byte[]> deleteImage(@PathVariable("name") String name) {
+        ImageHandlerDAO dao = new ImageHandlerDAOMongo();
 
-        return false;
+        String res;
+
+        if(dao.deleteImage(name)) {
+            res = "File " + name + " deleted successfully.";
+            return new HttpEntity<>(res.getBytes());
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     private String getRandomHexString(int length){
