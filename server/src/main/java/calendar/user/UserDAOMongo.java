@@ -22,6 +22,7 @@ import java.util.Random;
 class UserDAOMongo implements UserDAO {
     private Jongo client;
 
+    //TODO: Secure from injection
     UserDAOMongo() {
         client = MongoDBClient.getClient();
     }
@@ -36,6 +37,18 @@ class UserDAOMongo implements UserDAO {
         MongoCollection collection = client.getCollection("users");
 
         return collection.findOne("{email: \"" + email + "\"}").as(User.class);
+    }
+
+    public ArrayList<User> getUsersByOrganization(String organizationName) {
+        MongoCollection collection = client.getCollection("users");
+        return cursorToArray(collection.find(
+                "{organization.name: \"" + organizationName + "\"}").as(User.class)
+        );
+    }
+
+    public ArrayList<User> getAllUsers() throws Exception {
+        MongoCollection collection = client.getCollection("users");
+        return cursorToArray(collection.find("{}").as(User.class));
     }
 
     public User createUser(RegistrationDTO dto) {

@@ -14,6 +14,9 @@ import java.util.ArrayList;
 interface UserDAO {
     User getUserById(String id) throws Exception;
     User getUserByEmail(String email) throws Exception;
+    ArrayList<User> getUsersByOrganization(String organizationName) throws Exception;
+    ArrayList<User> getAllUsers() throws Exception;
+
     User createUser(RegistrationDTO dto) throws Exception;
     void deleteUser(String id) throws Exception;
 
