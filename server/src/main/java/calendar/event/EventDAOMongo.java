@@ -1,10 +1,10 @@
 package calendar.event;
 
 import calendar.databaseConnections.MongoDBClient;
+import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
-import org.jongo.Oid;
 
 public class EventDAOMongo implements EventDAO {
 
@@ -16,13 +16,24 @@ public class EventDAOMongo implements EventDAO {
 
     public Event getEvent(String id) {
         MongoCollection collection = client.getCollection("events");
-        Event event = collection.findOne(Oid.withOid(id)).as(Event.class);
-        return event;
+        return collection.findOne(new ObjectId(id)).as(Event.class);
     }
 
     public void createEvent(Event event) {
         MongoCollection collection = client.getCollection("events");
         event.setCreatedAt(DateTime.now().getMillis());
         collection.insert(event);
+    }
+
+    public void deleteEvent(String id) {
+        MongoCollection collection = client.getCollection("events");
+        collection.remove(new ObjectId(id));
+    }
+
+    public Event updateEvent(Event event) {
+        MongoCollection collection = client.getCollection("events");
+        event.setUpdatedAt(DateTime.now().getMillis());
+        collection.update(new ObjectId(event.getId())).with(event);
+        return event;
     }
 }

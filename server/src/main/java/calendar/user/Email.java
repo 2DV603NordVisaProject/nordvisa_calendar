@@ -11,6 +11,6 @@ class Email {
     }
 
     void sendPasswordResetEmail(String id) {
-        System.out.println("http://localhost:8080/email/reset?id=" + id);
+        System.out.println("http://localhost:8080/change_password/" + id);
     }
 }

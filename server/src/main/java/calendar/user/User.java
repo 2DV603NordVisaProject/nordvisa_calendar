@@ -1,6 +1,7 @@
 package calendar.user;
 
 import calendar.user.dto.RegistrationDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
@@ -23,7 +24,9 @@ class User {
     private String password;
     private String role;
 
+    @JsonIgnore
     private AuthenticationLink resetPasswordLink;
+    @JsonIgnore
     private AuthenticationLink validateEmailLink;
 
     private long createdAt;
@@ -45,8 +48,7 @@ class User {
         this.role = "USER";
 
         this.resetPasswordLink = new AuthenticationLink("", 0);
-        this.validateEmailLink = new AuthenticationLink(generateRandomString(),
-                DateTime.now().getMillis());
+        this.validateEmailLink = new AuthenticationLink("", 0);
 
         this.createdAt = DateTime.now().getMillis();
         this.updatedAt = DateTime.now().getMillis();
@@ -126,22 +128,12 @@ class User {
         this.role = role;
     }
 
-    void setResetPasswordLink(String resetPasswordLink) {
-        this.resetPasswordLink = this.resetPasswordLink;
+    void setResetPasswordLink(AuthenticationLink resetPasswordLink) {
+        this.resetPasswordLink = resetPasswordLink;
     }
 
     void setValidateEmailLink(AuthenticationLink validateEmailLink) {
         this.validateEmailLink = validateEmailLink;
-    }
-
-    void createResetPasswordLink() {
-        this.resetPasswordLink = new AuthenticationLink(generateRandomString(),
-                DateTime.now().getMillis());
-    }
-
-    void createValidateEmailLink() {
-        this.validateEmailLink = new AuthenticationLink(generateRandomString(),
-                DateTime.now().getMillis());
     }
 
 //    void setCreatedAt(long createdAt) {
@@ -160,16 +152,4 @@ class User {
         this.organization = organization;
     }
 
-    private String generateRandomString() {
-        String characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890";
-        int length = 20;
-        Random rnd = new Random();
-
-        char[] text = new char[length];
-        for(int i = 0; i < length; i++) {
-            text[i] = characters.charAt(rnd.nextInt(characters.length()));
-        }
-
-        return new String(text);
-    }
 }

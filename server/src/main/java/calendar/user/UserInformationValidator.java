@@ -1,6 +1,7 @@
 package calendar.user;
 
 import calendar.user.dto.ChangePasswordDTO;
+import calendar.user.dto.RecoverPasswordDTO;
 import calendar.user.dto.RegistrationDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,6 +61,15 @@ class UserInformationValidator {
             throw new Exception("The passwords did not match");
         }
         else if(passwordNotValid(dto.getPassword())) {
+            throw new Exception("The password was not valid");
+        }
+    }
+
+    void validate(RecoverPasswordDTO dto) throws Exception {
+        if (passwordConfirmationDoesNotMatch(dto.getPassword(), dto.getPasswordConfirmation())) {
+            throw new Exception("The passwords did not match");
+        }
+        else if (passwordNotValid(dto.getPassword())) {
             throw new Exception("The password was not valid");
         }
     }

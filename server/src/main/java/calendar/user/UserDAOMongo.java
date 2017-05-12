@@ -4,12 +4,15 @@ import calendar.databaseConnections.MongoDBClient;
 import calendar.user.dto.RegistrationDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 import org.bson.types.ObjectId;
+import org.joda.time.DateTime;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Class UserDAOMongo
@@ -19,6 +22,7 @@ import java.util.List;
 class UserDAOMongo implements UserDAO {
     private Jongo client;
 
+    //TODO: Secure from injection
     UserDAOMongo() {
         client = MongoDBClient.getClient();
     }
@@ -35,35 +39,32 @@ class UserDAOMongo implements UserDAO {
         return collection.findOne("{email: \"" + email + "\"}").as(User.class);
     }
 
+    public ArrayList<User> getUsersByOrganization(String organizationName) {
+        MongoCollection collection = client.getCollection("users");
+        return cursorToArray(collection.find(
+                "{organization.name: \"" + organizationName + "\"}").as(User.class)
+        );
+    }
+
+    public ArrayList<User> getAllUsers() throws Exception {
+        MongoCollection collection = client.getCollection("users");
+        return cursorToArray(collection.find("{}").as(User.class));
+    }
+
     public User createUser(RegistrationDTO dto) {
         MongoCollection collection = client.getCollection("users");
 
         User user = new User(dto);
-        collection.insert(user);
+        user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
+                DateTime.now().getMillis()));
 
+        collection.insert(user);
         return user;
     }
 
     public void deleteUser(String id) {
         MongoCollection collection = client.getCollection("users");
         collection.remove(new ObjectId(id));
-    }
-
-    public User updateUserDetails(UserDetailsUpdateDTO dto) {
-        MongoCollection collection = client.getCollection("users");
-        User user = collection.findOne(new ObjectId(dto.getId())).as(User.class);
-
-        // TODO: If email is incorrect the user can't log in again and recover. :(
-        if (!user.getEmail().equals(dto.getEmail())) {
-            user.setEmail(dto.getEmail());
-            user.createValidateEmailLink();
-        }
-
-        user.getOrganization().setChangePending(dto.getOrganization());
-
-        collection.update(new ObjectId(user.getId())).with(user);
-
-        return user;
     }
 
     public void changePassword(String id, String password) {
@@ -75,9 +76,22 @@ class UserDAOMongo implements UserDAO {
         collection.update(new ObjectId(id)).with(user);
     }
 
-    public void verifyEmailAddress(String id) throws Exception {
+    public User setPasswordRecoveryLink(String email) {
         MongoCollection collection = client.getCollection("users");
-        User user = collection.findOne("{validateEmailLink.url: \"" + id + "\"}").as(User.class);
+        User user = getUserByEmail(email);
+
+        user.setResetPasswordLink(new AuthenticationLink(generateRandomString(),
+                DateTime.now().getMillis()));
+
+        collection.update(new ObjectId(user.getId())).with(user);
+
+        return user;
+    }
+
+    public void verifyEmailAddress(String urlId) throws Exception {
+        MongoCollection collection = client.getCollection("users");
+        User user = collection.findOne("{validateEmailLink.url: \"" + urlId + "\"}")
+                .as(User.class);
 
         if (user == null) {
             throw new Exception("This link is invalid");
@@ -89,6 +103,25 @@ class UserDAOMongo implements UserDAO {
 
         user.setValidateEmailLink(new AuthenticationLink("", 0));
         collection.update(new ObjectId(user.getId())).with(user);
+    }
+
+    public void recoverPassword(String urlId, String password) throws Exception {
+        MongoCollection collection = client.getCollection("users");
+        User user = collection.findOne("{resetPasswordLink.url: \"" + urlId + "\"}")
+                .as(User.class);
+
+        if (user == null) {
+            throw new Exception("This link is invalid");
+        }
+
+        if(user.getResetPasswordLink().hasExpired()) {
+            throw new Exception("This link has expired");
+        }
+
+        user.setResetPasswordLink(new AuthenticationLink("", 0));
+        collection.update(new ObjectId(user.getId())).with(user);
+
+        changePassword(user.getId(), password);
     }
 
     public void changeOrganization(String id, boolean approved) {
@@ -123,16 +156,29 @@ class UserDAOMongo implements UserDAO {
         collection.update(new ObjectId(id)).with(user);
     }
 
-    public void makeAdministrator(String id) {
-        System.out.println("UserDAOMongo.makeAdministrator is not implemented");
+    public User updateUserDetails(UserDetailsUpdateDTO dto) {
+        MongoCollection collection = client.getCollection("users");
+        User user = collection.findOne(new ObjectId(dto.getId())).as(User.class);
+
+        // TODO: If email is incorrect the user can't log in again and recover. :(
+        if (!user.getEmail().equals(dto.getEmail())) {
+            user.setEmail(dto.getEmail());
+            user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
+                    DateTime.now().getMillis()));
+        }
+
+        user.getOrganization().setChangePending(dto.getOrganization());
+
+        collection.update(new ObjectId(user.getId())).with(user);
+
+        return user;
     }
 
-    public void removeAdministrator(String id) {
-        System.out.println("UserDAOMongo.removeAdministrator is not implemented");
-    }
+    public void setRole(String id, String role) {
+        MongoCollection collection = client.getCollection("users");
 
-    public void makeSuperAdministrator(String id) {
-        System.out.println("UserDAOMongo.makeSuperAdministrator is not implemented");
+        User user = getUserById(id);
+
     }
 
     private static ArrayList<User> cursorToArray(MongoCursor<User> cursor) {
@@ -143,5 +189,18 @@ class UserDAOMongo implements UserDAO {
         }
 
         return list;
+    }
+
+    private String generateRandomString() {
+        String characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890";
+        int length = 20;
+        Random rnd = new Random();
+
+        char[] text = new char[length];
+        for(int i = 0; i < length; i++) {
+            text[i] = characters.charAt(rnd.nextInt(characters.length()));
+        }
+
+        return new String(text);
     }
 }
