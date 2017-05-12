@@ -131,3 +131,8 @@ form {
   border: 1px solid lightgrey;
   padding: 20px;
 }
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}

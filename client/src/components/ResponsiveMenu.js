@@ -26,6 +26,9 @@ class ResponsiveMenu extends Component {
             <li>My Account</li>
             <li>Members</li>
             <li>Create Event</li>
+            <li>My Events</li>
+            <li>Generate Widget</li>
+            <li>Pending Registrations</li>
           </ul>
         </div>
       </div>

@@ -8,6 +8,7 @@ import UpdatePasswordView from "./UpdatePasswordView";
 import MyAccountView from "./MyAccountView";
 import MembersView from "./MembersView";
 import CreateView from "./CreateView";
+import MyEventsView from "./MyEventsView";
 
 class ViewContainer extends Component {
   render() {
@@ -20,6 +21,7 @@ class ViewContainer extends Component {
         <Match pattern="/user/my-account" component={MyAccountView}/>
         <Match pattern="/admin/members" component={MembersView}/>
         <Match pattern="/user/create-event" component={CreateView}/>
+        <Match pattern="/user/my-events" component={MyEventsView}/>
       </div>
     );
   }
