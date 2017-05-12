@@ -20,11 +20,13 @@ interface UserDAO {
     User updateUserDetails(UserDetailsUpdateDTO dto) throws Exception;
     void changePassword(String id, String password) throws Exception;
 
+    User setPasswordRecoveryLink(String email) throws Exception;
+
     void verifyEmailAddress(String urlId) throws Exception;
-    void changeOrganization(String id, boolean approved) throws Exception;
 
     ArrayList<User> getPendingRegistrations() throws Exception;
     void approveRegistration(String id) throws Exception;
+    void changeOrganization(String id, boolean approved) throws Exception;
 
     void makeAdministrator(String id) throws Exception;
     void removeAdministrator(String id) throws Exception;

@@ -1,5 +1,6 @@
 package calendar.user;
 
+import calendar.user.dto.PasswordRecoveryRequestDTO;
 import calendar.user.dto.RegistrationDTO;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +38,12 @@ public class VisitorController {
         }
         response.sendRedirect("/");
         return "";
+    }
+
+    @RequestMapping(value = "/request_password_recovery", method = RequestMethod.POST)
+    public void requestPasswordRecovery(@ModelAttribute PasswordRecoveryRequestDTO dto)
+            throws Exception {
+        User user = dao.setPasswordRecoveryLink(dto.getEmail());
+        email.sendPasswordResetEmail(user.getResetPasswordLink().getUrl());
     }
 }

@@ -45,8 +45,7 @@ class User {
         this.role = "USER";
 
         this.resetPasswordLink = new AuthenticationLink("", 0);
-        this.validateEmailLink = new AuthenticationLink(generateRandomString(),
-                DateTime.now().getMillis());
+        this.validateEmailLink = new AuthenticationLink("", 0);
 
         this.createdAt = DateTime.now().getMillis();
         this.updatedAt = DateTime.now().getMillis();
@@ -126,22 +125,12 @@ class User {
         this.role = role;
     }
 
-    void setResetPasswordLink(String resetPasswordLink) {
-        this.resetPasswordLink = this.resetPasswordLink;
+    void setResetPasswordLink(AuthenticationLink resetPasswordLink) {
+        this.resetPasswordLink = resetPasswordLink;
     }
 
     void setValidateEmailLink(AuthenticationLink validateEmailLink) {
         this.validateEmailLink = validateEmailLink;
-    }
-
-    void createResetPasswordLink() {
-        this.resetPasswordLink = new AuthenticationLink(generateRandomString(),
-                DateTime.now().getMillis());
-    }
-
-    void createValidateEmailLink() {
-        this.validateEmailLink = new AuthenticationLink(generateRandomString(),
-                DateTime.now().getMillis());
     }
 
 //    void setCreatedAt(long createdAt) {
@@ -160,16 +149,4 @@ class User {
         this.organization = organization;
     }
 
-    private String generateRandomString() {
-        String characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890";
-        int length = 20;
-        Random rnd = new Random();
-
-        char[] text = new char[length];
-        for(int i = 0; i < length; i++) {
-            text[i] = characters.charAt(rnd.nextInt(characters.length()));
-        }
-
-        return new String(text);
-    }
 }

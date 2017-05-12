@@ -4,12 +4,14 @@ import calendar.databaseConnections.MongoDBClient;
 import calendar.user.dto.RegistrationDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 import org.bson.types.ObjectId;
+import org.joda.time.DateTime;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Class UserDAOMongo
@@ -39,31 +41,16 @@ class UserDAOMongo implements UserDAO {
         MongoCollection collection = client.getCollection("users");
 
         User user = new User(dto);
-        collection.insert(user);
+        user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
+                DateTime.now().getMillis()));
 
+        collection.insert(user);
         return user;
     }
 
     public void deleteUser(String id) {
         MongoCollection collection = client.getCollection("users");
         collection.remove(new ObjectId(id));
-    }
-
-    public User updateUserDetails(UserDetailsUpdateDTO dto) {
-        MongoCollection collection = client.getCollection("users");
-        User user = collection.findOne(new ObjectId(dto.getId())).as(User.class);
-
-        // TODO: If email is incorrect the user can't log in again and recover. :(
-        if (!user.getEmail().equals(dto.getEmail())) {
-            user.setEmail(dto.getEmail());
-            user.createValidateEmailLink();
-        }
-
-        user.getOrganization().setChangePending(dto.getOrganization());
-
-        collection.update(new ObjectId(user.getId())).with(user);
-
-        return user;
     }
 
     public void changePassword(String id, String password) {
@@ -73,6 +60,18 @@ class UserDAOMongo implements UserDAO {
         user.setPassword(password);
 
         collection.update(new ObjectId(id)).with(user);
+    }
+
+    public User setPasswordRecoveryLink(String email) {
+        MongoCollection collection = client.getCollection("users");
+        User user = getUserByEmail(email);
+
+        user.setResetPasswordLink(new AuthenticationLink(generateRandomString(),
+                DateTime.now().getMillis()));
+
+        collection.update(new ObjectId(user.getId())).with(user);
+
+        return user;
     }
 
     public void verifyEmailAddress(String id) throws Exception {
@@ -123,6 +122,24 @@ class UserDAOMongo implements UserDAO {
         collection.update(new ObjectId(id)).with(user);
     }
 
+    public User updateUserDetails(UserDetailsUpdateDTO dto) {
+        MongoCollection collection = client.getCollection("users");
+        User user = collection.findOne(new ObjectId(dto.getId())).as(User.class);
+
+        // TODO: If email is incorrect the user can't log in again and recover. :(
+        if (!user.getEmail().equals(dto.getEmail())) {
+            user.setEmail(dto.getEmail());
+            user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
+                    DateTime.now().getMillis()));
+        }
+
+        user.getOrganization().setChangePending(dto.getOrganization());
+
+        collection.update(new ObjectId(user.getId())).with(user);
+
+        return user;
+    }
+
     public void makeAdministrator(String id) {
         System.out.println("UserDAOMongo.makeAdministrator is not implemented");
     }
@@ -143,5 +160,18 @@ class UserDAOMongo implements UserDAO {
         }
 
         return list;
+    }
+
+    private String generateRandomString() {
+        String characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890";
+        int length = 20;
+        Random rnd = new Random();
+
+        char[] text = new char[length];
+        for(int i = 0; i < length; i++) {
+            text[i] = characters.charAt(rnd.nextInt(characters.length()));
+        }
+
+        return new String(text);
     }
 }
