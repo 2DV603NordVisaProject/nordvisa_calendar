@@ -5,7 +5,6 @@ import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
-import org.jongo.Oid;
 
 public class EventDAOMongo implements EventDAO {
 
@@ -17,8 +16,7 @@ public class EventDAOMongo implements EventDAO {
 
     public Event getEvent(String id) {
         MongoCollection collection = client.getCollection("events");
-        Event event = collection.findOne(new ObjectId(id)).as(Event.class);
-        return event;
+        return collection.findOne(new ObjectId(id)).as(Event.class);
     }
 
     public void createEvent(Event event) {
