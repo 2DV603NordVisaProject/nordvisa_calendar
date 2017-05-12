@@ -1,16 +1,37 @@
 import React, { Component } from "react";
+import { isEmail } from "validator";
 import "./RegisterView.css";
+import ErrorList from "./ErrorList";
 
 class RegisterView extends Component {
+  state = {
+    fields: {
+      email: "",
+      password: "",
+      confirmpassword: "",
+      org: "",
+      neworg: "",
+    },
+    fieldErrors: [],
+  }
+
+  validate(fields) {
+    const errors = [];
+    if (!fields.email) errors.push("Email Required!");
+    if (!fields.password || !fields.confirmpassword) errors.push("Password Required!");
+    if (fields.password !== fields.confirmpassword) errors.push("Password's doesn't match!")
+    if (!isEmail(fields.email)) errors.push("Invalid email!");
+    return errors;
+  }
 
   onInputChange(event) {
-    let value = event.target.value;
-    let name = event.target.name;
+    const value = event.target.value;
+    const name = event.target.name;
     const fields = this.state.fields;
     fields[name] = value;
     this.setState({ fields });
 
-    let hiddenForm = document.querySelector(".change");
+    const hiddenForm = document.querySelector(".change");
 
     if (value === "new" && name === "org") {
       hiddenForm.classList.remove("hidden");
@@ -21,21 +42,19 @@ class RegisterView extends Component {
   onFormSubmit(event) {
     //TODO
     event.preventDefault();
-    console.log(`Email: ${this.refs.email.value}`);
-    console.log(`Pass: ${this.refs.password.value}`);
-    console.log(`Pass2: ${this.refs.confirmpassword.value}`);
-    console.log(`Org: ${this.refs.org.value}`);
-    console.log(`New Org: ${this.refs.neworg.value}`);
-  }
+    const fieldErrors = this.validate(this.state.fields);
+    this.setState({ fieldErrors });
 
-  state = {
-    fields: {
+    // Return on Errors
+    if (fieldErrors.length) return;
+
+    this.setState({fields: {
       email: "",
       password: "",
       confirmpassword: "",
       org: "",
       neworg: "",
-    }
+    }})
   }
 
   render() {
@@ -83,6 +102,7 @@ class RegisterView extends Component {
             </input>
           </div>
           <div className="g-recaptcha" data-sitekey="6Le13yAUAAAAAC4D1Ml81bW3WlGN83bZo4FzHU7Z"></div>
+          <ErrorList errors={this.state.fieldErrors}/>
           <input type="submit" value="register" className="btn-primary"/>
         </form>
       </div>

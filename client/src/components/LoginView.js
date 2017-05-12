@@ -10,13 +10,14 @@ class LoginView extends Component {
   }
 
   onFormSubmit(event) {
-    //TODO
+    event.preventDefault();
+    this.setState({fields: {email: "", password: ""}})
   }
 
   onInputChange(event) {
     let fields = this.state.fields;
     fields[event.target.name] = event.target.value;
-    this.setState({fields})
+    this.setState({fields});
   }
   render() {
     return (
