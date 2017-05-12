@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,9 +75,10 @@ class UserDAOMongo implements UserDAO {
         return user;
     }
 
-    public void verifyEmailAddress(String id) throws Exception {
+    public void verifyEmailAddress(String urlId) throws Exception {
         MongoCollection collection = client.getCollection("users");
-        User user = collection.findOne("{validateEmailLink.url: \"" + id + "\"}").as(User.class);
+        User user = collection.findOne("{validateEmailLink.url: \"" + urlId + "\"}")
+                .as(User.class);
 
         if (user == null) {
             throw new Exception("This link is invalid");
@@ -88,6 +90,25 @@ class UserDAOMongo implements UserDAO {
 
         user.setValidateEmailLink(new AuthenticationLink("", 0));
         collection.update(new ObjectId(user.getId())).with(user);
+    }
+
+    public void recoverPassword(String urlId, String password) throws Exception {
+        MongoCollection collection = client.getCollection("users");
+        User user = collection.findOne("{resetPasswordLink.url: \"" + urlId + "\"}")
+                .as(User.class);
+
+        if (user == null) {
+            throw new Exception("This link is invalid");
+        }
+
+        if(user.getResetPasswordLink().hasExpired()) {
+            throw new Exception("This link has expired");
+        }
+
+        user.setResetPasswordLink(new AuthenticationLink("", 0));
+        collection.update(new ObjectId(user.getId())).with(user);
+
+        changePassword(user.getId(), password);
     }
 
     public void changeOrganization(String id, boolean approved) {

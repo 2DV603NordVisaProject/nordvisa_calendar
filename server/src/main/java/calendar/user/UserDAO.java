@@ -23,6 +23,7 @@ interface UserDAO {
     User setPasswordRecoveryLink(String email) throws Exception;
 
     void verifyEmailAddress(String urlId) throws Exception;
+    void recoverPassword(String url, String password) throws Exception;
 
     ArrayList<User> getPendingRegistrations() throws Exception;
     void approveRegistration(String id) throws Exception;
