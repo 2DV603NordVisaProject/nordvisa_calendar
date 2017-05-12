@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./LoginView.css";
+import { isEmail } from "validator";
+import ErrorList from "./ErrorList";
 
 class LoginView extends Component {
   state = {
@@ -7,10 +9,25 @@ class LoginView extends Component {
       email: "",
       password: "",
     },
+    fieldErrors: [],
+  }
+
+  validate(fields) {
+    const errors = []
+    if (!isEmail(fields.email)) errors.push("Email is invalid!");
+    if (!fields.password) errors.push("Password field is empty!")
+    return errors
   }
 
   onFormSubmit(event) {
     event.preventDefault();
+
+    const fieldErrors = this.validate(this.state.fields);
+    this.setState({ fieldErrors });
+
+    // Return on Errors
+    if (fieldErrors.length) return;
+
     this.setState({fields: {email: "", password: ""}})
   }
 
@@ -38,6 +55,7 @@ class LoginView extends Component {
             value={this.state.fields.password}
             type="password">
           </input>
+          <ErrorList errors={this.state.fieldErrors}/>
           <input type="submit" className="btn-primary" value="login"></input>
         </form>
         <a href="/recover-password">Forgot Password?</a>
