@@ -3,7 +3,7 @@ package calendar.imageHandling;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
-class Image {
+public class Image {
 
     @MongoId
     @MongoObjectId
