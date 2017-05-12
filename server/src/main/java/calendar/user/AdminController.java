@@ -1,6 +1,8 @@
 package calendar.user;
 
 import calendar.user.dto.RegistrationDecisionDTO;
+import calendar.user.dto.UserIdDTO;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -14,6 +16,20 @@ import java.util.ArrayList;
 @RequestMapping("/api/admin")
 public class AdminController {
     private UserDAO dao = new UserDAOMongo();
+
+    // TODO: NOT TESTED!
+    @RequestMapping(value = "/make_admin", method = RequestMethod.POST)
+    public void makeAdmin(@ModelAttribute UserIdDTO dto) throws Exception {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User actor = dao.getUserByEmail("test@test.com"); //TODO: Change argument to email
+        User target = dao.getUserById(dto.getId());
+
+        if(target.getRole().equals("USER")) {
+            if(target.getOrganization().getName().equals(actor.getOrganization().getName())) {
+                dao.setRole(dto.getId(), "ADMIN");
+            }
+        }
+    }
 
     @RequestMapping(value = "/registrations", method = RequestMethod.GET)
     @ResponseBody

@@ -174,16 +174,11 @@ class UserDAOMongo implements UserDAO {
         return user;
     }
 
-    public void makeAdministrator(String id) {
-        System.out.println("UserDAOMongo.makeAdministrator is not implemented");
-    }
+    public void setRole(String id, String role) {
+        MongoCollection collection = client.getCollection("users");
 
-    public void removeAdministrator(String id) {
-        System.out.println("UserDAOMongo.removeAdministrator is not implemented");
-    }
+        User user = getUserById(id);
 
-    public void makeSuperAdministrator(String id) {
-        System.out.println("UserDAOMongo.makeSuperAdministrator is not implemented");
     }
 
     private static ArrayList<User> cursorToArray(MongoCursor<User> cursor) {

@@ -32,7 +32,5 @@ interface UserDAO {
     void approveRegistration(String id) throws Exception;
     void changeOrganization(String id, boolean approved) throws Exception;
 
-    void makeAdministrator(String id) throws Exception;
-    void removeAdministrator(String id) throws Exception;
-    void makeSuperAdministrator(String id) throws Exception;
+    void setRole(String id, String role) throws Exception;
 }
