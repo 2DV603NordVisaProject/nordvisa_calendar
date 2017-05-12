@@ -1,5 +1,7 @@
 package calendar.event;
 
+import calendar.event.dto.CreateEventDTO;
+import calendar.event.dto.GetEventDTO;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
@@ -18,7 +20,7 @@ class Event {
     private int recursEvery;
     private long recursUntil;
     private String url;
-    //private List<?> images;
+    //private List<Image> images;
     private long createdAt;
     private long updatedAt;
     private String editedBy;
@@ -44,7 +46,7 @@ class Event {
 
     Event(CreateEventDTO dto) {
         this.name = dto.getName();
-        this.location = dto.getGeoCodedLocation(dto.getAddress());
+        this.location = dto.getGeoCodedLocation(dto.getLocation());
         this.description = dto.getDescription();
         this.date = dto.getDate();
         this.duration = dto.getDuration();

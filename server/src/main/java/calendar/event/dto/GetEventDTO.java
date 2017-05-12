@@ -1,4 +1,6 @@
-package calendar.event;
+package calendar.event.dto;
+
+import calendar.event.EventLocation;
 
 public class GetEventDTO {
 

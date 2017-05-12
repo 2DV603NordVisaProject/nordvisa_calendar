@@ -1,15 +1,16 @@
-package calendar.event;
+package calendar.event.dto;
 
+import calendar.event.EventLocation;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.GeocodingApiRequest;
 import com.google.maps.model.AddressComponent;
 import com.google.maps.model.GeocodingResult;
 
-class CreateEventDTO {
+public class CreateEventDTO {
 
     private String name;
-    private String address;
+    private String location;
     private String description;
     private long date;
     private float duration;
@@ -17,6 +18,7 @@ class CreateEventDTO {
     private int recursEvery;
     private long recursUntil;
     private String url;
+    //private List<Image> images;
     private long createdAt;
     private long updatedAt;
     private String editedBy;
@@ -29,12 +31,12 @@ class CreateEventDTO {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getLocation() {
+        return location;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getDescription() {
