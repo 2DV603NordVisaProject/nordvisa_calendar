@@ -1,0 +1,51 @@
+.pending-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgrey;
+  width: 100%;
+  align-items: center;
+}
+
+.pending-view form {
+  width: 100%;
+}
+
+.pending-item-child {
+  max-width: 33%;
+  overflow: hidden;
+}
+
+.pending-view input {
+  width: 20px;
+  background: #fff;
+}
+.pending-item p {
+  margin: 0 15px
+}
+
+.approve {
+	-webkit-appearance: none;
+	background-color: #fff;
+	border: 1px solid grey;
+  border-radius: 3px;
+  position: relative;
+}
+
+.approve:active, .approve:checked:active {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.approve:checked {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+	color: #1565c0;
+}
+
+.approve:checked:after {
+	content: '\2714';
+	font-size: 18px;
+	position: absolute;
+	top: -5px;
+	left: 2px;
+	color: #1565c0;
+}

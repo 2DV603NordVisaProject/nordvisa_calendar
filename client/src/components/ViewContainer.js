@@ -10,6 +10,7 @@ import MembersView from "./MembersView";
 import CreateView from "./CreateView";
 import MyEventsView from "./MyEventsView";
 import WidgetView from "./WidgetView";
+import PendingRegistrationsView from "./PendingRegistrationsView"
 
 class ViewContainer extends Component {
   render() {
@@ -22,8 +23,9 @@ class ViewContainer extends Component {
         <Match pattern="/generate-widget" component={WidgetView}/>
         <Match pattern="/user/my-account" component={MyAccountView}/>
         <Match pattern="/user/create-event" component={CreateView}/>
-        <Match pattern="/admin/members" component={MembersView}/>
         <Match pattern="/user/my-events" component={MyEventsView}/>
+        <Match pattern="/admin/members" component={MembersView}/>
+        <Match pattern="/admin/pending-registrations" component={PendingRegistrationsView}/>
       </div>
     );
   }
