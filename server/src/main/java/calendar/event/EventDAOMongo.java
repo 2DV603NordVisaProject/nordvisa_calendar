@@ -32,6 +32,7 @@ public class EventDAOMongo implements EventDAO {
 
     public Event updateEvent(Event event) {
         MongoCollection collection = client.getCollection("events");
+        event.setUpdatedAt(DateTime.now().getMillis());
         collection.update(new ObjectId(event.getId())).with(event);
         return event;
     }
