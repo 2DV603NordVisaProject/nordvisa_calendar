@@ -12,7 +12,7 @@ class TopBar extends Component {
         </div>
         <ResponsiveMenu/>
         <select>
-          <option selected disabled>Language</option>
+          <option defaultValue disabled>Language</option>
           <option>Swedish</option>
           <option>English</option>
           <option>Norwegian</option>
