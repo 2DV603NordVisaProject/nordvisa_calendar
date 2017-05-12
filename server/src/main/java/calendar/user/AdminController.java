@@ -18,6 +18,25 @@ public class AdminController {
     private UserDAO dao = new UserDAOMongo();
 
     // TODO: NOT TESTED!
+    @RequestMapping(value = "/make_user", method = RequestMethod.POST)
+    public void makeUser(@ModelAttribute UserIdDTO dto) throws Exception {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User actor = dao.getUserByEmail("test@test.com"); //TODO: Change argument to email
+        User target = dao.getUserById(dto.getId());
+
+        if(target.getRole().equals("ADMIN")) {
+            if(actor.getRole().equals("SUPER_ADMIN")) {
+                dao.setRole(dto.getId(), "USER");
+            }
+            else if(actor.getOrganization().getName().equals(target.getOrganization().getName()) &&
+                    !actor.getOrganization().getName().equals("")) {
+                dao.setRole(dto.getId(), "USER");
+            }
+        }
+
+    }
+
+    // TODO: NOT TESTED!
     @RequestMapping(value = "/make_admin", method = RequestMethod.POST)
     public void makeAdmin(@ModelAttribute UserIdDTO dto) throws Exception {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
