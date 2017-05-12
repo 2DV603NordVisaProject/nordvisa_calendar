@@ -83,6 +83,15 @@ select:focus {
   outline: none;
 }
 
+textarea:focus {
+  outline: none;
+}
+
+textarea {
+  width: 400px;
+  height: 150px;
+}
+
 
 .lightbox {
   background: #fff;

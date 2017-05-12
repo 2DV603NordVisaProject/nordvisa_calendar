@@ -1,0 +1,53 @@
+.create-event form {
+  width: 100%;
+}
+
+.create-event input {
+  margin: 0 0 0 10px;
+  float: left;
+  display: block;
+  width: 300px;
+}
+
+.create-event label {
+  display: block;
+}
+
+.create-event textarea {
+  margin: 0 0 0 10px;
+}
+
+.react-date-field__input {
+  width: 10px;
+}
+
+.react-date-field--theme-default {
+  border: 1px solid darkgray;
+  margin: 0 0 0 10px;
+}
+
+.react-date-field--theme-default input {
+  width: 100px;
+}
+
+.create-event button {
+  margin: 35px auto;
+}
+
+@media (max-width: 475px) {
+  .create-event textarea {
+    width: 90%;
+  }
+  .create-event form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 375px) {
+  .create-event input {
+    width: 90%;
+  }
+  .react-date-field--theme-default {
+    width: 90%;
+  }
+}

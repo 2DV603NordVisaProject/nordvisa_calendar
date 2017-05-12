@@ -7,6 +7,7 @@ import RecoverView from "./RecoverView";
 import UpdatePasswordView from "./UpdatePasswordView";
 import MyAccountView from "./MyAccountView";
 import MembersView from "./MembersView";
+import CreateView from "./CreateView";
 
 class ViewContainer extends Component {
   render() {
@@ -18,6 +19,7 @@ class ViewContainer extends Component {
         <Match pattern="/update-password" component={UpdatePasswordView}/>
         <Match pattern="/user/my-account" component={MyAccountView}/>
         <Match pattern="/admin/members" component={MembersView}/>
+        <Match pattern="/user/create-event" component={CreateView}/>
       </div>
     );
   }
