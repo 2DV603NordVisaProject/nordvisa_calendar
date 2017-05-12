@@ -1,6 +1,7 @@
 package calendar.user;
 
 import calendar.user.dto.RegistrationDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
@@ -23,7 +24,9 @@ class User {
     private String password;
     private String role;
 
+    @JsonIgnore
     private AuthenticationLink resetPasswordLink;
+    @JsonIgnore
     private AuthenticationLink validateEmailLink;
 
     private long createdAt;
