@@ -1,6 +1,7 @@
 package calendar.event;
 
 import calendar.event.dto.CreateEventDTO;
+import calendar.event.dto.DeleteEventDTO;
 import calendar.event.dto.GetEventDTO;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,5 +22,11 @@ public class EventController {
         EventDAO dao = new EventDAOMongo();
         dao.createEvent(event);
         return event.toGetEventDTO();
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public void deleteEvent(@RequestBody DeleteEventDTO deleteEventDTO) {
+        EventDAO dao = new EventDAOMongo();
+        dao.deleteEvent(deleteEventDTO.getId());
     }
 }

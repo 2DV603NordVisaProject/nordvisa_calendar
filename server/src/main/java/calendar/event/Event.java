@@ -72,6 +72,8 @@ class Event {
         dto.setName(this.name);
         dto.setDescription(this.description);
         dto.setLocation(this.location);
+        dto.setCreatedAt(this.createdAt);
+        dto.setUpdatedAt(this.updatedAt);
         return dto;
     }
 

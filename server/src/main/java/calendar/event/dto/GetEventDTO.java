@@ -14,6 +14,7 @@ public class GetEventDTO {
     private int recursEvery;
     private long recursUntil;
     private String url;
+    //private List<Image> images;
     private long createdAt;
     private long updatedAt;
     private String editedBy;
