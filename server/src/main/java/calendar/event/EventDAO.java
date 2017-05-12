@@ -4,4 +4,5 @@ public interface EventDAO {
     Event getEvent(String id);
     void createEvent(Event event);
     void deleteEvent(String id);
+    Event updateEvent(Event event);
 }

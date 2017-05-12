@@ -29,4 +29,10 @@ public class EventController {
         EventDAO dao = new EventDAOMongo();
         dao.deleteEvent(deleteEventDTO.getId());
     }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Event updateEvent(@RequestBody Event event) {
+        EventDAO dao = new EventDAOMongo();
+        return dao.updateEvent(event);
+    }
 }

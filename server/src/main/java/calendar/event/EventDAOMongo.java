@@ -29,4 +29,10 @@ public class EventDAOMongo implements EventDAO {
         MongoCollection collection = client.getCollection("events");
         collection.remove(new ObjectId(id));
     }
+
+    public Event updateEvent(Event event) {
+        MongoCollection collection = client.getCollection("events");
+        collection.update(new ObjectId(event.getId())).with(event);
+        return event;
+    }
 }
