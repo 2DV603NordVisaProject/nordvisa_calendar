@@ -28,7 +28,7 @@ class MenuList extends Component {
             <div>
               <li><Link to="/login" className="menu-link">Login</Link></li>
               <li><Link to="/register" className="menu-link">Register</Link></li>
-              <li><Link to="/forgot-password" className="menu-link">Forgot Password</Link></li>
+              <li><Link to="/recover-password" className="menu-link">Forgot Password</Link></li>
             </div>
           )
         }
