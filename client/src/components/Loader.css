@@ -1,0 +1,58 @@
+.loader {
+  border: 8px solid lightgrey;
+  border-radius: 50%;
+  border-top: 8px solid #0d47a1;
+  border-bottom: 8px solid #0d47a1;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 5px;
+}
+
+.load-container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+}
+
+.load {
+  text-align: center;
+  margin: 5px 0;
+}
+
+.load {
+  color: #0d47a1;
+  font-weight: bold;
+  overflow: hidden;
+  height: 1.3em;
+  margin-top: -0.3em;
+  line-height: 1.5em;
+  vertical-align: text-bottom;
+}
+
+.load::after {
+  display: inline-table;
+  white-space: pre;
+  text-align: left;
+}
+
+/* --- Types --- */
+
+/* default loading is ellip */
+.load::after {
+  content: "\A.\A..\A...";
+  animation: spin4 2s steps(4) infinite;
+}
+
+@keyframes spin4  { to { transform: translateY( -6.0em); } }
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

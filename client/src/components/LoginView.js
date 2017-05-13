@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import "./LoginView.css";
 import { isEmail } from "validator";
 import ErrorList from "./ErrorList";
+import Client from "../Client";
+import Redirect from "react-router/Redirect";
+import Loader from "./Loader";
 
 class LoginView extends Component {
   state = {
@@ -10,6 +13,15 @@ class LoginView extends Component {
       password: "",
     },
     fieldErrors: [],
+    loginInProgress: false,
+    shouldRedirect: false,
+  }
+
+  performLogin() {
+    this.setState({ loginInProgress: true });
+    Client.login().then(() => (
+      this.setState({ shouldRedirect: true })
+    ));
   }
 
   validate(fields) {
@@ -28,6 +40,8 @@ class LoginView extends Component {
     // Return on Errors
     if (fieldErrors.length) return;
 
+    //TODO Might change
+    this.performLogin();
     this.setState({fields: {email: "", password: ""}})
   }
 
@@ -37,30 +51,40 @@ class LoginView extends Component {
     this.setState({fields});
   }
   render() {
-    return (
-      <div className="lightbox login">
-        <h2>Login</h2>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
-          <label htmlFor="email">Email:</label>
-          <input
-            name="email"
-            value={this.state.fields.email}
-            onChange={this.onInputChange.bind(this)}
-            type="text">
-          </input>
-          <label htmlFor="password">Password:</label>
-          <input
-            name="password"
-            onChange={this.onInputChange.bind(this)}
-            value={this.state.fields.password}
-            type="password">
-          </input>
-          <ErrorList errors={this.state.fieldErrors}/>
-          <input type="submit" className="btn-primary" value="login"></input>
-        </form>
-        <a href="/recover-password">Forgot Password?</a>
-      </div>
-    );
+    if (this.state.shouldRedirect) {
+      return (
+        <Redirect to="/user/my-events"/>
+      );
+    } else if (this.state.loginInProgress) {
+      return (
+        <Loader/>
+      );
+    } else {
+      return (
+        <div className="lightbox login">
+          <h2>Login</h2>
+          <form onSubmit={this.onFormSubmit.bind(this)}>
+            <label htmlFor="email">Email:</label>
+            <input
+              name="email"
+              value={this.state.fields.email}
+              onChange={this.onInputChange.bind(this)}
+              type="text">
+            </input>
+            <label htmlFor="password">Password:</label>
+            <input
+              name="password"
+              onChange={this.onInputChange.bind(this)}
+              value={this.state.fields.password}
+              type="password">
+            </input>
+            <ErrorList errors={this.state.fieldErrors}/>
+            <input type="submit" className="btn-primary" value="login"></input>
+          </form>
+          <a href="/recover-password">Forgot Password?</a>
+        </div>
+      );
+    }
   }
 }
 

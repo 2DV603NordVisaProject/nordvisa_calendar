@@ -22,6 +22,19 @@
   font-weight: bold;
 }
 
+.menu-link {
+  margin: 0;
+  color: #e3f2fd;
+}
+
+.menu-link:visited {
+  color: #e3f2fd;
+}
+
+.menu-link:hover {
+  text-decoration: none;
+}
+
 .menu-btn {
   width: 25px;
   float: right;

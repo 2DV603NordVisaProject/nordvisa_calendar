@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./ResponsiveMenu.css";
+import MenuList from "./MenuList";
 
 
 class ResponsiveMenu extends Component {
@@ -19,17 +20,7 @@ class ResponsiveMenu extends Component {
 	        <div className="bar3"></div>
         </div>
         <div className="responsive-menu">
-          <ul>
-            <li>Login/Logout</li>
-            <li>Register</li>
-            <li>Forgot Password</li>
-            <li>My Account</li>
-            <li>Members</li>
-            <li>Create Event</li>
-            <li>My Events</li>
-            <li>Generate Widget</li>
-            <li>Pending Registrations</li>
-          </ul>
+          <MenuList/>
         </div>
       </div>
     );
