@@ -57,6 +57,29 @@ class CreateView extends Component {
     this.setState({ progress: "preview" });
   }
 
+  onEditClick(event) {
+    event.preventDefault();
+    this.setState({progress: "edit"});
+  }
+
+  onSaveClick(event) {
+    event.preventDefault();
+    const fieldErrors = [];
+    fieldErrors.push("The event is now saved!");
+    this.setState({fieldErrors});
+    this.setState({ progress: "saved"});
+    this.setState({ fields: {
+      name: "",
+      date: "",
+      recurring: false,
+      recursuntil: "",
+      recurs: "",
+      location: "",
+      desc: "",
+      img:  "",
+    }});
+  }
+
   render() {
     if (this.state.progress === "preview") {
       return (
@@ -74,6 +97,10 @@ class CreateView extends Component {
             </div>
             <div className="maps">
               <p>G Maps Goes here</p>
+            </div>
+            <div className="action-container">
+              <button className="btn-primary" onClick={this.onSaveClick.bind(this)}>save</button>
+              <button className="btn-primary" onClick={this.onEditClick.bind(this)}>edit</button>
             </div>
           </div>
         </div>
@@ -147,7 +174,7 @@ class CreateView extends Component {
                 value={this.state.fields.img}
                 onChange={this.onInputChange.bind(this)}>
               </input>
-              <ErrorList errors={this.state.fieldErrors}/>
+              <ErrorList className={this.state.progress === "saved" ? "success" : ""} errors={this.state.fieldErrors}/>
               <input type="submit" value="preview" className="btn-primary"></input>
             </form>
           </div>

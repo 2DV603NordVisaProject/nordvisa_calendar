@@ -89,6 +89,11 @@ p.preview-text {
   width: 90%;
 }
 
+.action-container {
+  display: flex;
+  flex-direction: row;
+}
+
 @media (max-width: 475px) {
   .create-event textarea {
     width: 90%;
