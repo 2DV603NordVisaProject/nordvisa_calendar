@@ -15,10 +15,10 @@ import java.util.ArrayList;
  * having to authenticate.
  *
  * With it you can do the following:
- * Register new account         -       /api/visitor/registration
- * Request password recovery    -       /api/visitor/request_password_recovery
- * Recover password             -       /api/visitor/recover_password
- * Verify email address         -       /api/visitor/verify_email
+ * Register new account         -   POST    -   /api/visitor/registration
+ * Request password recovery    -   POST    -   /api/visitor/request_password_recovery
+ * Recover password             -   POST    -   /api/visitor/recover_password
+ * Verify email address         -   GET     -   /api/visitor/verify_email
  *
  * @author Axel Nilsson (axnion)
  */

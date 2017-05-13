@@ -1,19 +1,17 @@
 package calendar.user;
 
 import calendar.databaseConnections.MongoDBClient;
-import calendar.user.dto.RegistrationDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
+// TODO: Remove as much logic as posible from DAO
 /**
  * Class UserDAOMongo
  *
