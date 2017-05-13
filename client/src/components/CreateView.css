@@ -49,6 +49,46 @@
   margin: 35px auto;
 }
 
+h4 {
+  margin: 0;
+  color: #0d47a1;
+}
+
+.preview-text {
+  margin: 0 30px;
+}
+
+p.preview-text {
+  font-size: 12px;
+}
+
+.img-container {
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+  height: 300px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.desc {
+  border: 1px solid lightgrey;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.desc p {
+  margin: 10px;
+}
+
+.maps {
+  border: 1px solid;
+  margin: 20px auto;
+  width: 90%;
+}
+
 @media (max-width: 475px) {
   .create-event textarea {
     width: 90%;
