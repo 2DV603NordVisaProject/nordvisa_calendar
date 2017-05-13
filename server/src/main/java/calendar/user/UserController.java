@@ -96,7 +96,7 @@ public class UserController {
     @RequestMapping(value = "/unregister", method = RequestMethod.POST)
     public void unregister(@ModelAttribute UserIdDTO dto) throws Exception {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User actor = dao.getUserByEmail("test@test.com"); //TODO: Change argument to email
+        User actor = dao.getUserByEmail(email);
         User target = dao.getUserById(dto.getId());
 
         if(target == null) {

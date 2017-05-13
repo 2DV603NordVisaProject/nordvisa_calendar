@@ -3,6 +3,7 @@ package calendar.user;
 import calendar.user.dto.PasswordRecoveryRequestDTO;
 import calendar.user.dto.RecoverPasswordDTO;
 import calendar.user.dto.RegistrationDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,11 +26,16 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api/visitor")
 public class VisitorController {
-    // TODO: Figure out how to do dependency injection into these
-    private UserDAO dao = new UserDAOMongo();
-    private Email email = new Email();
-    private UserInformationValidator informationValidator =
-            new UserInformationValidator(dao);
+    private UserDAO dao;
+    private Email email;
+    private UserInformationValidator informationValidator;
+
+    @Autowired
+    public VisitorController(UserDAOMongo dao, Email email, UserInformationValidator validator) {
+        this.dao = dao;
+        this.email = email;
+        this.informationValidator = validator;
+    }
 
     /**
      * Runs on POST call to /api/visitor/registration. It registers a user account to the database.
