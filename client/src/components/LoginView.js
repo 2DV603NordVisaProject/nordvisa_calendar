@@ -5,6 +5,7 @@ import ErrorList from "./ErrorList";
 import Client from "../Client";
 import Redirect from "react-router/Redirect";
 import Loader from "./Loader";
+import Link from "react-router/Link";
 
 class LoginView extends Component {
   state = {
@@ -81,7 +82,7 @@ class LoginView extends Component {
             <ErrorList errors={this.state.fieldErrors}/>
             <input type="submit" className="btn-primary" value="login"></input>
           </form>
-          <a href="/recover-password">Forgot Password?</a>
+          <Link to="/recover-password">Forgot Password?</Link>
         </div>
       );
     }
