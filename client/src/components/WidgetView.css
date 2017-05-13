@@ -1,3 +1,19 @@
 .widget-view {
   margin: 150px auto;
 }
+
+.widget-code {
+  width: 100%;
+  height: auto;
+  resize: none;
+  padding: 0;
+  background: #fff;
+  border: 1px solid lightgrey;
+  color: #0d47a1;
+}
+
+.code-container p {
+  font-size: 12px;
+  margin: 0px;
+  color: grey;
+}
