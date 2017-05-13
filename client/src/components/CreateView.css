@@ -2,6 +2,17 @@
   width: 100%;
 }
 
+.is-recurring select {
+  float: left;
+  margin: 0 10px;
+  width: 170px;
+}
+
+.is-recurring {
+  width: 100%;
+  overflow: auto;
+}
+
 .create-event input[type=text], .create-event input[type=file] {
   margin: 0 0 0 10px;
   float: left;
@@ -11,6 +22,10 @@
 
 .create-event label {
   display: block;
+}
+
+.create-event .error-list {
+  margin: 40px 0;
 }
 
 .create-event textarea {

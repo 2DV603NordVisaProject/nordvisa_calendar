@@ -24,6 +24,17 @@
   margin: 0 15px
 }
 
+.recurring input {
+  width: 20px;
+  float: left;
+  margin: 0 10px;
+}
+
+.recurring {
+  float: left;
+  width: 100%;
+}
+
 .approve {
 	-webkit-appearance: none;
 	background-color: #fff;
