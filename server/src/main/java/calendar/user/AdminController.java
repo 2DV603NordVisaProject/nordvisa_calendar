@@ -37,19 +37,12 @@ public class AdminController {
     @RequestMapping(value = "/make_user", method = RequestMethod.POST)
     public void makeUser(@ModelAttribute UserIdDTO dto) throws Exception {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User actor = dao.getUserByEmail("test@test.com"); //TODO: Change argument to email
+        User actor = dao.getUserByEmail(email);
         User target = dao.getUserById(dto.getId());
 
-        if(target.getRole().equals("ADMIN")) {
-            if(actor.getRole().equals("SUPER_ADMIN")) {
-                dao.setRole(dto.getId(), "USER");
-            }
-            else if(actor.getOrganization().getName().equals(target.getOrganization().getName()) &&
-                    !actor.getOrganization().getName().equals("")) {
-                dao.setRole(dto.getId(), "USER");
-            }
+        if(actor.canDemote(target)) {
+            dao.setRole(dto.getId(), "USER");
         }
-
     }
 
     /**
@@ -63,13 +56,11 @@ public class AdminController {
     @RequestMapping(value = "/make_admin", method = RequestMethod.POST)
     public void makeAdmin(@ModelAttribute UserIdDTO dto) throws Exception {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User actor = dao.getUserByEmail("test@test.com"); //TODO: Change argument to email
+        User actor = dao.getUserByEmail(email);
         User target = dao.getUserById(dto.getId());
 
-        if(target.getRole().equals("USER")) {
-            if(target.getOrganization().getName().equals(actor.getOrganization().getName())) {
-                dao.setRole(dto.getId(), "ADMIN");
-            }
+        if(actor.canPromoteToAdmin(target)) {
+            dao.setRole(dto.getId(), "ADMIN");
         }
     }
 
