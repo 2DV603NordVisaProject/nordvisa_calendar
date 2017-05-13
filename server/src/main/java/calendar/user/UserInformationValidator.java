@@ -6,6 +6,7 @@ import calendar.user.dto.RegistrationDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +16,7 @@ import java.util.regex.Pattern;
  *
  * @author Axel Nilsson (axnion)
  */
+@Component
 class UserInformationValidator {
     private UserDAO dao;
 

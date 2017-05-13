@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,6 +18,7 @@ import java.util.Random;
  *
  * @author Axel Nilsson (axnion)
  */
+@Component
 class UserDAOMongo implements UserDAO {
     private Jongo client;
 

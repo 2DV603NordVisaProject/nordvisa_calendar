@@ -1,10 +1,13 @@
 package calendar.user;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Class Email
  *
  * @author Axel Nilsson (axnion)
  */
+@Component
 class Email {
     void sendVerificationEmail(String id) {
         System.out.println("http://localhost:8080/api/visitor/verify_email?id=" + id);
