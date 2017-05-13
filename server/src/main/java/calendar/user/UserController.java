@@ -102,11 +102,7 @@ public class UserController {
         if(target == null) {
             throw new Exception("The user you are trying to unregister does not exist");
         }
-        else if(actor.getId().equals(dto.getId())) {
-            dao.deleteUser(dto.getId());
-        }
-        else if(actor.getRole().equals("ADMIN") || actor.getRole().equals("SUPER_ADMIN")
-                && actor.getOrganization().getName().equals(target.getOrganization().getName())) { //TODO: NOT TESTED!
+        else if(actor.canManage(target)) {
             dao.deleteUser(dto.getId());
         }
         else {

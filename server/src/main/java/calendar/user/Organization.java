@@ -43,4 +43,8 @@ class Organization {
     void setChangePending(String organizationName) {
         this.changePending = organizationName;
     }
+
+    boolean compare(Organization other) {
+        return name.equals(other.getName());
+    }
 }
