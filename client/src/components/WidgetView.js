@@ -31,7 +31,7 @@ class WidgetView extends Component {
 
     this.setState({isGenerated: true});
     this.setState({headCode: `<script src="example.com/widget.js></script>`})
-    this.setState({bodyCode: `<div id="visa-widget" data-region=${this.state.fields.region}></div>`})
+    this.setState({bodyCode: `<div id="visa-widget" data-region="${this.state.fields.region}"></div>`})
   }
 
   onInputChange(event)  {
