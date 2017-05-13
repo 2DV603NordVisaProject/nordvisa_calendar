@@ -23,7 +23,7 @@ class CreateView extends Component {
             <textarea name="desc"></textarea>
             <label htmlFor="img">Image:</label>
             <input type="file" name="img" accept="image/*"></input>
-            <button>save</button>
+            <input type="submit" value="save" className="btn-primary"></input>
           </form>
         </div>
       </div>

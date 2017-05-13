@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-.create-event input {
+.create-event input[type=text], .create-event input[type=file] {
   margin: 0 0 0 10px;
   float: left;
   display: block;
@@ -26,11 +26,11 @@
   margin: 0 0 0 10px;
 }
 
-.react-date-field--theme-default input {
-  width: 100px;
+.react-date-field--theme-default input[type=text] {
+  width: 110px;
 }
 
-.create-event button {
+.create-event input[type=submit] {
   margin: 35px auto;
 }
 
@@ -44,7 +44,7 @@
 }
 
 @media (max-width: 375px) {
-  .create-event input {
+  .create-event input[type=text], .create-event input[type=file] {
     width: 90%;
   }
   .react-date-field--theme-default {
