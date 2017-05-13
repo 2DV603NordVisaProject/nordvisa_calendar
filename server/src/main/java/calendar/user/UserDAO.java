@@ -17,7 +17,7 @@ interface UserDAO {
     ArrayList<User> getUsersByOrganization(String organizationName) throws Exception;
     ArrayList<User> getAllUsers() throws Exception;
 
-    User createUser(RegistrationDTO dto) throws Exception;
+    User createUser(User user) throws Exception;
     void deleteUser(String id) throws Exception;
 
     User updateUserDetails(UserDetailsUpdateDTO dto) throws Exception;

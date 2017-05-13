@@ -51,10 +51,9 @@ class UserDAOMongo implements UserDAO {
         return cursorToArray(collection.find("{}").as(User.class));
     }
 
-    public User createUser(RegistrationDTO dto) {
+    public User createUser(User user) {
         MongoCollection collection = client.getCollection("users");
 
-        User user = new User(dto);
         user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
                 DateTime.now().getMillis()));
 
