@@ -129,6 +129,7 @@ class UserDAOMongo implements UserDAO {
         }
 
         user.getOrganization().setChangePending("");
+        user.getOrganization().setApproved(true);
     }
 
     public ArrayList<User> getPendingRegistrations() {
