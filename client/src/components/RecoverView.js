@@ -8,7 +8,7 @@ class RecoverView extends Component {
         <form>
           <label htmlFor="email">Email:</label>
           <input name="email" type="text"></input>
-          <button>request password</button>
+          <input type="submit" value="request password" className="btn-primary"></input>
         </form>
       </div>
     );
