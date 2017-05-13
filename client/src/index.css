@@ -125,6 +125,10 @@ form {
   margin: 0 auto 20px;
 }
 
+.error404 {
+  margin: 80px auto;
+}
+
 .view {
   max-width: 900px;
   margin: 25px auto;

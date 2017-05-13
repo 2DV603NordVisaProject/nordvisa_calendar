@@ -15,11 +15,18 @@ import Redirect from "react-router/Redirect";
 import Logout from "./Logout";
 import MatchWhenLoggedIn from "./MatchWhenLoggedIn";
 import MatchWhenAdmin from "./MatchWhenAdmin";
+import Miss from "react-router/Miss";
 
 class ViewContainer extends Component {
   render() {
     return (
       <div className="view-container">
+        <Miss render={({ location }) => (
+            <div className="lightbox error404">
+              <h2>404</h2>
+              <h3>{location.pathname} could not be found!</h3>
+            </div>
+          )}/>
         <Match exactly pattern="/" render={() => (
             <Redirect to="/login"/>
         )}/>
