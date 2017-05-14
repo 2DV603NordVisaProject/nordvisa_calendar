@@ -3,50 +3,62 @@ import "./MembersView.css";
 
 class MembersView extends Component {
 
-  //let membersMock = ["demo@gmail.com", "demo2@gmail.com", "demo3@gmail.com", "demo4@gmail.com", "demo5@gmail.com", "demo6@gmail.com", "demo7@gmail.com", "demo8@gmail.com", "demo9@gmail.com", "demo10@gmail.com"]
-
   render() {
     return (
       <div className="members view">
         <h2>Members</h2>
         <form>
-          <table>
-            <tr>
-              <th className="email-cell">Email</th>
-              <th>Access Level</th>
-            </tr>
-            <tr>
-              <td className="email-cell" >demo@hotmail.com</td>
-              <td>
-                <select className="select-full">
-                  <option selected>User</option>
-                  <option>Admin</option>
-                  <option>Superadmin</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td className="email-cell" >demo@hotmail.com</td>
-              <td>
-                <select className="select-full">
-                  <option selected>User</option>
-                  <option>Admin</option>
-                  <option>Superadmin</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td className="email-cell" >demo@hotmail.com</td>
-              <td>
-                <select className="select-full">
-                  <option selected>User</option>
-                  <option>Admin</option>
-                  <option>Superadmin</option>
-                </select>
-              </td>
-            </tr>
-          </table>
-          <button>SAVE</button>
+          <div className="members-list">
+            <div className="list-header">
+              <p>Email</p>
+              <p>Access Level</p>
+            </div>
+            <ul>
+              <li>
+                <div className="member-item">
+                  <div className="email-cell">
+                    <p>sample@gmail.com</p>
+                  </div>
+                  <div className="access-select">
+                    <select className="select-full">
+                      <option selected>User</option>
+                      <option>Admin</option>
+                      <option>Superadmin</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="member-item">
+                  <div className="email-cell">
+                    <p>sample@gmail.com</p>
+                  </div>
+                  <div className="access-select">
+                    <select className="select-full">
+                      <option selected>User</option>
+                      <option>Admin</option>
+                      <option>Superadmin</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="member-item">
+                  <div className="email-cell">
+                    <p>sample@gmail.com</p>
+                  </div>
+                  <div className="access-select">
+                    <select className="select-full">
+                      <option selected>User</option>
+                      <option>Admin</option>
+                      <option>Superadmin</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <input type="submit" value="save" className="btn-primary"></input>
         </form>
       </div>
     );

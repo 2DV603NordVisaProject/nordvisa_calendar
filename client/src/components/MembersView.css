@@ -2,6 +2,15 @@
   width: 100%;
 }
 
+.members-list {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.members-list ul {
+  margin: 0;
+}
+
 .members table {
   width: 600px;
   margin: 0 auto;
@@ -9,6 +18,11 @@
 
 .members form {
   width: 100%;
+}
+
+.member-item {
+  display: flex;
+  flex-direction: row;
 }
 
 .members th {
@@ -21,6 +35,15 @@
   padding: 0 0 0 15px;
   border-bottom: 1px solid lightgrey;
   border-left: 1px solid lightgrey;
+  width: 60%;
+}
+
+.email-cell p {
+  margin: 0;
+}
+
+.access-select {
+  width: 40%;
 }
 
 @media (max-width: 640px) {
