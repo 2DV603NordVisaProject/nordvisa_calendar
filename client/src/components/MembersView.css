@@ -29,6 +29,8 @@
 
 .email-cell p {
   margin: 0;
+  font-size: 14px;
+  line-height: 30px;
 }
 
 .access-select {

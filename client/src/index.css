@@ -63,6 +63,36 @@ input {
   cursor: pointer;
 }
 
+.btn-error {
+  width: auto;
+  padding: 0 15px;
+  background: red;
+  border: none;
+  height: 30px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  margin: 15px auto;
+  display: block;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn-success {
+  width: auto;
+  padding: 0 15px;
+  background: green;
+  border: none;
+  height: 30px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  margin: 15px auto;
+  display: block;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
 h2 {
   text-align: center;
   color: #0d47a1;

@@ -26,6 +26,22 @@ const Client = {
      accessLevel = 2;
    }
    return accessLevel;
+ },
+ getMembers: () => {
+   return [
+     {
+       email: "sample1@gmail.com",
+       userLevel: "user",
+     },
+     {
+       email: "sample2@gmail.com",
+       userLevel: "admin",
+     },
+     {
+       email: "sample3@gmail.com",
+       userLevel: "superadmin",
+     }
+   ];
  }
 };
 
