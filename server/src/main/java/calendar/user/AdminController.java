@@ -28,6 +28,8 @@ import java.util.ArrayList;
 public class AdminController {
     @Autowired
     private UserDAO dao = new UserDAOMongo();
+    @Autowired
+    private CurrentUser currentUser;
 
     /**
      * This method take a user ID in a UserIdDTO and if conditions are meet then demotes the target
@@ -39,7 +41,7 @@ public class AdminController {
     // TODO: NOT TESTED!
     @RequestMapping(value = "/make_user", method = RequestMethod.POST)
     public void makeUser(@ModelAttribute UserIdDTO dto) throws Exception {
-        User actor = dao.getUserByEmail(new CurrentUser().getEmailAddres());
+        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
         if(actor.canDemote(target)) {
@@ -58,7 +60,7 @@ public class AdminController {
     // TODO: NOT TESTED!
     @RequestMapping(value = "/make_admin", method = RequestMethod.POST)
     public void makeAdmin(@ModelAttribute UserIdDTO dto) throws Exception {
-        User actor = dao.getUserByEmail(new CurrentUser().getEmailAddres());
+        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
         if(actor.canPromoteToAdmin(target)) {
@@ -77,8 +79,8 @@ public class AdminController {
     @RequestMapping(value = "/registrations", method = RequestMethod.GET)
     @ResponseBody
     public ArrayList<User> getPendingRegistrations() throws Exception {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        String organization = dao.getUserByEmail(email).getOrganization().getName();
+        String organization = dao.getUserByEmail(currentUser.getEmailAddres())
+                .getOrganization().getName();
 
         return dao.getPendingRegistrations(organization);
     }
