@@ -15,11 +15,11 @@ import java.util.ArrayList;
  * @author Axel Nilsson (axnion)
  */
 @Component
-class UserDAOMongo implements UserDAO {
+public class UserDAOMongo implements UserDAO {
     private Jongo client;
 
     //TODO: Secure from injection
-    UserDAOMongo() {
+    public UserDAOMongo() {
         client = MongoDBClient.getClient();
     }
 

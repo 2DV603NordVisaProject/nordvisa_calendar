@@ -5,7 +5,7 @@ package calendar.user;
  *
  * @author Axel Nilsson (axnion)
  */
-class Organization {
+public class Organization {
     private String name;
     private boolean approved;
     private String changePending;
@@ -24,7 +24,7 @@ class Organization {
         return name;
     }
 
-    boolean isApproved() {
+    public boolean isApproved() {
         return approved;
     }
 

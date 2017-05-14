@@ -7,9 +7,9 @@ import java.util.ArrayList;
  *
  * @author Axel Nilsson (axnion)
  */
-interface UserDAO {
-    User getUserById(String id) throws Exception;
-    User getUserByEmail(String email) throws Exception;
+public interface UserDAO {
+    User getUserById(String id);
+    User getUserByEmail(String email);
     User getUserByPasswordRecoveryLink(String urlId) throws Exception;
     User getUserByEmailVerificationLink(String urlId) throws Exception;
     ArrayList<User> getUsersByOrganization(String organizationName) throws Exception;

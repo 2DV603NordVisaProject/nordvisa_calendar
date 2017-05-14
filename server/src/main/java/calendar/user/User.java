@@ -16,7 +16,7 @@ import java.util.Random;
  *
  * @author Axel Nilsson (axnion)
  */
-class User {
+public class User {
     @MongoId
     @MongoObjectId
     private String id;
@@ -24,9 +24,7 @@ class User {
     private String password;
     private String role;
 
-    @JsonIgnore
     private AuthenticationLink resetPasswordLink;
-    @JsonIgnore
     private AuthenticationLink validateEmailLink;
 
     private long createdAt;

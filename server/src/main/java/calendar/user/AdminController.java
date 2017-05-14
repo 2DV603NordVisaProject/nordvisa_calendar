@@ -2,6 +2,8 @@ package calendar.user;
 
 import calendar.user.dto.RegistrationDecisionDTO;
 import calendar.user.dto.UserIdDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
+    @Autowired
     private UserDAO dao = new UserDAOMongo();
 
     /**
@@ -95,7 +98,6 @@ public class AdminController {
     public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) throws Exception {
         User user = dao.getUserById(dto.getId());
 
-        // TODO: Double check this logic!
         if(user.getOrganization().getChangePending().equals("")) {
             if (dto.isApproved()) {
                 user.getOrganization().setApproved(true);
