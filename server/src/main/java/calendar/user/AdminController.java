@@ -2,6 +2,8 @@ package calendar.user;
 
 import calendar.user.dto.RegistrationDecisionDTO;
 import calendar.user.dto.UserIdDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,10 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
+    @Autowired
     private UserDAO dao = new UserDAOMongo();
+    @Autowired
+    private CurrentUser currentUser;
 
     /**
      * This method take a user ID in a UserIdDTO and if conditions are meet then demotes the target
@@ -36,12 +41,12 @@ public class AdminController {
     // TODO: NOT TESTED!
     @RequestMapping(value = "/make_user", method = RequestMethod.POST)
     public void makeUser(@ModelAttribute UserIdDTO dto) throws Exception {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User actor = dao.getUserByEmail(email);
+        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
         if(actor.canDemote(target)) {
-            dao.setRole(dto.getId(), "USER");
+            target.setRole("USER");
+            dao.update(target);
         }
     }
 
@@ -55,12 +60,12 @@ public class AdminController {
     // TODO: NOT TESTED!
     @RequestMapping(value = "/make_admin", method = RequestMethod.POST)
     public void makeAdmin(@ModelAttribute UserIdDTO dto) throws Exception {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User actor = dao.getUserByEmail(email);
+        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
         if(actor.canPromoteToAdmin(target)) {
-            dao.setRole(dto.getId(), "ADMIN");
+            target.setRole("ADMIN");
+            dao.update(target);
         }
     }
 
@@ -74,7 +79,10 @@ public class AdminController {
     @RequestMapping(value = "/registrations", method = RequestMethod.GET)
     @ResponseBody
     public ArrayList<User> getPendingRegistrations() throws Exception {
-        return dao.getPendingRegistrations();
+        String organization = dao.getUserByEmail(currentUser.getEmailAddres())
+                .getOrganization().getName();
+
+        return dao.getPendingRegistrations(organization);
     }
 
     /**
@@ -90,15 +98,23 @@ public class AdminController {
     public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) throws Exception {
         User user = dao.getUserById(dto.getId());
 
-        // TODO: Double check this logic!
         if(user.getOrganization().getChangePending().equals("")) {
-            if (dto.isApproved())
-                dao.approveRegistration(dto.getId());
+            if (dto.isApproved()) {
+                user.getOrganization().setApproved(true);
+                dao.update(user);
+            }
             else
-                dao.deleteUser(dto.getId());
+                dao.delete(dto.getId());
         }
         else {
-            dao.changeOrganization(dto.getId(), dto.isApproved());
+            if(dto.isApproved()) {
+                user.getOrganization().setName(user.getOrganization().getChangePending());
+            }
+
+            user.getOrganization().setChangePending("");
+            user.getOrganization().setApproved(true);
+
+            dao.update(user);
         }
     }
 }

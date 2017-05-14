@@ -3,10 +3,12 @@ package calendar.user;
 import calendar.user.dto.ChangePasswordDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 import calendar.user.dto.UserIdDTO;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class UserController
@@ -28,9 +30,14 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private UserDAO dao = new UserDAOMongo();
-    private Email email = new Email();
-    private UserInformationValidator informationValidator = new UserInformationValidator(dao);
+    @Autowired
+    private UserDAO dao;
+    @Autowired
+    private Email email;
+    @Autowired
+    private UserInformationValidator validator;
+    @Autowired
+    private CurrentUser currentUser;
 
     /**
      * Runs on GET call to /api/user?id="". Takes the id provided and fetches a matching user using
@@ -95,15 +102,14 @@ public class UserController {
      */
     @RequestMapping(value = "/unregister", method = RequestMethod.POST)
     public void unregister(@ModelAttribute UserIdDTO dto) throws Exception {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User actor = dao.getUserByEmail(email);
+        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
         if(target == null) {
             throw new Exception("The user you are trying to unregister does not exist");
         }
         else if(actor.canManage(target)) {
-            dao.deleteUser(dto.getId());
+            dao.delete(dto.getId());
         }
         else {
             throw new Exception("You are not authorized to unregister this account");
@@ -120,9 +126,21 @@ public class UserController {
      */
     @RequestMapping(value = "/update_user_details", method = RequestMethod.POST)
     public void updateUserDetails(@ModelAttribute UserDetailsUpdateDTO dto) throws Exception {
-        informationValidator.validate(dto);
-        User user = dao.updateUserDetails(dto);
-        email.sendVerificationEmail(user.getValidateEmailLink().getUrl());
+        validator.validate(dto);
+
+        User user = dao.getUserById(dto.getId());
+
+        if (!user.getEmail().equals(dto.getEmail())) {
+            user.setEmail(dto.getEmail());
+            user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
+                    DateTime.now().getMillis()));
+
+            email.sendVerificationEmail(user.getValidateEmailLink().getUrl());
+        }
+
+        user.getOrganization().setChangePending(dto.getOrganization());
+
+        dao.update(user);
     }
 
     /**
@@ -135,7 +153,24 @@ public class UserController {
      */
     @RequestMapping(value = "/change_password", method = RequestMethod.POST)
     public void changePassword(@ModelAttribute ChangePasswordDTO dto) throws Exception {
-        informationValidator.validate(dto);
-        dao.changePassword(dto.getId(), dto.getPassword());
+        validator.validate(dto);
+
+        User user = dao.getUserById(dto.getId());
+        user.setPassword(dto.getPassword());
+
+        dao.update(user);
+    }
+
+    private String generateRandomString() {
+        String characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890";
+        int length = 20;
+        Random rnd = new Random();
+
+        char[] text = new char[length];
+        for(int i = 0; i < length; i++) {
+            text[i] = characters.charAt(rnd.nextInt(characters.length()));
+        }
+
+        return new String(text);
     }
 }

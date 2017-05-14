@@ -34,12 +34,12 @@ public class SuperAdminController {
     // TODO: NOT TESTED!
     @RequestMapping(value = "/make_super_admin", method = RequestMethod.POST)
     public void makeSuperAdministrator(@ModelAttribute UserIdDTO dto) throws Exception {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User actor = dao.getUserByEmail(email);
+        User actor = dao.getUserByEmail(new CurrentUser().getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
         if(actor.canPromoteToSuperAdmin(target)) {
-            dao.setRole(dto.getId(), "SUPER_ADMIN");
+            target.setRole("SUPER_ADMIN");
+            dao.update(target);
         }
     }
 }

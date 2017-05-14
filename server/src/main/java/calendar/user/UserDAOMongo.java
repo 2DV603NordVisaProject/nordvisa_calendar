@@ -1,44 +1,69 @@
 package calendar.user;
 
 import calendar.databaseConnections.MongoDBClient;
-import calendar.user.dto.UserDetailsUpdateDTO;
 import org.bson.types.ObjectId;
-import org.joda.time.DateTime;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-// TODO: Remove as much logic as posible from DAO
 /**
  * Class UserDAOMongo
  *
  * @author Axel Nilsson (axnion)
  */
 @Component
-class UserDAOMongo implements UserDAO {
+public class UserDAOMongo implements UserDAO {
     private Jongo client;
 
     //TODO: Secure from injection
-    UserDAOMongo() {
+    public UserDAOMongo() {
         client = MongoDBClient.getClient();
     }
 
+    /**
+     * Takes the id of a potential User and returns the User object. If user does not exist null
+     * is returned.
+     *
+     * @param id    ObjectId of the user in the database
+     * @return      A User object with matching id as argument
+     */
     public User getUserById(String id) {
         MongoCollection collection = client.getCollection("users");
-
         return collection.findOne(new ObjectId(id)).as(User.class);
     }
 
+    /**
+     * Takes the email of a potential User and returns the User object. If no user is found then
+     * null is returned.
+     *
+     * @param email Email of the User to be returned
+     * @return      A User object with matching email as argument
+     */
     public User getUserByEmail(String email) {
         MongoCollection collection = client.getCollection("users");
-
         return collection.findOne("{email: \"" + email + "\"}").as(User.class);
     }
 
+    public User getUserByPasswordRecoveryLink(String urlId) {
+        MongoCollection collection = client.getCollection("users");
+        return collection.findOne("{validateEmailLink.url: \"" + urlId + "\"}").as(User.class);
+    }
+
+    public User getUserByEmailVerificationLink(String urlId) {
+        MongoCollection collection = client.getCollection("users");
+        return collection.findOne("{validateEmailLink.url: \"" + urlId + "\"}")
+                .as(User.class);
+    }
+
+    /**
+     * Takes the organization name and returns all Users with a matching organization name
+     *
+     * @param organizationName  Name of the organization which members to be returned
+     * @return                  An Arraylist containing all Users within the argument organization.
+     */
     public ArrayList<User> getUsersByOrganization(String organizationName) {
         MongoCollection collection = client.getCollection("users");
         return cursorToArray(collection.find(
@@ -46,139 +71,49 @@ class UserDAOMongo implements UserDAO {
         );
     }
 
+    /**
+     * Returns all Users in the database.
+     *
+     * @return              An ArrayList of all Users in the database
+     * @throws Exception    Database errors
+     */
     public ArrayList<User> getAllUsers() throws Exception {
         MongoCollection collection = client.getCollection("users");
         return cursorToArray(collection.find("{}").as(User.class));
     }
 
-    public User createUser(User user) {
+    public ArrayList<User> getPendingRegistrations(String organization) throws Exception {
         MongoCollection collection = client.getCollection("users");
 
-        user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
-                DateTime.now().getMillis()));
-
-        collection.insert(user);
-        return user;
-    }
-
-    public void deleteUser(String id) {
-        MongoCollection collection = client.getCollection("users");
-        collection.remove(new ObjectId(id));
-    }
-
-    public void changePassword(String id, String password) {
-        MongoCollection collection = client.getCollection("users");
-
-        User user = getUserById(id);
-        user.setPassword(password);
-
-        collection.update(new ObjectId(id)).with(user);
-    }
-
-    public User setPasswordRecoveryLink(String email) {
-        MongoCollection collection = client.getCollection("users");
-        User user = getUserByEmail(email);
-
-        user.setResetPasswordLink(new AuthenticationLink(generateRandomString(),
-                DateTime.now().getMillis()));
-
-        collection.update(new ObjectId(user.getId())).with(user);
-
-        return user;
-    }
-
-    public void verifyEmailAddress(String urlId) throws Exception {
-        MongoCollection collection = client.getCollection("users");
-        User user = collection.findOne("{validateEmailLink.url: \"" + urlId + "\"}")
-                .as(User.class);
-
-        if (user == null) {
-            throw new Exception("This link is invalid");
-        }
-
-        if(user.getValidateEmailLink().hasExpired()) {
-            throw new Exception("This link has expired");
-        }
-
-        user.setValidateEmailLink(new AuthenticationLink("", 0));
-        collection.update(new ObjectId(user.getId())).with(user);
-    }
-
-    public void recoverPassword(String urlId, String password) throws Exception {
-        MongoCollection collection = client.getCollection("users");
-        User user = collection.findOne("{resetPasswordLink.url: \"" + urlId + "\"}")
-                .as(User.class);
-
-        if (user == null) {
-            throw new Exception("This link is invalid");
-        }
-
-        if(user.getResetPasswordLink().hasExpired()) {
-            throw new Exception("This link has expired");
-        }
-
-        user.setResetPasswordLink(new AuthenticationLink("", 0));
-        collection.update(new ObjectId(user.getId())).with(user);
-
-        changePassword(user.getId(), password);
-    }
-
-    public void changeOrganization(String id, boolean approved) {
-        User user = getUserById(id);
-
-        if(approved) {
-            user.getOrganization().setName(user.getOrganization().getChangePending());
-        }
-
-        user.getOrganization().setChangePending("");
-        user.getOrganization().setApproved(true);
-    }
-
-    public ArrayList<User> getPendingRegistrations() {
-        String adminsOrg = "my_org"; //TODO: Add parameter email of admin and get org from database
-
-        MongoCollection collection = client.getCollection("users");
-
-        ArrayList<User> list = new ArrayList<>();
+        ArrayList<User> list;
 
         list = cursorToArray(collection.find("{organization.approved: false}").as(User.class));
         list.addAll(cursorToArray(collection.find("{organization.changePending: \""
-                + adminsOrg + "\"}").as(User.class)));
+                + organization + "\"}").as(User.class)));
 
         return list;
     }
 
-    public void approveRegistration(String id) {
+    /**
+     * Takes a User object and adds it to the database.
+     *
+     * @param user  The User object to be inserted into the database
+     */
+    public void add(User user) {
         MongoCollection collection = client.getCollection("users");
-        User user = getUserById(id);
 
-        user.getOrganization().setApproved(true);
-        collection.update(new ObjectId(id)).with(user);
+
+        collection.insert(user);
     }
 
-    public User updateUserDetails(UserDetailsUpdateDTO dto) {
+    public void delete(String id) {
         MongoCollection collection = client.getCollection("users");
-        User user = collection.findOne(new ObjectId(dto.getId())).as(User.class);
+        collection.remove(new ObjectId(id));
+    }
 
-        // TODO: If email is incorrect the user can't log in again and recover. :(
-        if (!user.getEmail().equals(dto.getEmail())) {
-            user.setEmail(dto.getEmail());
-            user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
-                    DateTime.now().getMillis()));
-        }
-
-        user.getOrganization().setChangePending(dto.getOrganization());
-
+    public void update(User user) {
+        MongoCollection collection = client.getCollection("users");
         collection.update(new ObjectId(user.getId())).with(user);
-
-        return user;
-    }
-
-    public void setRole(String id, String role) {
-        MongoCollection collection = client.getCollection("users");
-
-        User user = getUserById(id);
-
     }
 
     private static ArrayList<User> cursorToArray(MongoCursor<User> cursor) {
@@ -189,18 +124,5 @@ class UserDAOMongo implements UserDAO {
         }
 
         return list;
-    }
-
-    private String generateRandomString() {
-        String characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890";
-        int length = 20;
-        Random rnd = new Random();
-
-        char[] text = new char[length];
-        for(int i = 0; i < length; i++) {
-            text[i] = characters.charAt(rnd.nextInt(characters.length()));
-        }
-
-        return new String(text);
     }
 }
