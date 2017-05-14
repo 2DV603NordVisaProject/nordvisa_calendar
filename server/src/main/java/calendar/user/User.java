@@ -57,49 +57,43 @@ class User {
         this.organization = new Organization(dto.getOrganization(), false);
     }
 
-    String getId() {
+    public String getId() {
         return id;
     }
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    String getRole() {
+    public String getRole() {
         return role;
     }
 
-    String[] getAuthorities() {
-        String[] roles = null;
-
-        if(role.equals("USER")) {
-            roles = new String[] {"USER"};
-        }
-
-        if(role.equals("ADMIN")) {
-            roles = new String[] {"USER", "ADMIN"};
-        }
-
-        if(role.equals("SUPER_ADMIN")) {
-            roles = new String[] {"USER", "ADMIN", "SUPER_ADMIN"};
-        }
-
-        return roles;
-    }
-
-    AuthenticationLink getResetPasswordLink() {
+    public AuthenticationLink getResetPasswordLink() {
         return resetPasswordLink;
     }
 
-    AuthenticationLink getValidateEmailLink() {
+    public AuthenticationLink getValidateEmailLink() {
         return validateEmailLink;
     }
 
-    Organization getOrganization() {
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public ArrayList<String> getEvents() {
+        return events;
+    }
+
+    public Organization getOrganization() {
         return organization;
     }
 
@@ -122,6 +116,24 @@ class User {
 
     void setValidateEmailLink(AuthenticationLink validateEmailLink) {
         this.validateEmailLink = validateEmailLink;
+    }
+
+    public String[] fetchAuthorities() {
+        String[] roles = null;
+
+        if(role.equals("USER")) {
+            roles = new String[] {"USER"};
+        }
+
+        if(role.equals("ADMIN")) {
+            roles = new String[] {"USER", "ADMIN"};
+        }
+
+        if(role.equals("SUPER_ADMIN")) {
+            roles = new String[] {"USER", "ADMIN", "SUPER_ADMIN"};
+        }
+
+        return roles;
     }
 
     /**

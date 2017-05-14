@@ -3,6 +3,7 @@ package calendar.user;
 import calendar.user.dto.ChangePasswordDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 import calendar.user.dto.UserIdDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +29,12 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private UserDAO dao = new UserDAOMongo();
-    private Email email = new Email();
-    private UserInformationValidator informationValidator = new UserInformationValidator(dao);
+    @Autowired
+    private UserDAO dao;
+    @Autowired
+    private Email email;
+    @Autowired
+    private UserInformationValidator informationValidator;
 
     /**
      * Runs on GET call to /api/user?id="". Takes the id provided and fetches a matching user using
@@ -137,5 +141,9 @@ public class UserController {
     public void changePassword(@ModelAttribute ChangePasswordDTO dto) throws Exception {
         informationValidator.validate(dto);
         dao.changePassword(dto.getId(), dto.getPassword());
+    }
+
+    public UserDAO getDAO() {
+        return dao;
     }
 }
