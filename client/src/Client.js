@@ -42,6 +42,22 @@ const Client = {
        userLevel: "superadmin",
      }
    ];
+ },
+ getRegistrations: () => {
+   return [
+     {
+       email: "johan.gudmundsson2012@gmail.com",
+       org: "The long sample organization",
+     },
+     {
+       email: "johan.gudmundsson2012@gmail.com",
+       org: "sample org",
+     },
+     {
+       email: "axel@gmail.com",
+       org: "NordVisa",
+     }
+   ];
  }
 };
 
