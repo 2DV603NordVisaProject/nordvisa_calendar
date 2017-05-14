@@ -15,27 +15,45 @@ class PendingRegistrationsView extends Component {
         <ul>
           <li>
             <div className="pending-item">
-              <p>johan.gudmundsson2012@gmail.com</p>
-              <p>The long sample organization</p>
-              <input type="checkbox" className="approve"></input>
+              <div className="email">
+                <p>johan.gudmundsson2012@gmail.com</p>
+              </div>
+              <div className="org">
+                <p>The long sample organization</p>
+              </div>
+              <div className="approve-action">
+                <input type="checkbox" className="approve"></input>
+              </div>
             </div>
           </li>
           <li>
             <div className="pending-item">
-              <p>axel@gmail.com</p>
-              <p>The long sample organization</p>
-              <input type="checkbox" className="approve"></input>
+              <div className="email">
+                <p>axel@gmail.com</p>
+              </div>
+              <div className="org">
+                <p>The long sample organization</p>
+              </div>
+              <div className="approve-action">
+                <input type="checkbox" className="approve"></input>
+              </div>
             </div>
           </li>
           <li>
             <div className="pending-item">
-              <p>johan.gudmundsson2012@gmail.com</p>
-              <p>NordVisa</p>
-              <input type="checkbox" className="approve"></input>
+              <div className="email">
+                <p>axel@gmail.com</p>
+              </div>
+              <div className="org">
+                <p>NordVisa</p>
+              </div>
+              <div className="approve-action">
+                <input type="checkbox" className="approve"></input>
+              </div>
             </div>
           </li>
         </ul>
-        <button>approve</button>
+        <input type="submit" className="btn-primary" value="approve"></input>
         </form>
       </div>
     );

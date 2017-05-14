@@ -11,17 +11,20 @@
   width: 100%;
 }
 
-.pending-item-child {
-  max-width: 33%;
-  overflow: hidden;
-}
-
-.pending-view input {
+.pending-view input[type=checkbox] {
   width: 20px;
   background: #fff;
 }
 .pending-item p {
   margin: 0 15px
+}
+
+.email {
+  width: 10%;
+}
+
+.approve-action {
+  width: 50px;
 }
 
 .recurring input {
@@ -33,6 +36,10 @@
 .recurring {
   float: left;
   width: 100%;
+}
+
+.pending-view .list-header {
+  justify-content: space-between;
 }
 
 .approve {
@@ -59,4 +66,23 @@
 	top: -5px;
 	left: 2px;
 	color: #1565c0;
+}
+
+@media (max-width: 880px) {
+  .pending-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  .email {
+    width: auto;
+  }
+}
+
+@media (max-width: 1000px) {
+  .pending-item {
+    width: 100%;
+  }
+  .list-header {
+    width: 100%;
+  }
 }

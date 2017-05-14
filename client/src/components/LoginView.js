@@ -54,7 +54,7 @@ class LoginView extends Component {
   render() {
     if (this.state.shouldRedirect) {
       return (
-        <Redirect to="/user/my-events"/>
+        <Redirect to="/user/events"/>
       );
     } else if (this.state.loginInProgress) {
       return (
