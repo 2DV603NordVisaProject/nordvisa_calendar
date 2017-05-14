@@ -41,7 +41,8 @@ public class AdminController {
         User target = dao.getUserById(dto.getId());
 
         if(actor.canDemote(target)) {
-            dao.setRole(dto.getId(), "USER");
+            target.setRole("USER");
+            dao.update(target);
         }
     }
 
@@ -60,7 +61,8 @@ public class AdminController {
         User target = dao.getUserById(dto.getId());
 
         if(actor.canPromoteToAdmin(target)) {
-            dao.setRole(dto.getId(), "ADMIN");
+            target.setRole("ADMIN");
+            dao.update(target);
         }
     }
 
@@ -74,7 +76,10 @@ public class AdminController {
     @RequestMapping(value = "/registrations", method = RequestMethod.GET)
     @ResponseBody
     public ArrayList<User> getPendingRegistrations() throws Exception {
-        return dao.getPendingRegistrations();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        String organization = dao.getUserByEmail(email).getOrganization().getName();
+
+        return dao.getPendingRegistrations(organization);
     }
 
     /**
@@ -92,13 +97,22 @@ public class AdminController {
 
         // TODO: Double check this logic!
         if(user.getOrganization().getChangePending().equals("")) {
-            if (dto.isApproved())
-                dao.approveRegistration(dto.getId());
+            if (dto.isApproved()) {
+                user.getOrganization().setApproved(true);
+                dao.update(user);
+            }
             else
-                dao.deleteUser(dto.getId());
+                dao.delete(dto.getId());
         }
         else {
-            dao.changeOrganization(dto.getId(), dto.isApproved());
+            if(dto.isApproved()) {
+                user.getOrganization().setName(user.getOrganization().getChangePending());
+            }
+
+            user.getOrganization().setChangePending("");
+            user.getOrganization().setApproved(true);
+
+            dao.update(user);
         }
     }
 }

@@ -39,7 +39,8 @@ public class SuperAdminController {
         User target = dao.getUserById(dto.getId());
 
         if(actor.canPromoteToSuperAdmin(target)) {
-            dao.setRole(dto.getId(), "SUPER_ADMIN");
+            target.setRole("SUPER_ADMIN");
+            dao.update(target);
         }
     }
 }
