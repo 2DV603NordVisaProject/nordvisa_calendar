@@ -1,8 +1,18 @@
 import React, { Component } from "react";
 import "./PendingRegistrationsView.css";
 import RegistrationsList from "./RegistrationsList";
+import Client from "../Client";
 
 class PendingRegistrationsView extends Component {
+  state = {
+    registrations: [],
+  }
+
+  componentWillMount() {
+    const registrations = Client.getRegistrations();
+    this.setState({registrations});
+  }
+
   render() {
     return (
       <div className="view pending-view">
@@ -13,7 +23,7 @@ class PendingRegistrationsView extends Component {
           <p>Approve</p>
         </div>
         <form>
-          <RegistrationsList/>
+          <RegistrationsList registrations={this.state.registrations}/>
         <input type="submit" className="btn-primary" value="approve"></input>
         </form>
       </div>

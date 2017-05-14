@@ -6,10 +6,10 @@ class Registration extends Component {
       <li>
         <div className="pending-item">
           <div className="email">
-            <p>johan.gudmundsson2012@gmail.com</p>
+            <p>{this.props.registration.email}</p>
           </div>
           <div className="org">
-            <p>The long sample organization</p>
+            <p>{this.props.registration.org}</p>
           </div>
           <div className="approve-action">
             <input type="checkbox" className="approve"></input>

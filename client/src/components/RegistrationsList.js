@@ -5,7 +5,11 @@ class RegistrationsList extends Component {
   render() {
     return (
       <ul>
-        <Registration/>
+        {
+          this.props.registrations.map((registration, i) => (
+            <Registration key={i} registration={registration}/>
+          ))
+        }
       </ul>
     );
   }
