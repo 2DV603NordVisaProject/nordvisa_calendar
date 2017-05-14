@@ -5,7 +5,6 @@ import calendar.user.dto.UserDetailsUpdateDTO;
 import calendar.user.dto.UserIdDTO;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -36,7 +35,9 @@ public class UserController {
     @Autowired
     private Email email;
     @Autowired
-    private UserInformationValidator informationValidator;
+    private UserInformationValidator validator;
+    @Autowired
+    private CurrentUser currentUser;
 
     /**
      * Runs on GET call to /api/user?id="". Takes the id provided and fetches a matching user using
@@ -101,8 +102,7 @@ public class UserController {
      */
     @RequestMapping(value = "/unregister", method = RequestMethod.POST)
     public void unregister(@ModelAttribute UserIdDTO dto) throws Exception {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User actor = dao.getUserByEmail(email);
+        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
         if(target == null) {
@@ -126,7 +126,7 @@ public class UserController {
      */
     @RequestMapping(value = "/update_user_details", method = RequestMethod.POST)
     public void updateUserDetails(@ModelAttribute UserDetailsUpdateDTO dto) throws Exception {
-        informationValidator.validate(dto);
+        validator.validate(dto);
 
         User user = dao.getUserById(dto.getId());
 
@@ -153,7 +153,7 @@ public class UserController {
      */
     @RequestMapping(value = "/change_password", method = RequestMethod.POST)
     public void changePassword(@ModelAttribute ChangePasswordDTO dto) throws Exception {
-        informationValidator.validate(dto);
+        validator.validate(dto);
 
         User user = dao.getUserById(dto.getId());
         user.setPassword(dto.getPassword());

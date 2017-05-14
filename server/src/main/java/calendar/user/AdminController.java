@@ -39,8 +39,7 @@ public class AdminController {
     // TODO: NOT TESTED!
     @RequestMapping(value = "/make_user", method = RequestMethod.POST)
     public void makeUser(@ModelAttribute UserIdDTO dto) throws Exception {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User actor = dao.getUserByEmail(email);
+        User actor = dao.getUserByEmail(new CurrentUser().getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
         if(actor.canDemote(target)) {
@@ -59,8 +58,7 @@ public class AdminController {
     // TODO: NOT TESTED!
     @RequestMapping(value = "/make_admin", method = RequestMethod.POST)
     public void makeAdmin(@ModelAttribute UserIdDTO dto) throws Exception {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User actor = dao.getUserByEmail(email);
+        User actor = dao.getUserByEmail(new CurrentUser().getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
         if(actor.canPromoteToAdmin(target)) {
