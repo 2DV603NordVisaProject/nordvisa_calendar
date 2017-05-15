@@ -9,7 +9,11 @@ class EventsList extends Component {
           <p>Events</p>
         </div>
         <ul>
-          <Event/>
+          {
+            this.props.events.map((event, i) => (
+              <Event key={i} event={event} delete={this.props.delete}/>
+            ))
+          }
         </ul>
       </div>
     );

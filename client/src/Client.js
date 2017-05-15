@@ -58,7 +58,7 @@ const Client = {
        org: "NordVisa",
      }
    ];
- }
+ },
  getEvents: () => {
    return [
      {
