@@ -20,6 +20,7 @@
   border-left: 1px solid #e3f2fd;
   color: #e3f2fd;
   font-weight: bold;
+  z-index: 10;
 }
 
 .menu-link {
