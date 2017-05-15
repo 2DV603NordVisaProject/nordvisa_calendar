@@ -16,6 +16,7 @@ import Logout from "./Logout";
 import MatchWhenLoggedIn from "./MatchWhenLoggedIn";
 import MatchWhenAdmin from "./MatchWhenAdmin";
 import Miss from "react-router/Miss";
+import Client from "../Client";
 
 class ViewContainer extends Component {
   render() {
@@ -39,6 +40,30 @@ class ViewContainer extends Component {
         <MatchWhenLoggedIn pattern="/user/account" component={MyAccountView}/>
         <MatchWhenLoggedIn pattern="/user/event/create" component={CreateView}/>
         <MatchWhenLoggedIn exactly pattern="/user/event" component={MyEventsView}/>
+        <Match pattern="/user/event/edit/:id" render={({params}) => {
+            if (Client.isLogedIn()) {
+              return (
+                <CreateView id={params.id} progress="edit"/>
+              );
+            } else {
+              return (
+                <Redirect to="/login"/>
+              )
+            }
+
+          }}/>
+
+        <Match pattern="/user/event/view/:id" render={({params}) => {
+            if (Client.isLogedIn()) {
+              return (
+                <CreateView id={params.id} progress="view"/>
+              );
+            } else {
+              return (
+                <Redirect to="/login"/>
+              )
+            }
+          }}/>
         <MatchWhenAdmin pattern="/admin/members" component={MembersView}/>
         <MatchWhenAdmin pattern="/admin/pending-registrations" component={PendingRegistrationsView}/>
       </div>

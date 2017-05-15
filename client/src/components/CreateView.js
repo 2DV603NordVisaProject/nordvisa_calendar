@@ -3,6 +3,7 @@ import { DateField } from "react-date-picker";
 import "react-date-picker/index.css";
 import "./CreateView.css";
 import ErrorList from "./ErrorList";
+import Client from "../Client";
 
 class CreateView extends Component {
   state = {
@@ -18,6 +19,14 @@ class CreateView extends Component {
     },
     fieldErrors: [],
     progress: "create",
+  }
+
+  componentWillMount() {
+    if (this.props.progress) {
+      const progress =  this.props.progress;
+      const fields = Client.getEvent(this.props.id);
+      this.setState({ progress, fields})
+    }
   }
 
   validate(fields) {
@@ -81,12 +90,14 @@ class CreateView extends Component {
   }
 
   render() {
-    if (this.state.progress === "preview") {
+    if (this.state.progress === "preview" || this.state.progress === "view") {
       return (
         <div className="view preview">
           <h2>Create Event</h2>
           <div className="box">
-            <h3>Preview Event</h3>
+            {
+              this.state.progress === "preview" ? <h3>Preview Event</h3> : <h3>View Event</h3>
+            }
             <h4 className="preview-text">{this.state.fields.name}</h4>
             <p className="preview-text">{this.state.fields.location} - {this.state.fields.date}</p>
             <div className="img-container" style={{backgroundImage: `url(${this.state.fields.img})`}}>
@@ -99,7 +110,9 @@ class CreateView extends Component {
               <p>G Maps Goes here</p>
             </div>
             <div className="action-container">
-              <button className="btn-primary" onClick={this.onSaveClick.bind(this)}>save</button>
+              {
+                this.state.progress === "preview" ? <button className="btn-primary" onClick={this.onSaveClick.bind(this)}>save</button> : ""
+              }
               <button className="btn-primary" onClick={this.onEditClick.bind(this)}>edit</button>
             </div>
           </div>

@@ -64,16 +64,56 @@ const Client = {
      {
        name: "Sample Event One",
        id: 1,
+       date: "2020 July",
+       location: "YOLO Land",
+       desc: "test test test test test test test test test",
      },
      {
        name: "Sample Event Two",
        id: 2,
+       name: "Swag?",
+       date: "2020 July",
+       location: "YOLO Land",
+       desc: "test test test test test test test test test",
      },
      {
        name: "Sample Event Three",
        id: 3,
+       name: "Swag?",
+       date: "2020 July",
+       location: "YOLO Land",
+       desc: "test test test test test test test test test",
      },
    ];
+ },
+ getEvent: (id) => {
+   const events = [
+     {
+       name: "Sample Event One",
+       id: 1,
+       date: "2020 July",
+       location: "YOLO Land",
+       desc: "test test test test test test test test test",
+     },
+     {
+       name: "Sample Event Two",
+       id: 2,
+       name: "Swag?",
+       date: "2020 July",
+       location: "YOLO Land",
+       desc: "test test test test test test test test test",
+     },
+     {
+       name: "Sample Event Three",
+       id: 3,
+       name: "Swag?",
+       date: "2020 July",
+       location: "YOLO Land",
+       desc: "test test test test test test test test test",
+     },
+   ];
+
+   return event = events.find((event) => event.id == id);
  }
 };
 

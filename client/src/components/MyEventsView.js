@@ -28,9 +28,10 @@ class MyEventsView extends Component {
   handleDeleteClick(evt) {
     evt.preventDefault();
     const eventName = this.state.events.filter((event) => {
-      if (event.id == evt.target.name) {
+      if (event.id === evt.target.name) {
         return event.name;
       }
+      return "";
     })[0];
 
     const popup = {
