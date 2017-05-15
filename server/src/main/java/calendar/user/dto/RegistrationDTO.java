@@ -1,5 +1,7 @@
 package calendar.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Class RegistrationDTO
  *
@@ -10,6 +12,8 @@ public class RegistrationDTO {
     private String password;
     private String passwordConfirmation;
     private String organization;
+    @JsonProperty("g-recaptcha-response")
+    private String recaptcha;
 
     public String getEmail() {
         return email;
@@ -25,6 +29,10 @@ public class RegistrationDTO {
 
     public String getOrganization() {
         return organization;
+    }
+
+    public String getRecaptcha() {
+        return recaptcha;
     }
 
     public void setEmail(String email) {

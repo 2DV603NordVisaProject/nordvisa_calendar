@@ -1,6 +1,7 @@
 package calendar.user;
 
 import calendar.user.dto.PasswordRecoveryRequestDTO;
+import calendar.user.dto.RecaptchaResponseDTO;
 import calendar.user.dto.RecoverPasswordDTO;
 import calendar.user.dto.RegistrationDTO;
 import org.joda.time.DateTime;
@@ -48,8 +49,11 @@ public class VisitorController {
      * @throws Exception    Invalid registration data, or database errors
      */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public void registration(@ModelAttribute RegistrationDTO dto) throws Exception {
+    public RecaptchaResponseDTO registration(@ModelAttribute RegistrationDTO dto) throws Exception {
         informationValidator.validate(dto);
+
+        RecaptchaResponseDTO response = informationValidator.validateRecaptcha(dto.getRecaptcha());
+
         ArrayList<User> existingUsers = dao.getAllUsers();
         User user = new User(dto);
 
@@ -63,6 +67,8 @@ public class VisitorController {
         dao.add(user);
 
         email.sendVerificationEmail(user.getValidateEmailLink().getUrl());
+
+        return response;
     }
 
     /**
