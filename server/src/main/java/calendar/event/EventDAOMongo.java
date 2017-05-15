@@ -21,7 +21,6 @@ public class EventDAOMongo implements EventDAO {
 
     public void createEvent(Event event) {
         MongoCollection collection = client.getCollection("events");
-        event.setCreatedAt(DateTime.now().getMillis());
         collection.insert(event);
     }
 
@@ -32,6 +31,8 @@ public class EventDAOMongo implements EventDAO {
 
     public Event updateEvent(Event event) {
         MongoCollection collection = client.getCollection("events");
+        Event eventToUpdate = collection.findOne(new ObjectId(event.getId())).as(Event.class);
+        event.setCreatedAt(eventToUpdate.getCreatedAt());
         event.setUpdatedAt(DateTime.now().getMillis());
         collection.update(new ObjectId(event.getId())).with(event);
         return event;

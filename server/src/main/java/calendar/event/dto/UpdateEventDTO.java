@@ -1,20 +1,21 @@
 package calendar.event.dto;
 
-import calendar.event.EventLocation;
+import calendar.imageHandling.Image;
 
-public class GetEventDTO {
+import java.util.List;
+
+public class UpdateEventDTO {
 
     private String id;
     private String name;
-    private EventLocation location;
+    private String location;
     private String description;
     private long date;
     private float duration;
-    private boolean isRecurring;
+    private boolean recurring;
     private int recursEvery;
     private long recursUntil;
-    private String url;
-    //private List<Image> images;
+    private List<Image> images;
     private long createdAt;
     private long updatedAt;
     private String editedBy;
@@ -35,11 +36,11 @@ public class GetEventDTO {
         this.name = name;
     }
 
-    public EventLocation getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(EventLocation location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
@@ -67,12 +68,12 @@ public class GetEventDTO {
         this.duration = duration;
     }
 
-    public boolean isRecurring() {
-        return isRecurring;
+    public boolean getRecurring() {
+        return recurring;
     }
 
     public void setRecurring(boolean recurring) {
-        isRecurring = recurring;
+        this.recurring = recurring;
     }
 
     public int getRecursEvery() {
@@ -91,16 +92,16 @@ public class GetEventDTO {
         this.recursUntil = recursUntil;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public long getCreatedAt() {
         return createdAt;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public void setCreatedAt(long createdAt) {

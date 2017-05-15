@@ -1,10 +1,13 @@
 package calendar.event;
 
 import calendar.event.dto.CreateEventDTO;
-import calendar.event.dto.GetEventDTO;
+import calendar.event.dto.UpdateEventDTO;
+import calendar.imageHandling.Image;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
+
+import java.util.List;
 
 class Event {
 
@@ -16,65 +19,45 @@ class Event {
     private String description;
     private long date;
     private float duration;
-    private boolean isRecurring;
+    private boolean recurring;
     private int recursEvery;
     private long recursUntil;
-    private String url;
-    //private List<Image> images;
+    private List<Image> images;
     private long createdAt;
     private long updatedAt;
     private String editedBy;
 
-    Event() {
-    }
-
-    Event(GetEventDTO dto) {
-        this.id = dto.getId();
-        this.name = dto.getName();
-        this.location = dto.getLocation();
-        this.description = dto.getDescription();
-        this.date = dto.getDate();
-        this.duration = dto.getDuration();
-        this.isRecurring = dto.isRecurring();
-        this.recursEvery = dto.getRecursEvery();
-        this.recursUntil = dto.getRecursUntil();
-        this.url = dto.getUrl();
-        this.createdAt = dto.getCreatedAt();
-        this.updatedAt = DateTime.now().getMillis();
-        this.editedBy = dto.getEditedBy();
-    }
+    Event() {}
 
     Event(CreateEventDTO dto) {
+        long createdAt = DateTime.now().getMillis();
         this.name = dto.getName();
-        this.location = dto.getGeoCodedLocation(dto.getLocation());
+        this.location = GeoCodeHandler.getGeoCodedLocation(dto.getLocation());
         this.description = dto.getDescription();
         this.date = dto.getDate();
         this.duration = dto.getDuration();
-        this.isRecurring = dto.isRecurring();
+        this.recurring = dto.getRecurring();
         this.recursEvery = dto.getRecursEvery();
         this.recursUntil = dto.getRecursUntil();
-        this.url = dto.getUrl();
-        this.createdAt = dto.getCreatedAt();
-        this.updatedAt = DateTime.now().getMillis();
+        this.images = dto.getImages();
+        this.createdAt = createdAt;
+        this.updatedAt = createdAt;
         this.editedBy = dto.getEditedBy();
     }
 
-    public CreateEventDTO toCreateEventDTO() {
-        CreateEventDTO dto = new CreateEventDTO();
-        dto.setName(this.name);
-        dto.setDescription(this.description);
-        return dto;
-    }
-
-    public GetEventDTO toGetEventDTO() {
-        GetEventDTO dto = new GetEventDTO();
-        dto.setId(this.id);
-        dto.setName(this.name);
-        dto.setDescription(this.description);
-        dto.setLocation(this.location);
-        dto.setCreatedAt(this.createdAt);
-        dto.setUpdatedAt(this.updatedAt);
-        return dto;
+    Event(UpdateEventDTO dto) {
+        this.id = dto.getId();
+        this.name = dto.getName();
+        this.location = GeoCodeHandler.getGeoCodedLocation(dto.getLocation());
+        this.description = dto.getDescription();
+        this.date = dto.getDate();
+        this.duration = dto.getDuration();
+        this.recurring = dto.getRecurring();
+        this.recursEvery = dto.getRecursEvery();
+        this.recursUntil = dto.getRecursUntil();
+        this.images = dto.getImages();
+        this.updatedAt = DateTime.now().getMillis();
+        this.editedBy = dto.getEditedBy();
     }
 
     public String getId() {
@@ -125,12 +108,12 @@ class Event {
         this.duration = duration;
     }
 
-    public boolean isRecurring() {
-        return isRecurring;
+    public boolean getRecurring() {
+        return recurring;
     }
 
     public void setRecurring(boolean recurring) {
-        isRecurring = recurring;
+        this.recurring = recurring;
     }
 
     public int getRecursEvery() {
@@ -149,12 +132,12 @@ class Event {
         this.recursUntil = recursUntil;
     }
 
-    public String getUrl() {
-        return url;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public long getCreatedAt() {

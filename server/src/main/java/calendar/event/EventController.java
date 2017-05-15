@@ -2,7 +2,7 @@ package calendar.event;
 
 import calendar.event.dto.CreateEventDTO;
 import calendar.event.dto.DeleteEventDTO;
-import calendar.event.dto.GetEventDTO;
+import calendar.event.dto.UpdateEventDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.*;
 public class EventController {
 
     @RequestMapping(method = RequestMethod.GET)
-    public GetEventDTO getEvent(@RequestParam(value="get", required = true) String id) {
+    public Event getEvent(@RequestParam(value="get", required = true) String id) {
         EventDAO dao = new EventDAOMongo();
         Event event = dao.getEvent(id);
-        return event.toGetEventDTO();
+        return event;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public GetEventDTO createEvent(@RequestBody CreateEventDTO createEventDTO) {
+    public Event createEvent(@RequestBody CreateEventDTO createEventDTO) {
         Event event = new Event(createEventDTO);
         EventDAO dao = new EventDAOMongo();
         dao.createEvent(event);
-        return event.toGetEventDTO();
+        return event;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
@@ -31,7 +31,8 @@ public class EventController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Event updateEvent(@RequestBody Event event) {
+    public Event updateEvent(@RequestBody UpdateEventDTO updateEventDTO) {
+        Event event = new Event(updateEventDTO);
         EventDAO dao = new EventDAOMongo();
         return dao.updateEvent(event);
     }
