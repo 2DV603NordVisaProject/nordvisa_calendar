@@ -37,15 +37,14 @@ public class ImageHandler {
     // TODO: better error handling
     @RequestMapping(method = RequestMethod.POST)
     public HttpEntity<byte[]> uploadImage(@RequestParam("file") MultipartFile file) {
-        // Gets the original filename. Might be useful later.
-        // String name = file.getOriginalFilename();
+        String name = file.getOriginalFilename();
         ImageHandlerDAO dao = new ImageHandlerDAOMongo();
 
         String res;
 
         try {
             // TODO: duplicated name checking
-            String name = getRandomHexString(16);
+            String path = getRandomHexString(16);
 
             InputStream is = new BufferedInputStream(file.getInputStream());
             String mimeType = URLConnection.guessContentTypeFromStream(is);
@@ -53,7 +52,7 @@ public class ImageHandler {
             if(!ACCEPTED_FILE_TYPES.contains(mimeType)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            dao.saveImage(name, file, mimeType);
+            dao.saveImage(name, file, path, mimeType);
 
             res = "File " + name + " uploaded. File type: " + mimeType;
         } catch(IOException e) {
@@ -64,11 +63,11 @@ public class ImageHandler {
         return new HttpEntity<>(res.getBytes());
     }
 
-    @RequestMapping(path = "/{name:.+}", method = RequestMethod.GET)
-    public HttpEntity<byte[]> getImage(@PathVariable("name") String name) {
+    @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.GET)
+    public HttpEntity<byte[]> getImage(@PathVariable("path") String path, @PathVariable("name") String name) {
         ImageHandlerDAO dao = new ImageHandlerDAOMongo();
 
-        Image image = dao.getImage(name);
+        Image image = dao.getImage(path, name);
 
         if(image != null) {
             HttpHeaders headers = new HttpHeaders();

@@ -9,22 +9,25 @@ public class Image {
     @MongoObjectId
     private String id;
     private String name;
+    private String path;
     private byte[] file;
     private String type;
 
     Image() {}
 
-    Image(String name, byte[] file, String type) {
+    Image(String name, byte[] file, String path, String type) {
         this.name = name;
         this.file = file;
         this.type = type;
+        this.path = path;
     }
 
-    Image(String id, String name, byte[] file, String type) {
+    Image(String id, String name, byte[] file, String path, String type) {
         this.id = id;
         this.name = name;
         this.file = file;
         this.type = type;
+        this.path = path;
     }
 
     public String getName() {
@@ -57,5 +60,13 @@ public class Image {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

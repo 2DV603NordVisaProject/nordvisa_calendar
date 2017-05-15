@@ -17,7 +17,7 @@ class ImageHandlerDAOMongo implements ImageHandlerDAO {
     }
 
     @Override
-    public boolean saveImage(String name, MultipartFile file, String type) {
+    public boolean saveImage(String name, MultipartFile file, String path, String type) {
         byte[] imageByteArray;
 
         try {
@@ -27,7 +27,7 @@ class ImageHandlerDAOMongo implements ImageHandlerDAO {
             return false;
         }
 
-        Image image = new Image(name, imageByteArray, type);
+        Image image = new Image(name, imageByteArray, path, type);
         MongoCollection collection = client.getCollection("images");
         collection.insert(image);
 
@@ -35,9 +35,9 @@ class ImageHandlerDAOMongo implements ImageHandlerDAO {
     }
 
     @Override
-    public Image getImage(String name) {
+    public Image getImage(String path, String name) {
         MongoCollection collection = client.getCollection("images");
-        Image image = collection.findOne("{name: '" + name + "'}").as(Image.class);
+        Image image = collection.findOne("{path: '" + path + "', name: '" + name + "'}").as(Image.class);
 
         if(image == null) {
             return null;
