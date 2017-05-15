@@ -12,16 +12,14 @@ public class EventController {
     @RequestMapping(method = RequestMethod.GET)
     public Event getEvent(@RequestParam(value="get", required = true) String id) {
         EventDAO dao = new EventDAOMongo();
-        Event event = dao.getEvent(id);
-        return event;
+        return dao.getEvent(id);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Event createEvent(@RequestBody CreateEventDTO createEventDTO) {
         Event event = new Event(createEventDTO);
         EventDAO dao = new EventDAOMongo();
-        dao.createEvent(event);
-        return event;
+        return dao.createEvent(event);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)

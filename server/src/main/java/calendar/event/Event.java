@@ -25,6 +25,7 @@ class Event {
     private List<Image> images;
     private long createdAt;
     private long updatedAt;
+    private String createdBy;
     private String editedBy;
 
     Event() {}
@@ -42,6 +43,7 @@ class Event {
         this.images = dto.getImages();
         this.createdAt = createdAt;
         this.updatedAt = createdAt;
+        this.createdBy = dto.getCreatedBy();
         this.editedBy = dto.getEditedBy();
     }
 
@@ -154,6 +156,14 @@ class Event {
 
     public void setUpdatedAt(long updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public String getEditedBy() {

@@ -19,9 +19,10 @@ public class EventDAOMongo implements EventDAO {
         return collection.findOne(new ObjectId(id)).as(Event.class);
     }
 
-    public void createEvent(Event event) {
+    public Event createEvent(Event event) {
         MongoCollection collection = client.getCollection("events");
         collection.insert(event);
+        return event;
     }
 
     public void deleteEvent(String id) {
@@ -32,6 +33,7 @@ public class EventDAOMongo implements EventDAO {
     public Event updateEvent(Event event) {
         MongoCollection collection = client.getCollection("events");
         Event eventToUpdate = collection.findOne(new ObjectId(event.getId())).as(Event.class);
+        event.setCreatedBy(eventToUpdate.getCreatedBy());
         event.setCreatedAt(eventToUpdate.getCreatedAt());
         event.setUpdatedAt(DateTime.now().getMillis());
         collection.update(new ObjectId(event.getId())).with(event);

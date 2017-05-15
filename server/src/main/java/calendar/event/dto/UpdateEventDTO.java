@@ -18,6 +18,7 @@ public class UpdateEventDTO {
     private List<Image> images;
     private long createdAt;
     private long updatedAt;
+    private String createdBy;
     private String editedBy;
 
     public String getId() {
@@ -122,5 +123,13 @@ public class UpdateEventDTO {
 
     public void setEditedBy(String editedBy) {
         this.editedBy = editedBy;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }

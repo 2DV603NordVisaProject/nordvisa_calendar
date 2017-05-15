@@ -17,6 +17,7 @@ public class CreateEventDTO {
     private List<Image> images;
     private long createdAt;
     private long updatedAt;
+    private String createdBy;
     private String editedBy;
 
     public String getName() {
@@ -105,6 +106,14 @@ public class CreateEventDTO {
 
     public void setUpdatedAt(long updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public String getEditedBy() {
