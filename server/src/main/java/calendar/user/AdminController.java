@@ -3,8 +3,6 @@ package calendar.user;
 import calendar.user.dto.RegistrationDecisionDTO;
 import calendar.user.dto.UserIdDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import java.util.ArrayList;
 @RequestMapping("/api/admin")
 public class AdminController {
     @Autowired
-    private UserDAO dao = new UserDAOMongo();
+    private UserDAO dao;
     @Autowired
     private CurrentUser currentUser;
 
@@ -38,7 +36,6 @@ public class AdminController {
      * @param dto           UserIdDTO containing the user ID of the target user
      * @throws Exception    Unauthorized or database errors
      */
-    // TODO: NOT TESTED!
     @RequestMapping(value = "/make_user", method = RequestMethod.POST)
     public void makeUser(@ModelAttribute UserIdDTO dto) throws Exception {
         User actor = dao.getUserByEmail(currentUser.getEmailAddres());
@@ -57,7 +54,6 @@ public class AdminController {
      * @param dto           UserIdDTO containing the user ID of the target user
      * @throws Exception    Unauthorized or database errors
      */
-    // TODO: NOT TESTED!
     @RequestMapping(value = "/make_admin", method = RequestMethod.POST)
     public void makeAdmin(@ModelAttribute UserIdDTO dto) throws Exception {
         User actor = dao.getUserByEmail(currentUser.getEmailAddres());
