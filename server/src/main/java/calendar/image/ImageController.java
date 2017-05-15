@@ -1,5 +1,6 @@
-package calendar.imageHandling;
+package calendar.image;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,9 @@ import java.util.Set;
 @RequestMapping("/api/upload")
 public class ImageController {
 
+    @Autowired
+    private ImageDAO dao;
+
     private static final Set<String> ACCEPTED_FILE_TYPES = new HashSet<>(Arrays.asList(
            "image/png", "image/jpeg", "image/gif"
     ));
@@ -36,11 +40,10 @@ public class ImageController {
      */
     // TODO: better error handling
     @RequestMapping(method = RequestMethod.POST)
-    public HttpEntity<byte[]> uploadImage(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<byte[]> uploadImage(@RequestParam("file") MultipartFile file) {
         String name = file.getOriginalFilename();
-        ImageDAO dao = new ImageDAOMongo();
 
-        String res;
+        //String res;
 
         try {
             // TODO: duplicated name checking
@@ -50,23 +53,21 @@ public class ImageController {
             String mimeType = URLConnection.guessContentTypeFromStream(is);
 
             if(!ACCEPTED_FILE_TYPES.contains(mimeType)) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
             }
             dao.saveImage(name, file, path, mimeType);
 
-            res = "File " + name + " uploaded. File type: " + mimeType;
+            //res = "File " + name + " uploaded. File type: " + mimeType;
         } catch(IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new HttpEntity<>(res.getBytes());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.GET)
     public HttpEntity<byte[]> getImage(@PathVariable("path") String path, @PathVariable("name") String name) {
-        ImageDAO dao = new ImageDAOMongo();
-
         Image image = dao.getImage(path, name);
 
         if(image != null) {
@@ -81,8 +82,6 @@ public class ImageController {
 
     @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.DELETE)
     public HttpEntity<byte[]> deleteImage(@PathVariable("path") String path, @PathVariable("name") String name) {
-        ImageDAO dao = new ImageDAOMongo();
-
         String res;
 
         if(dao.deleteImage(path, name)) {

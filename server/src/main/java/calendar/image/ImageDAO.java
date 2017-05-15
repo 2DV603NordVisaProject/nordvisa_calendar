@@ -1,4 +1,4 @@
-package calendar.imageHandling;
+package calendar.image;
 
 import org.springframework.web.multipart.MultipartFile;
 

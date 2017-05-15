@@ -1,4 +1,4 @@
-package calendar.imageHandling;
+package calendar.image;
 
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
