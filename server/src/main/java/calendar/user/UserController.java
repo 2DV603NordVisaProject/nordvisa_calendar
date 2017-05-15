@@ -51,8 +51,8 @@ public class UserController {
      * @throws Exception    Database errors
      */
     @RequestMapping(value = "", params = "id", method = RequestMethod.GET)
-    public UserDTO getUserById(@RequestParam("id") String id) throws Exception {
-        return new UserDTO(dao.getUserById(id));
+    public User getUserById(@RequestParam("id") String id) throws Exception {
+        return dao.getUserById(id);
     }
 
     /**
@@ -64,8 +64,12 @@ public class UserController {
      * @throws Exception    Database errors
      */
     @RequestMapping(value = "", params = "email", method = RequestMethod.GET)
-    public UserDTO getUserByEmail(@RequestParam("email") String email) throws Exception {
-        return new UserDTO(dao.getUserByEmail(email));
+    public User getUserByEmail(@RequestParam("email") String email) throws Exception {
+        User user = dao.getUserByEmail(email);
+
+        UserDTO dto = new UserDTO(user);
+
+        return user;
     }
 
     /**

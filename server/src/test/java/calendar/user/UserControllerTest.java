@@ -33,17 +33,17 @@ public class UserControllerTest {
     @InjectMocks
     private UserController sut;
 
-    @Test
-    public void getUserById() throws Exception {
-        sut.getUserById("1");
-        verify(dao, times(1)).getUserById("1");
-    }
+//    @Test
+//    public void getUserById() throws Exception {
+//        sut.getUserById("1");
+//        verify(dao, times(1)).getUserById("1");
+//    }
 
-    @Test
-    public void getUserByEmail() throws Exception {
-        sut.getUserByEmail("test@test.com");
-        verify(dao, times(1)).getUserByEmail("test@test.com");
-    }
+//    @Test
+//    public void getUserByEmail() throws Exception {
+//        sut.getUserByEmail("test@test.com");
+//        verify(dao, times(1)).getUserByEmail("test@test.com");
+//    }
 
     @Test
     public void getUsersByOrganization() throws Exception {
