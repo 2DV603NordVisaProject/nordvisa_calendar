@@ -37,7 +37,7 @@ public class SuperAdminControllerTest {
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
-        when(actorMock.canPromoteToSuperAdmin(targetMock)).thenReturn(true);
+        when(actorMock.canChangeRoleTo(targetMock, "SUPER_ADMIN")).thenReturn(true);
 
         try {
             sut.makeSuperAdministrator(dtoMock);
@@ -60,7 +60,7 @@ public class SuperAdminControllerTest {
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
-        when(actorMock.canPromoteToSuperAdmin(targetMock)).thenReturn(false);
+        when(actorMock.canChangeRoleTo(targetMock, "SUPER_ADMIN")).thenReturn(false);
 
         try {
             sut.makeSuperAdministrator(dtoMock);

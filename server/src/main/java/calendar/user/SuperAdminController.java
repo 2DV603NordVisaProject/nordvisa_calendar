@@ -41,7 +41,7 @@ public class SuperAdminController {
         User actor = dao.getUserByEmail(currentUser.getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
-        if(actor.canPromoteToSuperAdmin(target)) {
+        if(actor.canChangeRoleTo(target, "SUPER_ADMIN")) {
             target.setRole("SUPER_ADMIN");
             dao.update(target);
         }

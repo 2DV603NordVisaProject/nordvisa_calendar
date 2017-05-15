@@ -1,10 +1,13 @@
 package calendar.user;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Class Organization
  *
  * @author Axel Nilsson (axnion)
  */
+@Component
 public class Organization {
     private String name;
     private boolean approved;

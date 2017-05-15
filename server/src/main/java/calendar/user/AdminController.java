@@ -41,7 +41,7 @@ public class AdminController {
         User actor = dao.getUserByEmail(currentUser.getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
-        if(actor.canDemote(target)) {
+        if(actor.canChangeRoleTo(target, "USER")) {
             target.setRole("USER");
             dao.update(target);
         }
@@ -59,7 +59,7 @@ public class AdminController {
         User actor = dao.getUserByEmail(currentUser.getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
-        if(actor.canPromoteToAdmin(target)) {
+        if(actor.canChangeRoleTo(target, "ADMIN")) {
             target.setRole("ADMIN");
             dao.update(target);
         }

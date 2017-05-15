@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,6 +34,7 @@ public class User {
 
     private ArrayList<String> events;
 
+    @Autowired
     private Organization organization;
 
     public User() {
@@ -95,6 +98,10 @@ public class User {
         return organization;
     }
 
+    void setId(String id) {
+        this.id = id;
+    }
+
     void setEmail(String email) {
         this.email = email;
     }
@@ -114,6 +121,10 @@ public class User {
 
     void setValidateEmailLink(AuthenticationLink validateEmailLink) {
         this.validateEmailLink = validateEmailLink;
+    }
+
+    void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
     public String[] fetchAuthorities() {
@@ -147,78 +158,73 @@ public class User {
         if(id.equals(target.getId())) {
             answer = true;
         }
+        else if(target.getRole().equals("SUPER_ADMIN")) {
+            answer = false;
+        }
         else if(role.equals("SUPER_ADMIN")) {
             answer = true;
         }
-        else if(role.equals("ADMIN") && organization.getName().equals("")) {
-            answer = true;
-        }
-        else if(role.equals("ADMIN") && organization.compare(target.getOrganization())) {
-            answer = true;
-        }
-
-        return answer;
-    }
-
-    /**
-     * Determines if this user can promote the target user to administrator.
-     *
-     * @param target    The target user which this user want to do at action on
-     * @return          True if this user can promote target user to administrator otherwise false
-     */
-    boolean canPromoteToAdmin(User target) {
-        boolean answer = false;
-
-        if(target.getRole().equals("SUPER_ADMIN")) {
-            answer = false;
-        }
-        else if(role.equals("ADMIN") && organization.compare(target.getOrganization())) {
-            answer = true;
-        }
-        else if(role.equals("ADMIN") && organization.getName().equals("")) {
-            answer = true;
-        }
-
-        return answer;
-    }
-
-    /**
-     * Determines if this user can promote the target user to super administrator.
-     *
-     * @param target    The target user which this user want to do at action on
-     * @return          True if this user can promote the target user to super administrator.
-     *                  Otherwise false.
-     */
-    boolean canPromoteToSuperAdmin(User target) {
-        boolean answer = false;
-
-        if(!target.getRole().equals("SUPER_ADMIN") && role.equals("SUPER_ADMIN")) {
-            answer = true;
-        }
-
-        return answer;
-    }
-
-    /**
-     * Determines if this user can demote the target user.
-     *
-     * @param target    The target user which this user want to do at action on
-     * @return          True if this user can demote the target user. Otherwise false.
-     */
-    boolean canDemote(User target) {
-        boolean answer = false;
-
-        if(!target.getRole().equals("SUPER_ADMIN")) {
-            if(role.equals("SUPER_ADMIN")) {
-                if(target.getRole().equals("ADMIN") || target.getRole().equals("USER")) {
+        else if(role.equals("ADMIN")) {
+            if(getOrganization().getName().equals("")) {
+                if(target.getRole().equals("USER")) {
+                    answer = true;
+                }
+                else if(!target.getOrganization().getName().equals("")) {
                     answer = true;
                 }
             }
-            else if(role.equals("ADMIN") && target.getRole().equals("USER")) {
+            else if(organization.compare(target.getOrganization()) &&
+                    target.getRole().equals("USER")) {
                 answer = true;
             }
         }
 
         return answer;
+    }
+
+    boolean canChangeRoleTo(User target, String newRole) {
+        if(getRole().equals("USER")) {
+            return false;
+        }
+        else if(target.getRole().equals("SUPER_ADMIN")) {
+            return false;
+        }
+        else if(target.getRole().equals(newRole)) {
+            return false;
+        }
+        else if(newRole.equals("USER")) {
+            if(getRole().equals("ADMIN") && (organization.getName().equals("") ||
+                    organization.compare(target.getOrganization()))) {
+
+                if(organization.compare(target.getOrganization())) {
+                    return true;
+                }
+                else if(organization.getName().equals("") &&
+                        !target.getOrganization().getName().equals("")) {
+                    return true;
+                }
+            }
+            else if(getRole().equals("SUPER_ADMIN")) {
+                return true;
+            }
+        }
+        else if(newRole.equals("ADMIN")) {
+            if(getRole().equals("ADMIN") && organization.compare(target.getOrganization())) {
+                return true;
+            }
+            else if(getRole().equals("ADMIN") && getOrganization().getName().equals("")) {
+                return true;
+            }
+            else if(getRole().equals("SUPER_ADMIN")) {
+                return true;
+            }
+        }
+        else if(newRole.equals("SUPER_ADMIN")) {
+            if(getRole().equals("SUPER_ADMIN")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

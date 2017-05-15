@@ -37,7 +37,7 @@ public class AdminControllerTest {
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
-        when(actorMock.canDemote(targetMock)).thenReturn(true);
+        when(actorMock.canChangeRoleTo(targetMock, "USER")).thenReturn(true);
 
         try {
             sut.makeUser(dtoMock);
@@ -60,7 +60,7 @@ public class AdminControllerTest {
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
-        when(actorMock.canDemote(targetMock)).thenReturn(false);
+        when(actorMock.canChangeRoleTo(targetMock, "USER")).thenReturn(false);
 
         try {
             sut.makeUser(dtoMock);
@@ -83,7 +83,7 @@ public class AdminControllerTest {
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
-        when(actorMock.canPromoteToAdmin(targetMock)).thenReturn(true);
+        when(actorMock.canChangeRoleTo(targetMock, "ADMIN")).thenReturn(true);
 
         try {
             sut.makeAdmin(dtoMock);
@@ -106,7 +106,7 @@ public class AdminControllerTest {
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
-        when(actorMock.canPromoteToAdmin(targetMock)).thenReturn(false);
+        when(actorMock.canChangeRoleTo(targetMock, "ADMIN")).thenReturn(false);
 
         try {
             sut.makeAdmin(dtoMock);
