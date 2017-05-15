@@ -2,7 +2,7 @@ package calendar.event;
 
 import calendar.event.dto.CreateEventDTO;
 import calendar.event.dto.UpdateEventDTO;
-import calendar.imageHandling.Image;
+import calendar.image.Image;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;

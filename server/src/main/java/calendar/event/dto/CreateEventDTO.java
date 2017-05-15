@@ -1,6 +1,6 @@
 package calendar.event.dto;
 
-import calendar.imageHandling.Image;
+import calendar.image.Image;
 
 import java.util.List;
 
