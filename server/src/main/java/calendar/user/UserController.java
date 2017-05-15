@@ -1,9 +1,6 @@
 package calendar.user;
 
-import calendar.user.dto.ChangePasswordDTO;
-import calendar.user.dto.UserDTO;
-import calendar.user.dto.UserDetailsUpdateDTO;
-import calendar.user.dto.UserIdDTO;
+import calendar.user.dto.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +36,11 @@ public class UserController {
     private UserInformationValidator validator;
     @Autowired
     private CurrentUser currentUser;
+
+    @RequestMapping(value = "/role", method = RequestMethod.GET)
+    public RoleDTO getRole() throws Exception {
+        return new RoleDTO(new CurrentUser().getEmailAddres());
+    }
 
     /**
      * Runs on GET call to /api/user?id="". Takes the id provided and fetches a matching user using

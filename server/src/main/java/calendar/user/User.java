@@ -145,6 +145,10 @@ public class User {
         return roles;
     }
 
+    public boolean isValid() {
+        return organization.isApproved() && validateEmailLink.getUrl().equals("");
+    }
+
     /**
      * The method determines if this user is authorized to manage the other account. Manage involves
      * editing of events created by target user, unregister the account.

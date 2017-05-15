@@ -27,27 +27,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // TODO: ENABLE SECURITY!!
-//        http
-//                .authorizeRequests()
-//                    .antMatchers("/api/user/**").hasAuthority("USER")
-//                    .antMatchers("/api/admin/**").hasAuthority("ADMIN")
-//                    .antMatchers("/api/super_admin/**").hasAuthority("SUPER_ADMIN")
-//                    .anyRequest().permitAll()
-//                    .and()
-//                .formLogin()
-//                    .loginPage("/login.html")
-//                    .loginProcessingUrl("/login")
-//                    .permitAll()
-//                    .and()
-//                .logout()
-//                    .permitAll()
-//                    .and()
-//                .csrf()
-//                    .disable();
-
         http
                 .authorizeRequests()
-                .anyRequest().permitAll();
+                    .antMatchers("/api/user/**").hasAuthority("USER")
+                    .antMatchers("/api/admin/**").hasAuthority("ADMIN")
+                    .antMatchers("/api/super_admin/**").hasAuthority("SUPER_ADMIN")
+                    .antMatchers("/").authenticated()
+                    .anyRequest().permitAll()
+                    .and()
+                .formLogin()
+                    .loginPage("/login.html")
+                    .loginProcessingUrl("/login")
+                    .permitAll()
+                    .and()
+                .logout()
+                    .permitAll()
+                    .and()
+                .csrf()
+                    .disable();
+
+//        http
+//                .authorizeRequests()
+//                .anyRequest().permitAll();
     }
 
     @Autowired
@@ -66,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     return new org.springframework.security.core.userdetails.User(
                             user.getEmail(),
                             user.getPassword(),
-                            user.getOrganization().isApproved(),
+                            user.isValid(),
                             true,
                             true,
                             true,

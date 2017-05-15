@@ -35,7 +35,6 @@ public class SuperAdminController {
      * @param dto           UserIdDTO containing the user ID of the target user
      * @throws Exception    Database errors
      */
-    // TODO: NOT TESTED!
     @RequestMapping(value = "/make_super_admin", method = RequestMethod.POST)
     public void makeSuperAdministrator(@ModelAttribute UserIdDTO dto) throws Exception {
         User actor = dao.getUserByEmail(currentUser.getEmailAddres());
