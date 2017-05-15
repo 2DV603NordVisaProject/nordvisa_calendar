@@ -1,13 +1,16 @@
 package calendar.image;
 
+import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.naming.SizeLimitExceededException;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,12 +29,16 @@ import java.util.Set;
 @RequestMapping("/api/upload")
 public class ImageController {
 
+
+
     @Autowired
     private ImageDAO dao;
 
     private static final Set<String> ACCEPTED_FILE_TYPES = new HashSet<>(Arrays.asList(
            "image/png", "image/jpeg", "image/gif"
     ));
+
+
 
     /**
      * Upload an image to the server. Returns a boolean meaning whether the upload was successful or not.
@@ -52,7 +59,7 @@ public class ImageController {
             InputStream is = new BufferedInputStream(file.getInputStream());
             String mimeType = URLConnection.guessContentTypeFromStream(is);
 
-            if(!ACCEPTED_FILE_TYPES.contains(mimeType)) {
+            if (!ACCEPTED_FILE_TYPES.contains(mimeType)) {
                 return new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
             }
             dao.saveImage(name, file, path, mimeType);
