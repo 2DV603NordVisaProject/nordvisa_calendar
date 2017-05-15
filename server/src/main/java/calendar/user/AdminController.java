@@ -1,6 +1,7 @@
 package calendar.user;
 
 import calendar.user.dto.RegistrationDecisionDTO;
+import calendar.user.dto.UserDTO;
 import calendar.user.dto.UserIdDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -74,11 +75,16 @@ public class AdminController {
      */
     @RequestMapping(value = "/registrations", method = RequestMethod.GET)
     @ResponseBody
-    public ArrayList<User> getPendingRegistrations() throws Exception {
+    public ArrayList<UserDTO> getPendingRegistrations() throws Exception {
         String organization = dao.getUserByEmail(currentUser.getEmailAddres())
                 .getOrganization().getName();
+        ArrayList<UserDTO> dto = new ArrayList<>();
 
-        return dao.getPendingRegistrations(organization);
+        for (User user : dao.getPendingRegistrations(organization)) {
+            dto.add(new UserDTO(user));
+        }
+
+        return dto;
     }
 
     /**
