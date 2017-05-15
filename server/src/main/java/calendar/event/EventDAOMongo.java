@@ -5,6 +5,10 @@ import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
+import org.jongo.MongoCursor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventDAOMongo implements EventDAO {
 
@@ -14,9 +18,21 @@ public class EventDAOMongo implements EventDAO {
         client = MongoDBClient.getClient();
     }
 
-    public Event getEvent(String id) {
+    public List<Event> getEvent(String id) {
         MongoCollection collection = client.getCollection("events");
-        return collection.findOne(new ObjectId(id)).as(Event.class);
+        List<Event> eventList = new ArrayList<>();
+        eventList.add(collection.findOne(new ObjectId(id)).as(Event.class));
+        return eventList;
+    }
+
+    public List<Event> getEvents() {
+        MongoCollection collection = client.getCollection("events");
+        return cursorToArray(collection.find().as(Event.class));
+    }
+
+    public List<Event> getEventsFromCountry(String country) {
+        MongoCollection collection = client.getCollection("events");
+        return cursorToArray(collection.find("{ location.country: # }", country).as(Event.class));
     }
 
     public Event createEvent(Event event) {
@@ -38,5 +54,15 @@ public class EventDAOMongo implements EventDAO {
         event.setUpdatedAt(DateTime.now().getMillis());
         collection.update(new ObjectId(event.getId())).with(event);
         return event;
+    }
+
+    private static List<Event> cursorToArray(MongoCursor<Event> cursor) {
+        List<Event> list = new ArrayList<>();
+
+        while(cursor.hasNext()) {
+            list.add(cursor.next());
+        }
+
+        return list;
     }
 }
