@@ -48,6 +48,10 @@ input {
   width: 180px;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .btn-primary {
   width: auto;
   padding: 0 15px;

@@ -8,7 +8,7 @@ class Event extends Component {
         <div className="event-item">
           <p>{this.props.event.name}</p>
           <div className="item-action-container">
-            <a className="error" href="" name={this.props.event.id} onClick={this.props.delete.bind(this)}>Delete</a>
+            <a className="error clickable" href="" name={this.props.event.id} onClick={this.props.delete.bind(this)}>Delete</a>
             <Link to={`/user/event/edit/${this.props.event.id}`} className="success">Edit</Link>
             <Link to={`/user/event/view/${this.props.event.id}`}>View</Link>
           </div>
