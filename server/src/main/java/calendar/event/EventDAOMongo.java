@@ -35,8 +35,19 @@ public class EventDAOMongo implements EventDAO {
         return cursorToArray(collection.find("{ location.country: # }", country).as(Event.class));
     }
 
+    public List<Event> getEventsWithinRadius(double longitude, double latitude, double radius) {
+        MongoCollection collection = client.getCollection("events");
+        return cursorToArray(collection.find("{ location.coordinates: { " +
+                "$near: { " +
+                "$geometry: { " +
+                "type: 'Point', " +
+                "coordinates: [ #, # ] }, " +
+                "$maxDistance: # } } }", longitude, latitude, radius).as(Event.class));
+    }
+
     public Event createEvent(Event event) {
         MongoCollection collection = client.getCollection("events");
+        collection.ensureIndex("{ location.coordinates: '2dsphere' }");
         collection.insert(event);
         return event;
     }

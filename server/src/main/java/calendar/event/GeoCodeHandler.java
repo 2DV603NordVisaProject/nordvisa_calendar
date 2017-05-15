@@ -6,6 +6,9 @@ import com.google.maps.GeocodingApiRequest;
 import com.google.maps.model.AddressComponent;
 import com.google.maps.model.GeocodingResult;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class GeoCodeHandler {
 
     public static EventLocation getGeoCodedLocation(String address) {
@@ -20,8 +23,14 @@ public abstract class GeoCodeHandler {
 
         try {
             GeocodingResult[] results = request.await();
-            eventLocation.setLatitude(results[0].geometry.location.lat);
-            eventLocation.setLongitude(results[0].geometry.location.lng);
+
+            List<Double> latlng = new ArrayList<>();
+            latlng.add(results[0].geometry.location.lng);
+            latlng.add(results[0].geometry.location.lat);
+
+            EventLocationCoordinates eventLocationCoordinates = new EventLocationCoordinates();
+            eventLocationCoordinates.setCoordinates(latlng);
+            eventLocation.setCoordinates(eventLocationCoordinates);
             eventLocation.setAddress(address);
             eventLocation.setParsedAddress(results[0].formattedAddress);
 

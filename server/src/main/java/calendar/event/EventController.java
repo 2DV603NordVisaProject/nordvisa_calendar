@@ -14,7 +14,7 @@ public class EventController {
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public List<Event> getEvents(@RequestParam(required = false) String id,
                                  @RequestParam(required = false) Double longitude,
-                                 @RequestParam(required = false) Double latitute,
+                                 @RequestParam(required = false) Double latitude,
                                  @RequestParam(required = false) Double radius,
                                  @RequestParam(required = false) String country,
                                  @RequestParam(required = false) Long fromDate,
@@ -28,6 +28,10 @@ public class EventController {
 
         if (country != null) {
             return dao.getEventsFromCountry(country);
+        }
+
+        if (longitude != null && latitude != null && radius != null) {
+            return dao.getEventsWithinRadius(longitude, latitude, radius);
         }
 
         return dao.getEvents();
