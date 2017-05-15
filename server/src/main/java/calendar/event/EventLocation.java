@@ -9,7 +9,6 @@ public class EventLocation {
     private String postalCode;
     private String city;
     private String country;
-    private String region;
 
     public EventLocation() {
     }
@@ -70,11 +69,4 @@ public class EventLocation {
         this.country = country;
     }
 
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
 }

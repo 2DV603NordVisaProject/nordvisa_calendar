@@ -5,14 +5,33 @@ import calendar.event.dto.DeleteEventDTO;
 import calendar.event.dto.UpdateEventDTO;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Event getEvent(@RequestParam(value="get", required = true) String id) {
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public List<Event> getEvents(@RequestParam(required = false) String id,
+                                 @RequestParam(required = false) Double longitude,
+                                 @RequestParam(required = false) Double latitute,
+                                 @RequestParam(required = false) Double radius,
+                                 @RequestParam(required = false) String country,
+                                 @RequestParam(required = false) Long fromDate,
+                                 @RequestParam(required = false) Long toDate) {
+
         EventDAO dao = new EventDAOMongo();
-        return dao.getEvent(id);
+
+        if (id != null) {
+            return dao.getEvent(id);
+        }
+
+        if (country != null) {
+            return dao.getEventsFromCountry(country);
+        }
+
+        return dao.getEvents();
+
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

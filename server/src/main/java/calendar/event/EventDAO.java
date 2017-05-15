@@ -1,7 +1,11 @@
 package calendar.event;
 
+import java.util.List;
+
 public interface EventDAO {
-    Event getEvent(String id);
+    List<Event> getEvent(String id);
+    List<Event> getEvents();
+    List<Event> getEventsFromCountry(String country);
     Event createEvent(Event event);
     void deleteEvent(String id);
     Event updateEvent(Event event);
