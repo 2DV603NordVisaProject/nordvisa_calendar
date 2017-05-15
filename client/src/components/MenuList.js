@@ -20,8 +20,8 @@ class MenuList extends Component {
           Client.isLogedIn() ? (
             <div>
               <li><Link to="/user/account" className="menu-link">My Account</Link></li>
-              <li><Link to="/user/events/create" className="menu-link">Create Event</Link></li>
-              <li><Link to="/user/events" className="menu-link">My Events</Link></li>
+              <li><Link to="/user/event/create" className="menu-link">Create Event</Link></li>
+              <li><Link to="/user/event" className="menu-link">My Events</Link></li>
               <li><Link to="/logout" className="menu-link">Logout</Link></li>
             </div>
           ) : (

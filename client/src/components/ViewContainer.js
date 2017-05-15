@@ -37,8 +37,8 @@ class ViewContainer extends Component {
         <Match pattern="/update-password" component={UpdatePasswordView}/>
         <Match pattern="/generate-widget" component={WidgetView}/>
         <MatchWhenLoggedIn pattern="/user/account" component={MyAccountView}/>
-        <MatchWhenLoggedIn pattern="/user/events/create" component={CreateView}/>
-        <MatchWhenLoggedIn exactly pattern="/user/events" component={MyEventsView}/>
+        <MatchWhenLoggedIn pattern="/user/event/create" component={CreateView}/>
+        <MatchWhenLoggedIn exactly pattern="/user/event" component={MyEventsView}/>
         <MatchWhenAdmin pattern="/admin/members" component={MembersView}/>
         <MatchWhenAdmin pattern="/admin/pending-registrations" component={PendingRegistrationsView}/>
       </div>

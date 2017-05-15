@@ -10,7 +10,7 @@ const MatchWhenAdmin = ({component: Component, ...rest}) => (
         <Component {...props}/>
       ) : (
         <Redirect to={{
-          pathname: "/user/events",
+          pathname: "/user/event",
         }}/>
       )
     ) : (
