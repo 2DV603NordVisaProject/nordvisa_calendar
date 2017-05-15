@@ -23,7 +23,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api/upload")
-public class ImageHandler {
+public class ImageController {
 
     private static final Set<String> ACCEPTED_FILE_TYPES = new HashSet<>(Arrays.asList(
            "image/png", "image/jpeg", "image/gif"
@@ -38,7 +38,7 @@ public class ImageHandler {
     @RequestMapping(method = RequestMethod.POST)
     public HttpEntity<byte[]> uploadImage(@RequestParam("file") MultipartFile file) {
         String name = file.getOriginalFilename();
-        ImageHandlerDAO dao = new ImageHandlerDAOMongo();
+        ImageDAO dao = new ImageDAOMongo();
 
         String res;
 
@@ -65,7 +65,7 @@ public class ImageHandler {
 
     @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.GET)
     public HttpEntity<byte[]> getImage(@PathVariable("path") String path, @PathVariable("name") String name) {
-        ImageHandlerDAO dao = new ImageHandlerDAOMongo();
+        ImageDAO dao = new ImageDAOMongo();
 
         Image image = dao.getImage(path, name);
 
@@ -79,13 +79,13 @@ public class ImageHandler {
         }
     }
 
-    @RequestMapping(path = "/{name:.+}", method = RequestMethod.DELETE)
-    public HttpEntity<byte[]> deleteImage(@PathVariable("name") String name) {
-        ImageHandlerDAO dao = new ImageHandlerDAOMongo();
+    @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.DELETE)
+    public HttpEntity<byte[]> deleteImage(@PathVariable("path") String path, @PathVariable("name") String name) {
+        ImageDAO dao = new ImageDAOMongo();
 
         String res;
 
-        if(dao.deleteImage(name)) {
+        if(dao.deleteImage(path, name)) {
             res = "File " + name + " deleted successfully.";
             return new HttpEntity<>(res.getBytes());
         } else {

@@ -8,11 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-class ImageHandlerDAOMongo implements ImageHandlerDAO {
+class ImageDAOMongo implements ImageDAO {
 
     private Jongo client;
 
-    ImageHandlerDAOMongo() {
+    ImageDAOMongo() {
         client = MongoDBClient.getClient();
     }
 
@@ -47,9 +47,9 @@ class ImageHandlerDAOMongo implements ImageHandlerDAO {
     }
 
     @Override
-    public boolean deleteImage(String name) {
+    public boolean deleteImage(String path, String name) {
         MongoCollection collection = client.getCollection("images");
-        WriteResult r = collection.remove("{name: '" + name + "'}");
+        WriteResult r = collection.remove("{path: '" + path + "', name: '" + name + "'}");
 
         return r.getN() == 1;
     }
