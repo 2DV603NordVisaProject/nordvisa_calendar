@@ -59,6 +59,22 @@ const Client = {
      }
    ];
  }
+ getEvents: () => {
+   return [
+     {
+       name: "Sample Event One",
+       id: 1,
+     },
+     {
+       name: "Sample Event Two",
+       id: 2,
+     },
+     {
+       name: "Sample Event Three",
+       id: 3,
+     },
+   ];
+ }
 };
 
 export default Client;
