@@ -1,6 +1,7 @@
 package calendar.user;
 
 import calendar.user.dto.ChangePasswordDTO;
+import calendar.user.dto.UserDTO;
 import calendar.user.dto.UserDetailsUpdateDTO;
 import calendar.user.dto.UserIdDTO;
 import org.junit.Test;
@@ -9,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -33,17 +36,68 @@ public class UserControllerTest {
     @InjectMocks
     private UserController sut;
 
-//    @Test
-//    public void getUserById() throws Exception {
-//        sut.getUserById("1");
-//        verify(dao, times(1)).getUserById("1");
-//    }
+    @Test
+    public void getUserById() throws Exception {
+        long longNumber = 12351;
 
-//    @Test
-//    public void getUserByEmail() throws Exception {
-//        sut.getUserByEmail("test@test.com");
-//        verify(dao, times(1)).getUserByEmail("test@test.com");
-//    }
+        User user = mock(User.class);
+        when(user.getId()).thenReturn("1");
+        when(user.getEmail()).thenReturn("test@test.com");
+        when(user.getRole()).thenReturn("USER");
+
+        when(user.getCreatedAt()).thenReturn(longNumber);
+        when(user.getUpdatedAt()).thenReturn(longNumber);
+
+        ArrayList<String> events = new ArrayList<>();
+        Organization org = mock(Organization.class);
+        when(user.getEvents()).thenReturn(events);
+        when(user.getOrganization()).thenReturn(org);
+
+        when(dao.getUserById("1")).thenReturn(user);
+
+        UserDTO dto = sut.getUserById("1");
+
+        assertEquals(dto.getId(), "1");
+        assertEquals(dto.getEmail(), "test@test.com");
+        assertEquals(dto.getRole(), "USER");
+        assertEquals(dto.getCreatedAt(), longNumber);
+        assertEquals(dto.getUpdatedAt(), longNumber);
+        assertEquals(dto.getEvents(), events);
+        assertEquals(dto.getOrganization(), org);
+
+        verify(dao, times(1)).getUserById("1");
+    }
+
+    @Test
+    public void getUserByEmail() throws Exception {
+        long longNumber = 12351;
+
+        User user = mock(User.class);
+        when(user.getId()).thenReturn("1");
+        when(user.getEmail()).thenReturn("test@test.com");
+        when(user.getRole()).thenReturn("USER");
+
+        when(user.getCreatedAt()).thenReturn(longNumber);
+        when(user.getUpdatedAt()).thenReturn(longNumber);
+
+        ArrayList<String> events = new ArrayList<>();
+        Organization org = mock(Organization.class);
+        when(user.getEvents()).thenReturn(events);
+        when(user.getOrganization()).thenReturn(org);
+
+        when(dao.getUserByEmail("test@test.com")).thenReturn(user);
+        UserDTO dto = sut.getUserByEmail("test@test.com");
+
+        assertEquals(dto.getId(), "1");
+        assertEquals(dto.getEmail(), "test@test.com");
+        assertEquals(dto.getRole(), "USER");
+        assertEquals(dto.getCreatedAt(), longNumber);
+        assertEquals(dto.getUpdatedAt(), longNumber);
+        assertEquals(dto.getEvents(), events);
+        assertEquals(dto.getOrganization(), org);
+
+        verify(dao, times(1)).getUserByEmail("test@test.com");
+    }
 
     @Test
     public void getUsersByOrganization() throws Exception {
