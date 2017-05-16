@@ -42,7 +42,14 @@ public class EventDAOMongo implements EventDAO {
                 "$geometry: { " +
                 "type: 'Point', " +
                 "coordinates: [ #, # ] }, " +
-                "$maxDistance: # } } }", longitude, latitude, radius).as(Event.class));
+                "$maxDistance: # } } }", longitude, latitude, radius * 1000).as(Event.class));
+    }
+
+    public List<Event> getEventsWithinDates(long fromDate, long toDate) {
+        MongoCollection collection = client.getCollection("events");
+        return cursorToArray(collection.find( "{ createdAt: { " +
+                "$gte: #," +
+                "$lt: # } }", fromDate, toDate).as(Event.class));
     }
 
     public Event createEvent(Event event) {
