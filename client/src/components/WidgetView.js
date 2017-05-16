@@ -5,11 +5,6 @@ import ProvinceSelect from "./ProvinceSelect";
 
 
 class WidgetView extends Component {
-  constructor(props) {
-    super(props)
-
-    this.onProvinceChange = this.onProvinceChange.bind(this)
-  }
   state = {
     fields: {
       region: "",
@@ -57,13 +52,6 @@ class WidgetView extends Component {
     return `<div id="visa-widget" data-region="${region}" token="${this.state.token}"></div>`;
   }
 
-  onProvinceChange(event) {
-    console.log("ping");
-    const fields = this.state.fields;
-    fields.province = event.target.value;
-    this.setState(fields);
-  }
-
   onInputChange(event)  {
     let fields = this.state.fields;
     fields[event.target.name] = event.target.value;
@@ -82,7 +70,7 @@ class WidgetView extends Component {
     return (
       <div className="lightbox widget-view">
         <h2>Generate Widget Code</h2>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
+        <form>
           <select
             name="region"
             onChange={this.onInputChange.bind(this)}
@@ -97,10 +85,10 @@ class WidgetView extends Component {
           <div id="on-province-select" className="hidden">
             <ProvinceSelect
               region={this.state.fields.region}
-              onProvinceChange={this.onProvinceChange}/>
+              onChange={this.onInputChange.bind(this)}/>
           </div>
           <ErrorList errors={this.state.fieldErrors}/>
-          <input type="submit" value="generate" className="btn-primary"></input>
+          <button className="btn-primary" onClick={this.onFormSubmit.bind(this)}>generate</button>
         </form>
         {
           this.state.isGenerated ? (
