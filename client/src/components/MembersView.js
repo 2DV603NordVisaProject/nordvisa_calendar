@@ -21,7 +21,7 @@ class MembersView extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-    const updated = this.state.updated.toString();
+    const updated = this.state.updated.join(", ");
     const popup = {
       pop: true,
       msg: `Are you sure you want to change access for ${updated}`,
