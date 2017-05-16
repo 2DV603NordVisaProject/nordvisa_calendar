@@ -1,5 +1,6 @@
 package calendar.image;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -9,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -17,10 +20,12 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Files;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -32,6 +37,8 @@ public class ImageControllerTest {
             .getResource("../../../../resources/test/")
             .getPath();
 
+    private String endpoint = "/api/upload";
+
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -41,45 +48,47 @@ public class ImageControllerTest {
     @InjectMocks
     private ImageController sut;
 
+    @Before
+    public void setup() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
+
     @Test
     public void uploadImage() throws Exception {
         FileInputStream testImage = new FileInputStream(resources + "test.jpg");
-        MockMultipartFile file = new MockMultipartFile("test.jpg", testImage);
+        MockMultipartFile file = new MockMultipartFile("file", testImage);
 
-        assertEquals(HttpStatus.OK, sut.uploadImage(file).getStatusCode());
+        mockMvc.perform(fileUpload(endpoint)
+                .file(file))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
     public void uploadImageWrongFileType() throws Exception {
         FileInputStream testImage = new FileInputStream(resources + "test.bmp");
-        MockMultipartFile file = new MockMultipartFile("test.bmp", testImage);
+        MockMultipartFile file = new MockMultipartFile("file", testImage);
 
-        assertEquals(HttpStatus.UNSUPPORTED_MEDIA_TYPE, sut.uploadImage(file).getStatusCode());
-    }
-
-    @Test
-    public void uploadImageTooLarge() throws Exception {
-        FileInputStream testImage = new FileInputStream(resources + "test-large.jpg");
-        MockMultipartFile file = new MockMultipartFile("test-large.jpg", testImage);
-
-        //MediaType mediaType = new MediaType("multipart", "form-data");
-
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-
-        mockMvc.perform(post("/api/upload")
-                .content(file.getBytes()))
-                .andExpect(status().isPayloadTooLarge());
-
-
-        //assertEquals(HttpStatus.PAYLOAD_TOO_LARGE, sut.uploadImage(file).getStatusCode());
+        mockMvc.perform(fileUpload(endpoint)
+                .file(file))
+                .andDo(print())
+                .andExpect(status().isUnsupportedMediaType());
     }
 
     @Test
     public void getImage() throws Exception {
-        String path = "123456789abcdef";
-        String name = "test.jpg";
+        Image image = mock(Image.class);
 
-        sut.getImage(path, name);
-        verify(dao, times(1)).getImage(path, name);
+        byte[] file = Files.readAllBytes(new File(resources + "test.jpg").toPath());
+
+        when(image.getFile()).thenReturn(file);
+        when(image.getPath()).thenReturn("123456789abcdef");
+        when(image.getName()).thenReturn("test.jpg");
+
+        when(dao.getImage("123456789abcdef", "test.jpg")).thenReturn(image);
+
+        assertEquals(file, sut.getImage("123456789abcdef", "test.jpg").getBody());
+
+        verify(dao, times(1)).getImage("123456789abcdef", "test.jpg");
     }
 }

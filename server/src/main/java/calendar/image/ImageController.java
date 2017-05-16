@@ -47,10 +47,8 @@ public class ImageController {
      */
     // TODO: better error handling
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<byte[]> uploadImage(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity uploadImage(@RequestParam("file") MultipartFile file) {
         String name = file.getOriginalFilename();
-
-        //String res;
 
         try {
             // TODO: duplicated name checking
@@ -60,17 +58,15 @@ public class ImageController {
             String mimeType = URLConnection.guessContentTypeFromStream(is);
 
             if (!ACCEPTED_FILE_TYPES.contains(mimeType)) {
-                return new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+                return new ResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
             }
             dao.saveImage(name, file, path, mimeType);
-
-            //res = "File " + name + " uploaded. File type: " + mimeType;
         } catch(IOException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.GET)
