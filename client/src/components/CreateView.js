@@ -17,6 +17,8 @@ class CreateView extends Component {
       location: "",
       desc: "",
       img:  "",
+      startTime: "",
+      endTime: "",
     },
     fieldErrors: [],
     progress: "create",
@@ -37,6 +39,10 @@ class CreateView extends Component {
     //if (!fields.date) errors.push("You need to ender a date!");
     if (!fields.location) errors.push("You need to enter a location!");
     if (!fields.desc) errors.push("You need to enter a description!");
+    if (!fields.startTime) errors.push("Start time is required!");
+    if (!fields.endTime) errors.push("End time is required!");
+    if (fields.startTime.length !== 5 || fields.endTime.length !== 5) errors.push("Incorrect time format!");
+
     return errors;
   }
 
@@ -101,7 +107,7 @@ class CreateView extends Component {
               this.state.progress === "preview" ? <h3>Preview Event</h3> : <h3>View Event</h3>
             }
             <h4 className="preview-text">{this.state.fields.name}</h4>
-            <p className="preview-text">{this.state.fields.location} - {this.state.fields.date}</p>
+            <p className="preview-text">{this.state.fields.location} - {this.state.fields.date} - {this.state.fields.startTime} - {this.state.fields.endTime}</p>
             <div className="img-container" style={{backgroundImage: `url(${this.state.fields.img})`}}>
             </div>
             <h4 className="preview-text">Description:</h4>
@@ -141,6 +147,13 @@ class CreateView extends Component {
                 dateFormat="YYYY-MM-DD"
                 value={this.state.fields.date}
                 onChange={this.onInputChange.bind(this)}/>
+              <label htmlFor="time">Time:</label>
+              <input
+                name="startTime"
+                type="text" value={this.state.fields.startTime} onChange={this.onInputChange.bind(this)} placeholder="15.30..." className="time-form"></input>
+              <input
+                name="endTime"
+                type="text" value={this.state.fields.endTime} onChange={this.onInputChange.bind(this)}placeholder="16.30..." className="time-form end-time"></input>
               <div className="recurring">
                 <label htmlFor="recurring">Recurring:</label>
                 <input

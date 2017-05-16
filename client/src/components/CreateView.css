@@ -94,6 +94,16 @@ p.preview-text {
   flex-direction: row;
 }
 
+.create-event input[type=text].time-form {
+  width: 50px;
+  float: left;
+  display: block;
+}
+
+.create-event input[type=text].end-time {
+  margin: 0 450px 0 10px;
+}
+
 @media (max-width: 475px) {
   .create-event textarea {
     width: 90%;

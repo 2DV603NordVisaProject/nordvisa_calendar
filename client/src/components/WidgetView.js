@@ -19,6 +19,7 @@ class WidgetView extends Component {
     isGenerated: false,
     headCode: "",
     bodyCode: "",
+    token: "",
   }
 
   validate(fields) {
@@ -53,7 +54,7 @@ class WidgetView extends Component {
   }
 
   generateBodyCode(region) {
-    return `<div id="visa-widget" data-region="${region}"></div>`;
+    return `<div id="visa-widget" data-region="${region}" token="${this.state.token}"></div>`;
   }
 
   onProvinceChange(event) {
