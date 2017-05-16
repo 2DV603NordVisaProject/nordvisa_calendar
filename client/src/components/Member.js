@@ -8,8 +8,8 @@ class Member extends Component {
           <div className="email-cell">
             <p>{this.props.member.email}</p>
           </div>
-          <div className="access-select" value={this.props.member.userLevel}>
-            <select className="select-full" onChange={this.props.onChange} name={this.props.member.email}>
+          <div className="access-select">
+            <select className="select-full" onChange={this.props.onChange} name={this.props.member.email} defaultValue={this.props.member.userLevel}>
               <option value="user" disabled={this.props.member.userLevel === "superadmin" ? true : false}>User</option>
               <option value="admin" disabled={this.props.member.userLevel === "superadmin" ? true : false}>Admin</option>
               <option value="superadmin">Superadmin</option>
