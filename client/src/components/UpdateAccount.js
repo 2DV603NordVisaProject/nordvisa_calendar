@@ -26,7 +26,7 @@ class UpdateAccount extends Component {
     fields[name] = value;
     this.setState({ fields });
 
-    const hiddenForm = document.querySelector(".change");
+    const hiddenForm = document.querySelector("#on-select-change");
 
     if (value === "new" && name === "org") {
       hiddenForm.classList.remove("hidden");
@@ -67,7 +67,7 @@ class UpdateAccount extends Component {
             <option value="new">New Organization</option>
             <option value="">No Organization</option>
           </select>
-          <div className="change hidden">
+          <div id="on-select-change" className="hidden">
             <label htmlFor="neworg">New Organization:</label>
             <input
               name="neworg"
