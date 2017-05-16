@@ -4,6 +4,7 @@ import "react-date-picker/index.css";
 import "./CreateView.css";
 import ErrorList from "./ErrorList";
 import Client from "../Client";
+import Redirect from "react-router/Redirect";
 
 class CreateView extends Component {
   state = {
@@ -19,13 +20,14 @@ class CreateView extends Component {
     },
     fieldErrors: [],
     progress: "create",
+    comeFrom: "",
   }
 
   componentWillMount() {
     if (this.props.progress) {
       const progress =  this.props.progress;
       const fields = Client.getEvent(this.props.id);
-      this.setState({ progress, fields})
+      this.setState({ progress, fields, comeFrom: "event"})
     }
   }
 
@@ -189,6 +191,9 @@ class CreateView extends Component {
               </input>
               <ErrorList className={this.state.progress === "saved" ? "success" : ""} errors={this.state.fieldErrors}/>
               <input type="submit" value="preview" className="btn-primary"></input>
+                {
+                  this.state.comeFrom === "event" ? this.state.progress === "saved" ? <Redirect to="/user/event"/> : "" : ""
+                }
             </form>
           </div>
         </div>
