@@ -107,7 +107,7 @@ p.preview-text {
   margin: 0 0 0 10px;
 }
 
-.create-event input[type=time].end-time {
+.end-time {
   margin: 0 400px 0 10px;
 }
 

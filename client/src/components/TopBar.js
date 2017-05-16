@@ -12,10 +12,9 @@ class TopBar extends Component {
           <Link to="/user/event">Event Dashboard</Link>
         </div>
         <ResponsiveMenu/>
-        <select>
-          <option defaultValue disabled>Language</option>
+        <select defaultValue="english">
           <option>Swedish</option>
-          <option>English</option>
+          <option value="english">English</option>
           <option>Norwegian</option>
           <option>Danish</option>
           <option>Icelandic</option>

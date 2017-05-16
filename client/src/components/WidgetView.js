@@ -30,7 +30,7 @@ class WidgetView extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-
+    console.log(this.state.fields)
     const fieldErrors = this.validate(this.state.fields);
     this.setState({ fieldErrors });
 
@@ -86,8 +86,7 @@ class WidgetView extends Component {
           <select
             name="region"
             onChange={this.onInputChange.bind(this)}
-            value={this.state.fields.region}
-            defaultValue="">
+            defaultValue={this.state.fields.region}>
             <option value="">Choose Region</option>
             <option value="all">All Nordic Countries</option>
             <option value="sweden">Sweden</option>
