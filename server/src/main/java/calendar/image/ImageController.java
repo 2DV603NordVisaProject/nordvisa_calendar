@@ -1,12 +1,16 @@
-package calendar.imageHandling;
+package calendar.image;
 
+import org.apache.tomcat.util.http.fileupload.FileUploadBase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.naming.SizeLimitExceededException;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,11 +27,18 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api/upload")
-public class ImageHandler {
+public class ImageController {
+
+
+
+    @Autowired
+    private ImageDAO dao;
 
     private static final Set<String> ACCEPTED_FILE_TYPES = new HashSet<>(Arrays.asList(
            "image/png", "image/jpeg", "image/gif"
     ));
+
+
 
     /**
      * Upload an image to the server. Returns a boolean meaning whether the upload was successful or not.
@@ -36,39 +47,31 @@ public class ImageHandler {
      */
     // TODO: better error handling
     @RequestMapping(method = RequestMethod.POST)
-    public HttpEntity<byte[]> uploadImage(@RequestParam("file") MultipartFile file) {
-        // Gets the original filename. Might be useful later.
-        // String name = file.getOriginalFilename();
-        ImageHandlerDAO dao = new ImageHandlerDAOMongo();
-
-        String res;
+    public ResponseEntity uploadImage(@RequestParam("file") MultipartFile file) {
+        String name = file.getOriginalFilename();
 
         try {
             // TODO: duplicated name checking
-            String name = getRandomHexString(16);
+            String path = getRandomHexString(16);
 
             InputStream is = new BufferedInputStream(file.getInputStream());
             String mimeType = URLConnection.guessContentTypeFromStream(is);
 
-            if(!ACCEPTED_FILE_TYPES.contains(mimeType)) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            if (!ACCEPTED_FILE_TYPES.contains(mimeType)) {
+                return new ResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
             }
-            dao.saveImage(name, file, mimeType);
-
-            res = "File " + name + " uploaded. File type: " + mimeType;
+            dao.saveImage(name, file, path, mimeType);
         } catch(IOException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new HttpEntity<>(res.getBytes());
+        return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/{name:.+}", method = RequestMethod.GET)
-    public HttpEntity<byte[]> getImage(@PathVariable("name") String name) {
-        ImageHandlerDAO dao = new ImageHandlerDAOMongo();
-
-        Image image = dao.getImage(name);
+    @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.GET)
+    public HttpEntity<byte[]> getImage(@PathVariable("path") String path, @PathVariable("name") String name) {
+        Image image = dao.getImage(path, name);
 
         if(image != null) {
             HttpHeaders headers = new HttpHeaders();
@@ -80,13 +83,11 @@ public class ImageHandler {
         }
     }
 
-    @RequestMapping(path = "/{name:.+}", method = RequestMethod.DELETE)
-    public HttpEntity<byte[]> deleteImage(@PathVariable("name") String name) {
-        ImageHandlerDAO dao = new ImageHandlerDAOMongo();
-
+    @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.DELETE)
+    public HttpEntity<byte[]> deleteImage(@PathVariable("path") String path, @PathVariable("name") String name) {
         String res;
 
-        if(dao.deleteImage(name)) {
+        if(dao.deleteImage(path, name)) {
             res = "File " + name + " deleted successfully.";
             return new HttpEntity<>(res.getBytes());
         } else {

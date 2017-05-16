@@ -1,13 +1,16 @@
 package calendar.user;
 
-import calendar.user.dto.ChangePasswordDTO;
-import calendar.user.dto.RecoverPasswordDTO;
-import calendar.user.dto.RegistrationDTO;
-import calendar.user.dto.UserDetailsUpdateDTO;
+import calendar.user.dto.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.Registration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +22,11 @@ import java.util.regex.Pattern;
 @Component
 class UserInformationValidator {
     private UserDAO dao;
+
+    @Value("${recaptcha.url}")
+    private String recaptchaUrl;
+    @Value("${recaptcha.secret}")
+    private String recaptchaRes;
 
     UserInformationValidator(UserDAO dao) {
         this.dao = dao;
@@ -74,6 +82,31 @@ class UserInformationValidator {
         else if (passwordNotValid(dto.getPassword())) {
             throw new Exception("The password was not valid");
         }
+    }
+
+    RecaptchaResponseDTO validateRecaptcha(String secret) throws Exception {
+        RestTemplate rest = new RestTemplate();
+        RecaptchaResponseDTO responseDTO;
+
+        try {
+            responseDTO = rest.postForEntity(
+                    recaptchaUrl,
+                    createBody(secret, recaptchaRes),
+                    RecaptchaResponseDTO.class
+            ).getBody();
+        }
+        catch (RestClientException expt) {
+            throw new Exception("Could not verify captcha");
+        }
+
+        return responseDTO;
+    }
+
+    private MultiValueMap<String, String> createBody(String secret, String response) {
+        MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
+        form.add("secret", secret);
+        form.add("response", response);
+        return form;
     }
 
     private boolean idDoesNotExist(String id) throws Exception {

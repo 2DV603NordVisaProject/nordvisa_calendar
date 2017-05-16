@@ -1,8 +1,6 @@
 package calendar.user;
 
-import calendar.user.dto.ChangePasswordDTO;
-import calendar.user.dto.UserDetailsUpdateDTO;
-import calendar.user.dto.UserIdDTO;
+import calendar.user.dto.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +37,11 @@ public class UserController {
     @Autowired
     private CurrentUser currentUser;
 
+    @RequestMapping(value = "/role", method = RequestMethod.GET)
+    public RoleDTO getRole() throws Exception {
+        return new RoleDTO(new CurrentUser().getEmailAddres());
+    }
+
     /**
      * Runs on GET call to /api/user?id="". Takes the id provided and fetches a matching user using
      * the DAO. If no suitable user is found then null is returned.
@@ -48,8 +51,8 @@ public class UserController {
      * @throws Exception    Database errors
      */
     @RequestMapping(value = "", params = "id", method = RequestMethod.GET)
-    public User getUserById(@RequestParam("id") String id) throws Exception {
-        return dao.getUserById(id);
+    public UserDTO getUserById(@RequestParam("id") String id) throws Exception {
+        return new UserDTO(dao.getUserById(id));
     }
 
     /**
@@ -61,8 +64,8 @@ public class UserController {
      * @throws Exception    Database errors
      */
     @RequestMapping(value = "", params = "email", method = RequestMethod.GET)
-    public User getUserByEmail(@RequestParam("email") String email) throws Exception {
-        return dao.getUserByEmail(email);
+    public UserDTO getUserByEmail(@RequestParam("email") String email) throws Exception {
+        return new UserDTO(dao.getUserByEmail(email));
     }
 
     /**
@@ -74,9 +77,15 @@ public class UserController {
      * @throws Exception    Database errors
      */
     @RequestMapping(value = "", params = "organization", method = RequestMethod.GET)
-    public ArrayList<User> getUsersByOrganization(
+    public ArrayList<UserDTO> getUsersByOrganization(
             @RequestParam("organization") String organization) throws Exception {
-        return dao.getUsersByOrganization(organization);
+        ArrayList<UserDTO> dto = new ArrayList<>();
+
+        for (User user : dao.getUsersByOrganization(organization)) {
+            dto.add(new UserDTO(user));
+        }
+
+        return dto;
     }
 
     /**
@@ -85,8 +94,14 @@ public class UserController {
      * @throws Exception    Database errors
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ArrayList<User> getAllUsers() throws Exception {
-        return dao.getAllUsers();
+    public ArrayList<UserDTO> getAllUsers() throws Exception {
+        ArrayList<UserDTO> dto = new ArrayList<>();
+
+        for (User user : dao.getAllUsers()) {
+            dto.add(new UserDTO(user));
+        }
+
+        return dto;
     }
 
     /**

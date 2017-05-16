@@ -1,23 +1,25 @@
-package calendar.imageHandling;
+package calendar.image;
 
 import calendar.databaseConnections.MongoDBClient;
 import com.mongodb.WriteResult;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-class ImageHandlerDAOMongo implements ImageHandlerDAO {
+@Component
+class ImageDAOMongo implements ImageDAO {
 
     private Jongo client;
 
-    ImageHandlerDAOMongo() {
+    ImageDAOMongo() {
         client = MongoDBClient.getClient();
     }
 
     @Override
-    public boolean saveImage(String name, MultipartFile file, String type) {
+    public boolean saveImage(String name, MultipartFile file, String path, String type) {
         byte[] imageByteArray;
 
         try {
@@ -27,7 +29,7 @@ class ImageHandlerDAOMongo implements ImageHandlerDAO {
             return false;
         }
 
-        Image image = new Image(name, imageByteArray, type);
+        Image image = new Image(name, imageByteArray, path, type);
         MongoCollection collection = client.getCollection("images");
         collection.insert(image);
 
@@ -35,9 +37,9 @@ class ImageHandlerDAOMongo implements ImageHandlerDAO {
     }
 
     @Override
-    public Image getImage(String name) {
+    public Image getImage(String path, String name) {
         MongoCollection collection = client.getCollection("images");
-        Image image = collection.findOne("{name: '" + name + "'}").as(Image.class);
+        Image image = collection.findOne("{path: '" + path + "', name: '" + name + "'}").as(Image.class);
 
         if(image == null) {
             return null;
@@ -47,9 +49,9 @@ class ImageHandlerDAOMongo implements ImageHandlerDAO {
     }
 
     @Override
-    public boolean deleteImage(String name) {
+    public boolean deleteImage(String path, String name) {
         MongoCollection collection = client.getCollection("images");
-        WriteResult r = collection.remove("{name: '" + name + "'}");
+        WriteResult r = collection.remove("{path: '" + path + "', name: '" + name + "'}");
 
         return r.getN() == 1;
     }

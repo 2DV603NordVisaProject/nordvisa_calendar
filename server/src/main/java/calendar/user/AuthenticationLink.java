@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
  * @author Axel Nilsson (axnion)
  */
 class AuthenticationLink {
-    private String url;     //TODO: Should be encrypted
+    private String url;
     private long timestamp;
 
     AuthenticationLink() {

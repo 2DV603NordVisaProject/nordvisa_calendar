@@ -1,5 +1,6 @@
 package calendar.user.dto;
 
+
 /**
  * Class RegistrationDecisionDTO
  *

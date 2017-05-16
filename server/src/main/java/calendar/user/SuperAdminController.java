@@ -1,7 +1,7 @@
 package calendar.user;
 
 import calendar.user.dto.UserIdDTO;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/super_admin")
 public class SuperAdminController {
-    private UserDAO dao = new UserDAOMongo();
+    @Autowired
+    private UserDAO dao;
+
+    @Autowired
+    private CurrentUser currentUser;
 
     /**
      * Runs on POST call to /api/super_admin/make_super_admin. Takes an ID though a UserIdDTO, and
@@ -31,13 +35,12 @@ public class SuperAdminController {
      * @param dto           UserIdDTO containing the user ID of the target user
      * @throws Exception    Database errors
      */
-    // TODO: NOT TESTED!
     @RequestMapping(value = "/make_super_admin", method = RequestMethod.POST)
     public void makeSuperAdministrator(@ModelAttribute UserIdDTO dto) throws Exception {
-        User actor = dao.getUserByEmail(new CurrentUser().getEmailAddres());
+        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
         User target = dao.getUserById(dto.getId());
 
-        if(actor.canPromoteToSuperAdmin(target)) {
+        if(actor.canChangeRoleTo(target, "SUPER_ADMIN")) {
             target.setRole("SUPER_ADMIN");
             dao.update(target);
         }

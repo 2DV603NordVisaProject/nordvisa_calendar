@@ -1,11 +1,8 @@
 package calendar.event.dto;
 
-import calendar.event.EventLocation;
-import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.GeocodingApiRequest;
-import com.google.maps.model.AddressComponent;
-import com.google.maps.model.GeocodingResult;
+import calendar.image.Image;
+
+import java.util.List;
 
 public class CreateEventDTO {
 
@@ -14,13 +11,13 @@ public class CreateEventDTO {
     private String description;
     private long date;
     private float duration;
-    private boolean isRecurring;
+    private boolean recurring;
     private int recursEvery;
     private long recursUntil;
-    private String url;
-    //private List<Image> images;
+    private List<Image> images;
     private long createdAt;
     private long updatedAt;
+    private String createdBy;
     private String editedBy;
 
     public String getName() {
@@ -63,12 +60,12 @@ public class CreateEventDTO {
         this.duration = duration;
     }
 
-    public boolean isRecurring() {
-        return isRecurring;
+    public boolean getRecurring() {
+        return recurring;
     }
 
     public void setRecurring(boolean recurring) {
-        isRecurring = recurring;
+        this.recurring = recurring;
     }
 
     public int getRecursEvery() {
@@ -87,12 +84,12 @@ public class CreateEventDTO {
         this.recursUntil = recursUntil;
     }
 
-    public String getUrl() {
-        return url;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public long getCreatedAt() {
@@ -111,6 +108,14 @@ public class CreateEventDTO {
         this.updatedAt = updatedAt;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     public String getEditedBy() {
         return editedBy;
     }
@@ -119,49 +124,4 @@ public class CreateEventDTO {
         this.editedBy = editedBy;
     }
 
-    public EventLocation getGeoCodedLocation(String address) {
-
-        EventLocation eventLocation = new EventLocation();
-
-        // Temporary API key
-        final String API_KEY = "AIzaSyAM9tW28Kcfem-zAIyyPnnPnyqL1WY5TGo";
-
-        GeoApiContext context = new GeoApiContext().setApiKey(API_KEY);
-        GeocodingApiRequest request = GeocodingApi.newRequest(context).address(address);
-
-        try {
-            GeocodingResult[] results = request.await();
-            eventLocation.setLatitude(results[0].geometry.location.lat);
-            eventLocation.setLongitude(results[0].geometry.location.lng);
-            eventLocation.setAddress(address);
-            eventLocation.setParsedAddress(results[0].formattedAddress);
-
-            for (AddressComponent addressComponent : results[0].addressComponents) {
-                switch (addressComponent.types[0]) {
-                    case POSTAL_CODE:
-                        // Remove any white space from postal code
-                        String postalCode = addressComponent.longName
-                                .replaceAll("\\s+","");
-                        eventLocation.setPostalCode(postalCode);
-                        break;
-                    case LOCALITY:
-                        eventLocation.setCity(addressComponent.longName);
-                        break;
-                    case POSTAL_TOWN:
-                        eventLocation.setCity(addressComponent.longName);
-                        break;
-                    case COUNTRY:
-                        eventLocation.setCountry(addressComponent.shortName);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-        } catch (Exception e) {
-            // Handle error
-        }
-
-        return eventLocation;
-    }
 }

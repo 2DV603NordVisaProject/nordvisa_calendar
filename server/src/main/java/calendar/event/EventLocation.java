@@ -2,32 +2,21 @@ package calendar.event;
 
 public class EventLocation {
 
-    private double longitude;
-    private double latitude;
+    private EventLocationCoordinates coordinates;
     private String address;
     private String parsedAddress;
     private String postalCode;
     private String city;
     private String country;
-    private String region;
 
-    public EventLocation() {
+    public EventLocation() {}
+
+    public EventLocationCoordinates getCoordinates() {
+        return coordinates;
     }
 
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setCoordinates(EventLocationCoordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     public String getAddress() {
@@ -70,11 +59,4 @@ public class EventLocation {
         this.country = country;
     }
 
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
 }
