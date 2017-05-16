@@ -36,7 +36,7 @@ class CreateView extends Component {
   validate(fields) {
     const errors = [];
     if (!fields.name) errors.push("You need to enter a name!");
-    //if (!fields.date) errors.push("You need to ender a date!");
+    if (!fields.date) errors.push("You need to ender a date!");
     if (!fields.location) errors.push("You need to enter a location!");
     if (!fields.desc) errors.push("You need to enter a description!");
     if (!fields.startTime) errors.push("Start time is required!");
@@ -142,18 +142,28 @@ class CreateView extends Component {
               </input>
               <br/>
               <label htmlFor="date">Date:</label>
-              <DateField
+              <input
+                type="date"
                 name="date"
-                dateFormat="YYYY-MM-DD"
                 value={this.state.fields.date}
-                onChange={this.onInputChange.bind(this)}/>
+                onChange={this.onInputChange.bind(this)}>
+              </input>
               <label htmlFor="time">Time:</label>
               <input
                 name="startTime"
-                type="text" value={this.state.fields.startTime} onChange={this.onInputChange.bind(this)} placeholder="15.30..." className="time-form"></input>
+                type="time"
+                value={this.state.fields.startTime}
+                onChange={this.onInputChange.bind(this)}
+                className="time-form">
+              </input>
               <input
                 name="endTime"
-                type="text" value={this.state.fields.endTime} onChange={this.onInputChange.bind(this)}placeholder="16.30..." className="time-form end-time"></input>
+                type="time"
+                value={this.state.fields.endTime}
+                onChange={this.onInputChange.bind(this)}
+                placeholder="16.30..."
+                className="time-form end-time">
+              </input>
               <div className="recurring">
                 <label htmlFor="recurring">Recurring:</label>
                 <input
@@ -165,11 +175,12 @@ class CreateView extends Component {
               </div>
               <div className="is-recurring hidden">
                 <label htmlFor="recursuntil">Recurs Until:</label>
-                <DateField
+                <input
+                  type="date"
                   name="recursuntil"
-                  dateFormat="YYYY-MM-DD"
                   value={this.state.fields.recursuntil}
-                  onChange={this.onInputChange.bind(this)}/>
+                  onChange={this.onInputChange.bind(this)}>
+                </input>
                 <label htmlFor="recurs">Recurs:</label>
                 <select
                   name="recurs"

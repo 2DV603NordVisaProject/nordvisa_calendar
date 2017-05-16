@@ -1,3 +1,9 @@
+input[type="date"] {
+  float: left;
+  margin: 0 370px 0 10px;
+  display: block;
+}
+
 .create-event form {
   width: 100%;
 }
@@ -94,14 +100,15 @@ p.preview-text {
   flex-direction: row;
 }
 
-.create-event input[type=text].time-form {
-  width: 50px;
+.create-event input[type=time] {
+  width: 80px;
   float: left;
   display: block;
+  margin: 0 0 0 10px;
 }
 
-.create-event input[type=text].end-time {
-  margin: 0 450px 0 10px;
+.create-event input[type=time].end-time {
+  margin: 0 400px 0 10px;
 }
 
 @media (max-width: 475px) {
