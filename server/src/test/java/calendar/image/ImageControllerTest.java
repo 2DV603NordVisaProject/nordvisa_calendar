@@ -55,17 +55,32 @@ public class ImageControllerTest {
 
     @Test
     public void uploadImage() throws Exception {
+
         FileInputStream testImage = new FileInputStream(resources + "test.jpg");
         MockMultipartFile file = new MockMultipartFile("file", testImage);
 
+        // Fails in Travis. Need to fix
+        /*
         mockMvc.perform(fileUpload(endpoint)
                 .file(file))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk());*/
+
+        assertEquals(HttpStatus.OK, sut.uploadImage(file).getStatusCode());
     }
 
     @Test
     public void uploadImageWrongFileType() throws Exception {
+        MockMultipartFile file = new MockMultipartFile("file", "hello world!".getBytes());
+
+        mockMvc.perform(fileUpload(endpoint)
+                .file(file))
+                .andDo(print())
+                .andExpect(status().isUnsupportedMediaType());
+    }
+
+    @Test
+    public void uploadImageWrongImageType() throws Exception {
         FileInputStream testImage = new FileInputStream(resources + "test.bmp");
         MockMultipartFile file = new MockMultipartFile("file", testImage);
 

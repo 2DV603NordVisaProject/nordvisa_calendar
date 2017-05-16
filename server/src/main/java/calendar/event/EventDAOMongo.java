@@ -30,6 +30,11 @@ public class EventDAOMongo implements EventDAO {
         return cursorToArray(collection.find().as(Event.class));
     }
 
+    public List<Event> getEventsFromCounty(String county) {
+        MongoCollection collection = client.getCollection("events");
+        return cursorToArray(collection.find("{ location.county: # }", county).as(Event.class));
+    }
+
     public List<Event> getEventsFromCountry(String country) {
         MongoCollection collection = client.getCollection("events");
         return cursorToArray(collection.find("{ location.country: # }", country).as(Event.class));
@@ -42,7 +47,14 @@ public class EventDAOMongo implements EventDAO {
                 "$geometry: { " +
                 "type: 'Point', " +
                 "coordinates: [ #, # ] }, " +
-                "$maxDistance: # } } }", longitude, latitude, radius).as(Event.class));
+                "$maxDistance: # } } }", longitude, latitude, radius * 1000).as(Event.class));
+    }
+
+    public List<Event> getEventsWithinDates(long fromDate, long toDate) {
+        MongoCollection collection = client.getCollection("events");
+        return cursorToArray(collection.find( "{ createdAt: { " +
+                "$gte: #," +
+                "$lt: # } }", fromDate, toDate).as(Event.class));
     }
 
     public Event createEvent(Event event) {

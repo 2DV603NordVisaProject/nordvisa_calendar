@@ -48,6 +48,9 @@ public abstract class GeoCodeHandler {
                     case POSTAL_TOWN:
                         eventLocation.setCity(addressComponent.longName);
                         break;
+                    case ADMINISTRATIVE_AREA_LEVEL_1:
+                        eventLocation.setCounty(addressComponent.longName);
+                        break;
                     case COUNTRY:
                         eventLocation.setCountry(addressComponent.shortName);
                         break;

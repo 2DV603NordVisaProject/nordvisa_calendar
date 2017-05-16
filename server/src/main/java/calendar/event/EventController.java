@@ -3,6 +3,10 @@ package calendar.event;
 import calendar.event.dto.CreateEventDTO;
 import calendar.event.dto.DeleteEventDTO;
 import calendar.event.dto.UpdateEventDTO;
+import calendar.event.exceptions.EventNotFoundException;
+import calendar.event.exceptions.Error;
+import org.bson.types.ObjectId;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +20,7 @@ public class EventController {
                                  @RequestParam(required = false) Double longitude,
                                  @RequestParam(required = false) Double latitude,
                                  @RequestParam(required = false) Double radius,
+                                 @RequestParam(required = false) String county,
                                  @RequestParam(required = false) String country,
                                  @RequestParam(required = false) Long fromDate,
                                  @RequestParam(required = false) Long toDate) {
@@ -23,18 +28,69 @@ public class EventController {
         EventDAO dao = new EventDAOMongo();
 
         if (id != null) {
-            return dao.getEvent(id);
+
+            // Check if supplied id is valid ObjectId
+            try {
+                ObjectId eventId = new ObjectId(id);
+            } catch (IllegalArgumentException e) {
+                throw new EventNotFoundException("Event not found");
+            }
+
+            List<Event> event = dao.getEvent(id);
+
+            if (event.get(0) == null) {
+                throw new EventNotFoundException("Event not found");
+            }
+
+            return event;
+        }
+
+        if (county != null) {
+
+            List<Event> events = dao.getEventsFromCounty(county);
+
+            if (events.size() == 0) {
+                throw new EventNotFoundException("Events not found");
+            }
+
+            return events;
         }
 
         if (country != null) {
-            return dao.getEventsFromCountry(country);
+
+            List<Event> events = dao.getEventsFromCountry(country);
+
+            if (events.size() == 0) {
+                throw new EventNotFoundException("Events not found");
+            }
+
+            return events;
+
         }
 
         if (longitude != null && latitude != null && radius != null) {
-            return dao.getEventsWithinRadius(longitude, latitude, radius);
+
+            List<Event> events = dao.getEventsWithinRadius(longitude, latitude, radius);
+
+            if (events.size() == 0) {
+                throw new EventNotFoundException("Events not found");
+            }
+
+            return events;
         }
 
-        return dao.getEvents();
+        if (fromDate != null && toDate != null) {
+
+            List<Event> events = dao.getEventsWithinDates(fromDate, toDate);
+
+            if (events.size() == 0) {
+                throw new EventNotFoundException("Events not found");
+            }
+
+            return events;
+        }
+
+        throw new EventNotFoundException("Events not found");
 
     }
 
@@ -56,5 +112,12 @@ public class EventController {
         Event event = new Event(updateEventDTO);
         EventDAO dao = new EventDAOMongo();
         return dao.updateEvent(event);
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Error eventNotFound(EventNotFoundException e) {
+        String message = e.getMessage();
+        return new Error(message);
     }
 }
