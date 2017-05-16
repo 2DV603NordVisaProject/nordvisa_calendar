@@ -90,7 +90,7 @@ class RegisterView extends Component {
             value={this.state.fields.org}>
             <option>NordVisa</option>
             <option value="new">New Organization</option>
-            <option defaultValue>No Organization</option>
+            <option value="">No Organization</option>
           </select>
           <div className="change hidden">
             <label htmlFor="neworg">New Organization:</label>
