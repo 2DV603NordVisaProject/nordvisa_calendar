@@ -15,6 +15,8 @@ class UpdatePassword extends Component {
     const errors = [];
     if (!fields.newpassword || !fields.confirmpassword || !fields.oldpassword) errors.push("Password Required!");
     if (fields.newpassword !== fields.confirmpassword) errors.push("Password's doesn't match!");
+    if (fields.newpassword.length < 10) errors.push("Pasword needs to be atleast 10 characters long!");
+    if (fields.newpassword.length > 255) errors.push("Password can't be longer than 255 characters");
     return errors;
   }
 
