@@ -87,8 +87,9 @@ class RegisterView extends Component {
           <select
             name="org"
             onChange={this.onInputChange.bind(this)}
-            value={this.state.fields.org}>
-            <option>NordVisa</option>
+            value={this.state.fields.org}
+            defaultValue="">
+            <option value="NordVisa">NordVisa</option>
             <option value="new">New Organization</option>
             <option value="">No Organization</option>
           </select>
