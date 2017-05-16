@@ -5,6 +5,7 @@ import calendar.event.dto.DeleteEventDTO;
 import calendar.event.dto.UpdateEventDTO;
 import calendar.event.exceptions.EventNotFoundException;
 import calendar.event.exceptions.Error;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,13 @@ public class EventController {
         EventDAO dao = new EventDAOMongo();
 
         if (id != null) {
+
+            // Check if supplied id is valid ObjectId
+            try {
+                ObjectId eventId = new ObjectId(id);
+            } catch (IllegalArgumentException e) {
+                throw new EventNotFoundException("Event not found");
+            }
 
             List<Event> event = dao.getEvent(id);
 
