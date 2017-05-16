@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "./TopBar.css";
 import ResponsiveMenu from "./ResponsiveMenu";
+import Link from "react-router/Link";
 
 
 class TopBar extends Component {
@@ -8,7 +9,7 @@ class TopBar extends Component {
     return (
       <div className="topbar">
         <div className="brand">
-          <p>Event Dashboard</p>
+          <Link to="/user/event">Event Dashboard</Link>
         </div>
         <ResponsiveMenu/>
         <select>
