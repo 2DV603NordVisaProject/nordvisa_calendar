@@ -7,6 +7,7 @@ public class EventLocation {
     private String parsedAddress;
     private String postalCode;
     private String city;
+    private String county;
     private String country;
 
     public EventLocation() {}
@@ -49,6 +50,14 @@ public class EventLocation {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
     }
 
     public String getCountry() {

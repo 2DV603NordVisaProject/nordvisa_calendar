@@ -30,6 +30,11 @@ public class EventDAOMongo implements EventDAO {
         return cursorToArray(collection.find().as(Event.class));
     }
 
+    public List<Event> getEventsFromCounty(String county) {
+        MongoCollection collection = client.getCollection("events");
+        return cursorToArray(collection.find("{ location.county: # }", county).as(Event.class));
+    }
+
     public List<Event> getEventsFromCountry(String country) {
         MongoCollection collection = client.getCollection("events");
         return cursorToArray(collection.find("{ location.country: # }", country).as(Event.class));

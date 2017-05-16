@@ -5,6 +5,7 @@ import java.util.List;
 public interface EventDAO {
     List<Event> getEvent(String id);
     List<Event> getEvents();
+    List<Event> getEventsFromCounty(String county);
     List<Event> getEventsFromCountry(String country);
     List<Event> getEventsWithinRadius(double longitude, double latitude, double radius);
     List<Event> getEventsWithinDates(long fromDate, long toDate);

@@ -20,6 +20,7 @@ public class EventController {
                                  @RequestParam(required = false) Double longitude,
                                  @RequestParam(required = false) Double latitude,
                                  @RequestParam(required = false) Double radius,
+                                 @RequestParam(required = false) String county,
                                  @RequestParam(required = false) String country,
                                  @RequestParam(required = false) Long fromDate,
                                  @RequestParam(required = false) Long toDate) {
@@ -42,6 +43,17 @@ public class EventController {
             }
 
             return event;
+        }
+
+        if (county != null) {
+
+            List<Event> events = dao.getEventsFromCounty(county);
+
+            if (events.size() == 0) {
+                throw new EventNotFoundException("Events not found");
+            }
+
+            return events;
         }
 
         if (country != null) {
