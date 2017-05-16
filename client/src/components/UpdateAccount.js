@@ -61,10 +61,11 @@ class UpdateAccount extends Component {
           <select
             name="org"
             onChange={this.onInputChange.bind(this)}
-            value={this.state.fields.org}>
-            <option>NordVisa</option>
+            value={this.state.fields.org}
+            defaultValue="">
+            <option value="NordVisa">NordVisa</option>
             <option value="new">New Organization</option>
-            <option defaultValue>No Organization</option>
+            <option value="">No Organization</option>
           </select>
           <div className="change hidden">
             <label htmlFor="neworg">New Organization:</label>
