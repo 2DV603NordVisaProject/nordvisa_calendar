@@ -118,7 +118,7 @@ public class UserControllerTest {
 
         UserIdDTO idMock = mock(UserIdDTO.class);
 
-        when(currentUser.getEmailAddres()).thenReturn("test@test.com");
+        when(currentUser.getEmailAddress()).thenReturn("test@test.com");
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(actorMock.canManage(targetMock)).thenReturn(true);
@@ -141,7 +141,7 @@ public class UserControllerTest {
 
         UserIdDTO idMock = mock(UserIdDTO.class);
 
-        when(currentUser.getEmailAddres()).thenReturn("test@test.com");
+        when(currentUser.getEmailAddress()).thenReturn("test@test.com");
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(null);
         when(actorMock.canManage(targetMock)).thenReturn(true);
@@ -165,7 +165,7 @@ public class UserControllerTest {
 
         UserIdDTO idMock = mock(UserIdDTO.class);
 
-        when(currentUser.getEmailAddres()).thenReturn("test@test.com");
+        when(currentUser.getEmailAddress()).thenReturn("test@test.com");
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(actorMock.canManage(targetMock)).thenReturn(false);

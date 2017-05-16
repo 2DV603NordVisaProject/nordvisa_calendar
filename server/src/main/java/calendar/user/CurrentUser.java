@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 class CurrentUser {
-    String getEmailAddres() {
+    String getEmailAddress() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

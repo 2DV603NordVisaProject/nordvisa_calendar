@@ -39,7 +39,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/make_user", method = RequestMethod.POST)
     public void makeUser(@ModelAttribute UserIdDTO dto) throws Exception {
-        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
+        User actor = dao.getUserByEmail(currentUser.getEmailAddress());
         User target = dao.getUserById(dto.getId());
 
         if(actor.canChangeRoleTo(target, "USER")) {
@@ -57,7 +57,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/make_admin", method = RequestMethod.POST)
     public void makeAdmin(@ModelAttribute UserIdDTO dto) throws Exception {
-        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
+        User actor = dao.getUserByEmail(currentUser.getEmailAddress());
         User target = dao.getUserById(dto.getId());
 
         if(actor.canChangeRoleTo(target, "ADMIN")) {
@@ -76,7 +76,7 @@ public class AdminController {
     @RequestMapping(value = "/registrations", method = RequestMethod.GET)
     @ResponseBody
     public ArrayList<UserDTO> getPendingRegistrations() throws Exception {
-        String organization = dao.getUserByEmail(currentUser.getEmailAddres())
+        String organization = dao.getUserByEmail(currentUser.getEmailAddress())
                 .getOrganization().getName();
         ArrayList<UserDTO> dto = new ArrayList<>();
 

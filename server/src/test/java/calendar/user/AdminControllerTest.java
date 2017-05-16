@@ -33,7 +33,7 @@ public class AdminControllerTest {
         User targetMock = mock(User.class);
         UserIdDTO dtoMock = mock(UserIdDTO.class);
 
-        when(currentUser.getEmailAddres()).thenReturn("test@test.com");
+        when(currentUser.getEmailAddress()).thenReturn("test@test.com");
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
@@ -56,7 +56,7 @@ public class AdminControllerTest {
         User targetMock = mock(User.class);
         UserIdDTO dtoMock = mock(UserIdDTO.class);
 
-        when(currentUser.getEmailAddres()).thenReturn("test@test.com");
+        when(currentUser.getEmailAddress()).thenReturn("test@test.com");
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
@@ -79,7 +79,7 @@ public class AdminControllerTest {
         User targetMock = mock(User.class);
         UserIdDTO dtoMock = mock(UserIdDTO.class);
 
-        when(currentUser.getEmailAddres()).thenReturn("test@test.com");
+        when(currentUser.getEmailAddress()).thenReturn("test@test.com");
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
@@ -102,7 +102,7 @@ public class AdminControllerTest {
         User targetMock = mock(User.class);
         UserIdDTO dtoMock = mock(UserIdDTO.class);
 
-        when(currentUser.getEmailAddres()).thenReturn("test@test.com");
+        when(currentUser.getEmailAddress()).thenReturn("test@test.com");
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");

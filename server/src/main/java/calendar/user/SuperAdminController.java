@@ -36,8 +36,8 @@ public class SuperAdminController {
      * @throws Exception    Database errors
      */
     @RequestMapping(value = "/make_super_admin", method = RequestMethod.POST)
-    public void makeSuperAdministrator(@ModelAttribute UserIdDTO dto) throws Exception {
-        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
+    public void makeSuperAdmin(@ModelAttribute UserIdDTO dto) throws Exception {
+        User actor = dao.getUserByEmail(currentUser.getEmailAddress());
         User target = dao.getUserById(dto.getId());
 
         if(actor.canChangeRoleTo(target, "SUPER_ADMIN")) {

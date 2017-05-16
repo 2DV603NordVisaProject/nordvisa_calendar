@@ -39,7 +39,7 @@ public class UserController {
 
     @RequestMapping(value = "/role", method = RequestMethod.GET)
     public RoleDTO getRole() throws Exception {
-        return new RoleDTO(new CurrentUser().getEmailAddres());
+        return new RoleDTO(new CurrentUser().getEmailAddress());
     }
 
     /**
@@ -117,7 +117,7 @@ public class UserController {
      */
     @RequestMapping(value = "/unregister", method = RequestMethod.POST)
     public void unregister(@ModelAttribute UserIdDTO dto) throws Exception {
-        User actor = dao.getUserByEmail(currentUser.getEmailAddres());
+        User actor = dao.getUserByEmail(currentUser.getEmailAddress());
         User target = dao.getUserById(dto.getId());
 
         if(target == null) {

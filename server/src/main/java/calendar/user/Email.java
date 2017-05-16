@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 class Email {
+    // TODO: Add Email as parameter
     void sendVerificationEmail(String id) {
         System.out.println("http://localhost:8080/api/visitor/verify_email?id=" + id);
     }

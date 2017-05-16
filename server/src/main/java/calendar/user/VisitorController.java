@@ -31,13 +31,13 @@ import java.util.Random;
 public class VisitorController {
     private UserDAO dao;
     private Email email;
-    private UserInformationValidator informationValidator;
+    private UserInformationValidator validator;
 
     @Autowired
     public VisitorController(UserDAOMongo dao, Email email, UserInformationValidator validator) {
         this.dao = dao;
         this.email = email;
-        this.informationValidator = validator;
+        this.validator= validator;
     }
 
     /**
@@ -50,9 +50,9 @@ public class VisitorController {
      */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public RecaptchaResponseDTO registration(@ModelAttribute RegistrationDTO dto) throws Exception {
-        informationValidator.validate(dto);
+        validator.validate(dto);
 
-        RecaptchaResponseDTO response = informationValidator.validateRecaptcha(dto.getRecaptcha());
+        RecaptchaResponseDTO response = validator.validateRecaptcha(dto.getRecaptcha());
 
         ArrayList<User> existingUsers = dao.getAllUsers();
         User user = new User(dto);
@@ -99,8 +99,8 @@ public class VisitorController {
      * @throws Exception    Invalid data, database errors
      */
     @RequestMapping(value = "/recover_password", method = RequestMethod.POST)
-    public void requestPasswordRecovery(@ModelAttribute RecoverPasswordDTO dto) throws Exception {
-        informationValidator.validate(dto);
+    public void recoverPassword(@ModelAttribute RecoverPasswordDTO dto) throws Exception {
+        validator.validate(dto);
 
         User user = dao.getUserByPasswordRecoveryLink(dto.getUrlId());
 

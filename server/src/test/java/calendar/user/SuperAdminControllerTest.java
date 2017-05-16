@@ -33,14 +33,14 @@ public class SuperAdminControllerTest {
         User targetMock = mock(User.class);
         UserIdDTO dtoMock = mock(UserIdDTO.class);
 
-        when(currentUser.getEmailAddres()).thenReturn("test@test.com");
+        when(currentUser.getEmailAddress()).thenReturn("test@test.com");
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
         when(actorMock.canChangeRoleTo(targetMock, "SUPER_ADMIN")).thenReturn(true);
 
         try {
-            sut.makeSuperAdministrator(dtoMock);
+            sut.makeSuperAdmin(dtoMock);
         }
         catch (Exception expt) {
             fail(expt.getMessage());
@@ -56,14 +56,14 @@ public class SuperAdminControllerTest {
         User targetMock = mock(User.class);
         UserIdDTO dtoMock = mock(UserIdDTO.class);
 
-        when(currentUser.getEmailAddres()).thenReturn("test@test.com");
+        when(currentUser.getEmailAddress()).thenReturn("test@test.com");
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
         when(actorMock.canChangeRoleTo(targetMock, "SUPER_ADMIN")).thenReturn(false);
 
         try {
-            sut.makeSuperAdministrator(dtoMock);
+            sut.makeSuperAdmin(dtoMock);
         }
         catch (Exception expt) {
             fail(expt.getMessage());
