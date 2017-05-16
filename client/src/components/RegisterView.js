@@ -20,8 +20,8 @@ class RegisterView extends Component {
     if (!fields.email) errors.push("Email Required!");
     if (!fields.password || !fields.confirmpassword) errors.push("Password Required!");
     if (fields.password !== fields.confirmpassword) errors.push("Password's doesn't match!");
-    if (fields.password.length < 10) errors.push("Pasword needs to be atleast 10 characters long!");
-    if (fields.password.length > 255) errors.push("Password can't be longer than 255 characters");
+    if (fields.password.length < 10) errors.push("Password is too short!");
+    if (fields.password.length > 255) errors.push("Password is too long!");
     if (!isEmail(fields.email)) errors.push("Invalid email!");
     return errors;
   }
