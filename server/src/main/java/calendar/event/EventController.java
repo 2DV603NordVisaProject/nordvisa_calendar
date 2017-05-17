@@ -118,6 +118,6 @@ public class EventController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Error eventNotFound(EventNotFoundException e) {
         String message = e.getMessage();
-        return new Error(message);
+        return new Error(404, message);
     }
 }
