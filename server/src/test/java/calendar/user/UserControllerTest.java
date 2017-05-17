@@ -209,7 +209,7 @@ public class UserControllerTest {
         verify(userMock, times(1)).setEmail("test2@test.com");
         verify(userMock, times(1)).
                 setValidateEmailLink(any(AuthenticationLink.class));
-        verify(email, times(1)).sendVerificationEmail("urlid");
+        verify(email, times(1)).sendVerificationEmail("urlid", "test@test.com");
 
         verify(orgMock).setChangePending("new_org");
         verify(dao).update(userMock);
@@ -243,7 +243,7 @@ public class UserControllerTest {
         verify(userMock, never()).setEmail(anyString());
         verify(userMock, never()).
                 setValidateEmailLink(any(AuthenticationLink.class));
-        verify(email, never()).sendVerificationEmail("urlid");
+        verify(email, never()).sendVerificationEmail("urlid", "test@test.com");
 
         verify(orgMock).setChangePending("new_org");
         verify(dao).update(userMock);
