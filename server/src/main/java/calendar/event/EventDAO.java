@@ -1,9 +1,11 @@
 package calendar.event;
 
+import org.bson.types.ObjectId;
+
 import java.util.List;
 
 public interface EventDAO {
-    List<Event> getEvent(String id);
+    List<Event> getEvent(ObjectId id);
     List<Event> getEvents();
     List<Event> getEventsFromCounty(String county);
     List<Event> getEventsFromCountry(String country);

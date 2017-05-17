@@ -18,10 +18,10 @@ public class EventDAOMongo implements EventDAO {
         client = MongoDBClient.getClient();
     }
 
-    public List<Event> getEvent(String id) {
+    public List<Event> getEvent(ObjectId id) {
         MongoCollection collection = client.getCollection("events");
         List<Event> eventList = new ArrayList<>();
-        eventList.add(collection.findOne(new ObjectId(id)).as(Event.class));
+        eventList.add(collection.findOne(id).as(Event.class));
         return eventList;
     }
 

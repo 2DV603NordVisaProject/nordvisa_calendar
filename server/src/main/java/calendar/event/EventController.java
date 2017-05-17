@@ -9,8 +9,6 @@ import calendar.event.exceptions.MissingTokenException;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -38,18 +36,21 @@ public class EventController {
 
             // Check if supplied id is valid ObjectId
             try {
+
                 ObjectId eventId = new ObjectId(id);
+
+                List<Event> event = dao.getEvent(eventId);
+
+                if (event.get(0) == null) {
+                    throw new EventNotFoundException("Event not found");
+                }
+
+                return event;
+
             } catch (IllegalArgumentException e) {
                 throw new EventNotFoundException("Event not found");
             }
 
-            List<Event> event = dao.getEvent(id);
-
-            if (event.get(0) == null) {
-                throw new EventNotFoundException("Event not found");
-            }
-
-            return event;
         }
 
         if (county != null) {
