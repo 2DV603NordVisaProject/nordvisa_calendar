@@ -5,10 +5,12 @@ import calendar.event.dto.DeleteEventDTO;
 import calendar.event.dto.UpdateEventDTO;
 import calendar.event.exceptions.EventNotFoundException;
 import calendar.event.exceptions.Error;
+import calendar.event.exceptions.MissingTokenException;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -23,9 +25,14 @@ public class EventController {
                                  @RequestParam(required = false) String county,
                                  @RequestParam(required = false) String country,
                                  @RequestParam(required = false) Long fromDate,
-                                 @RequestParam(required = false) Long toDate) {
+                                 @RequestParam(required = false) Long toDate,
+                                 @RequestParam(required = false) String token) {
 
         EventDAO dao = new EventDAOMongo();
+
+        if (token == null) {
+            throw new MissingTokenException("Unauthorized access");
+        }
 
         if (id != null) {
 
@@ -119,5 +126,12 @@ public class EventController {
     public Error eventNotFound(EventNotFoundException e) {
         String message = e.getMessage();
         return new Error(404, message);
+    }
+
+    @ExceptionHandler(MissingTokenException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Error missingToken(MissingTokenException e) {
+        String message = e.getMessage();
+        return new Error(401, message);
     }
 }
