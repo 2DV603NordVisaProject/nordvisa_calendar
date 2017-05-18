@@ -28,9 +28,6 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/upload")
 public class ImageController {
-
-
-
     @Autowired
     private ImageDAO dao;
 
@@ -38,32 +35,42 @@ public class ImageController {
            "image/png", "image/jpeg", "image/gif"
     ));
 
-
-
     /**
-     * Upload an image to the server. Returns a boolean meaning whether the upload was successful or not.
-     * @param file
-     * @return
+     * Upload an array of images to the server.
+     * @param files An array of files to upload.
+     * @return HTTP response
      */
-    // TODO: better error handling
+    // TODO: maximum number of files to upload
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity uploadImage(@RequestParam("file") MultipartFile file) {
-        String name = file.getOriginalFilename();
+    public ResponseEntity uploadImages(@RequestParam("files") MultipartFile[] files) {
+        String path;
 
-        try {
-            // TODO: duplicated name checking
-            String path = getRandomHexString(16);
+        do {
+            path = getRandomHexString(16);
+        } while(dao.pathExists(path));
 
-            InputStream is = new BufferedInputStream(file.getInputStream());
-            String mimeType = URLConnection.guessContentTypeFromStream(is);
+        for (MultipartFile file : files) {
+            String name = file.getOriginalFilename();
 
-            if (!ACCEPTED_FILE_TYPES.contains(mimeType)) {
-                return new ResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+            try {
+                InputStream is = new BufferedInputStream(file.getInputStream());
+                String mimeType = URLConnection.guessContentTypeFromStream(is);
+
+                if (!ACCEPTED_FILE_TYPES.contains(mimeType)) {
+                    dao.deleteAllImages(path);
+                    return new ResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+                }
+                if (!dao.saveImage(name, file, path, mimeType)) {
+                    // If saving an image fails for some reason, delete all previously uploaded images and
+                    // return 500
+                    dao.deleteAllImages(path);
+                    return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                dao.deleteAllImages(path);
+                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            dao.saveImage(name, file, path, mimeType);
-        } catch(IOException e) {
-            e.printStackTrace();
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return new ResponseEntity(HttpStatus.OK);
@@ -83,6 +90,7 @@ public class ImageController {
         }
     }
 
+    //TODO: Authentication
     @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.DELETE)
     public HttpEntity<byte[]> deleteImage(@PathVariable("path") String path, @PathVariable("name") String name) {
         String res;

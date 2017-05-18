@@ -1,46 +1,27 @@
 package calendar.image;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Files;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ImageControllerTest {
-    private MockMvc mockMvc;
-
     private String resources = ImageController.class
             .getResource("../../../../resources/test/")
             .getPath();
-
-    private String endpoint = "/api/upload";
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
 
     @Mock
     private ImageDAO dao;
@@ -48,35 +29,57 @@ public class ImageControllerTest {
     @InjectMocks
     private ImageController sut;
 
-    @Before
-    public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
-
     @Test
     public void uploadImage() throws Exception {
 
         FileInputStream testImage = new FileInputStream(resources + "test.jpg");
-        MockMultipartFile file = new MockMultipartFile("file", testImage);
+        MockMultipartFile file1 = new MockMultipartFile("file", "test.jpg", "image/jpeg", testImage);
+        MockMultipartFile[] files = { file1 };
 
-        // Fails in Travis. Need to fix
-        /*
-        mockMvc.perform(fileUpload(endpoint)
-                .file(file))
-                .andDo(print())
-                .andExpect(status().isOk());*/
+        when(dao.saveImage(eq("test.jpg"), eq(file1), anyString(), eq("image/jpeg"))).thenReturn(true);
 
-        assertEquals(HttpStatus.OK, sut.uploadImage(file).getStatusCode());
+        assertEquals(HttpStatus.OK, sut.uploadImages(files).getStatusCode());
+    }
+
+    @Test
+    public void uploadImages() throws Exception {
+        FileInputStream testImage1 = new FileInputStream(resources + "test.jpg");
+        FileInputStream testImage2 = new FileInputStream(resources + "test.png");
+        MockMultipartFile file1 = new MockMultipartFile("file", "test.jpg", "image/jpeg", testImage1);
+        MockMultipartFile file2 = new MockMultipartFile("file", "test.png", "image/png", testImage2);
+
+        MockMultipartFile[] files = { file1, file2 };
+
+        when(dao.saveImage(eq("test.jpg"), eq(file1), anyString(), eq("image/jpeg"))).thenReturn(true);
+        when(dao.saveImage(eq("test.png"), eq(file2), anyString(), eq("image/png"))).thenReturn(true);
+
+        assertEquals(HttpStatus.OK, sut.uploadImages(files).getStatusCode());
+    }
+
+    @Test
+    public void deleteImagesWhenUploadFails() throws Exception {
+        FileInputStream testImage1 = new FileInputStream(resources + "test.jpg");
+        FileInputStream testImage2 = new FileInputStream(resources + "test.bmp");
+
+        MockMultipartFile file1 = new MockMultipartFile("file", "test.jpg", "image/jpeg", testImage1);
+        MockMultipartFile file2 = new MockMultipartFile("file", "test.bmp", "image/bmp", testImage2);
+
+        MockMultipartFile[] files = { file1, file2 };
+
+        when(dao.saveImage(eq("test.jpg"), eq(file1), anyString(), eq("image/jpeg"))).thenReturn(true);
+
+        assertEquals(HttpStatus.UNSUPPORTED_MEDIA_TYPE, sut.uploadImages(files).getStatusCode());
+
+        verify(dao, times(1)).deleteAllImages(anyString());
     }
 
     @Test
     public void uploadImageWrongFileType() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "hello world!".getBytes());
 
-        mockMvc.perform(fileUpload(endpoint)
-                .file(file))
-                .andDo(print())
-                .andExpect(status().isUnsupportedMediaType());
+        MockMultipartFile[] files = { file };
+
+        assertEquals(HttpStatus.UNSUPPORTED_MEDIA_TYPE, sut.uploadImages(files).getStatusCode());
     }
 
     @Test
@@ -84,10 +87,9 @@ public class ImageControllerTest {
         FileInputStream testImage = new FileInputStream(resources + "test.bmp");
         MockMultipartFile file = new MockMultipartFile("file", testImage);
 
-        mockMvc.perform(fileUpload(endpoint)
-                .file(file))
-                .andDo(print())
-                .andExpect(status().isUnsupportedMediaType());
+        MockMultipartFile[] files = { file };
+
+        assertEquals(HttpStatus.UNSUPPORTED_MEDIA_TYPE, sut.uploadImages(files).getStatusCode());
     }
 
     @Test

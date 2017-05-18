@@ -55,4 +55,16 @@ class ImageDAOMongo implements ImageDAO {
 
         return r.getN() == 1;
     }
+
+    @Override
+    public void deleteAllImages(String path) {
+        MongoCollection collection = client.getCollection("images");
+        collection.remove("{path: '" + path + "'}");
+    }
+
+    @Override
+    public boolean pathExists(String path) {
+        MongoCollection collection = client.getCollection("images");
+        return collection.count("{path: '" + path + "'}") > 0;
+    }
 }
