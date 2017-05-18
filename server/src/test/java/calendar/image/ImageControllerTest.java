@@ -57,23 +57,6 @@ public class ImageControllerTest {
     }
 
     @Test
-    public void deleteImagesWhenUploadFails() throws Exception {
-        FileInputStream testImage1 = new FileInputStream(resources + "test.jpg");
-        FileInputStream testImage2 = new FileInputStream(resources + "test.bmp");
-
-        MockMultipartFile file1 = new MockMultipartFile("file", "test.jpg", "image/jpeg", testImage1);
-        MockMultipartFile file2 = new MockMultipartFile("file", "test.bmp", "image/bmp", testImage2);
-
-        MockMultipartFile[] files = { file1, file2 };
-
-        when(dao.saveImage(eq("test.jpg"), eq(file1), anyString(), eq("image/jpeg"))).thenReturn(true);
-
-        assertEquals(HttpStatus.UNSUPPORTED_MEDIA_TYPE, sut.uploadImages(files).getStatusCode());
-
-        verify(dao, times(1)).deleteAllImages(anyString());
-    }
-
-    @Test
     public void uploadImageWrongFileType() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "hello world!".getBytes());
 
@@ -93,6 +76,23 @@ public class ImageControllerTest {
     }
 
     @Test
+    public void deleteImagesWhenUploadFails() throws Exception {
+        FileInputStream testImage1 = new FileInputStream(resources + "test.jpg");
+        FileInputStream testImage2 = new FileInputStream(resources + "test.bmp");
+
+        MockMultipartFile file1 = new MockMultipartFile("file", "test.jpg", "image/jpeg", testImage1);
+        MockMultipartFile file2 = new MockMultipartFile("file", "test.bmp", "image/bmp", testImage2);
+
+        MockMultipartFile[] files = { file1, file2 };
+
+        when(dao.saveImage(eq("test.jpg"), eq(file1), anyString(), eq("image/jpeg"))).thenReturn(true);
+
+        assertEquals(HttpStatus.UNSUPPORTED_MEDIA_TYPE, sut.uploadImages(files).getStatusCode());
+
+        verify(dao, times(1)).deleteAllImages(anyString());
+    }
+
+    @Test
     public void getImage() throws Exception {
         Image image = mock(Image.class);
 
@@ -107,5 +107,32 @@ public class ImageControllerTest {
         assertEquals(file, sut.getImage("123456789abcdef", "test.jpg").getBody());
 
         verify(dao, times(1)).getImage("123456789abcdef", "test.jpg");
+    }
+
+    @Test
+    public void getNonexistentImage() throws Exception {
+        when(dao.getImage("123456789abcdef", "test.jpg")).thenReturn(null);
+
+        assertEquals(HttpStatus.NOT_FOUND, sut.getImage("123456789abcdef", "test.jpg").getStatusCode());
+
+        verify(dao, times(1)).getImage("123456789abcdef", "test.jpg");
+    }
+
+    @Test
+    public void deleteImage() throws Exception {
+        when(dao.deleteImage("123456789abcdef", "test.jpg")).thenReturn(true);
+
+        assertEquals(HttpStatus.NO_CONTENT, sut.deleteImage("123456789abcdef", "test.jpg").getStatusCode());
+
+        verify(dao, times(1)).deleteImage("123456789abcdef", "test.jpg");
+    }
+
+    @Test
+    public void deleteNonexistentImage() throws Exception {
+        when(dao.deleteImage("123456789abcdef", "test.jpg")).thenReturn(false);
+
+        assertEquals(HttpStatus.NOT_FOUND, sut.deleteImage("123456789abcdef", "test.jpg").getStatusCode());
+
+        verify(dao, times(1)).deleteImage("123456789abcdef", "test.jpg");
     }
 }

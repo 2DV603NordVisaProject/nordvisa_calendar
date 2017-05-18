@@ -77,14 +77,14 @@ public class ImageController {
     }
 
     @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.GET)
-    public HttpEntity<byte[]> getImage(@PathVariable("path") String path, @PathVariable("name") String name) {
+    public ResponseEntity<byte[]> getImage(@PathVariable("path") String path, @PathVariable("name") String name) {
         Image image = dao.getImage(path, name);
 
         if(image != null) {
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, image.getType());
 
-            return new HttpEntity<>(image.getFile(), headers);
+            return new ResponseEntity<>(image.getFile(), headers, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -92,14 +92,11 @@ public class ImageController {
 
     //TODO: Authentication
     @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.DELETE)
-    public HttpEntity<byte[]> deleteImage(@PathVariable("path") String path, @PathVariable("name") String name) {
-        String res;
-
+    public ResponseEntity deleteImage(@PathVariable("path") String path, @PathVariable("name") String name) {
         if(dao.deleteImage(path, name)) {
-            res = "File " + name + " deleted successfully.";
-            return new HttpEntity<>(res.getBytes());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 
