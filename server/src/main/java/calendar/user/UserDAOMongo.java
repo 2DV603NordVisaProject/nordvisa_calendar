@@ -82,6 +82,7 @@ public class UserDAOMongo implements UserDAO {
         return cursorToArray(collection.find("{}").as(User.class));
     }
 
+    // TODO: Check logic so users creating new organization is approved by admin
     public ArrayList<User> getPendingRegistrations(String organization) throws Exception {
         MongoCollection collection = client.getCollection("users");
 
@@ -101,8 +102,6 @@ public class UserDAOMongo implements UserDAO {
      */
     public void add(User user) {
         MongoCollection collection = client.getCollection("users");
-
-
         collection.insert(user);
     }
 
@@ -116,7 +115,7 @@ public class UserDAOMongo implements UserDAO {
         collection.update(new ObjectId(user.getId())).with(user);
     }
 
-    private static ArrayList<User> cursorToArray(MongoCursor<User> cursor) {
+    private ArrayList<User> cursorToArray(MongoCursor<User> cursor) {
         ArrayList<User> list = new ArrayList<>();
 
         while(cursor.hasNext()) {

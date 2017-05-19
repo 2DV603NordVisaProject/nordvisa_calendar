@@ -15,6 +15,7 @@ import java.util.Random;
  * authenticated user.
  *
  * The following routes are available:
+ * Get role of the current user -   GET     -    /api/user/role
  * Get a User by ID             -   GET     -    /api/user?id=""
  * Get a User by Email          -   GET     -    /api/user?email=""
  * Get Users by Organization    -   GET     -    /api/user?organization=""
@@ -39,7 +40,9 @@ public class UserController {
 
     @RequestMapping(value = "/role", method = RequestMethod.GET)
     public RoleDTO getRole() throws Exception {
-        return new RoleDTO(new CurrentUser().getEmailAddress());
+        String email = new CurrentUser().getEmailAddress();
+        User user = dao.getUserByEmail(email);
+        return new RoleDTO(user.getRole());
     }
 
     /**
@@ -150,7 +153,7 @@ public class UserController {
             user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
                     DateTime.now().getMillis()));
 
-            email.sendVerificationEmail(user.getValidateEmailLink().getUrl());
+            email.sendVerificationEmail(user.getValidateEmailLink().getUrl(), user.getEmail());
         }
 
         user.getOrganization().setChangePending(dto.getOrganization());

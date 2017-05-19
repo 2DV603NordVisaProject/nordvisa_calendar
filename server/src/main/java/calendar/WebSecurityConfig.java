@@ -26,17 +26,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // TODO: ENABLE SECURITY!!
 //        http
 //                .authorizeRequests()
 //                    .antMatchers("/api/user/**").hasAuthority("USER")
 //                    .antMatchers("/api/admin/**").hasAuthority("ADMIN")
 //                    .antMatchers("/api/super_admin/**").hasAuthority("SUPER_ADMIN")
-//                    .antMatchers("/").authenticated()
+//                    .antMatchers("/api/event/create",
+//                            "/api/event/detete",
+//                            "/api/event/update").authenticated()
+//                    .antMatchers("/api/upload").authenticated()
 //                    .anyRequest().permitAll()
 //                    .and()
 //                .formLogin()
-//                    .loginPage("/login.html")
+//                    .loginPage("/")
 //                    .loginProcessingUrl("/login")
 //                    .permitAll()
 //                    .and()

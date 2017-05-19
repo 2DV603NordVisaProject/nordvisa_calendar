@@ -6,6 +6,7 @@ gradle
 gradlew
 gradlew.bat
 build
+/server/src/main/resources/static/*
 
 *.log
 

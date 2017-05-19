@@ -59,6 +59,7 @@ public class VisitorController {
 
         if(existingUsers.size() == 0) {
             user.setRole("SUPER_ADMIN");
+            user.getOrganization().setApproved(true);
         }
 
         user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
@@ -66,7 +67,7 @@ public class VisitorController {
 
         dao.add(user);
 
-        email.sendVerificationEmail(user.getValidateEmailLink().getUrl());
+        email.sendVerificationEmail(user.getValidateEmailLink().getUrl(), user.getEmail());
 
         return response;
     }
@@ -87,7 +88,7 @@ public class VisitorController {
                 DateTime.now().getMillis()));
         dao.update(user);
 
-        email.sendPasswordResetEmail(user.getResetPasswordLink().getUrl());
+        email.sendPasswordResetEmail(user.getResetPasswordLink().getUrl(), user.getEmail());
     }
 
     /**
@@ -129,25 +130,20 @@ public class VisitorController {
     @RequestMapping(value = "/verify_email", method = RequestMethod.GET)
     public String verifyEmailAddress(HttpServletResponse response, @RequestParam("id") String urlId)
             throws Exception {
-        try {
-            User user = dao.getUserByEmailVerificationLink(urlId);
+        User user = dao.getUserByEmailVerificationLink(urlId);
 
-            if (user == null) {
-                throw new Exception("This link is invalid");
-            }
-
-            if(user.getValidateEmailLink().hasExpired()) {
-                throw new Exception("This link has expired");
-            }
-
+        if(user == null) {
+            return "This link is invalid";
+        }
+        else if(user.getValidateEmailLink().hasExpired()) {
+            return "This link has expired";
+        }
+        else {
             user.setValidateEmailLink(new AuthenticationLink("", 0));
             dao.update(user);
+            response.sendRedirect("/");
+            return "";
         }
-        catch (Exception expt) {
-            return expt.getMessage();
-        }
-        response.sendRedirect("/");
-        return "";
     }
 
     private String generateRandomString() {

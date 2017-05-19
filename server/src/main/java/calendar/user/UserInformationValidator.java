@@ -94,6 +94,7 @@ class UserInformationValidator {
                     createBody(secret, recaptchaRes),
                     RecaptchaResponseDTO.class
             ).getBody();
+
         }
         catch (RestClientException expt) {
             throw new Exception("Could not verify captcha");

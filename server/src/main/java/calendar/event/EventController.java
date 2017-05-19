@@ -5,10 +5,10 @@ import calendar.event.dto.DeleteEventDTO;
 import calendar.event.dto.UpdateEventDTO;
 import calendar.event.exceptions.EventNotFoundException;
 import calendar.event.exceptions.Error;
+import calendar.event.exceptions.MissingTokenException;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -23,26 +23,34 @@ public class EventController {
                                  @RequestParam(required = false) String county,
                                  @RequestParam(required = false) String country,
                                  @RequestParam(required = false) Long fromDate,
-                                 @RequestParam(required = false) Long toDate) {
+                                 @RequestParam(required = false) Long toDate,
+                                 @RequestParam(required = false) String token) {
 
         EventDAO dao = new EventDAOMongo();
+
+        if (token == null) {
+            throw new MissingTokenException("Unauthorized access");
+        }
 
         if (id != null) {
 
             // Check if supplied id is valid ObjectId
             try {
+
                 ObjectId eventId = new ObjectId(id);
+
+                List<Event> event = dao.getEvent(eventId);
+
+                if (event.get(0) == null) {
+                    throw new EventNotFoundException("Event not found");
+                }
+
+                return event;
+
             } catch (IllegalArgumentException e) {
                 throw new EventNotFoundException("Event not found");
             }
 
-            List<Event> event = dao.getEvent(id);
-
-            if (event.get(0) == null) {
-                throw new EventNotFoundException("Event not found");
-            }
-
-            return event;
         }
 
         if (county != null) {
@@ -118,6 +126,13 @@ public class EventController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Error eventNotFound(EventNotFoundException e) {
         String message = e.getMessage();
-        return new Error(message);
+        return new Error(404, message);
+    }
+
+    @ExceptionHandler(MissingTokenException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Error missingToken(MissingTokenException e) {
+        String message = e.getMessage();
+        return new Error(401, message);
     }
 }

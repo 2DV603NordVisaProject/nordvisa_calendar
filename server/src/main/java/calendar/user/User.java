@@ -157,33 +157,31 @@ public class User {
      * @return          True if this user can manage the target user
      */
     boolean canManage(User target) {
-        boolean answer = false;
-
-        if(id.equals(target.getId())) {
-            answer = true;
+        if(getId().equals(target.getId())) {
+            return true;
         }
         else if(target.getRole().equals("SUPER_ADMIN")) {
-            answer = false;
+            return false;
         }
-        else if(role.equals("SUPER_ADMIN")) {
-            answer = true;
+        else if(getRole().equals("SUPER_ADMIN")) {
+            return true;
         }
-        else if(role.equals("ADMIN")) {
+        else if(getRole().equals("ADMIN")) {
             if(getOrganization().getName().equals("")) {
                 if(target.getRole().equals("USER")) {
-                    answer = true;
+                    return true;
                 }
                 else if(!target.getOrganization().getName().equals("")) {
-                    answer = true;
+                    return true;
                 }
             }
-            else if(organization.compare(target.getOrganization()) &&
+            else if(getOrganization().compare(target.getOrganization()) &&
                     target.getRole().equals("USER")) {
-                answer = true;
+                return true;
             }
         }
 
-        return answer;
+        return false;
     }
 
     boolean canChangeRoleTo(User target, String newRole) {
@@ -197,23 +195,19 @@ public class User {
             return false;
         }
         else if(newRole.equals("USER")) {
-            if(getRole().equals("ADMIN") && (organization.getName().equals("") ||
-                    organization.compare(target.getOrganization()))) {
-
-                if(organization.compare(target.getOrganization())) {
-                    return true;
-                }
-                else if(organization.getName().equals("") &&
-                        !target.getOrganization().getName().equals("")) {
-                    return true;
-                }
+            if(getRole().equals("ADMIN") && getOrganization().compare(target.getOrganization())) {
+                return true;
+            }
+            else if(getRole().equals("ADMIN") && getOrganization().getName().equals("") &&
+                    !target.getOrganization().getName().equals("")) {
+                return true;
             }
             else if(getRole().equals("SUPER_ADMIN")) {
                 return true;
             }
         }
         else if(newRole.equals("ADMIN")) {
-            if(getRole().equals("ADMIN") && organization.compare(target.getOrganization())) {
+            if(getRole().equals("ADMIN") && getOrganization().compare(target.getOrganization())) {
                 return true;
             }
             else if(getRole().equals("ADMIN") && getOrganization().getName().equals("")) {
@@ -223,10 +217,8 @@ public class User {
                 return true;
             }
         }
-        else if(newRole.equals("SUPER_ADMIN")) {
-            if(getRole().equals("SUPER_ADMIN")) {
+        else if(newRole.equals("SUPER_ADMIN") && getRole().equals("SUPER_ADMIN")) {
                 return true;
-            }
         }
 
         return false;
