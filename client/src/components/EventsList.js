@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import Event from "./Event";
+import PropTypes from "prop-types";
 
 class EventsList extends Component {
   render() {
+
+    const language = this.context.language.MyEventsView;
+
     return (
       <div className="event-list">
         <div className="list-header">
-          <p>Events</p>
+          <p className="capitalize">{language.events}</p>
         </div>
         <ul>
           {
@@ -18,6 +22,10 @@ class EventsList extends Component {
       </div>
     );
   }
+}
+
+EventsList.contextTypes = {
+  language: PropTypes.object,
 }
 
 export default EventsList;

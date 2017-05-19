@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./WidgetView.css";
 import ErrorList from "./ErrorList";
 import ProvinceSelect from "./ProvinceSelect";
+import PropTypes from "prop-types"
 
 
 class WidgetView extends Component {
@@ -67,20 +68,24 @@ class WidgetView extends Component {
   }
 
   render() {
+
+    const language = this.context.language.WidgetView;
+
     return (
       <div className="lightbox widget-view">
-        <h2>Generate Widget Code</h2>
+        <h2 className="uppercase">{language.generateWidgetCode}</h2>
         <form>
           <select
+            className="capitalize"
             name="region"
             onChange={this.onInputChange.bind(this)}
             defaultValue={this.state.fields.region}>
-            <option value="">Choose Region</option>
-            <option value="all">All Nordic Countries</option>
-            <option value="sweden">Sweden</option>
-            <option value="norway">Norway</option>
-            <option value="denmark">Denmark</option>
-            <option value="iceland">Iceland</option>
+            <option value="" className="capitalize">{language.chooseRegion}</option>
+            <option value="all" className="capitalize">{language.allNordic}</option>
+            <option value="sweden" className="capitalize">{language.sweden}</option>
+            <option value="norway" className="capitalize">{language.norway}</option>
+            <option value="denmark" className="capitalize">{language.denmark}</option>
+            <option value="iceland" className="capitalize">{language.iceland}</option>
           </select>
           <div id="on-province-select" className="hidden">
             <ProvinceSelect
@@ -88,14 +93,14 @@ class WidgetView extends Component {
               onChange={this.onInputChange.bind(this)}/>
           </div>
           <ErrorList errors={this.state.fieldErrors}/>
-          <button className="btn-primary" onClick={this.onFormSubmit.bind(this)}>generate</button>
+          <button className="btn-primary" onClick={this.onFormSubmit.bind(this)}>{language.generate}</button>
         </form>
         {
           this.state.isGenerated ? (
             <div className="code-container">
-              <p>Paste the following code within the head-tags on your website:</p>
+              <p>{language.headCode}:</p>
               <textarea className="widget-code" defaultValue={this.state.headCode} disabled></textarea>
-              <p>Paste the following code where you want to display the widget</p>
+              <p>{language.bodyCode}:</p>
               <textarea className="widget-code" defaultValue={this.state.bodyCode} disabled></textarea>
             </div>
           ) : (
@@ -105,6 +110,10 @@ class WidgetView extends Component {
       </div>
     );
   }
+}
+
+WidgetView.contextTypes = {
+  language: PropTypes.object,
 }
 
 export default WidgetView;

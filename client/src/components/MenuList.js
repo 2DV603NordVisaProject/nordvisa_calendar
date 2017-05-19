@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import Client from "../Client";
 import Link from "react-router/Link";
+import PropTypes from "prop-types";
 
 class MenuList extends Component {
   render() {
+
+    const language = this.context.language.MenuList;
+
     return (
       <ul>
         {
@@ -26,16 +30,20 @@ class MenuList extends Component {
             </div>
           ) : (
             <div>
-              <li><Link to="/login" className="menu-link">Login</Link></li>
-              <li><Link to="/register" className="menu-link">Register</Link></li>
-              <li><Link to="/recover-password" className="menu-link">Forgot Password</Link></li>
+              <li><Link to="/login" className="menu-link capitalize">{language.login}</Link></li>
+              <li><Link to="/register" className="menu-link capitalize">{language.register}</Link></li>
+              <li><Link to="/recover-password" className="menu-link capitalize">{language.forgot}</Link></li>
             </div>
           )
         }
-        <li><Link to="/generate-widget" className="menu-link">Generate Widget</Link></li>
+        <li><Link to="/generate-widget" className="menu-link capitalize">{language.generate}</Link></li>
       </ul>
     )
   }
+}
+
+MenuList.contextTypes = {
+  language: PropTypes.object,
 }
 
 export default MenuList;

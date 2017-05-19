@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { isEmail } from "validator";
 import ErrorList from "./ErrorList";
+import PropTypes from "prop-types";
 
 class UpdateAccount extends Component {
   state = {
@@ -51,24 +52,28 @@ class UpdateAccount extends Component {
   }
 
   render() {
+
+    const language = this.context.language.MyAccountView;
+
     return (
       <div className="box">
-        <h3>Update Account Details</h3>
+        <h3 className="capitalize">{language.updateDetails}</h3>
         <form onSubmit={this.onFormSubmit.bind(this)}>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email" className="capitalize">{language.email}:</label>
           <input type="text" name="email" value={this.state.fields.email} onChange={this.onInputChange.bind(this)}></input>
-          <label htmlFor="org">Organization:</label>
+          <label htmlFor="org" className="capitalize">{language.organization}:</label>
           <select
+            className="capitalize"
             name="org"
             onChange={this.onInputChange.bind(this)}
             value={this.state.fields.org}
             defaultValue="">
             <option value="NordVisa">NordVisa</option>
-            <option value="new">New Organization</option>
-            <option value="">No Organization</option>
+            <option value="new" className="capitalize">{language.newOrganization}</option>
+            <option value="" className="capitalize">{language.noOrganization}</option>
           </select>
           <div id="on-select-change" className="hidden">
-            <label htmlFor="neworg">New Organization:</label>
+            <label htmlFor="neworg">{language.newOrganization}:</label>
             <input
               name="neworg"
               value={this.state.fields.neworg}
@@ -77,11 +82,15 @@ class UpdateAccount extends Component {
             </input>
           </div>
           <ErrorList errors={this.state.fieldErrors}/>
-          <input type="submit" value="save" className="btn-primary"></input>
+          <input type="submit" value={language.save} className="btn-primary"></input>
         </form>
       </div>
     );
   }
+}
+
+UpdateAccount.contextTypes = {
+  language: PropTypes.object,
 }
 
 export default UpdateAccount;

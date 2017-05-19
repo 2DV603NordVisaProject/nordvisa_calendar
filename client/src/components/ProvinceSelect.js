@@ -1,11 +1,17 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+
 class ProvinceSelect extends Component {
   render() {
+
+    const language = this.context.language.WidgetView;
+
     if (this.props.region === "sweden") {
       return (
-        <select defaultValue="" name="province" onChange={this.props.onChange.bind(this)}>
-          <option value="">Choose Province</option>
-          <option value="">None</option>
+        <select defaultValue="" name="province" onChange={this.props.onChange.bind(this)} className="capitalize">
+          <option value="" className="capitalize">{language.chooseProvince}</option>
+          <option value="" className="capitalize">{language.none}</option>
           <option value="blekinge">Blekinge</option>
           <option value="bohuslan">Bohuslän</option>
           <option value="dalarna">Dalarna</option>
@@ -34,9 +40,9 @@ class ProvinceSelect extends Component {
       );
     } else if(this.props.region === "norway") {
       return (
-        <select name="province" defaultValue="" onChange={this.props.onChange.bind(this)}>
-          <option value="">Choose Province</option>
-          <option value="">None</option>
+        <select name="province" defaultValue="" onChange={this.props.onChange.bind(this)} className="capitalize">
+          <option value="" className="capitalize">{language.chooseProvince}</option>
+          <option value="" className="capitalize">{language.none}</option>
           <option value="agder">Agder</option>
           <option value="follo">Follo</option>
           <option value="gudbrandsdalen">Gudbrandsdalen</option>
@@ -68,9 +74,9 @@ class ProvinceSelect extends Component {
       );
     } else if (this.props.region === "iceland") {
       return (
-        <select name="province" defaultValue="" onChange={this.props.onChange.bind(this)}>
-          <option value="">Choose Province</option>
-          <option value="">None</option>
+        <select name="province" defaultValue="" onChange={this.props.onChange.bind(this)} className="capitalize">
+          <option value="" className="capitalize">{language.chooseProvince}</option>
+          <option value="" className="capitalize">{language.none}</option>
           <option value="arnessysla">Árnessýsla</option>
           <option value="austurbaroastrandarsysla">Austur-Barðastrandarsýsla</option>
           <option value="austurhunavatnssysla">Austur-Húnavatnssýsla</option>
@@ -98,9 +104,9 @@ class ProvinceSelect extends Component {
       );
     } else if (this.props.region === "denmark") {
       return (
-        <select defaultValue="" name="province" onChange={this.props.onChange.bind(this)}>
-          <option value="">Choose Province</option>
-          <option value="">None</option>
+        <select defaultValue="" name="province" onChange={this.props.onChange.bind(this)} className="capitalize">
+          <option value="" className="capitalize">{language.chooseProvince}</option>
+          <option value="" className="capitalize">{language.none}</option>
           <option value="nordjylland">Nordjylland</option>
           <option value="midtjylland">Midtjylland</option>
           <option value="syddanmark">Syddanmark</option>
@@ -115,4 +121,9 @@ class ProvinceSelect extends Component {
     }
   }
 }
+
+ProvinceSelect.contextTypes = {
+  language: PropTypes.object,
+}
+
 export default ProvinceSelect;

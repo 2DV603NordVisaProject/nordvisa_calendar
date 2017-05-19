@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./PendingRegistrationsView.css";
 import RegistrationsList from "./RegistrationsList";
 import Client from "../Client";
+import PropTypes from "prop-types";
 
 class PendingRegistrationsView extends Component {
   state = {
@@ -14,21 +15,28 @@ class PendingRegistrationsView extends Component {
   }
 
   render() {
+
+    const language = this.context.language.PendingRegistrationsView;
+
     return (
       <div className="view pending-view">
-        <h2>Pending Registrations</h2>
+        <h2 className="uppercase">{language.pending}</h2>
         <div className="list-header">
-          <p>Email</p>
-          <p>Organization</p>
-          <p>Approve</p>
+          <p className="capitalize">{language.email}</p>
+          <p className="capitalize">{language.organization}</p>
+          <p className="capitalize">{language.approve}</p>
         </div>
         <form>
           <RegistrationsList registrations={this.state.registrations}/>
-        <input type="submit" className="btn-primary" value="approve"></input>
+        <input type="submit" className="btn-primary" value={language.approve}></input>
         </form>
       </div>
     );
   }
+}
+
+PendingRegistrationsView.contextTypes = {
+  language: PropTypes.object,
 }
 
 export default PendingRegistrationsView;

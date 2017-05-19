@@ -6,6 +6,7 @@ import Client from "../Client";
 import Redirect from "react-router/Redirect";
 import Loader from "./Loader";
 import Link from "react-router/Link";
+import PropTypes from "prop-types";
 
 class LoginView extends Component {
   state = {
@@ -55,6 +56,9 @@ class LoginView extends Component {
     this.setState({fields});
   }
   render() {
+
+    const language = this.context.language;
+
     if (this.state.shouldRedirect) {
       return (
         <Redirect to="/user/event"/>
@@ -66,16 +70,16 @@ class LoginView extends Component {
     } else {
       return (
         <div className="lightbox login">
-          <h2>Login</h2>
+          <h2 className="uppercase">{language.LoginView.login}</h2>
           <form onSubmit={this.onFormSubmit.bind(this)}>
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="email" className="capitalize">{language.LoginView.email}:</label>
             <input
               name="email"
               value={this.state.fields.email}
               onChange={this.onInputChange.bind(this)}
               type="text">
             </input>
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password" className="capitalize">{language.LoginView.password}:</label>
             <input
               name="password"
               onChange={this.onInputChange.bind(this)}
@@ -83,13 +87,17 @@ class LoginView extends Component {
               type="password">
             </input>
             <ErrorList errors={this.state.fieldErrors}/>
-            <input type="submit" className="btn-primary" value="login"></input>
+            <input type="submit" className="btn-primary" value={language.LoginView.login}></input>
           </form>
-          <Link to="/recover-password">Forgot Password?</Link>
+          <Link to="/recover-password" className="capitalize">{language.LoginView.forgot}</Link>
         </div>
       );
     }
   }
 }
+
+LoginView.contextTypes = {
+  language: PropTypes.object,
+};
 
 export default LoginView;

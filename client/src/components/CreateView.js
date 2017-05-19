@@ -5,6 +5,7 @@ import "./CreateView.css";
 import ErrorList from "./ErrorList";
 import Client from "../Client";
 import Redirect from "react-router/Redirect";
+import PropTypes from "prop-types";
 
 class CreateView extends Component {
   state = {
@@ -98,19 +99,22 @@ class CreateView extends Component {
   }
 
   render() {
+
+    const language = this.context.language.CreateView;
+
     if (this.state.progress === "preview" || this.state.progress === "view") {
       return (
         <div className="view preview">
-          <h2>Create Event</h2>
+          <h2 className="capitalize">{language.createEvent}</h2>
           <div className="box">
             {
-              this.state.progress === "preview" ? <h3>Preview Event</h3> : <h3>View Event</h3>
+              this.state.progress === "preview" ? <h3 className="capitalize">{language.previewEvent}</h3> : <h3 className="capitalize">{language.viewEvent}</h3>
             }
             <h4 className="preview-text">{this.state.fields.name}</h4>
             <p className="preview-text">{this.state.fields.location} - {this.state.fields.date} - {this.state.fields.startTime} - {this.state.fields.endTime}</p>
             <div className="img-container" style={{backgroundImage: `url(${this.state.fields.img})`}}>
             </div>
-            <h4 className="preview-text">Description:</h4>
+            <h4 className="preview-text capitalize">{language.description}:</h4>
             <div className="desc">
               <p>{this.state.fields.desc}</p>
             </div>
@@ -119,9 +123,9 @@ class CreateView extends Component {
             </div>
             <div className="action-container">
               {
-                this.state.progress === "preview" ? <button className="btn-primary" onClick={this.onSaveClick.bind(this)}>save</button> : ""
+                this.state.progress === "preview" ? <button className="btn-primary" onClick={this.onSaveClick.bind(this)}>{language.save}</button> : ""
               }
-              <button className="btn-primary" onClick={this.onEditClick.bind(this)}>edit</button>
+              <button className="btn-primary" onClick={this.onEditClick.bind(this)}>{language.edit}</button>
             </div>
           </div>
         </div>
@@ -129,11 +133,11 @@ class CreateView extends Component {
     } else {
       return (
         <div className="view create-event">
-          <h2>Create Event</h2>
+          <h2 className="capitalize">{language.createEvent}</h2>
           <div className="box">
-            <h3>New Event</h3>
+            <h3 className="capitalize">{language.newEvent}</h3>
             <form onSubmit={this.onFormSubmit.bind(this)}>
-              <label htmlFor="name">Name:</label>
+              <label htmlFor="name" className="capitalize">{language.name}:</label>
               <input
                 name="name"
                 type="text"
@@ -141,14 +145,14 @@ class CreateView extends Component {
                 onChange={this.onInputChange.bind(this)}>
               </input>
               <br/>
-              <label htmlFor="date">Date:</label>
+              <label htmlFor="date" className="capitalize">{language.date}:</label>
               <input
                 type="date"
                 name="date"
                 value={this.state.fields.date}
                 onChange={this.onInputChange.bind(this)}>
               </input>
-              <label htmlFor="time">Time:</label>
+              <label htmlFor="time" className="capitalize">{language.time}:</label>
               <input
                 name="startTime"
                 type="time"
@@ -165,7 +169,7 @@ class CreateView extends Component {
                 className="time-form end-time">
               </input>
               <div className="recurring">
-                <label htmlFor="recurring">Recurring:</label>
+                <label htmlFor="recurring" className="capitalize">{language.recurring}:</label>
                 <input
                   name="recurring"
                   type="checkbox"
@@ -174,24 +178,25 @@ class CreateView extends Component {
                   onChange={this.onInputChange.bind(this)}></input>
               </div>
               <div className="is-recurring hidden">
-                <label htmlFor="recursuntil">Recurs Until:</label>
+                <label htmlFor="recursuntil" className="capitalize">{language.recursUntil}:</label>
                 <input
                   type="date"
                   name="recursuntil"
                   value={this.state.fields.recursuntil}
                   onChange={this.onInputChange.bind(this)}>
                 </input>
-                <label htmlFor="recurs">Recurs:</label>
+                <label htmlFor="recurs" className="capitalize">{language.recurs}:</label>
                 <select
+                  className="capitalize"
                   name="recurs"
                   value={this.state.fields.recurs}
                   onChange={this.onInputChange.bind(this)}>
-                  <option>Weekly</option>
-                  <option>Monthly</option>
-                  <option>Yearly</option>
+                  <option className="capitalize">{language.weekly}</option>
+                  <option className="capitalize">{language.monthly}</option>
+                  <option className="capitalize">{language.yearly}</option>
                 </select>
               </div>
-              <label htmlFor="location">Location:</label>
+              <label htmlFor="location" className="capitalize">{language.location}:</label>
               <input
                 name="location"
                 type="text"
@@ -199,13 +204,13 @@ class CreateView extends Component {
                 onChange={this.onInputChange.bind(this)}>
               </input>
               <br/>
-              <label htmlFor="desc">Description:</label>
+              <label htmlFor="desc" className="capitalize">{language.description}:</label>
               <textarea
                 name="desc"
                 value={this.state.fields.desc}
                 onChange={this.onInputChange.bind(this)}>
               </textarea>
-              <label htmlFor="img">Image:</label>
+              <label htmlFor="img" className="capitalize">{language.image}:</label>
               <input
                 type="file"
                 name="img"
@@ -214,7 +219,7 @@ class CreateView extends Component {
                 onChange={this.onInputChange.bind(this)}>
               </input>
               <ErrorList className={this.state.progress === "saved" ? "success" : ""} errors={this.state.fieldErrors}/>
-              <input type="submit" value="preview" className="btn-primary"></input>
+              <input type="submit" value={language.preview} className="btn-primary"></input>
                 {
                   this.state.comeFrom === "event" ? this.state.progress === "saved" ? <Redirect to="/user/event"/> : "" : ""
                 }
@@ -224,6 +229,10 @@ class CreateView extends Component {
       );
     }
   }
+}
+
+CreateView.contextTypes = {
+  language: PropTypes.object,
 }
 
 export default CreateView;

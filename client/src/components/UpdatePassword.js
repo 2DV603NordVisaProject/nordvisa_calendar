@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ErrorList from "./ErrorList";
+import PropTypes from "prop-types";
 
 class UpdatePassword extends Component {
   state = {
@@ -44,25 +45,28 @@ class UpdatePassword extends Component {
   }
 
   render() {
+
+    const language = this.context.language.MyAccountView;
+
     return (
       <div className="box">
-        <h3>Update Account Password</h3>
+        <h3 className="capitalize">{language.updatePassword}</h3>
         <form onSubmit={this.onFormSubmit.bind(this)}>
-          <label htmlFor="oldpassword">Old Password:</label>
+          <label htmlFor="oldpassword" className="capitalize">{language.oldPassword}:</label>
           <input
             type="password"
             name="oldpassword"
             value={this.state.fields.oldpassword}
             onChange={this.onInputChange.bind(this)}>
           </input>
-          <label htmlFor="newpassword">New Password:</label>
+          <label htmlFor="newpassword" className="capitalize">{language.newPassword}:</label>
           <input
             type="password"
             name="newpassword"
             value={this.state.fields.newpassword}
             onChange={this.onInputChange.bind(this)}>
           </input>
-          <label htmlFor="confirmpassword">New Password Again:</label>
+          <label htmlFor="confirmpassword" className="capitalize">{language.confirmPassword}:</label>
           <input
             type="password"
             name="confirmpassword"
@@ -70,11 +74,15 @@ class UpdatePassword extends Component {
             onChange={this.onInputChange.bind(this)}>
           </input>
           <ErrorList errors={this.state.fieldErrors}/>
-          <input type="submit" value="save" className="btn-primary"></input>
+          <input type="submit" value={language.save} className="btn-primary"></input>
         </form>
       </div>
     );
   }
 }
+UpdatePassword.contextTypes = {
+  language: PropTypes.object,
+}
+
 
 export default UpdatePassword;

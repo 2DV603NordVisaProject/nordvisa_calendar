@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { isEmail } from "validator";
 import "./RegisterView.css";
 import ErrorList from "./ErrorList";
+import PropTypes from "prop-types";
 
 class RegisterView extends Component {
   state = {
@@ -60,32 +61,35 @@ class RegisterView extends Component {
   }
 
   render() {
+
+    const language = this.context.language.RegisterView;
+
     return (
       <div className="lightbox register">
-        <h2>Register</h2>
+        <h2 className="uppercase">{language.register}</h2>
         <form className="center" onSubmit={this.onFormSubmit.bind(this)}>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email" className="capitalize">{language.email}:</label>
           <input
             name="email"
             type="text"
             value={this.state.fields.email}
             onChange={this.onInputChange.bind(this)}>
           </input>
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password" className="capitalize">{language.password}:</label>
           <input
             name="password"
             value={this.state.fields.password}
             onChange={this.onInputChange.bind(this)}
             type="password">
           </input>
-          <label htmlFor="confirmpassword">Password Again:</label>
+          <label htmlFor="confirmpassword" className="capitalize">{language.confirmPassword}:</label>
           <input
             name="confirmpassword"
             value={this.state.fields.confirmpassword}
             onChange={this.onInputChange.bind(this)}
             type="password">
           </input>
-          <label htmlFor="org">Organization:</label>
+          <label htmlFor="org" className="capitalize">{language.organization}:</label>
           <select
             name="org"
             onChange={this.onInputChange.bind(this)}
@@ -96,7 +100,7 @@ class RegisterView extends Component {
             <option value="">No Organization</option>
           </select>
           <div className="change hidden">
-            <label htmlFor="neworg">New Organization:</label>
+            <label htmlFor="neworg" className="capitalize">{language.newOrganization}:</label>
             <input
               name="neworg"
               value={this.state.fields.neworg}
@@ -106,11 +110,15 @@ class RegisterView extends Component {
           </div>
           <div className="g-recaptcha" data-sitekey="6Le13yAUAAAAAC4D1Ml81bW3WlGN83bZo4FzHU7Z"></div>
           <ErrorList errors={this.state.fieldErrors}/>
-          <input type="submit" value="register" className="btn-primary"/>
+          <input type="submit" value={language.registerBtn} className="btn-primary"/>
         </form>
       </div>
     );
   }
+}
+
+RegisterView.contextTypes = {
+  language: PropTypes.object
 }
 
 export default RegisterView;

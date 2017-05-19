@@ -3,6 +3,7 @@ import "./MembersView.css";
 import Client from "../Client";
 import MembersList from "./MembersList";
 import ConfirmMessage from "./ConfirmMessage";
+import PropTypes from "prop-types";
 
 class MembersView extends Component {
   state = {
@@ -24,7 +25,7 @@ class MembersView extends Component {
     const updated = this.state.updated.join(", ");
     const popup = {
       pop: true,
-      msg: `Are you sure you want to change access for ${updated}`,
+      msg: `${this.context.language.MembersView.accMsg} ${updated}`,
     }
 
     this.setState({ popup });
@@ -49,17 +50,24 @@ class MembersView extends Component {
   }
 
   render() {
+
+    const language = this.context.language.MembersView;
+
     return (
       <div className="members view">
-        <h2>Members</h2>
+        <h2 className="uppercase">{language.members}</h2>
         <form onSubmit={this.onFormSubmit.bind(this)}>
           <MembersList members={this.state.members} onChange={this.onInputChange.bind(this)}/>
-          <input type="submit" value="save" className="btn-primary"></input>
+          <input type="submit" value={language.save} className="btn-primary"></input>
         </form>
         <ConfirmMessage popup={this.state.popup} onClick={this.onConfirmClick.bind(this)}/>
       </div>
     );
   }
+}
+
+MembersView.contextTypes = {
+  language: PropTypes.object,
 }
 
 export default MembersView;

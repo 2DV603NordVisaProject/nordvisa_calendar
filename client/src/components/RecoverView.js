@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { isEmail } from "validator";
 import ErrorList from "./ErrorList";
+import PropTypes from "prop-types";
 
 class RecoverView extends Component {
   state = {
@@ -36,11 +37,14 @@ class RecoverView extends Component {
     this.setState({ fields });
   }
   render() {
+
+    const language = this.context.language.RecoverView;
+
     return (
       <div className="lightbox login">
-        <h2>Recover Password</h2>
+        <h2 className="uppercase">{language.recover}</h2>
         <form onSubmit={this.onFormSubmit.bind(this)}>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email" className="capitalize">{language.email}:</label>
           <input
             name="email"
             type="text"
@@ -48,11 +52,15 @@ class RecoverView extends Component {
             onChange={this.onInputChange.bind(this)}>
           </input>
           <ErrorList errors={this.state.fieldErrors}/>
-          <input type="submit" value="request password" className="btn-primary"></input>
+          <input type="submit" value={language.request} className="btn-primary uppercase"></input>
         </form>
       </div>
     );
   }
+}
+
+RecoverView.contextTypes = {
+  language: PropTypes.object,
 }
 
 export default RecoverView;
