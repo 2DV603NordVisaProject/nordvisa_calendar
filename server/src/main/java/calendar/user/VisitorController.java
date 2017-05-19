@@ -54,6 +54,8 @@ public class VisitorController {
 
         RecaptchaResponseDTO response = validator.validateRecaptcha(dto.getRecaptcha());
 
+        //TODO: Verify reCaptcha success
+
         ArrayList<User> existingUsers = dao.getAllUsers();
         User user = new User(dto);
 

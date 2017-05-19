@@ -18,7 +18,7 @@ public class UserDTO {
     private long createdAt;
     private long updatedAt;
 
-    private ArrayList<String> events;
+    private ArrayList<String> events; //REMOVE THIS
     private Organization organization;
 
     public UserDTO(User user) {
