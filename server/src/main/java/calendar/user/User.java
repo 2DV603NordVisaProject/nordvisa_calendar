@@ -32,7 +32,7 @@ public class User {
     private long createdAt;
     private long updatedAt;
 
-    private ArrayList<String> events;
+    private ArrayList<String> events; //REMOVE THIS!
 
     @Autowired
     private Organization organization;

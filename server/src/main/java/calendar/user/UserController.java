@@ -38,6 +38,7 @@ public class UserController {
     @Autowired
     private CurrentUser currentUser;
 
+    // TODO: Change to get current User!
     @RequestMapping(value = "/role", method = RequestMethod.GET)
     public RoleDTO getRole() throws Exception {
         String email = new CurrentUser().getEmailAddress();

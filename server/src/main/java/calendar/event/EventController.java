@@ -6,6 +6,7 @@ import calendar.event.dto.UpdateEventDTO;
 import calendar.event.exceptions.EventNotFoundException;
 import calendar.event.exceptions.Error;
 import calendar.event.exceptions.MissingTokenException;
+import calendar.user.AuthorizationChecker;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -111,12 +112,14 @@ public class EventController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public void deleteEvent(@RequestBody DeleteEventDTO deleteEventDTO) {
+        // TODO: Add authChecker
         EventDAO dao = new EventDAOMongo();
         dao.deleteEvent(deleteEventDTO.getId());
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Event updateEvent(@RequestBody UpdateEventDTO updateEventDTO) {
+        // TODO: Add authChecker
         Event event = new Event(updateEventDTO);
         EventDAO dao = new EventDAOMongo();
         return dao.updateEvent(event);
