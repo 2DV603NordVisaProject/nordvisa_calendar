@@ -13,6 +13,7 @@ class LoginView extends Component {
     fields: {
       email: "",
       password: "",
+      
     },
     fieldErrors: [],
     loginInProgress: false,
