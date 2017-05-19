@@ -59,6 +59,7 @@ public class VisitorController {
 
         if(existingUsers.size() == 0) {
             user.setRole("SUPER_ADMIN");
+            user.getOrganization().setApproved(true);
         }
 
         user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
