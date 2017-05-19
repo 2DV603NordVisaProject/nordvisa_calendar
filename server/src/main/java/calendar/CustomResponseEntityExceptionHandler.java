@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
+    // Exception Handelr
     @ExceptionHandler(MultipartException.class)
     public ResponseEntity<String> handleMultipartException(Exception e){
         if(e.getCause() instanceof IllegalStateException && e.getCause().getCause() instanceof FileUploadBase.SizeLimitExceededException) {

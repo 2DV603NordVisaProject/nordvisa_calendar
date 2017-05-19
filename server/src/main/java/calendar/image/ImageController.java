@@ -1,17 +1,13 @@
 package calendar.image;
 
 import calendar.image.dto.UploadImagesDTO;
-import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.naming.SizeLimitExceededException;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -92,15 +88,15 @@ public class ImageController {
         }
     }
 
-    //TODO: Authentication
-    @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.DELETE)
+    /*@RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.DELETE)
     public ResponseEntity deleteImage(@PathVariable("path") String path, @PathVariable("name") String name) {
+
         if(dao.deleteImage(path, name)) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
 
     private String getRandomHexString(int length){
         Random r = new Random();
