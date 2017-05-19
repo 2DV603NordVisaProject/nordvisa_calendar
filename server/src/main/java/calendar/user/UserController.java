@@ -38,12 +38,12 @@ public class UserController {
     @Autowired
     private CurrentUser currentUser;
 
-    // TODO: Change to get current User!
-    @RequestMapping(value = "/role", method = RequestMethod.GET)
-    public RoleDTO getRole() throws Exception {
+    // TODO: Update diagrams with this
+    @RequestMapping(value = "/current", method = RequestMethod.GET)
+    public UserDTO getCurrentUser() throws Exception {
         String email = new CurrentUser().getEmailAddress();
         User user = dao.getUserByEmail(email);
-        return new RoleDTO(user.getRole());
+        return new UserDTO(user);
     }
 
     /**

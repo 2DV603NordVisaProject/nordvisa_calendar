@@ -5,6 +5,7 @@ package calendar.user;
  *
  * @author Axel Nilsson (axnion)
  */
+// TODO: Add to class diagram
 public class AuthorizationChecker {
     public boolean currentUserCanManage(String id) {
         CurrentUser currentUser = new CurrentUser();
