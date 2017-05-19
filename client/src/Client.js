@@ -1,5 +1,12 @@
+export default Client = {
+  post: (obj) => {
 
-const Client = {
+  },
+  get: () => {
+
+  },
+}
+/*const Client = {
  login: () => {
    localStorage.setItem("logedIn", "true");
    localStorage.setItem("userLevel", "superadmin");
@@ -118,3 +125,4 @@ const Client = {
 };
 
 export default Client;
+*/
