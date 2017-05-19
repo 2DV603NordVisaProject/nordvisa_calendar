@@ -1,5 +1,6 @@
 package calendar.image;
 
+import calendar.image.dto.UploadImagesDTO;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -38,16 +39,17 @@ public class ImageController {
     /**
      * Upload an array of images to the server.
      * @param files An array of files to upload.
-     * @return HTTP response
+     * @return HTTP response of a body containing a JSON object with the generated path
      */
     // TODO: maximum number of files to upload
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity uploadImages(@RequestParam("files") MultipartFile[] files) {
+    public ResponseEntity<UploadImagesDTO> uploadImages(@RequestParam("files") MultipartFile[] files) {
         String path;
+        UploadImagesDTO uploadFailed = new UploadImagesDTO("", false);
 
         do {
             path = getRandomHexString(16);
-        } while(dao.pathExists(path));
+        } while (dao.pathExists(path));
 
         for (MultipartFile file : files) {
             String name = file.getOriginalFilename();
@@ -58,22 +60,22 @@ public class ImageController {
 
                 if (!ACCEPTED_FILE_TYPES.contains(mimeType)) {
                     dao.deleteAllImages(path);
-                    return new ResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+                    return new ResponseEntity<>(uploadFailed, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
                 }
                 if (!dao.saveImage(name, file, path, mimeType)) {
                     // If saving an image fails for some reason, delete all previously uploaded images and
                     // return 500
                     dao.deleteAllImages(path);
-                    return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<>(uploadFailed, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
                 dao.deleteAllImages(path);
-                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(uploadFailed, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(new UploadImagesDTO(path, true), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{path:.+}/{name:.+}", method = RequestMethod.GET)
