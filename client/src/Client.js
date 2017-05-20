@@ -6,17 +6,14 @@ const Client = {
   post: (obj, uri) => {
     console.log(obj);
 
-    const headers = new Headers();
-    headers.append("Content-Type", "application/x-www-form-urlencoded");
-
-    const config = {
+    const req = new Request(`${url}${uri}`, {
       method: "POST",
       mode: "no-cors",
-      headers: headers,
-      data: JSON.stringify(obj)
-    }
+      headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded"}),
+      body: JSON.stringify(obj)
+    })
 
-    return fetch(`${url}${uri}`, config).then(res => res.json);
+    return fetch(req).then(res => res.json);
  },
  login: () => {
    localStorage.setItem("logedIn", "true");
