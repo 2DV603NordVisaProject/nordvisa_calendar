@@ -48,9 +48,7 @@ public class UserControllerTest {
         when(user.getCreatedAt()).thenReturn(longNumber);
         when(user.getUpdatedAt()).thenReturn(longNumber);
 
-        ArrayList<String> events = new ArrayList<>();
         Organization org = mock(Organization.class);
-        when(user.getEvents()).thenReturn(events);
         when(user.getOrganization()).thenReturn(org);
 
         when(dao.getUserById("1")).thenReturn(user);
@@ -62,7 +60,6 @@ public class UserControllerTest {
         assertEquals(dto.getRole(), "USER");
         assertEquals(dto.getCreatedAt(), longNumber);
         assertEquals(dto.getUpdatedAt(), longNumber);
-        assertEquals(dto.getEvents(), events);
         assertEquals(dto.getOrganization(), org);
 
         verify(dao, times(1)).getUserById("1");
@@ -80,9 +77,7 @@ public class UserControllerTest {
         when(user.getCreatedAt()).thenReturn(longNumber);
         when(user.getUpdatedAt()).thenReturn(longNumber);
 
-        ArrayList<String> events = new ArrayList<>();
         Organization org = mock(Organization.class);
-        when(user.getEvents()).thenReturn(events);
         when(user.getOrganization()).thenReturn(org);
 
         when(dao.getUserByEmail("test@test.com")).thenReturn(user);
@@ -93,7 +88,6 @@ public class UserControllerTest {
         assertEquals(dto.getRole(), "USER");
         assertEquals(dto.getCreatedAt(), longNumber);
         assertEquals(dto.getUpdatedAt(), longNumber);
-        assertEquals(dto.getEvents(), events);
         assertEquals(dto.getOrganization(), org);
 
         verify(dao, times(1)).getUserByEmail("test@test.com");

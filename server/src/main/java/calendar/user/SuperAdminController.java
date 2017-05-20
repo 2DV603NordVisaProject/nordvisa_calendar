@@ -42,6 +42,7 @@ public class SuperAdminController {
 
         if(actor.canChangeRoleTo(target, "SUPER_ADMIN")) {
             target.setRole("SUPER_ADMIN");
+            target.getOrganization().setName("");
             dao.update(target);
         }
     }

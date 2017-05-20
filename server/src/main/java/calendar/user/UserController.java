@@ -38,7 +38,6 @@ public class UserController {
     @Autowired
     private CurrentUser currentUser;
 
-    // TODO: Update diagrams with this
     @RequestMapping(value = "/current", method = RequestMethod.GET)
     public UserDTO getCurrentUser() throws Exception {
         String email = new CurrentUser().getEmailAddress();

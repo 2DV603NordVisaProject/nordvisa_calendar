@@ -32,8 +32,6 @@ public class User {
     private long createdAt;
     private long updatedAt;
 
-    private ArrayList<String> events; //REMOVE THIS!
-
     @Autowired
     private Organization organization;
 
@@ -54,7 +52,6 @@ public class User {
         this.createdAt = DateTime.now().getMillis();
         this.updatedAt = DateTime.now().getMillis();
 
-        this.events = new ArrayList<>();
         this.organization = new Organization(dto.getOrganization(), false);
     }
 
@@ -88,10 +85,6 @@ public class User {
 
     public long getUpdatedAt() {
         return updatedAt;
-    }
-
-    public ArrayList<String> getEvents() {
-        return events;
     }
 
     public Organization getOrganization() {
