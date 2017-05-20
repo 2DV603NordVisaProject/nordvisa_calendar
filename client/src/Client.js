@@ -5,12 +5,15 @@ const url = "http://localhost:8080"
 const Client = {
   post: (obj, uri) => {
     console.log(obj);
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
+
     const config = {
       method: "POST",
-      headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      data: obj
+      mode: "no-cors",
+      headers: headers,
+      data: JSON.stringify(obj)
     }
 
     return fetch(`${url}${uri}`, config).then(res => res.json);
