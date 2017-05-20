@@ -20,4 +20,5 @@ class Email {
     void sendPasswordResetEmail(String id, String email) {
         System.out.println("Sent to (" + email + ") http://" + baseUrl + "/change_password/" + id);
     }
+    // TODO: Add success email on registration when registration is approved.
 }
