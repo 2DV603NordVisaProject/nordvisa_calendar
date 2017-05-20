@@ -1,4 +1,16 @@
+"use strict";
+
+const url = "http://localhost:8080"
+
 const Client = {
+  post: (obj, uri) => {
+    const config = {
+      method: "POST",
+      data: obj
+    }
+
+    return fetch(`${url}${uri}`, config).then(res => res.json);
+ },
  login: () => {
    localStorage.setItem("logedIn", "true");
    localStorage.setItem("userLevel", "superadmin");
@@ -116,4 +128,11 @@ const Client = {
  }
 };
 
-export default Client;
+Client.post({
+  email: "test@live.se",
+  password: "hejsanhejsan",
+  passwordConfirmation: "hejsanhejsan",
+  organization: "for the lulz"
+}, "/api/visitor/registration");
+
+//export default Client;
