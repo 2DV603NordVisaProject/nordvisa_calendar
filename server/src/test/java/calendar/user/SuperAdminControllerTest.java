@@ -33,20 +33,20 @@ public class SuperAdminControllerTest {
         User targetMock = mock(User.class);
         UserIdDTO dtoMock = mock(UserIdDTO.class);
 
+        Organization targetOrgMock = mock(Organization.class);
+
         when(currentUser.getEmailAddress()).thenReturn("test@test.com");
         when(dao.getUserByEmail("test@test.com")).thenReturn(actorMock);
         when(dao.getUserById("1")).thenReturn(targetMock);
         when(dtoMock.getId()).thenReturn("1");
         when(actorMock.canChangeRoleTo(targetMock, "SUPER_ADMIN")).thenReturn(true);
+        when(targetMock.getOrganization()).thenReturn(targetOrgMock);
+        doNothing().when(targetOrgMock).setName("");
 
-        try {
-            sut.makeSuperAdmin(dtoMock);
-        }
-        catch (Exception expt) {
-            fail(expt.getMessage());
-        }
+        sut.makeSuperAdmin(dtoMock);
 
         verify(targetMock, times(1)).setRole("SUPER_ADMIN");
+        verify(targetOrgMock, times(1)).setName("");
         verify(dao, times(1)).update(targetMock);
     }
 

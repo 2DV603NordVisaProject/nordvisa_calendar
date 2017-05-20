@@ -2,12 +2,15 @@ package calendar.user;
 
 import calendar.databaseConnections.MongoDBClient;
 import org.bson.types.ObjectId;
+import org.jongo.Distinct;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class UserDAOMongo
@@ -18,7 +21,6 @@ import java.util.ArrayList;
 public class UserDAOMongo implements UserDAO {
     private Jongo client;
 
-    //TODO: Secure from injection
     public UserDAOMongo() {
         client = MongoDBClient.getClient();
     }
@@ -82,17 +84,39 @@ public class UserDAOMongo implements UserDAO {
         return cursorToArray(collection.find("{}").as(User.class));
     }
 
-    // TODO: Check logic so users creating new organization is approved by admin
+    // TODO: Users who want to join the global group can't
     public ArrayList<User> getPendingRegistrations(String organization) throws Exception {
         MongoCollection collection = client.getCollection("users");
 
-        ArrayList<User> list;
+        ArrayList<User> finalList = new ArrayList<>();
+        ArrayList<User> newOrgUsers = new ArrayList<>();
+        ArrayList<User> unapproved = cursorToArray(collection.find(
+                "{organization.approved: false}"
+        ).as(User.class));
 
-        list = cursorToArray(collection.find("{organization.approved: false}").as(User.class));
-        list.addAll(cursorToArray(collection.find("{organization.changePending: \""
-                + organization + "\"}").as(User.class)));
+        ArrayList<User> changingOrg = cursorToArray(collection.find(
+                "{organization.changePending: \"" + organization + "\"}"
+        ).as(User.class));
 
-        return list;
+        Iterator<User> changingOrgIterator = changingOrg.iterator();
+
+        while(changingOrgIterator.hasNext()) {
+            User next = changingOrgIterator.next();
+
+            if(next.getOrganization().getChangePending().equals("")) {
+                changingOrgIterator.remove();
+            }
+        }
+
+        if(organization.equals("")) {
+            newOrgUsers = getUsersCreatingNewOrganization(collection);
+        }
+
+        addToList(finalList, newOrgUsers);
+        addToList(finalList, unapproved);
+        addToList(finalList, changingOrg);
+
+        return finalList;
     }
 
     /**
@@ -113,6 +137,42 @@ public class UserDAOMongo implements UserDAO {
     public void update(User user) {
         MongoCollection collection = client.getCollection("users");
         collection.update(new ObjectId(user.getId())).with(user);
+    }
+
+    private ArrayList<User> getUsersCreatingNewOrganization(MongoCollection collection) {
+        ArrayList<User> users = new ArrayList<>();
+
+        Distinct distinct = collection.distinct("organization.name");
+
+        List<String> existingOrganization = distinct.as(String.class);
+
+        for(String org : existingOrganization) {
+            long numberOfUsers= collection.count("{organization.name: \"" + org + "\"}");
+
+            if(numberOfUsers == 1 && !org.equals("")) {
+                users.add(collection.findOne("{organization.name: \"" + org + "\"}")
+                        .as(User.class));
+            }
+        }
+
+        return users;
+    }
+
+    private void addToList(ArrayList<User> finalList, ArrayList<User> toBeAdded) {
+        for(User user : toBeAdded) {
+            boolean doesNotExist = true;
+
+            for (User existingUser : finalList) {
+                if(existingUser.getId().equals(user.getId())) {
+                    doesNotExist = false;
+                    break;
+                }
+            }
+
+            if (doesNotExist) {
+                finalList.add(user);
+            }
+        }
     }
 
     private ArrayList<User> cursorToArray(MongoCursor<User> cursor) {

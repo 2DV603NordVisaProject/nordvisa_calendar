@@ -54,22 +54,23 @@ public class VisitorController {
 
         RecaptchaResponseDTO response = validator.validateRecaptcha(dto.getRecaptcha());
 
-        //TODO: Verify reCaptcha success
+        // TODO: Add recptacha again
+//        if (response.isSuccess()) {
+            ArrayList<User> existingUsers = dao.getAllUsers();
+            User user = new User(dto);
 
-        ArrayList<User> existingUsers = dao.getAllUsers();
-        User user = new User(dto);
+            if(existingUsers.size() == 0) {
+                user.setRole("SUPER_ADMIN");
+                user.getOrganization().setApproved(true);
+            }
 
-        if(existingUsers.size() == 0) {
-            user.setRole("SUPER_ADMIN");
-            user.getOrganization().setApproved(true);
-        }
+            user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
+                    DateTime.now().getMillis()));
 
-        user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
-                DateTime.now().getMillis()));
+            dao.add(user);
 
-        dao.add(user);
-
-        email.sendVerificationEmail(user.getValidateEmailLink().getUrl(), user.getEmail());
+            email.sendVerificationEmail(user.getValidateEmailLink().getUrl(), user.getEmail());
+//        }
 
         return response;
     }

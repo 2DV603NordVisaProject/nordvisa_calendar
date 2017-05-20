@@ -18,7 +18,6 @@ public class UserDTO {
     private long createdAt;
     private long updatedAt;
 
-    private ArrayList<String> events; //REMOVE THIS
     private Organization organization;
 
     public UserDTO(User user) {
@@ -29,7 +28,6 @@ public class UserDTO {
         this.createdAt = user.getCreatedAt();
         this.updatedAt = user.getUpdatedAt();
 
-        this.events = user.getEvents();
         this.organization = user.getOrganization();
     }
 
@@ -51,10 +49,6 @@ public class UserDTO {
 
     public long getUpdatedAt() {
         return updatedAt;
-    }
-
-    public ArrayList<String> getEvents() {
-        return events;
     }
 
     public Organization getOrganization() {
