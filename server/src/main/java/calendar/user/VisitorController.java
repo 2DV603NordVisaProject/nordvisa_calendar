@@ -54,8 +54,7 @@ public class VisitorController {
 
         RecaptchaResponseDTO response = validator.validateRecaptcha(dto.getRecaptcha());
 
-        // TODO: Add recptacha again
-//        if (response.isSuccess()) {
+        if (response.isSuccess()) {
             ArrayList<User> existingUsers = dao.getAllUsers();
             User user = new User(dto);
 
@@ -70,7 +69,7 @@ public class VisitorController {
             dao.add(user);
 
             email.sendVerificationEmail(user.getValidateEmailLink().getUrl(), user.getEmail());
-//        }
+        }
 
         return response;
     }
