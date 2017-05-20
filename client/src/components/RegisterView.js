@@ -3,6 +3,7 @@ import { isEmail } from "validator";
 import "./RegisterView.css";
 import ErrorList from "./ErrorList";
 import PropTypes from "prop-types";
+import Client from "../Client";
 
 class RegisterView extends Component {
   state = {
@@ -49,7 +50,23 @@ class RegisterView extends Component {
     this.setState({ fieldErrors });
 
     // Return on Errors
-    if (fieldErrors.length) return;
+    if (this.state.fieldErrors.length) return;
+
+    // Do registration
+    const uri = "/api/visitor/registration";
+    const user = {
+      email: this.state.fields.email,
+      password: this.state.fields.password,
+      passwordConfirmation: this.state.fields.confirmpassword,
+      organization: this.state.fields.neworg || this.state.fields.org
+    };
+
+
+    Client.post(user, uri).then(res => {
+      const errors = [];
+      errors.push(res);
+      if (this.state.fieldErrors.length) return;
+    })
 
     this.setState({fields: {
       email: "",

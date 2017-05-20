@@ -4,8 +4,12 @@ const url = "http://localhost:8080"
 
 const Client = {
   post: (obj, uri) => {
+    console.log(obj);
     const config = {
       method: "POST",
+      headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+      },
       data: obj
     }
 
@@ -128,11 +132,4 @@ const Client = {
  }
 };
 
-Client.post({
-  email: "test@live.se",
-  password: "hejsanhejsan",
-  passwordConfirmation: "hejsanhejsan",
-  organization: "for the lulz"
-}, "/api/visitor/registration");
-
-//export default Client;
+export default Client;
