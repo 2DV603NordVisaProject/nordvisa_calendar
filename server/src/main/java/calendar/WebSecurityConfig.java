@@ -26,32 +26,32 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                    .antMatchers("/api/user/**").hasAuthority("USER")
-//                    .antMatchers("/api/admin/**").hasAuthority("ADMIN")
-//                    .antMatchers("/api/super_admin/**").hasAuthority("SUPER_ADMIN")
-//                    .antMatchers("/api/event/create",
-//                            "/api/event/detete",
-//                            "/api/event/update").authenticated()
-//                    .antMatchers("/api/upload/**").authenticated()
-//                    .anyRequest().permitAll()
-//                    .and()
-//                .formLogin()
-//                    .loginPage("/")
-//                    .loginProcessingUrl("/login")
-//                    .permitAll()
-//                    .and()
-//                .logout()
-//                    .permitAll()
-//                    .and()
-//                .csrf()
-//                    .disable();
-
         http
                 .authorizeRequests()
-                .anyRequest().permitAll().and()
-                .csrf().disable();
+                    .antMatchers("/api/user/**").hasAuthority("USER")
+                    .antMatchers("/api/admin/**").hasAuthority("ADMIN")
+                    .antMatchers("/api/super_admin/**").hasAuthority("SUPER_ADMIN")
+                    .antMatchers("/api/event/create",
+                            "/api/event/detete",
+                            "/api/event/update").authenticated()
+                    .antMatchers("/api/upload/**").authenticated()
+                    .anyRequest().permitAll()
+                    .and()
+                .formLogin()
+                    .loginPage("/")
+                    .loginProcessingUrl("/login")
+                    .permitAll()
+                    .and()
+                .logout()
+                    .permitAll()
+                    .and()
+                .csrf()
+                    .disable();
+
+//        http
+//                .authorizeRequests()
+//                .anyRequest().permitAll().and()
+//                .csrf().disable();
     }
 
     @Autowired
