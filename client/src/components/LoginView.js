@@ -13,16 +13,17 @@ class LoginView extends Component {
     fields: {
       email: "",
       password: "",
-      
+
     },
     fieldErrors: [],
     loginInProgress: false,
     shouldRedirect: false,
   }
 
-  performLogin() {
+  performLogin(user) {
     this.setState({ loginInProgress: true });
-    Client.login().then(() => (
+    const uri = "/login";
+    Client.login(user, uri).then(() => (
       this.setState({ shouldRedirect: true })
     ));
   }
@@ -33,8 +34,7 @@ class LoginView extends Component {
     if (!fields.password) errors.push("Password field is empty!")
     if (fields.password.length < 10) errors.push("Incorrect Password!");
     if (fields.password.length > 255) errors.push("Incorrect Password!");
-
-    return errors
+    return errors;
   }
 
   onFormSubmit(event) {
@@ -46,8 +46,13 @@ class LoginView extends Component {
     // Return on Errors
     if (fieldErrors.length) return;
 
+    const user = {
+      username: this.state.fields.email,
+      password: this.state.fields.password
+    }
+
     //TODO Might change
-    this.performLogin();
+    this.performLogin(user);
     this.setState({fields: {email: "", password: ""}})
   }
 

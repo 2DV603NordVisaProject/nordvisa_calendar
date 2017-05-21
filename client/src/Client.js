@@ -15,7 +15,7 @@ const Client = {
   post: (obj, uri) => {
     const req = new Request(`${url}${uri}`, {
       method: "POST",
-      //mode: "no-cors",
+      mode: "no-cors",
       headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"}),
       body: serialize(obj)
     })
@@ -28,7 +28,11 @@ const Client = {
         return json;
       });
  },
- login: () => {
+ login: function(userObj, uri) {
+   this.post(userObj, uri)
+    .then(res => {
+      console.log(res);
+    })
    localStorage.setItem("logedIn", "true");
    localStorage.setItem("userLevel", "superadmin");
 

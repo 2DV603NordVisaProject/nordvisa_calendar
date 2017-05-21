@@ -160,9 +160,12 @@ class RegisterView extends Component {
               sitekey='6Le13yAUAAAAAC4D1Ml81bW3WlGN83bZo4FzHU7Z'
               verifyCallback={this.callback.bind(this)}
               />
-
-            <ErrorList errors={this.state.fieldErrors}/>
-            <input type="submit" value={language.registerBtn} className="btn-primary"/>
+            <input
+              type="submit"
+              value={language.registerBtn}
+              className="btn-primary"
+              >
+            </input>
           </form>
         </div>
       );
