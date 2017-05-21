@@ -119,6 +119,14 @@ public class UserDAOMongo implements UserDAO {
         return finalList;
     }
 
+    public List<String> getOrganizations() {
+        MongoCollection collection = client.getCollection("users");
+
+        Distinct distinct = collection.distinct("organization.name");
+
+        return distinct.as(String.class);
+    }
+
     /**
      * Takes a User object and adds it to the database.
      *

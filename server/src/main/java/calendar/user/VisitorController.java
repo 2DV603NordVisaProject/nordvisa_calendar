@@ -1,15 +1,13 @@
 package calendar.user;
 
-import calendar.user.dto.PasswordRecoveryRequestDTO;
-import calendar.user.dto.RecaptchaResponseDTO;
-import calendar.user.dto.RecoverPasswordDTO;
-import calendar.user.dto.RegistrationDTO;
+import calendar.user.dto.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -146,6 +144,12 @@ public class VisitorController {
             response.sendRedirect("/");
             return "";
         }
+    }
+
+    // TODO: Add to documentation and diagrams
+    @RequestMapping(value = "/organizations", method = RequestMethod.GET)
+    public List<String> getOrganizations() throws Exception {
+        return dao.getOrganizations();
     }
 
     private String generateRandomString() {

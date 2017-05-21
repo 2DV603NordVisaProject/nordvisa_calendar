@@ -12,8 +12,7 @@ public class RegistrationDTO {
     private String password;
     private String passwordConfirmation;
     private String organization;
-    @JsonProperty("g-recaptcha-response")
-    private String recaptcha;
+    private String gRecaptchaResponse;
 
     public String getEmail() {
         return email;
@@ -32,7 +31,7 @@ public class RegistrationDTO {
     }
 
     public String getRecaptcha() {
-        return recaptcha;
+        return gRecaptchaResponse;
     }
 
     public void setEmail(String email) {
@@ -49,5 +48,9 @@ public class RegistrationDTO {
 
     public void setOrganization(String organization) {
         this.organization = organization;
+    }
+
+    public void setgRecaptchaResponse(String recaptcha) {
+        this.gRecaptchaResponse = recaptcha;
     }
 }
