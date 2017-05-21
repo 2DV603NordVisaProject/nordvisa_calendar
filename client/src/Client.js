@@ -26,12 +26,18 @@ const Client = {
       })
       .then(json => {
         return json;
+      })
+      .catch(err => {
+        console.log(err);
       });
  },
  login: function(userObj, uri) {
    this.post(userObj, uri)
     .then(res => {
       console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
     })
    localStorage.setItem("logedIn", "true");
    localStorage.setItem("userLevel", "superadmin");
