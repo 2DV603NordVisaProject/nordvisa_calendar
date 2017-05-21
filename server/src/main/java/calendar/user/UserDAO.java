@@ -6,6 +6,9 @@ import java.util.List;
 /**
  * Interface UserDAO
  *
+ * The interface between the application and the database driver. Any database driver should
+ * implement this interface
+ *
  * @author Axel Nilsson (axnion)
  */
 public interface UserDAO {

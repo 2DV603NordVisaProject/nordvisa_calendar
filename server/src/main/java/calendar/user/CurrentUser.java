@@ -12,6 +12,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 class CurrentUser {
+
+    /**
+     * Return the email addres of the currently logged in user
+     * @return email of the current user
+     */
     String getEmailAddress() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }

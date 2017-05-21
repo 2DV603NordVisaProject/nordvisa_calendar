@@ -38,6 +38,11 @@ public class UserController {
     @Autowired
     private CurrentUser currentUser;
 
+    /**
+     * Respond with the currently logged in used.
+     * @return              A UserDTO object with the data of the currently logged in user
+     * @throws Exception    Database errors
+     */
     @RequestMapping(value = "/current", method = RequestMethod.GET)
     public UserDTO getCurrentUser() throws Exception {
         String email = new CurrentUser().getEmailAddress();
@@ -93,6 +98,7 @@ public class UserController {
 
     /**
      * Runs on GET call to /api/user. It will return all users in the whole system.
+     *
      * @return              ArrayList of User objects serialized to JSON format
      * @throws Exception    Database errors
      */
@@ -179,6 +185,11 @@ public class UserController {
         dao.update(user);
     }
 
+    /**
+     * Generates a random 20 character string
+     *
+     * @return A random string
+     */
     private String generateRandomString() {
         String characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890";
         int length = 20;

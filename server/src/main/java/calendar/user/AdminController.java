@@ -122,6 +122,14 @@ public class AdminController {
     }
 
     // TODO: Add to documentation and diagrams
+
+    /**
+     * Returns all users who the currently logged in user can manage. For example if they can edit
+     * events created by the user.
+     *
+     * @return              An ArrayList containing UserDTOs of all user the current user can manage
+     * @throws Exception    Database errors
+     */
     @RequestMapping(value = "/manageableUsers", method = RequestMethod.GET)
     public ArrayList<UserDTO> getManageableUsers() throws Exception {
         String email = currentUser.getEmailAddress();
