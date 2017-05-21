@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class AdminController
@@ -118,5 +119,35 @@ public class AdminController {
 
             dao.update(user);
         }
+    }
+
+    // TODO: Add to documentation and diagrams
+    @RequestMapping(value = "/manageableUsers", method = RequestMethod.GET)
+    public ArrayList<UserDTO> getManageableUsers() throws Exception {
+        String email = currentUser.getEmailAddress();
+        User user = dao.getUserByEmail(email);
+
+        String adminOrg = user.getOrganization().getName();
+
+        ArrayList<User> users = new ArrayList<>();
+
+        if(adminOrg.equals("")) {
+            List<String> orgs = dao.getOrganizations();
+
+            for(String org : orgs) {
+                users.addAll(dao.getUsersByOrganization(org));
+            }
+        }
+        else {
+            users.addAll(dao.getUsersByOrganization(adminOrg));
+        }
+
+        ArrayList<UserDTO> dto = new ArrayList<>();
+
+        for(User orgUser : users) {
+            dto.add(new UserDTO(orgUser));
+        }
+
+        return dto;
     }
 }
