@@ -9,6 +9,7 @@
     "react-date-picker": "^5.3.28",
     "react-dom": "^15.5.4",
     "react-dropzone": "^3.13.1",
+    "react-gcaptcha": "^3.7.0",
     "react-router": "4.0.0-alpha.6",
     "validator": "^7.0.0"
   },

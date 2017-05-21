@@ -2,18 +2,31 @@
 
 const url = "http://localhost:8080"
 
+const serialize = function(obj) {
+  var str = [];
+  for(var p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
+};
+
 const Client = {
   post: (obj, uri) => {
-    console.log(obj);
-
     const req = new Request(`${url}${uri}`, {
       method: "POST",
-      mode: "no-cors",
-      headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded"}),
-      body: JSON.stringify(obj)
+      //mode: "no-cors",
+      headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"}),
+      body: serialize(obj)
     })
 
-    return fetch(req).then(res => res.json);
+    return fetch(req)
+      .then(res => {
+        return res.json();
+      })
+      .then(json => {
+        return json;
+      });
  },
  login: () => {
    localStorage.setItem("logedIn", "true");
