@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/super_admin/**").hasAuthority("SUPER_ADMIN")
                     .antMatchers("/api/event/create",
                             "/api/event/detete",
-                            "/api/event/update").authenticated()
-                    .antMatchers("/api/upload/**").authenticated()
+                            "/api/event/update").permitAll()
+                    .antMatchers("/api/upload/**").permitAll()
                     .anyRequest().permitAll()
                     .and()
                 .formLogin()
@@ -61,7 +62,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .failureHandler(new AuthenticationFailureHandler() {
                     @Override
-                    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+                    public void onAuthenticationFailure(HttpServletRequest request,
+                                                        HttpServletResponse response,
+                                                        AuthenticationException exception)
+                            throws IOException, ServletException {
                         response.sendError(500);
                     }
                 })
