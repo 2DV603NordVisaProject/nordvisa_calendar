@@ -28,7 +28,6 @@ class PendingRegistrationsView extends Component {
     } else {
       approve.push(event.target.value);
     }
-
     this.setState({approve});
   }
 
@@ -42,10 +41,8 @@ class PendingRegistrationsView extends Component {
         id: approve.shift(),
         approved: true
       }
-
-      Client.post(obj, uri);
+      Client.post(obj, uri)
     }
-
     this.setState({ approve });
     this.forceUpdate();
   }

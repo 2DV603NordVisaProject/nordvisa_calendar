@@ -48,7 +48,6 @@ const Client = {
       });
  },
  get: (uri) => {
-   console.log(`${url}${uri}`);
    const req = new Request(`${url}${uri}`, {
      method: "GET",
      credentials: 'include',

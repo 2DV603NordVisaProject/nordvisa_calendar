@@ -1,37 +1,38 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Client from "../Client";
 
 class UpdatePasswordView extends Component {
+
+  state = {
+    fields: {
+      urlId: this.props.id,
+      password: "",
+      passwordConfirmation: "",
+    }
+  }
+
+  onInputChange(event) {
+    const fields = this.state.fields;
+    fields[event.target.name] = event.target.value;
+    this.setState({ fields });
+  }
+
+  onFormSubmit(event) {
+    event.preventDefault();
+
+    const uri = "/api/visitor/recover_password";
+    Client.post(this.state.fields, uri)
+      .then(res =>{
+        this.setState({ fields: {
+          urlId: "",
+          passwrod: "",
+          passwordConfirmation: ""
+        }})
+      })
+  }
+
   render() {
-
-    state = {
-      fields: {
-        urlId: this.props.id,
-        password: "",
-        passwordConfirmation: "",
-      }
-    }
-
-    onInputChange(event) {
-      const fields = this.state.fields;
-      fields[event.target.name] = event.target.value;
-      this.setState({ fields });
-    }
-
-    onFormSubmit(event) {
-      event.preventDefault();
-
-      const uri = "/api/visitor/recover_password";
-      Client.post(this.state.fields, uri)
-        .then(res =>{
-          this.setState({ fields: {
-            urlId: "",
-            passwrod: "",
-            passwordConfirmation: ""
-          }})
-        })
-    }
-
     const language = this.context.language.UpdatePasswordView;
 
     return (
