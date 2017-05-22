@@ -35,7 +35,11 @@ class ViewContainer extends Component {
         <Match pattern="/logout" component={Logout}/>
         <Match pattern="/register" component={RegisterView}/>
         <Match pattern="/recover-password" component={RecoverView}/>
-        <Match pattern="/update-password" component={UpdatePasswordView}/>
+        <Match pattern="/update-password/:id" render={(params) => {
+            return (
+              <UpdatePasswordView id={params.id}/>
+            )
+          }}/>
         <Match pattern="/generate-widget" component={WidgetView}/>
         <MatchWhenLoggedIn pattern="/user/account" component={MyAccountView}/>
         <MatchWhenLoggedIn pattern="/user/event/create" component={CreateView}/>
