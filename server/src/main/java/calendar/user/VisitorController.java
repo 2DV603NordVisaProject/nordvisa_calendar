@@ -155,6 +155,7 @@ public class VisitorController {
     // TODO: Add to documentation and diagrams
     // Class done
     // Seq done
+    // Tested
     @RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public List<String> getOrganizations() throws Exception {
         return dao.getOrganizations();

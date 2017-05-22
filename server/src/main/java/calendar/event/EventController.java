@@ -111,10 +111,8 @@ public class EventController {
     // TODO: Add to docs and diagrams
     @RequestMapping(value = "/get_manageable", method = RequestMethod.GET)
     public List<Event> getManageable() {
-
         AuthorizationChecker auth = new AuthorizationChecker();
         List<String> ids = auth.getAllUserIds();
-
         List<Event> events = new ArrayList<>();
 
         for(String id : ids) {
