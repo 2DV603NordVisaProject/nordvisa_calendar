@@ -7,7 +7,7 @@ class RegistrationsList extends Component {
       <ul>
         {
           this.props.registrations.map((registration, i) => (
-            <Registration key={i} registration={registration}/>
+            <Registration key={i} registration={registration} onInputChange={this.props.onInputChange}/>
           ))
         }
       </ul>

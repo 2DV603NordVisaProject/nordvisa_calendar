@@ -31,7 +31,6 @@ const Client = {
   post: (obj, uri) => {
     const req = new Request(`${url}${uri}`, {
       method: "POST",
-      mode: "no-cors",
       credentials: 'include',
       headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"}),
       body: serialize(obj)
@@ -39,7 +38,6 @@ const Client = {
 
     return fetch(req)
       .then(res => {
-        console.log(res);
         return res.json();
       })
       .then(json => {
@@ -48,6 +46,24 @@ const Client = {
       .catch(err => {
         return err;
       });
+ },
+ get: (uri) => {
+   const req = new Request(`${url}${uri}`, {
+     method: "GET",
+     credentials: 'include',
+     headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"}),
+   })
+
+   return fetch(req)
+     .then(res => {
+       return res.json();
+     })
+     .then(json => {
+       return json;
+     })
+     .catch(err => {
+       return err;
+     });
  },
  login: function(userObj, uri) {
 
