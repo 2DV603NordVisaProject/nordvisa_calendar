@@ -214,7 +214,7 @@ public class User {
         return roles;
     }
 
-    public boolean isValid() {
+    public boolean valid() {
         return organization.isApproved() && validateEmailLink.getUrl().equals("");
     }
 

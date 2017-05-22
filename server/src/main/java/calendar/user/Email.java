@@ -37,7 +37,7 @@ class Email {
      * @param email The email address which the email should be sent to
      */
     void sendPasswordResetEmail(String id, String email) {
-        System.out.println("Sent to (" + email + ") http://" + baseUrl + "/change_password/" + id);
+        System.out.println("Sent to (" + email + ") http://" + baseUrl + "/api/visitor/change_password/" + id);
     }
     // TODO: Add success email on registration when registration is approved or declined.
 }

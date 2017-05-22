@@ -98,7 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     return new org.springframework.security.core.userdetails.User(
                             user.getEmail(),
                             user.getPassword(),
-                            user.isValid(),
+                            user.valid(),
                             true,
                             true,
                             true,
