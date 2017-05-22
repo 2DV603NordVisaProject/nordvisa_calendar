@@ -18,6 +18,7 @@ class CreateView extends Component {
       location: "",
       desc: "",
       img:  "",
+      file: null,
       startTime: "",
       endTime: "",
     },
@@ -61,6 +62,7 @@ class CreateView extends Component {
 
     if (event.target.name === "img") {
       fields[event.target.name] = URL.createObjectURL(event.target.files[0]);
+      fields["file"] = event.target.files[0];
     }
     this.setState({ fields });
   }
@@ -82,6 +84,9 @@ class CreateView extends Component {
 
   onSaveClick(event) {
     event.preventDefault();
+
+    Client.postEvent(this.state.fields.file)
+
     const fieldErrors = [];
     fieldErrors.push("The event is now saved!");
     this.setState({fieldErrors});

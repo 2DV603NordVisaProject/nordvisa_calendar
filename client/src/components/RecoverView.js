@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { isEmail } from "validator";
 import ErrorList from "./ErrorList";
 import PropTypes from "prop-types";
+import Client from "../Client";
 
 class RecoverView extends Component {
   state = {
@@ -26,9 +27,19 @@ class RecoverView extends Component {
     // Return on error.
     if (fieldErrors.length) return;
 
-    this.setState({ fields: {
-      email: "",
-    }})
+    const uri = "/api/visitor/request_password_recovery";
+
+    Client.post(this.state.fields, uri)
+      .then(res => {
+        const fieldErrors = ["Email sent!"];
+        this.setState({fieldErrors, fields: {
+          email: "",
+        }});
+      })
+
+
+
+    this.setState({ })
   }
 
   onInputChange(event) {

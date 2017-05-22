@@ -2,15 +2,32 @@ import React, { Component } from "react";
 import { isEmail } from "validator";
 import ErrorList from "./ErrorList";
 import PropTypes from "prop-types";
+import Client from "../Client";
 
 class UpdateAccount extends Component {
   state = {
     fields: {
+      id: null,
       email: "",
       org: "",
       neworg: "",
     },
     fieldErrors: [],
+  }
+
+  componentWillMount() {
+    const uri = "/api/user/current";
+    Client.get(uri)
+      .then(user => {
+        console.log(user);
+      const fields = {
+        id: user.id,
+        email: user.email,
+        org: user.organization,
+        neworg: ""
+      }
+      this.setState({fields});
+      })
   }
 
   validate(fields) {

@@ -48,9 +48,11 @@ const Client = {
       });
  },
  get: (uri) => {
+   console.log(`${url}${uri}`);
    const req = new Request(`${url}${uri}`, {
      method: "GET",
      credentials: 'include',
+     mode: "no-cors",
      headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"}),
    })
 
@@ -64,6 +66,19 @@ const Client = {
      .catch(err => {
        return err;
      });
+ },
+ postEvent: (eventObj, uri) => {
+   let data = new FormData()
+   data.append("file", eventObj.file)
+
+   fetch(`${url}/api/upload`, {
+     method: "POST",
+     body: data
+   }).then(res => {
+     return res.json();
+   }).then(json => {
+     console.log(json);
+   })
  },
  login: function(userObj, uri) {
 
