@@ -7,7 +7,6 @@ gradlew
 gradlew.bat
 build
 /server/src/main/resources/static/*
-/server/src/main/resources/application.properties
 
 *.log
 
