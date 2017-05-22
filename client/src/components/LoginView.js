@@ -23,9 +23,14 @@ class LoginView extends Component {
   performLogin(user) {
     this.setState({ loginInProgress: true });
     const uri = "/login";
-    Client.login(user, uri).then(() => (
-      this.setState({ shouldRedirect: true })
-    ));
+    Client.login(user, uri).then((res) => {
+      if (res === "success") {
+        this.setState({ shouldRedirect: true })
+      } else {
+        const fieldErrors = ["Login failed!"];
+        this.setState({ loginInProgress: false, fieldErrors });
+      }
+    });
   }
 
   validate(fields) {

@@ -11,56 +11,125 @@ const serialize = function(obj) {
   return str.join("&");
 };
 
+const getCookie = function(name) {
+  let nameEQ = name + "=";
+  let ca = document.cookie.split(';');
+  let value = null;
+  for(var i=0;i < ca.length;i++) {
+      var currentCookie = ca[i];
+      if (currentCookie.indexOf(name)) {
+        let length = currentCookie.length
+        let valueStart = currentCookie.indexOf("=") + 1;
+        value = currentCookie.substr(valueStart, length);
+      }
+
+  }
+  return value;
+}
+
 const Client = {
   post: (obj, uri) => {
     const req = new Request(`${url}${uri}`, {
       method: "POST",
       mode: "no-cors",
+      credentials: 'include',
       headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"}),
       body: serialize(obj)
     })
 
     return fetch(req)
       .then(res => {
+        console.log(res);
         return res.json();
       })
       .then(json => {
         return json;
       })
       .catch(err => {
-        console.log(err);
+        return err;
       });
  },
  login: function(userObj, uri) {
-   this.post(userObj, uri)
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-   localStorage.setItem("logedIn", "true");
-   localStorage.setItem("userLevel", "superadmin");
 
-   return new Promise((resolve, reject) => {
-   setTimeout(function(){
-     resolve("Success!");
-   }, 3000);
- });
+   const req = new Request(`${url}${uri}`, {
+     method: "POST",
+     mode: "no-cors",
+     credentials: 'include',
+     headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"}),
+     body: serialize(userObj)
+   })
+
+   return fetch(req)
+     .then(res => {
+
+       if (res.ok) {
+         document.cookie = "ESESSION=TRUE; expires=;";
+
+         const reqUser = new Request(`${url}/api/user/current`, {
+           method: "GET",
+           mode: "no-cors",
+           credentials: 'include',
+           headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"}),
+         })
+
+         fetch(reqUser)
+          .then(res => {
+            return res.json();
+          })
+          .then(json => {
+            document.cookie = `accessLevel=${json.role}; expires=;`
+          })
+
+         return "success";
+       } else {
+         return res.json();
+       }
+     })
+     .then(json => {
+       return json;
+     })
+     .catch(err => {
+       return err;
+     });
  },
  logout: () => {
-   localStorage.setItem("logedIn", "false");
-   localStorage.setItem("userLevel", "null");
+   const req = new Request(`${url}/logout`, {
+     method: "POST",
+     mode: "no-cors",
+     credentials: 'include',
+     headers: new Headers({"Content-Type" : "application/x-www-form-urlencoded; charset=utf-8"}),
+   })
+
+   fetch(req)
+     .then(res => {
+       if (res.ok) {
+         document.cookie = "ESESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+         document.cookie = "accessLevel=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+       }
+     })
+     .catch(err => {
+       return err;
+     });
  },
  isLogedIn: () => {
-   return JSON.parse(localStorage.getItem("logedIn"));
+   const cookies = document.cookie;
+   if (cookies.indexOf("ESESSION") === -1) {
+     return false;
+   } else {
+     return true;
+   }
  },
  getUserLevel: () => {
+   if (getCookie(accessLevel) === null) {
+     return;
+   }
+
+   const userLevel = getCookie(accessLevel);
+
    let accessLevel = 0;
-   const userLevel = localStorage.getItem("userLevel");
-   if (userLevel === "admin") {
+   if (userLevel === "ADMIN") {
      accessLevel = 1;
-   } else if (userLevel === "superadmin") {
+   } else if (userLevel === "SUPER_ADMIN") {
      accessLevel = 2;
    }
    return accessLevel;
