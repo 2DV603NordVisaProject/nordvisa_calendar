@@ -17,18 +17,9 @@ public class Organization {
      * Constructor used by Jackson when converting from JSON
      */
     Organization() {
-
-    }
-
-    /**
-     * Constructor which sets both name and if user is apporved or not.
-     * @param name      Name of the organization
-     * @param approved  True if user is approved, false if not
-     */
-    Organization(String name, boolean approved) {
-        this.name = name;
-        this.approved = approved;
-        this.changePending = "";
+        name = "";
+        approved = false;
+        changePending = "";
     }
 
     /**

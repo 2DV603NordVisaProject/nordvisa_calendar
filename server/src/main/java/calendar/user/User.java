@@ -60,7 +60,9 @@ public class User {
         this.createdAt = DateTime.now().getMillis();
         this.updatedAt = DateTime.now().getMillis();
 
-        this.organization = new Organization(dto.getOrganization(), false);
+        this.organization = new Organization();
+        this.organization.setChangePending(dto.getOrganization());
+        this.organization.setApproved(false);
     }
 
     /**

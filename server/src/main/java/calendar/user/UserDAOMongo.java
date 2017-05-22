@@ -117,14 +117,23 @@ public class UserDAOMongo implements UserDAO {
         MongoCollection collection = client.getCollection("users");
 
         ArrayList<User> finalList = new ArrayList<>();
-        ArrayList<User> newOrgUsers = new ArrayList<>();
+//        ArrayList<User> newOrgUsers = new ArrayList<>();
         ArrayList<User> unapproved = cursorToArray(collection.find(
                 "{organization.approved: false}"
         ).as(User.class));
 
-        ArrayList<User> changingOrg = cursorToArray(collection.find(
-                "{organization.changePending: \"" + organization + "\"}"
-        ).as(User.class));
+        ArrayList<User> changingOrg = new ArrayList<>();
+
+        if(organization.equals("")) {
+            changingOrg = cursorToArray(collection.find(
+                    "{organization.changePending: \"\"}"
+            ).as(User.class));
+        }
+        else {
+            changingOrg = cursorToArray(collection.find(
+                    "{organization.changePending: \"" + organization + "\"}"
+            ).as(User.class));
+        }
 
         Iterator<User> changingOrgIterator = changingOrg.iterator();
 
@@ -136,13 +145,25 @@ public class UserDAOMongo implements UserDAO {
             }
         }
 
-        if(organization.equals("")) {
-            newOrgUsers = getUsersCreatingNewOrganization(collection);
-        }
+//        if(organization.equals("")) {
+//            newOrgUsers = getUsersCreatingNewOrganization(collection);
+//        }
 
-        addToList(finalList, newOrgUsers);
+//        addToList(finalList, newOrgUsers);
         addToList(finalList, unapproved);
         addToList(finalList, changingOrg);
+
+//        for(User user : newOrgUsers) {
+//            System.out.println("1: " + user.getEmail());
+//        }
+
+        for(User user : unapproved) {
+            System.out.println("2 " + user.getEmail());
+        }
+
+        for(User user :changingOrg) {
+            System.out.println("3 " + user.getEmail());
+        }
 
         return finalList;
     }
@@ -195,7 +216,7 @@ public class UserDAOMongo implements UserDAO {
     private ArrayList<User> getUsersCreatingNewOrganization(MongoCollection collection) {
         ArrayList<User> users = new ArrayList<>();
 
-        Distinct distinct = collection.distinct("organization.name");
+        Distinct distinct = collection.distinct("organization.changePending");
 
         List<String> existingOrganization = distinct.as(String.class);
 
