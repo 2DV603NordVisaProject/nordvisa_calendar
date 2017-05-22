@@ -16,13 +16,18 @@ class MembersView extends Component {
     },
   }
   componentWillMount() {
-    const members = Client.getMembers();
-    this.setState({ members });
+    const uri = "/api/admin/manageableUsers";
+
+    Client.get(uri)
+      .then(members => {
+        this.setState({members})
+      })
   }
 
   onFormSubmit(event) {
     event.preventDefault();
-    const updated = this.state.updated.join(", ");
+    let updated = this.state.updated.map(user => user["email"]);
+    updated = updated.join(", ");
     const popup = {
       pop: true,
       msg: `${this.context.language.MembersView.accMsg} ${updated}`,
@@ -34,19 +39,46 @@ class MembersView extends Component {
   onInputChange(event) {
     const updated = this.state.updated;
     const members = this.state.members.filter((member) => {
-      if (event.target.name === member.email) {
-        updated.push(event.target.name);
+      if (event.target.name === member.id) {
+        updated.push({
+          id: event.target.name,
+          role: event.target.value,
+          email: member.email
+        });
+
         member.userLevel = event.target.value;
         return member;
       } else {
         return member;
       }
     });
-    this.setState({ members });
+
+    this.setState({ members, updated });
   }
 
   onConfirmClick() {
-    //TODO;
+    const updated = this.state.updated;
+
+    while (updated.length > 0) {
+      const user = updated.shift();
+      let uri = "";
+
+      if (user.role === "USER") {
+        uri = "/api/admin/make_user";
+      }
+
+      if (user.role === "ADMIN") {
+        uri = "/api/admin/make_admin";
+      }
+
+      if (user.role === "SUPER_ADMIN") {
+        uri = "/api/super_admin/make_super_admin";
+      }
+
+      Client.post({id: user.id}, uri)
+    }
+
+    this.setState({updated});
   }
 
   render() {
