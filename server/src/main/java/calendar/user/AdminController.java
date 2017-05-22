@@ -107,18 +107,23 @@ public class AdminController {
             if (dto.isApproved()) {
                 user.getOrganization().setApproved(true);
                 dao.update(user);
-                email.sendSuccessEmail(dto.getId(), "registration");
+                email.sendSuccessEmail(dao.getUserById(dto.getId()).getEmail(),
+                        "registration");
             }
-            else
+            else {
                 dao.delete(dto.getId());
-                email.sendDenialEmail(dto.getId(), "registration");
+                email.sendDenialEmail(dao.getUserById(dto.getId()).getEmail(),
+                        "registration");
+            }
         }
         else {
             if(dto.isApproved()) {
                 user.getOrganization().setName(user.getOrganization().getChangePending());
-                email.sendSuccessEmail(dto.getId(), "organization change");
+                email.sendSuccessEmail(dao.getUserById(dto.getId()).getEmail(),
+                        "organization change");
             } else {
-                email.sendDenialEmail(dto.getId(), "organization change");
+                email.sendDenialEmail(dao.getUserById(dto.getId()).getEmail(),
+                        "organization change");
             }
 
             user.getOrganization().setChangePending("");

@@ -18,6 +18,8 @@ class CurrentUser {
      * @return email of the current user
      */
     String getEmailAddress() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("--------------------- " + email + " --------------------------------");
+        return email;
     }
 }
