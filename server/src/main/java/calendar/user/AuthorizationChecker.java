@@ -1,5 +1,8 @@
 package calendar.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class AuthorizationChecker
  *
@@ -22,5 +25,25 @@ public class AuthorizationChecker {
         String email = currentUser.getEmailAddress();
         UserDAO dao = new UserDAOMongo();
         return dao.getUserByEmail(email).canManage(dao.getUserById(id));
+    }
+
+    // TODO: add to docs and diagrams
+    public List<String> getAllUserIds() {
+        UserDAO dao = new UserDAOMongo();
+        ArrayList<User> users = new ArrayList<>();
+
+        try {
+            users = dao.getAllUsers();
+        } catch (Exception expt) {
+            return null;
+        }
+
+        List<String> ids = new ArrayList<>();
+
+        for(User user : users) {
+            ids.add(user.getId());
+        }
+
+        return ids;
     }
 }

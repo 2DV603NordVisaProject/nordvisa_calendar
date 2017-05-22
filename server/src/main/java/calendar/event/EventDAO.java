@@ -11,6 +11,7 @@ public interface EventDAO {
     List<Event> getEventsFromCountry(String country);
     List<Event> getEventsWithinRadius(double longitude, double latitude, double radius);
     List<Event> getEventsWithinDates(long fromDate, long toDate);
+    List<Event> getEventsByUserId(String id);       // TODO: Add to docs and diagrams
     Event createEvent(Event event);
     void deleteEvent(String id);
     Event updateEvent(Event event);
