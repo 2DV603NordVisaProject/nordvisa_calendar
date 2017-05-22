@@ -117,12 +117,11 @@ public class UserDAOMongo implements UserDAO {
         MongoCollection collection = client.getCollection("users");
 
         ArrayList<User> finalList = new ArrayList<>();
-//        ArrayList<User> newOrgUsers = new ArrayList<>();
         ArrayList<User> unapproved = cursorToArray(collection.find(
                 "{organization.approved: false}"
         ).as(User.class));
 
-        ArrayList<User> changingOrg = new ArrayList<>();
+        ArrayList<User> changingOrg;
 
         if(organization.equals("")) {
             changingOrg = cursorToArray(collection.find(
@@ -145,17 +144,8 @@ public class UserDAOMongo implements UserDAO {
             }
         }
 
-//        if(organization.equals("")) {
-//            newOrgUsers = getUsersCreatingNewOrganization(collection);
-//        }
-
-//        addToList(finalList, newOrgUsers);
         addToList(finalList, unapproved);
         addToList(finalList, changingOrg);
-
-//        for(User user : newOrgUsers) {
-//            System.out.println("1: " + user.getEmail());
-//        }
 
         for(User user : unapproved) {
             System.out.println("2 " + user.getEmail());
@@ -204,32 +194,6 @@ public class UserDAOMongo implements UserDAO {
     public void update(User user) {
         MongoCollection collection = client.getCollection("users");
         collection.update(new ObjectId(user.getId())).with(user);
-    }
-
-    /**
-     * Returns all users who currently are trying to create new organzaton that needs to be approved
-     * by an administartor
-     *
-     * @param collection    The MonogCollection for the users collection
-     * @return              An ArrayList containing all users creating new organizations
-     */
-    private ArrayList<User> getUsersCreatingNewOrganization(MongoCollection collection) {
-        ArrayList<User> users = new ArrayList<>();
-
-        Distinct distinct = collection.distinct("organization.changePending");
-
-        List<String> existingOrganization = distinct.as(String.class);
-
-        for(String org : existingOrganization) {
-            long numberOfUsers= collection.count("{organization.name: \"" + org + "\"}");
-
-            if(numberOfUsers == 1 && !org.equals("")) {
-                users.add(collection.findOne("{organization.name: \"" + org + "\"}")
-                        .as(User.class));
-            }
-        }
-
-        return users;
     }
 
     /**

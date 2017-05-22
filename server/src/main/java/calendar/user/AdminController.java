@@ -100,7 +100,7 @@ public class AdminController {
      * @param dto           Id and approved boolean in an object
      * @throws Exception    Database errors.
      */
-    // TODO: Update sequence diagrams
+    // TODO: Update sequence diagrams, this method was totaly remade
     @RequestMapping(value = "/registrations", method = RequestMethod.POST)
     public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) throws Exception {
         User user = dao.getUserById(dto.getId());
@@ -114,50 +114,24 @@ public class AdminController {
             dao.update(user);
 
             if(isRegistered) {
-                email.sendSuccessEmail(dto.getId(), "registration");
-            } else {
                 email.sendSuccessEmail(dto.getId(), "organization change");
+            } else {
+                email.sendSuccessEmail(dto.getId(), "registration");
             }
         }
         else {
             if(user.getOrganization().isApproved()) {
                 user.getOrganization().setChangePending("");
                 dao.update(user);
+                email.sendDenialEmail(dao.getUserById(dto.getId()).getEmail(),
+                        "organization change");
             }
             else {
                 dao.delete(dto.getId());
+                email.sendDenialEmail(dao.getUserById(dto.getId()).getEmail(),
+                        "registration");
             }
         }
-
-
-//        if(user.getOrganization().getChangePending().equals("")) {
-//            if (dto.isApproved()) {
-//                user.getOrganization().setApproved(true);
-//                dao.update(user);
-//                email.sendSuccessEmail(dao.getUserById(dto.getId()).getEmail(),
-//                        "registration");
-//            }
-//            else {
-//                dao.delete(dto.getId());
-//                email.sendDenialEmail(dao.getUserById(dto.getId()).getEmail(),
-//                        "registration");
-//            }
-//        }
-//        else {
-//            if(dto.isApproved()) {
-//                user.getOrganization().setName(user.getOrganization().getChangePending());
-//                email.sendSuccessEmail(dao.getUserById(dto.getId()).getEmail(),
-//                        "organization change");
-//            } else {
-//                email.sendDenialEmail(dao.getUserById(dto.getId()).getEmail(),
-//                        "organization change");
-//            }
-
-//            user.getOrganization().setChangePending("");
-//            user.getOrganization().setApproved(true);
-
-//            dao.update(user);
-//        }
     }
 
     // TODO: Add to documentation and diagrams.
