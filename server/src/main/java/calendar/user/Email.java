@@ -39,5 +39,30 @@ class Email {
     void sendPasswordResetEmail(String id, String email) {
         System.out.println("Sent to (" + email + ") http://" + baseUrl + "/api/visitor/change_password/" + id);
     }
-    // TODO: Add success email on registration when registration is approved or declined.
+
+    /**
+     * Sends an email to the email address telling them a recent action has been successfull. This
+     * could be registration or organization change.
+     *
+     * @param email The email address email should be sent to
+     * @param type  The type of action, registration or organization change
+     */
+    // TODO: add to diagrams and docs
+    // Class done
+    void sendSuccessEmail(String email, String type) {
+        System.out.println("To " + email + ": Your " + type + " has been successful");
+    }
+
+    /**
+     * Sends and email to the email address telling the user a recent action has been denied. This
+     * could be registration on organization change.
+     *
+     * @param email The email address email should be sent to
+     * @param type  The type of action, registration or organization change.
+     */
+    // TODO: add to diagrams and docs
+    // Class done
+    void sendDenialEmail(String email, String type) {
+        System.out.println("To " + email + ": Your " + type + " has been declined");
+    }
 }

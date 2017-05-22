@@ -153,6 +153,8 @@ public class VisitorController {
      * @throws Exception    Database errors
      */
     // TODO: Add to documentation and diagrams
+    // Class done
+    // Seq done
     @RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public List<String> getOrganizations() throws Exception {
         return dao.getOrganizations();

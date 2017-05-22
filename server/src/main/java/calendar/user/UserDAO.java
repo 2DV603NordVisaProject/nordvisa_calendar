@@ -18,7 +18,7 @@ public interface UserDAO {
     User getUserByEmailVerificationLink(String urlId) throws Exception;
     ArrayList<User> getUsersByOrganization(String organizationName) throws Exception;
     ArrayList<User> getAllUsers() throws Exception;
-    List<String> getOrganizations() throws Exception;     // TODO: ADD TO DOCS AND DIAGRAMS
+    List<String> getOrganizations() throws Exception;
 
     ArrayList<User> getPendingRegistrations(String orgazniation) throws Exception;
 

@@ -9,6 +9,7 @@ import java.util.Random;
 @RestController
 @RequestMapping("/api/widget")
 public class WidgetController {
+    // TODO: Diagrams
     @RequestMapping(value = "/generate", method = RequestMethod.GET)
     public String generateWidget() {
             String strToken = generateRandomString();

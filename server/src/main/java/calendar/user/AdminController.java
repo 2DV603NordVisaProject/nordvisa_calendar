@@ -30,6 +30,8 @@ public class AdminController {
     private UserDAO dao;
     @Autowired
     private CurrentUser currentUser;
+    @Autowired
+    private Email email;
 
     /**
      * This method take a user ID in a UserIdDTO and if conditions are meet then demotes the target
@@ -105,13 +107,18 @@ public class AdminController {
             if (dto.isApproved()) {
                 user.getOrganization().setApproved(true);
                 dao.update(user);
+                email.sendSuccessEmail(dto.getId(), "registration");
             }
             else
                 dao.delete(dto.getId());
+                email.sendDenialEmail(dto.getId(), "registration");
         }
         else {
             if(dto.isApproved()) {
                 user.getOrganization().setName(user.getOrganization().getChangePending());
+                email.sendSuccessEmail(dto.getId(), "organization change");
+            } else {
+                email.sendDenialEmail(dto.getId(), "organization change");
             }
 
             user.getOrganization().setChangePending("");
@@ -121,8 +128,9 @@ public class AdminController {
         }
     }
 
-    // TODO: Add to documentation and diagrams
-
+    // TODO: Add to documentation and diagrams.
+    // Class diagram done
+    // Seq done
     /**
      * Returns all users who the currently logged in user can manage. For example if they can edit
      * events created by the user.

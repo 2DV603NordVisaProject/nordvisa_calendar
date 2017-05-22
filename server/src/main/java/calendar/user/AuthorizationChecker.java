@@ -28,9 +28,11 @@ public class AuthorizationChecker {
     }
 
     // TODO: add to docs and diagrams
+    // Class diagram done
+    // Seq done
     public List<String> getAllUserIds() {
         UserDAO dao = new UserDAOMongo();
-        ArrayList<User> users = new ArrayList<>();
+        ArrayList<User> users;
 
         try {
             users = dao.getAllUsers();
