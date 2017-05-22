@@ -8,6 +8,7 @@ import calendar.event.exceptions.Error;
 import calendar.event.exceptions.MissingTokenException;
 import calendar.user.AuthorizationChecker;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
+
+    @Autowired
+    private EventDAO dao;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public List<Event> getEvents(@RequestParam(required = false) String id,
@@ -29,7 +33,6 @@ public class EventController {
                                  @RequestParam(required = false) Long toDate,
                                  @RequestParam(required = false) String token) {
 
-        EventDAO dao = new EventDAOMongo();
 
         if (token == null) {
             throw new MissingTokenException("Unauthorized access");
@@ -108,7 +111,6 @@ public class EventController {
     // TODO: Add to docs and diagrams
     @RequestMapping(value = "/get_manageable", method = RequestMethod.GET)
     public List<Event> getManageable() {
-        EventDAO dao = new EventDAOMongo();
 
         AuthorizationChecker auth = new AuthorizationChecker();
         List<String> ids = auth.getAllUserIds();
@@ -128,21 +130,18 @@ public class EventController {
     // TODO: Add to docs and diagrams
     @RequestMapping(value = "/get_all", method = RequestMethod.GET)
     public List<Event> getAll() {
-        EventDAO dao = new EventDAOMongo();
         return dao.getEvents();
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Event createEvent(@RequestBody CreateEventDTO createEventDTO) {
         Event event = new Event(createEventDTO);
-        EventDAO dao = new EventDAOMongo();
         return dao.createEvent(event);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public void deleteEvent(@RequestBody DeleteEventDTO deleteEventDTO) {
         // TODO: Add authChecker
-        EventDAO dao = new EventDAOMongo();
         dao.deleteEvent(deleteEventDTO.getId());
     }
 
@@ -150,7 +149,6 @@ public class EventController {
     public Event updateEvent(@RequestBody UpdateEventDTO updateEventDTO) {
         // TODO: Add authChecker
         Event event = new Event(updateEventDTO);
-        EventDAO dao = new EventDAOMongo();
         return dao.updateEvent(event);
     }
 
