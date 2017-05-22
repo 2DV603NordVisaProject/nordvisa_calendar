@@ -106,7 +106,7 @@ public class EventController {
     }
 
     // TODO: Add to docs and diagrams
-    @RequestMapping(value = "/get_managegeable", method = RequestMethod.GET)
+    @RequestMapping(value = "/get_manageable", method = RequestMethod.GET)
     public List<Event> getManageable() {
         EventDAO dao = new EventDAOMongo();
 
