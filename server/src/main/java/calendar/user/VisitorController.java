@@ -146,12 +146,24 @@ public class VisitorController {
         }
     }
 
+    /**
+     * Sends names of all organization to the requester
+     *
+     * @return              A List of String with names of each organization in the system
+     * @throws Exception    Database errors
+     */
     // TODO: Add to documentation and diagrams
     @RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public List<String> getOrganizations() throws Exception {
         return dao.getOrganizations();
     }
 
+
+    /**
+     * Generates a random 20 character string
+     *
+     * @return A random string
+     */
     private String generateRandomString() {
         String characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890";
         int length = 20;

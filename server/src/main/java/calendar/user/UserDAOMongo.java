@@ -15,12 +15,18 @@ import java.util.List;
 /**
  * Class UserDAOMongo
  *
+ * This is the MongoDB implementation of UserDAO which uses Jongo to communicate with the MongoDB
+ * database
+ *
  * @author Axel Nilsson (axnion)
  */
 @Component
 public class UserDAOMongo implements UserDAO {
     private Jongo client;
 
+    /**
+     * Default constructor
+     */
     public UserDAOMongo() {
         client = MongoDBClient.getClient();
     }
@@ -49,11 +55,23 @@ public class UserDAOMongo implements UserDAO {
         return collection.findOne("{email: \"" + email + "\"}").as(User.class);
     }
 
+    /**
+     * Find a User with a matching password recovery urlId and return the User
+     *
+     * @param urlId A urlId from a password recovery link
+     * @return      A User which has a password recovery link which matches the given urlId
+     */
     public User getUserByPasswordRecoveryLink(String urlId) {
         MongoCollection collection = client.getCollection("users");
         return collection.findOne("{validateEmailLink.url: \"" + urlId + "\"}").as(User.class);
     }
 
+    /**
+     * Find a User wih a matching email verification link id and returns the User
+     *
+     * @param urlId A urlIdfrom a email verification link
+     * @return      A User with a matching urlId to the given urlId
+     */
     public User getUserByEmailVerificationLink(String urlId) {
         MongoCollection collection = client.getCollection("users");
         return collection.findOne("{validateEmailLink.url: \"" + urlId + "\"}")
@@ -84,6 +102,16 @@ public class UserDAOMongo implements UserDAO {
         return cursorToArray(collection.find("{}").as(User.class));
     }
 
+
+    /**
+     * Find all pending registraitons and organization changes which are relevent to the
+     * administrator based on their organization.
+     *
+     * @param organization  Organization of the administrator
+     * @return              An ArrayList containing User which have pending registrations or
+     *                      organizaton changes relevant to the administrator
+     * @throws Exception    Database errors
+     */
     // TODO: Users who want to join the global group can't
     public ArrayList<User> getPendingRegistrations(String organization) throws Exception {
         MongoCollection collection = client.getCollection("users");
@@ -119,11 +147,13 @@ public class UserDAOMongo implements UserDAO {
         return finalList;
     }
 
+    /**
+     * Returns a List of String with the names of every organization in the system
+     * @return  A list of organization namesA list of organization names
+     */
     public List<String> getOrganizations() {
         MongoCollection collection = client.getCollection("users");
-
         Distinct distinct = collection.distinct("organization.name");
-
         return distinct.as(String.class);
     }
 
@@ -137,16 +167,31 @@ public class UserDAOMongo implements UserDAO {
         collection.insert(user);
     }
 
+    /**
+     * Deletes the User with a matching id from the database
+     * @param id    Id of the User to be deleted
+     */
     public void delete(String id) {
         MongoCollection collection = client.getCollection("users");
         collection.remove(new ObjectId(id));
     }
 
+    /**
+     * Updated a user with a matching id to the argument user, with the content of the argument user
+     * @param user  An updates User object
+     */
     public void update(User user) {
         MongoCollection collection = client.getCollection("users");
         collection.update(new ObjectId(user.getId())).with(user);
     }
 
+    /**
+     * Returns all users who currently are trying to create new organzaton that needs to be approved
+     * by an administartor
+     *
+     * @param collection    The MonogCollection for the users collection
+     * @return              An ArrayList containing all users creating new organizations
+     */
     private ArrayList<User> getUsersCreatingNewOrganization(MongoCollection collection) {
         ArrayList<User> users = new ArrayList<>();
 
@@ -166,6 +211,14 @@ public class UserDAOMongo implements UserDAO {
         return users;
     }
 
+    /**
+     * Takes a finalList and a toBeAdded, both ArrayList. It will go though the toBeAdded list and
+     * add each User who does not have a duplication in the finalList. This means finalList will end
+     * up as a Set in an ArrayList
+     *
+     * @param finalList The final list which User objects are added to if no duplicate is found
+     * @param toBeAdded The arraylist User objects are taken from
+     */
     private void addToList(ArrayList<User> finalList, ArrayList<User> toBeAdded) {
         for(User user : toBeAdded) {
             boolean doesNotExist = true;
@@ -183,6 +236,12 @@ public class UserDAOMongo implements UserDAO {
         }
     }
 
+    /**
+     * Takes a MongoCurson containing User object and moving them to an ArrayList.
+     *
+     * @param cursor    MongoCursor to be conveted to an ArrayList
+     * @return          An ArrayList containing all user object from the cursor
+     */
     private ArrayList<User> cursorToArray(MongoCursor<User> cursor) {
         ArrayList<User> list = new ArrayList<>();
 

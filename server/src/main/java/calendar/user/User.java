@@ -35,10 +35,18 @@ public class User {
     @Autowired
     private Organization organization;
 
+    /**
+     * Constructor used by Jackson when converting from JSON
+     */
     public User() {
 
     }
 
+    /**
+     * Constructor used during registration. It fills in the nessecary parts of the User.
+     *
+     * @param dto A DTO used to recive registration data.
+     */
     User(RegistrationDTO dto) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -55,71 +63,139 @@ public class User {
         this.organization = new Organization(dto.getOrganization(), false);
     }
 
+    /**
+     * Getter
+     * @return Id of the User
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Getter
+     * @return Email of the User.
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Getter
+     * @return Hashed password of the User
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Getter
+     * @return Authoratory role of the User
+     */
     public String getRole() {
         return role;
     }
 
+    /**
+     * Getter
+     * @return The reset password link for this User
+     */
     public AuthenticationLink getResetPasswordLink() {
         return resetPasswordLink;
     }
 
+    /**
+     * Getter
+     * @return The validate email link of this User
+     */
     public AuthenticationLink getValidateEmailLink() {
         return validateEmailLink;
     }
 
+    /**
+     * Getter
+     * @return The timestamp when user was created
+     */
     public long getCreatedAt() {
         return createdAt;
     }
 
+    /**
+     * Getter
+     * @return Timestamp when user was last updated
+     */
     public long getUpdatedAt() {
         return updatedAt;
     }
 
+    /**
+     * Getter
+     * @return Organization of the User
+     */
     public Organization getOrganization() {
         return organization;
     }
 
+    /**
+     * Setter
+     * @param id The id of the User
+     */
     void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Setter
+     * @param email Email of the User
+     */
     void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Setter
+     * @param password New unencoded password of the User
+     */
     void setPassword(String password) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         this.password = encoder.encode(password);
     }
 
+    /**
+     * Setter
+     * @param role New role of the user
+     */
     void setRole(String role) {
         this.role = role;
     }
 
+    /**
+     * Setter
+     * @param resetPasswordLink New reset password link for the User
+     */
     void setResetPasswordLink(AuthenticationLink resetPasswordLink) {
         this.resetPasswordLink = resetPasswordLink;
     }
 
+    /**
+     * Setter
+     * @param validateEmailLink New validate email link for the User
+     */
     void setValidateEmailLink(AuthenticationLink validateEmailLink) {
         this.validateEmailLink = validateEmailLink;
     }
 
+    /**
+     * Setter
+     * @param organization New Organization for the user
+     */
     void setOrganization(Organization organization) {
         this.organization = organization;
     }
 
+    /**
+     * Method which returns a list of authorities for Spring Security to use.
+     * @return  An array of roles to fit Spring Security
+     */
     public String[] fetchAuthorities() {
         String[] roles = null;
 
@@ -177,6 +253,14 @@ public class User {
         return false;
     }
 
+    /**
+     * Method goes though a large set of logic to find if this user has the authorities to to change
+     * the role of the target user to a specified role.
+     *
+     * @param target    The user this user wants to change role of
+     * @param newRole   The new role this user wants to give target
+     * @return          True if this user is allowed this action. False if not
+     */
     boolean canChangeRoleTo(User target, String newRole) {
         if(getRole().equals("USER")) {
             return false;
