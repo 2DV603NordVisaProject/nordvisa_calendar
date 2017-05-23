@@ -22,8 +22,12 @@ class MyEventsView extends Component {
   }
 
   componentWillMount() {
-    const events = Client.getEvents();
-    this.setState({ events });
+    const uri = "/api/event/get_manageable";
+    Client.get(uri)
+      .then(events => {
+        console.log(events);
+        this.setState({ events })
+      })
   }
 
   handleDeleteClick(evt) {
