@@ -153,11 +153,14 @@ public class EventController {
         }
     }
 
+    // TODO: Update seq diagram
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Event updateEvent(@ModelAttribute UpdateEventDTO updateEventDTO) {
-        // TODO: Add authChecker
         Event event = new Event(updateEventDTO);
-        return dao.updateEvent(event);
+
+        if(auth.currentUserCanManage(event.getCreatedBy())) {
+            return dao.updateEvent(event);
+        }
     }
 
     @ExceptionHandler(EventNotFoundException.class)
