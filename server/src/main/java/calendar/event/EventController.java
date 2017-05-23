@@ -161,6 +161,8 @@ public class EventController {
         if(auth.currentUserCanManage(event.getCreatedBy())) {
             return dao.updateEvent(event);
         }
+
+        return event;
     }
 
     @ExceptionHandler(EventNotFoundException.class)

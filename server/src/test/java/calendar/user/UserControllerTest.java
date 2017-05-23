@@ -200,10 +200,10 @@ public class UserControllerTest {
         }
 
         verify(validator).validate(dtoMock);
-        verify(userMock, times(1)).setEmail("test2@test.com");
+        verify(userMock, times(1)).setEmailChange("test2@test.com");
         verify(userMock, times(1)).
                 setValidateEmailLink(any(AuthenticationLink.class));
-        verify(email, times(1)).sendVerificationEmail("urlid", "test@test.com");
+        verify(email, times(1)).sendVerificationEmail("urlid", "test2@test.com");
 
         verify(orgMock).setChangePending("new_org");
         verify(dao).update(userMock);
