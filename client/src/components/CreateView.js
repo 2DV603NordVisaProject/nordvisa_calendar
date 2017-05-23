@@ -21,7 +21,8 @@ class CreateView extends Component {
       file: null,
       startTime: "",
       endTime: "",
-      path: ""
+      path: "",
+      imgName: ""
     },
     fieldErrors: [],
     progress: "create",
@@ -63,6 +64,7 @@ class CreateView extends Component {
 
     if (event.target.name === "img") {
       fields[event.target.name] = URL.createObjectURL(event.target.files[0]);
+      fields.imgName = event.target.value;
       fields.file = event.target.files[0];
       console.log(fields);
     }
@@ -81,15 +83,26 @@ class CreateView extends Component {
     if (file) {
       Client.uploadImage(file).then(res => {
         if(res.hasOwnProperty("message")) {
-          console.log(res.message);
-          fieldErrors.push(res.message);
+          let err = "";
+          if(res.message == "415") {
+            err = "Unsupported file type!";
+          } else if(res.message == "413") {
+            err = "File size too large!";
+          } else {
+            err = "Internal Server Error";
+          }
+          fieldErrors.push(err);
           this.setState({fieldErrors});
           return;
         }
 
-        this.state.fields.path = res.path;
+        const fields = this.state.fields;
+        fields.path = res.path;
+        this.setState({ fields });
         this.setState({ progress: "preview" });
       });
+    } else {
+      this.setState({ progress: "preview" });
     }
   }
 
@@ -101,7 +114,23 @@ class CreateView extends Component {
   onSaveClick(event) {
     event.preventDefault();
 
-    Client.postEvent(this.state.fields.file)
+    const fields = this.state.fields;
+    const uri = "/api/event/create";
+    const eventObj = {
+      name: fields.name,
+      date: fields.date,
+      recurring: fields.recurring,
+      recursUntil: fields.recursuntil,
+      recursEvery: fields.recurs,
+      location: fields.location,
+      description: fields.desc,
+      images: [fields.imgName],
+      startTime: fields.startTime,
+      endTime: fields.endTime,
+      path: fields.path
+    };
+
+    Client.post(eventObj, uri).then(res => console.log(res));
 
     const fieldErrors = [];
     fieldErrors.push("The event is now saved!");

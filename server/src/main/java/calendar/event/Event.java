@@ -22,7 +22,8 @@ class Event {
     private boolean recurring;
     private int recursEvery;
     private long recursUntil;
-    private List<Image> images;
+    private String path;
+    private List<String> images;
     private long createdAt;
     private long updatedAt;
     private String createdBy;
@@ -134,11 +135,11 @@ class Event {
         this.recursUntil = recursUntil;
     }
 
-    public List<Image> getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 
@@ -172,5 +173,13 @@ class Event {
 
     public void setEditedBy(String editedBy) {
         this.editedBy = editedBy;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

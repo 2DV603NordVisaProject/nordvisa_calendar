@@ -14,7 +14,7 @@ public class CreateEventDTO {
     private boolean recurring;
     private int recursEvery;
     private long recursUntil;
-    private List<Image> images;
+    private List<String> images;
     private long createdAt;
     private long updatedAt;
     private String createdBy;
@@ -84,11 +84,11 @@ public class CreateEventDTO {
         this.recursUntil = recursUntil;
     }
 
-    public List<Image> getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 
