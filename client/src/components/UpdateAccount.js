@@ -12,6 +12,7 @@ class UpdateAccount extends Component {
       org: "",
       neworg: "",
     },
+    organizations: [],
     fieldErrors: [],
   }
 
@@ -26,6 +27,12 @@ class UpdateAccount extends Component {
         neworg: ""
       }
       this.setState({fields});
+      })
+
+    const orgUri = "/api/visitor/organizations";
+    Client.get(orgUri)
+      .then(organizations => {
+        this.setState({ organizations });
       })
   }
 
@@ -96,7 +103,11 @@ class UpdateAccount extends Component {
             onChange={this.onInputChange.bind(this)}
             value={this.state.fields.org}
             defaultValue="">
-            <option value="NordVisa">NordVisa</option>
+            {
+              this.state.organizations.map(org => {
+                return <option className="capitalize" value={org}>{org}</option>
+              })
+            }
             <option value="new" className="capitalize">{language.newOrganization}</option>
             <option value="" className="capitalize">{language.noOrganization}</option>
           </select>

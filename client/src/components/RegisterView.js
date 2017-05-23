@@ -18,9 +18,18 @@ class RegisterView extends Component {
       neworg: "",
       recaptcha: "",
     },
+    organizations: [],
     fieldErrors: [],
     _loading: false,
     _redirect: false,
+  }
+
+  componentWillMount() {
+    const uri = "/api/visitor/organizations";
+    Client.get(uri)
+      .then(organizations => {
+        this.setState({ organizations });
+      })
   }
 
   validate(fields) {
@@ -143,7 +152,11 @@ class RegisterView extends Component {
               onChange={this.onInputChange.bind(this)}
               value={this.state.fields.org}
               defaultValue="">
-              <option value="NordVisa">NordVisa</option>
+              {
+                this.state.organizations.map(org => {
+                  return <option className="capitalize" value={org}>{org}</option>
+                })
+              }
               <option value="new">New Organization</option>
               <option value="">No Organization</option>
             </select>
