@@ -21,6 +21,7 @@ class CreateView extends Component {
       file: null,
       startTime: "",
       endTime: "",
+      path: ""
     },
     fieldErrors: [],
     progress: "create",
@@ -62,7 +63,8 @@ class CreateView extends Component {
 
     if (event.target.name === "img") {
       fields[event.target.name] = URL.createObjectURL(event.target.files[0]);
-      fields["file"] = event.target.files[0];
+      fields.file = event.target.files[0];
+      console.log(fields);
     }
     this.setState({ fields });
   }
@@ -74,7 +76,21 @@ class CreateView extends Component {
 
     // Return on error.
     if (fieldErrors.length) return;
-    this.setState({ progress: "preview" });
+
+    let file = this.state.fields.file;
+    if (file) {
+      Client.uploadImage(file).then(res => {
+        if(res.hasOwnProperty("message")) {
+          console.log(res.message);
+          fieldErrors.push(res.message);
+          this.setState({fieldErrors});
+          return;
+        }
+
+        this.state.fields.path = res.path;
+        this.setState({ progress: "preview" });
+      });
+    }
   }
 
   onEditClick(event) {

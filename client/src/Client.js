@@ -79,6 +79,31 @@ const Client = {
      console.log(json);
    })
  },
+ uploadImage: (imageFile) => {
+   let data = new FormData();
+   data.append("files", imageFile);
+   console.log(imageFile);
+   console.log(Array.from(data.entries()));
+
+   const req = new Request(`${url}/api/upload`, {
+     method: "POST",
+     body: data
+   });
+
+   return fetch(req)
+    .then(res => {
+      if(!res.ok) {
+        throw new Error(res.status);
+      }
+
+      return res.json();
+    }).then(json => {
+      return json;
+    }).catch(err => {
+      console.log(err.message);
+      return err;
+    });
+ },
  login: function(userObj, uri) {
 
    const req = new Request(`${url}${uri}`, {
