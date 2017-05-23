@@ -156,10 +156,6 @@ public class VisitorController {
      * @return              A List of String with names of each organization in the system
      * @throws Exception    Database errors
      */
-    // TODO: Add to documentation and diagrams
-    // Class done
-    // Seq done
-    // Tested
     @RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public List<String> getOrganizations() throws Exception {
         return dao.getOrganizations();

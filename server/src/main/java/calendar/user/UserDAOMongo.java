@@ -112,7 +112,6 @@ public class UserDAOMongo implements UserDAO {
      *                      organizaton changes relevant to the administrator
      * @throws Exception    Database errors
      */
-    // TODO: Users who want to join the global group can't
     public ArrayList<User> getPendingRegistrations(String organization) throws Exception {
         MongoCollection collection = client.getCollection("users");
 

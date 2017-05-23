@@ -24,7 +24,7 @@ public class EventController {
     @Autowired
     private EventDAO dao;
     private TokenValidator tokenValidator = new TokenValidator();
-    AuthorizationChecker auth = new AuthorizationChecker();
+    private AuthorizationChecker auth = new AuthorizationChecker();
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public List<Event> getEvents(@RequestParam(required = false) String id,
@@ -116,7 +116,6 @@ public class EventController {
 
     }
 
-    // TODO: Add to docs and diagrams
     @RequestMapping(value = "/get_manageable", method = RequestMethod.GET)
     public List<Event> getManageable() {
         List<String> ids = auth.getAllUserIds();
@@ -131,7 +130,6 @@ public class EventController {
         return events;
     }
 
-    // TODO: Add to docs and diagrams
     @RequestMapping(value = "/get_all", method = RequestMethod.GET)
     public List<Event> getAll() {
         return dao.getEvents();

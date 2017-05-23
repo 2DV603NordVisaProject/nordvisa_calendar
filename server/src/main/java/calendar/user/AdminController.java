@@ -134,9 +134,6 @@ public class AdminController {
         }
     }
 
-    // TODO: Add to documentation and diagrams.
-    // Class diagram done
-    // Seq done
     /**
      * Returns all users who the currently logged in user can manage. For example if they can edit
      * events created by the user.
