@@ -48,20 +48,28 @@ class UpdatePassword extends Component {
     const user = {
       id: this.state.fields.id,
       oldPassword: this.state.fields.oldpassword,
-      password: this.state.fields.password,
+      password: this.state.fields.newpassword,
       passwordConfirmation: this.state.fields.confirmpassword,
     };
 
     Client.post(user, uri)
+      .then(res => {
+        if (res.hasOwnProperty("message")) {
+          const fieldErrors = [];
+          fieldErrors.push(res.message);
+          this.setState({fieldErrors});
+          this.forceUpdate();
+        } else {
+          fieldErrors.push("Password updated!");
+          this.setState({ fieldErrors })
 
-    fieldErrors.push("Password updated!");
-    this.setState({ fieldErrors })
-
-    this.setState({fields: {
-      oldpassword: "",
-      newpassword: "",
-      confirmpassword: "",
-    }});
+          this.setState({fields: {
+            oldpassword: "",
+            newpassword: "",
+            confirmpassword: "",
+          }});
+        }
+      })
   }
 
   onInputChange(event) {
