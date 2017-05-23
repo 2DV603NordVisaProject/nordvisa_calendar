@@ -46,6 +46,7 @@ public class VisitorController {
      * @param dto           Object containing data sent to server from client
      * @throws Exception    Invalid registration data, or database errors
      */
+    // TODO: Update Seq
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public RecaptchaResponseDTO registration(@ModelAttribute RegistrationDTO dto) throws Exception {
         validator.validate(dto);
@@ -127,6 +128,7 @@ public class VisitorController {
      * @return              A String, if something goes wrong the message is sent to the client.
      * @throws Exception    IOExceptions from HTTPServletResponse.
      */
+    // TODO: Update Seq
     @RequestMapping(value = "/verify_email", method = RequestMethod.GET)
     public String verifyEmailAddress(HttpServletResponse response, @RequestParam("id") String urlId)
             throws Exception {
@@ -140,6 +142,8 @@ public class VisitorController {
         }
         else {
             user.setValidateEmailLink(new AuthenticationLink("", 0));
+            user.setEmail(user.getEmailChange());
+            user.setEmailChange("");
             dao.update(user);
             response.sendRedirect("/");
             return "";
