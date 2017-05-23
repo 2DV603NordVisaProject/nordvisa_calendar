@@ -228,7 +228,10 @@ public class User {
      * @return          True if this user can manage the target user
      */
     boolean canManage(User target) {
-        if(getId().equals(target.getId())) {
+        if(target == null) {
+            return getRole().equals("SUPER_ADMIN");
+        }
+        else if(getId().equals(target.getId())) {
             return true;
         }
         else if(target.getRole().equals("SUPER_ADMIN")) {
