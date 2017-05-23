@@ -54,9 +54,6 @@ class MyEventsView extends Component {
     }
 
     Client.post(event, uri)
-      .then(res => {
-        console.log(res);
-      })
 
     const events = this.state.events.filter(event => event.id !== this.state.toDelete);
     this.setState({ events })

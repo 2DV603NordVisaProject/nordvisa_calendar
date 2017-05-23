@@ -19,7 +19,6 @@ class UpdateAccount extends Component {
     const uri = "/api/user/current";
     Client.get(uri)
       .then(user => {
-        console.log(user);
       const fields = {
         id: user.id,
         email: user.email,
@@ -60,6 +59,15 @@ class UpdateAccount extends Component {
 
     // Return on Errors
     if (fieldErrors.length) return;
+
+    const uri = "/api/user/update_user_details";
+    const user = {
+      id: this.state.fields.id,
+      email: this.state.fields.email,
+      organization: this.state.fields.neworg || this.state.fields.org
+    };
+
+    Client.post(user, uri)
 
     this.setState({fields: {
       email: "",
