@@ -69,6 +69,9 @@ class UpdateAccount extends Component {
 
     Client.post(user, uri)
 
+    fieldErrors.push("Account updated!");
+    this.setState({ fieldErrors })
+
     this.setState({fields: {
       email: "",
       org: "",
