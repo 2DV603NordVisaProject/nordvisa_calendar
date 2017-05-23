@@ -7,6 +7,7 @@ import calendar.event.exceptions.EventNotFoundException;
 import calendar.event.exceptions.Error;
 import calendar.event.exceptions.MissingTokenException;
 import calendar.user.AuthorizationChecker;
+import calendar.token.TokenValidator;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,11 @@ import java.util.List;
 @RequestMapping("/api/event")
 public class EventController {
 
+    // TODO: Update class diagram
     @Autowired
     private EventDAO dao;
+
+    private TokenValidator tokenValidator = new TokenValidator();
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public List<Event> getEvents(@RequestParam(required = false) String id,
@@ -35,6 +39,10 @@ public class EventController {
 
 
         if (token == null) {
+            throw new MissingTokenException("Unauthorized access");
+        }
+
+        if (!tokenValidator.validate(token)) {
             throw new MissingTokenException("Unauthorized access");
         }
 
@@ -117,7 +125,6 @@ public class EventController {
 
         for(String id : ids) {
             if(auth.currentUserCanManage(id)) {
-                dao.getEventsByUserId(id);
                 events.addAll(dao.getEventsByUserId(id));
             }
         }

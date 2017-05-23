@@ -1,5 +1,6 @@
-package calendar.widget;
+package calendar.token;
 
+import org.joda.time.DateTime;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,19 +8,28 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/api/widget")
-public class WidgetController {
+@RequestMapping("/api/token")
+// TODO: change widget package to token package in docs
+public class TokenController {
+    private TokenDAO dao = new TokenDAOMongo();
+
     // TODO: Diagrams
-    @RequestMapping(value = "/generate", method = RequestMethod.GET)
-    public String generateWidget() {
-            String strToken = generateRandomString();
-            Token token = new Token();
-            token.setToken(strToken);
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public TokenDTO getToken() {
+        String strToken = generateRandomString();
+        Token token = new Token(strToken,
+                10000,
+                DateTime.now().getMillis(),
+                DateTime.now().plusYears(1).getMillis(),
+                true
+        );
 
-            WidgetGeneratorDao dao = new WidgetGeneratorDaoMongo();
-            dao.addApiToken(token);
+        dao.add(token);
 
-            return strToken;
+        TokenDTO dto = new TokenDTO();
+        dto.setToken(strToken);
+
+        return dto;
     }
 
     /**
