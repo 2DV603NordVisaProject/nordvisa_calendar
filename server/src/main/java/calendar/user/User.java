@@ -35,6 +35,8 @@ public class User {
     @Autowired
     private Organization organization;
 
+    private String emailChange;
+
     /**
      * Constructor used by Jackson when converting from JSON
      */
@@ -50,7 +52,7 @@ public class User {
     User(RegistrationDTO dto) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        this.email = dto.getEmail();
+        this.email = "";
         this.password = encoder.encode(dto.getPassword());
         this.role = "USER";
 
@@ -63,6 +65,8 @@ public class User {
         this.organization = new Organization();
         this.organization.setChangePending(dto.getOrganization());
         this.organization.setApproved(false);
+
+        this.emailChange = dto.getEmail();
     }
 
     /**
@@ -137,6 +141,10 @@ public class User {
         return organization;
     }
 
+    public String getEmailChange() {
+        return emailChange;
+    }
+
     /**
      * Setter
      * @param id The id of the User
@@ -194,6 +202,10 @@ public class User {
         this.organization = organization;
     }
 
+    void setEmailChange(String emailChange) {
+        this.emailChange = emailChange;
+    }
+
     /**
      * Method which returns a list of authorities for Spring Security to use.
      * @return  An array of roles to fit Spring Security
@@ -217,7 +229,7 @@ public class User {
     }
 
     public boolean valid() {
-        return organization.isApproved() && validateEmailLink.getUrl().equals("");
+        return organization.isApproved();
     }
 
     /**
@@ -228,7 +240,10 @@ public class User {
      * @return          True if this user can manage the target user
      */
     boolean canManage(User target) {
-        if(getId().equals(target.getId())) {
+        if(target == null) {
+            return getRole().equals("SUPER_ADMIN");
+        }
+        else if(getId().equals(target.getId())) {
             return true;
         }
         else if(target.getRole().equals("SUPER_ADMIN")) {

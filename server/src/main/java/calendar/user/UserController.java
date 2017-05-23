@@ -148,6 +148,7 @@ public class UserController {
      * @param dto           Object containing user details to be updated
      * @throws Exception    Invalid data or database errors
      */
+    // TODO: Update seq
     @RequestMapping(value = "/update_user_details", method = RequestMethod.POST)
     public void updateUserDetails(@ModelAttribute UserDetailsUpdateDTO dto) throws Exception {
         validator.validate(dto);
@@ -155,11 +156,11 @@ public class UserController {
         User user = dao.getUserById(dto.getId());
 
         if (!user.getEmail().equals(dto.getEmail())) {
-            user.setEmail(dto.getEmail());
+            user.setEmailChange(dto.getEmail());
             user.setValidateEmailLink(new AuthenticationLink(generateRandomString(),
                     DateTime.now().getMillis()));
 
-            email.sendVerificationEmail(user.getValidateEmailLink().getUrl(), user.getEmail());
+            email.sendVerificationEmail(user.getValidateEmailLink().getUrl(), dto.getEmail());
         }
 
         user.getOrganization().setChangePending(dto.getOrganization());

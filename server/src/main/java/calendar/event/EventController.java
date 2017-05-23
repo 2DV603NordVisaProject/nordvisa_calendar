@@ -23,8 +23,8 @@ public class EventController {
     // TODO: Update class diagram
     @Autowired
     private EventDAO dao;
-
     private TokenValidator tokenValidator = new TokenValidator();
+    private AuthorizationChecker auth = new AuthorizationChecker();
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public List<Event> getEvents(@RequestParam(required = false) String id,
@@ -116,10 +116,8 @@ public class EventController {
 
     }
 
-    // TODO: Add to docs and diagrams
     @RequestMapping(value = "/get_manageable", method = RequestMethod.GET)
     public List<Event> getManageable() {
-        AuthorizationChecker auth = new AuthorizationChecker();
         List<String> ids = auth.getAllUserIds();
         List<Event> events = new ArrayList<>();
 
@@ -132,29 +130,37 @@ public class EventController {
         return events;
     }
 
-    // TODO: Add to docs and diagrams
     @RequestMapping(value = "/get_all", method = RequestMethod.GET)
     public List<Event> getAll() {
         return dao.getEvents();
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Event createEvent(@RequestBody CreateEventDTO createEventDTO) {
+    public Event createEvent(@ModelAttribute CreateEventDTO createEventDTO) {
         Event event = new Event(createEventDTO);
         return dao.createEvent(event);
     }
 
+    // TODO: Update seq diagram
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public void deleteEvent(@RequestBody DeleteEventDTO deleteEventDTO) {
-        // TODO: Add authChecker
-        dao.deleteEvent(deleteEventDTO.getId());
+    public void deleteEvent(@ModelAttribute DeleteEventDTO deleteEventDTO) {
+        Event event = dao.getEvent(new ObjectId(deleteEventDTO.getId())).get(0);
+
+        if(auth.currentUserCanManage(event.getCreatedBy())) {
+            dao.deleteEvent(deleteEventDTO.getId());
+        }
     }
 
+    // TODO: Update seq diagram
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Event updateEvent(@RequestBody UpdateEventDTO updateEventDTO) {
-        // TODO: Add authChecker
+    public Event updateEvent(@ModelAttribute UpdateEventDTO updateEventDTO) {
         Event event = new Event(updateEventDTO);
-        return dao.updateEvent(event);
+
+        if(auth.currentUserCanManage(event.getCreatedBy())) {
+            return dao.updateEvent(event);
+        }
+
+        return event;
     }
 
     @ExceptionHandler(EventNotFoundException.class)

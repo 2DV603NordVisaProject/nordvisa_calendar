@@ -47,8 +47,6 @@ class Email {
      * @param email The email address email should be sent to
      * @param type  The type of action, registration or organization change
      */
-    // TODO: add to diagrams and docs
-    // Class done
     void sendSuccessEmail(String email, String type) {
         System.out.println("To " + email + ": Your " + type + " has been successful");
     }
@@ -60,8 +58,7 @@ class Email {
      * @param email The email address email should be sent to
      * @param type  The type of action, registration or organization change.
      */
-    // TODO: add to diagrams and docs
-    // Class done
+
     void sendDenialEmail(String email, String type) {
         System.out.println("To " + email + ": Your " + type + " has been declined");
     }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ErrorList from "./ErrorList";
 import PropTypes from "prop-types";
+import Client from "../Client";
 
 class UpdatePassword extends Component {
   state = {
@@ -10,6 +11,20 @@ class UpdatePassword extends Component {
       confirmpassword: "",
     },
     fieldErrors: [],
+  }
+
+  componentWillMount() {
+    const uri = "/api/user/current";
+    Client.get(uri)
+      .then(user => {
+      const fields = {
+        id: user.id,
+        oldpassword: "",
+        newpassword: "",
+        confirmpassword: "",
+      }
+      this.setState({fields});
+      })
   }
 
   validate(fields) {
@@ -29,11 +44,32 @@ class UpdatePassword extends Component {
     // Return on Errors
     if (fieldErrors.length) return;
 
-    this.setState({fields: {
-      oldpassword: "",
-      newpassword: "",
-      confirmpassword: "",
-    }});
+    const uri = "/api/user/change_password";
+    const user = {
+      id: this.state.fields.id,
+      oldPassword: this.state.fields.oldpassword,
+      password: this.state.fields.newpassword,
+      passwordConfirmation: this.state.fields.confirmpassword,
+    };
+
+    Client.post(user, uri)
+      .then(res => {
+        if (res.hasOwnProperty("message")) {
+          const fieldErrors = [];
+          fieldErrors.push(res.message);
+          this.setState({fieldErrors});
+          this.forceUpdate();
+        } else {
+          fieldErrors.push("Password updated!");
+          this.setState({ fieldErrors })
+
+          this.setState({fields: {
+            oldpassword: "",
+            newpassword: "",
+            confirmpassword: "",
+          }});
+        }
+      })
   }
 
   onInputChange(event) {

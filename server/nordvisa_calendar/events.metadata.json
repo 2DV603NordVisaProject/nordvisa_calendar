@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"nordvisa_calendar.events"},{"v":1,"key":{"location.coordinates":"2dsphere"},"name":"location.coordinates_2dsphere","ns":"nordvisa_calendar.events","2dsphereIndexVersion":2}]}

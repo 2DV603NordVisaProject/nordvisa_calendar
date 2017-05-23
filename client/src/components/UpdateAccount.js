@@ -12,6 +12,7 @@ class UpdateAccount extends Component {
       org: "",
       neworg: "",
     },
+    organizations: [],
     fieldErrors: [],
   }
 
@@ -19,7 +20,6 @@ class UpdateAccount extends Component {
     const uri = "/api/user/current";
     Client.get(uri)
       .then(user => {
-        console.log(user);
       const fields = {
         id: user.id,
         email: user.email,
@@ -27,6 +27,12 @@ class UpdateAccount extends Component {
         neworg: ""
       }
       this.setState({fields});
+      })
+
+    const orgUri = "/api/visitor/organizations";
+    Client.get(orgUri)
+      .then(organizations => {
+        this.setState({ organizations });
       })
   }
 
@@ -61,6 +67,18 @@ class UpdateAccount extends Component {
     // Return on Errors
     if (fieldErrors.length) return;
 
+    const uri = "/api/user/update_user_details";
+    const user = {
+      id: this.state.fields.id,
+      email: this.state.fields.email,
+      organization: this.state.fields.neworg || this.state.fields.org
+    };
+
+    Client.post(user, uri)
+
+    fieldErrors.push("Account updated!");
+    this.setState({ fieldErrors })
+
     this.setState({fields: {
       email: "",
       org: "",
@@ -85,7 +103,11 @@ class UpdateAccount extends Component {
             onChange={this.onInputChange.bind(this)}
             value={this.state.fields.org}
             defaultValue="">
-            <option value="NordVisa">NordVisa</option>
+            {
+              this.state.organizations.map(org => {
+                return <option className="capitalize" value={org}>{org}</option>
+              })
+            }
             <option value="new" className="capitalize">{language.newOrganization}</option>
             <option value="" className="capitalize">{language.noOrganization}</option>
           </select>
