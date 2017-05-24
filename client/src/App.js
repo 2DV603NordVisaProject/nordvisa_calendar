@@ -4,6 +4,9 @@ import ViewContainer from "./components/ViewContainer"
 import Router from "react-router/BrowserRouter";
 import sv from "./i18n/sv";
 import en from "./i18n/en";
+import no from "./i18n/no";
+import da from "./i18n/da";
+import is from "./i18n/is";
 import PropTypes from "prop-types";
 
 class App extends Component {
@@ -17,9 +20,9 @@ class App extends Component {
     languages: {
       sv: sv,
       en: en,
-      de: en,
-      is: en,
-      no: en,
+      da: da,
+      is: is,
+      no: no,
     },
     currentLanguage: "en",
   }
