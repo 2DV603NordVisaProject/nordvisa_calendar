@@ -12,6 +12,7 @@ import EventsMap from "./EventsMap";
 class CreateView extends Component {
   state = {
     fields: {
+      id: "",
       name: "",
       date: "",
       recurring: false,
@@ -53,9 +54,10 @@ class CreateView extends Component {
           let endTime = Moment(Moment(event.date).valueOf() + Moment(event.duration).valueOf());
 
           const fields = {
+            id: event.id,
             name: event.name,
             date: date.format("YYYY-MM-DD"),
-            recurring: event.recursive,
+            recurring: event.recurring,
             recursuntil: event.recursUntil,
             recurs: event.recursEvery,
             location: event.location.address,
@@ -166,6 +168,7 @@ class CreateView extends Component {
     const date = Moment(fields.date).valueOf();
     const duration = Moment(fields.date + " " + fields.endTime).valueOf() - Moment(fields.date + " " + fields.startTime).valueOf();
     const eventObj = {
+      id: fields.id,
       name: fields.name,
       date: date,
       recurring: fields.recurring,
