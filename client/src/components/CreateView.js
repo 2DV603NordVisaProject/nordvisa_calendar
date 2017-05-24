@@ -17,7 +17,7 @@ class CreateView extends Component {
       date: "",
       recurring: false,
       recursuntil: "",
-      recurs: 0,
+      recurs: "",
       location: "",
       desc: "",
       img:  "",
@@ -50,8 +50,10 @@ class CreateView extends Component {
           this.setState({event});
 
           let date = Moment(event.startDateTime);
+          console.log(date);
 
-          let endTime = Moment(Moment(event.date).valueOf() + Moment(event.duration).valueOf());
+          let endTime = Moment(date.valueOf() + event.duration);
+          console.log(endTime);
 
           const fields = {
             id: event.id,
@@ -165,12 +167,14 @@ class CreateView extends Component {
     const fields = this.state.fields;
     const uri = "/api/event/create";
     const editUri = "/api/event/update";
-    const date = Moment(fields.date).valueOf();
+    console.log(fields.date + " " + fields.startTime);
+    const date = Moment(fields.date + " " + fields.startTime).valueOf();
+    console.log(date);
     const duration = Moment(fields.date + " " + fields.endTime).valueOf() - Moment(fields.date + " " + fields.startTime).valueOf();
     const eventObj = {
       id: fields.id,
       name: fields.name,
-      date: date,
+      startDateTime: date,
       recurring: fields.recurring,
       location: fields.location,
       description: fields.desc,
@@ -182,7 +186,7 @@ class CreateView extends Component {
 
     if(fields.recurring) {
       eventObj.recursUntil = Moment(fields.recursuntil).valueOf();
-      eventObj.recursEvery = parseInt(fields.recurs, 10);
+      eventObj.recursEvery = fields.recurs;
     }
 
     console.log(eventObj);
