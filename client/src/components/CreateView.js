@@ -52,7 +52,7 @@ class CreateView extends Component {
 
           const fields = {
             name: event.name,
-            date: date.format("YYYY/M/D"),
+            date: date.format("YYYY-MM-DD"),
             recurring: event.recursive,
             recursuntil: event.recursUntil,
             recurs: event.recursEvery,
@@ -60,7 +60,7 @@ class CreateView extends Component {
             desc: event.description,
             img:  event.images,
             file: null,
-            startTime: "",
+            startTime: date.format("HH:mm"),
             endTime: "",
             path: event.path,
             imgName: "",
@@ -219,8 +219,6 @@ class CreateView extends Component {
             }
             <h4 className="preview-text">{this.state.fields.name}</h4>
             <p className="preview-text">{this.state.fields.location} - {this.state.fields.date} - {this.state.fields.startTime} - {this.state.fields.endTime}</p>
-            <div className="img-container" style={ this.state.comeFrom === "event" ? {backgroundImage: `url(${this.state.francis} : {backgroundImage: `url(${this.state.fields.img})`}}>
-            </div>
             {
               this.state.fields.path === "" ? "" : <div className="img-container" style={ this.state.comeFrom === "event" ? {backgroundImage: `url(${resourceURI}/${this.state.fields.path}/${this.state.fields.img})`} : {backgroundImage: `url(${this.state.fields.img})`}}></div>
             }
