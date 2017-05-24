@@ -62,7 +62,7 @@ class CreateView extends Component {
             file: null,
             startTime: "",
             endTime: "",
-            path: "",
+            path: event.path,
             imgName: "",
             createdBy: event.createdBy
           }
@@ -206,6 +206,7 @@ class CreateView extends Component {
 
   render() {
 
+    const resourceURI = "/api/upload"
     const language = this.context.language.CreateView;
 
     if (this.state.progress === "preview" || this.state.progress === "view") {
@@ -220,6 +221,9 @@ class CreateView extends Component {
             <p className="preview-text">{this.state.fields.location} - {this.state.fields.date} - {this.state.fields.startTime} - {this.state.fields.endTime}</p>
             <div className="img-container" style={ this.state.comeFrom === "event" ? {backgroundImage: `url(${this.state.francis} : {backgroundImage: `url(${this.state.fields.img})`}}>
             </div>
+            {
+              this.state.fields.path === "" ? "" : <div className="img-container" style={ this.state.comeFrom === "event" ? {backgroundImage: `url(${resourceURI}/${this.state.fields.path}/${this.state.fields.img})`} : {backgroundImage: `url(${this.state.fields.img})`}}></div>
+            }
             <h4 className="preview-text capitalize">{language.description}:</h4>
             <div className="desc">
               <p>{this.state.fields.desc}</p>
