@@ -88,7 +88,6 @@ class CreateView extends Component {
     if (!fields.desc) errors.push(this.context.language.Errors.descriptionNeeded);
     if (!fields.startTime) errors.push(this.context.language.Errors.startNeeded);
     if (!fields.endTime) errors.push(this.context.language.Errors.endNeeded);
-    if (fields.startTime.length !== 5 || fields.endTime.length !== 5) errors.push(this.context.language.Errors.incorrectTime);
 
     return errors;
   }
