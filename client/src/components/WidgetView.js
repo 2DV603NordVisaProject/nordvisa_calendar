@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import "./WidgetView.css";
 import ErrorList from "./ErrorList";
 import ProvinceSelect from "./ProvinceSelect";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
+import Client from "../Client";
 
 
 class WidgetView extends Component {
@@ -17,7 +18,16 @@ class WidgetView extends Component {
     bodyCode: "",
     token: "",
   }
-  
+
+  componentWillMount() {
+    const uri = "/api/token";
+    Client.get(uri)
+      .then(res => {
+        const token = res.token;
+        this.setState({ token });
+      })
+  }
+
   validate(fields) {
     const errors = []
     if (!fields.region) errors.push(this.context.language.Errors.chooseRegion);
