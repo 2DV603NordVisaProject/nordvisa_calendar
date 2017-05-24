@@ -14,6 +14,9 @@
     "validator": "^7.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-react": "^7.0.1",
     "react-scripts": "0.9.5"
   },
   "scripts": {

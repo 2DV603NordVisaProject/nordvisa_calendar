@@ -52,7 +52,7 @@ class UpdateAccount extends Component {
 
     const hiddenForm = document.querySelector("#on-select-change");
 
-    if (value === "new" && name === "org") {
+    if (this.state.fields.org === "new") {
       hiddenForm.classList.remove("hidden");
     } else {
       hiddenForm.classList.add("hidden");

@@ -19,6 +19,7 @@ class RegisterView extends Component {
       recaptcha: "",
     },
     organizations: [],
+    newOrg: "hidden",
     fieldErrors: [],
     _loading: false,
     _redirect: false,
@@ -59,10 +60,12 @@ class RegisterView extends Component {
 
     const hiddenForm = document.querySelector(".change");
 
-    if (value === "new" && name === "org") {
-      hiddenForm.classList.remove("hidden");
+    if (this.state.fields.org === "new") {
+      const newOrg = "";
+      this.setState({newOrg});
     } else {
-      hiddenForm.classList.add("hidden");
+      const newOrg = "hidden";
+      this.setState({newOrg});
     }
   }
   onFormSubmit(event) {
@@ -160,7 +163,7 @@ class RegisterView extends Component {
               <option value="new">New Organization</option>
               <option value="">No Organization</option>
             </select>
-            <div className="change hidden">
+            <div className={`change ${this.state.newOrg}`}>
               <label htmlFor="neworg" className="capitalize">{language.newOrganization}:</label>
               <input
                 name="neworg"
