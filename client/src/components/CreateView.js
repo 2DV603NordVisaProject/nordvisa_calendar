@@ -218,7 +218,7 @@ class CreateView extends Component {
             }
             <h4 className="preview-text">{this.state.fields.name}</h4>
             <p className="preview-text">{this.state.fields.location} - {this.state.fields.date} - {this.state.fields.startTime} - {this.state.fields.endTime}</p>
-            <div className="img-container" style={ this.state.comeFrom === "event" {backgroundImage: `url(${this.state.francis} ? : {backgroundImage: `url(${this.state.fields.img})`}}>
+            <div className="img-container" style={ this.state.comeFrom === "event" ? {backgroundImage: `url(${this.state.francis} : {backgroundImage: `url(${this.state.fields.img})`}}>
             </div>
             <h4 className="preview-text capitalize">{language.description}:</h4>
             <div className="desc">
