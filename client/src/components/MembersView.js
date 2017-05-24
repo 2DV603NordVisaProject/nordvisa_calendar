@@ -83,7 +83,11 @@ class MembersView extends Component {
     }
 
     updated = [];
-    this.setState({updated});
+    const popup = {
+      pop: false,
+      msg: "",
+    }
+    this.setState({updated, popup});
   }
 
   render() {
