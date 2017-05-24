@@ -26,14 +26,18 @@ class MembersView extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-    let updated = this.state.updated.map(user => user["email"]);
-    updated = updated.join(", ");
-    const popup = {
-      pop: true,
-      msg: `${this.context.language.MembersView.accMsg} ${updated}`,
+
+    if (this.state.updated.length > 0) {
+      let updated = this.state.updated.map(user => user["email"]);
+      updated = updated.join(", ");
+      const popup = {
+        pop: true,
+        msg: `${this.context.language.MembersView.accMsg} ${updated}`,
+      }
+
+      this.setState({ popup });
     }
 
-    this.setState({ popup });
   }
 
   onInputChange(event) {
@@ -57,7 +61,7 @@ class MembersView extends Component {
   }
 
   onConfirmClick() {
-    const updated = this.state.updated;
+    let updated = this.state.updated;
 
     while (updated.length > 0) {
       const user = updated.shift();
@@ -78,6 +82,7 @@ class MembersView extends Component {
       Client.post({id: user.id}, uri)
     }
 
+    updated = [];
     this.setState({updated});
   }
 
