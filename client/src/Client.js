@@ -65,7 +65,13 @@ const Client = {
 
    return fetch(req)
      .then(res => {
-       return res.json();
+       const contentType = res.headers.get("content-type");
+
+       if (contentType && contentType.indexOf("application/json") !== -1) {
+         return res.json();
+       }
+
+       return "";
      })
      .then(json => {
        return json;

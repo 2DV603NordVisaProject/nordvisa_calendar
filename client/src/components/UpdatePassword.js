@@ -26,13 +26,13 @@ class UpdatePassword extends Component {
       this.setState({fields});
       })
   }
-
+  
   validate(fields) {
     const errors = [];
-    if (!fields.newpassword || !fields.confirmpassword || !fields.oldpassword) errors.push("Password Required!");
-    if (fields.newpassword !== fields.confirmpassword) errors.push("Password's doesn't match!");
-    if (fields.newpassword.length < 10) errors.push("Pasword needs to be atleast 10 characters long!");
-    if (fields.newpassword.length > 255) errors.push("Password can't be longer than 255 characters");
+    if (!fields.newpassword || !fields.confirmpassword || !fields.oldpassword) errors.push(this.context.language.Errors.passwordRequired);
+    if (fields.newpassword !== fields.confirmpassword) errors.push(this.context.language.Errors.passwordDoesNotMatch);
+    if (fields.newpassword.length < 10) errors.push(this.context.language.Errors.shortPassword);
+    if (fields.newpassword.length > 255) errors.push(this.context.language.Errors.longPassword);
     return errors;
   }
 

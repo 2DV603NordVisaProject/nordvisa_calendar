@@ -17,10 +17,10 @@ class WidgetView extends Component {
     bodyCode: "",
     token: "",
   }
-
+  
   validate(fields) {
     const errors = []
-    if (!fields.region) errors.push("You must choose a region!");
+    if (!fields.region) errors.push(this.context.language.Errors.chooseRegion);
     return errors
   }
 

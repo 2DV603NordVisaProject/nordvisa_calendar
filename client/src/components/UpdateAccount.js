@@ -38,8 +38,8 @@ class UpdateAccount extends Component {
 
   validate(fields) {
     const errors = [];
-    if (!fields.email) errors.push("Email Required!");
-    if (!isEmail(fields.email)) errors.push("Invalid email!");
+    if (!fields.email) errors.push(this.context.language.Errors.emailRequired);
+    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
     return errors;
   }
 

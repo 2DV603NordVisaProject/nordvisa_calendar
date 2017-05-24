@@ -29,19 +29,21 @@ class RegisterView extends Component {
     const uri = "/api/visitor/organizations";
     Client.get(uri)
       .then(organizations => {
-        this.setState({ organizations });
+        if (organizations.length > 0) {
+          this.setState({ organizations });
+        }
       })
   }
 
   validate(fields) {
     const errors = [];
-    if (!fields.email) errors.push("Email Required!");
-    if (!fields.password || !fields.confirmpassword) errors.push("Password Required!");
-    if (fields.password !== fields.confirmpassword) errors.push("Password's doesn't match!");
-    if (!fields.recaptcha) errors.push("Captcha fails!");
-    if (fields.password.length < 10) errors.push("Password is too short!");
-    if (fields.password.length > 255) errors.push("Password is too long!");
-    if (!isEmail(fields.email)) errors.push("Invalid email!");
+    if (!fields.email) errors.push(this.context.language.Errors.emailRequired);
+    if (!fields.password || !fields.confirmpassword) errors.push(this.context.language.Errors.passwordRequired);
+    if (fields.password !== fields.confirmpassword) errors.push(this.context.language.Errors.passwordDoesNotMatch);
+    if (!fields.recaptcha) errors.push(this.context.language.Errors.captchaFails);
+    if (fields.password.length < 10) errors.push(this.context.language.Errors.shortPassword);
+    if (fields.password.length > 255) errors.push(this.context.language.Errors.longPassword);
+    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
     return errors;
   }
 
@@ -176,6 +178,7 @@ class RegisterView extends Component {
               sitekey='6Le13yAUAAAAAC4D1Ml81bW3WlGN83bZo4FzHU7Z'
               verifyCallback={this.callback.bind(this)}
               />
+            <ErrorList errors={this.state.fieldErrors}/>
             <input
               type="submit"
               value={language.registerBtn}

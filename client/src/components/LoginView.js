@@ -28,7 +28,7 @@ class LoginView extends Component {
         this.setState({ shouldRedirect: true })
         this.forceUpdate();
       } else {
-        const fieldErrors = ["Login failed!"];
+        const fieldErrors = [this.context.language.Errors.loginFailed];
         this.setState({ loginInProgress: false, fieldErrors });
       }
     });
@@ -36,10 +36,10 @@ class LoginView extends Component {
 
   validate(fields) {
     const errors = []
-    if (!isEmail(fields.email)) errors.push("Email is invalid!");
-    if (!fields.password) errors.push("Password field is empty!")
-    if (fields.password.length < 10) errors.push("Incorrect Password!");
-    if (fields.password.length > 255) errors.push("Incorrect Password!");
+    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
+    if (!fields.password) errors.push(this.context.language.Errors.emptyPassword);
+    if (fields.password.length < 10) errors.push(this.context.language.Errors.incorrectPassword);
+    if (fields.password.length > 255) errors.push(this.context.language.Errors.incorrectPassword);
     return errors;
   }
 

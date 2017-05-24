@@ -40,13 +40,13 @@ class CreateView extends Component {
 
   validate(fields) {
     const errors = [];
-    if (!fields.name) errors.push("You need to enter a name!");
-    if (!fields.date) errors.push("You need to ender a date!");
-    if (!fields.location) errors.push("You need to enter a location!");
-    if (!fields.desc) errors.push("You need to enter a description!");
-    if (!fields.startTime) errors.push("Start time is required!");
-    if (!fields.endTime) errors.push("End time is required!");
-    if (fields.startTime.length !== 5 || fields.endTime.length !== 5) errors.push("Incorrect time format!");
+    if (!fields.name) errors.push(this.context.language.Errors.nameNeeded);
+    if (!fields.date) errors.push(this.context.language.Errors.dateNeeded);
+    if (!fields.location) errors.push(this.context.language.Errors.locationNeeded);
+    if (!fields.desc) errors.push(this.context.language.Errors.descriptionNeeded);
+    if (!fields.startTime) errors.push(this.context.language.Errors.startNeeded);
+    if (!fields.endTime) errors.push(this.context.language.Errors.endNeeded);
+    if (fields.startTime.length !== 5 || fields.endTime.length !== 5) errors.push(this.context.language.Errors.incorrectTime);
 
     return errors;
   }
@@ -141,7 +141,7 @@ class CreateView extends Component {
     Client.post(eventObj, uri).then(res => console.log(res));
 
     const fieldErrors = [];
-    fieldErrors.push("The event is now saved!");
+    fieldErrors.push(this.context.language.Errors.eventSaved);
     this.setState({fieldErrors});
     this.setState({ progress: "saved"});
     this.setState({ fields: {
