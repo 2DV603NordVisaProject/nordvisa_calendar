@@ -160,6 +160,7 @@ class CreateView extends Component {
 
     const fields = this.state.fields;
     const uri = "/api/event/create";
+    const editUri = "/api/event/update";
     const date = Moment(fields.date).valueOf();
     const duration = Moment(fields.date + " " + fields.endTime).valueOf() - Moment(fields.date + " " + fields.startTime).valueOf();
     const eventObj = {
@@ -181,7 +182,11 @@ class CreateView extends Component {
 
     console.log(eventObj);
 
-    Client.post(eventObj, uri).then(res => console.log(res));
+    if (this.state.comeFrom === "event") {
+      Client.post(eventObj, editUri).then(res => console.log(res));
+    } else {
+      Client.post(eventObj, uri).then(res => console.log(res));
+    }
 
     const fieldErrors = [];
     fieldErrors.push(this.context.language.Errors.eventSaved);

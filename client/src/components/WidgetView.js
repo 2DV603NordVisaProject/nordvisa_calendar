@@ -60,7 +60,7 @@ class WidgetView extends Component {
   }
 
   generateBodyCode(region) {
-    return `<div id="visa-widget" data-region="${region}" token="${this.state.token}"></div>`;
+    return `<div id="visa-widget" data-region="${region}" data-token="${this.state.token}"></div>`;
   }
 
   onInputChange(event)  {
