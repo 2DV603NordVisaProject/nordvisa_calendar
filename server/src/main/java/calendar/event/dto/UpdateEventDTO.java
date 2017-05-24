@@ -11,7 +11,7 @@ public class UpdateEventDTO {
     private long date;
     private long duration;
     private boolean recurring;
-    private int recursEvery;
+    private String recursEvery;
     private long recursUntil;
     private List<String> images;
     private long createdAt;
@@ -76,11 +76,11 @@ public class UpdateEventDTO {
         this.recurring = recurring;
     }
 
-    public int getRecursEvery() {
+    public String getRecursEvery() {
         return recursEvery;
     }
 
-    public void setRecursEvery(int recursEvery) {
+    public void setRecursEvery(String recursEvery) {
         this.recursEvery = recursEvery;
     }
 
