@@ -58,7 +58,7 @@ class RegisterView extends Component {
     fields[name] = value;
     this.setState({ fields });
 
-    const hiddenForm = document.querySelector(".change");
+    const hiddenForm = document.querySelector("#on-select-change");
 
     if (this.state.fields.org === "new") {
       const newOrg = "";
@@ -163,7 +163,7 @@ class RegisterView extends Component {
               <option value="new">New Organization</option>
               <option value="">No Organization</option>
             </select>
-            <div className={`change ${this.state.newOrg}`}>
+            <div id="on-select-change" className={this.state.newOrg}>
               <label htmlFor="neworg" className="capitalize">{language.newOrganization}:</label>
               <input
                 name="neworg"
