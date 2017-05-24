@@ -2,7 +2,6 @@ package calendar.event;
 
 import calendar.event.dto.CreateEventDTO;
 import calendar.event.dto.UpdateEventDTO;
-import calendar.image.Image;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
@@ -17,8 +16,8 @@ class Event {
     private String name;
     private EventLocation location;
     private String description;
-    private long date;
-    private float duration;
+    private long startDateTime;
+    private long duration;
     private boolean recurring;
     private int recursEvery;
     private long recursUntil;
@@ -29,7 +28,6 @@ class Event {
     private String createdBy;
     private String editedBy;
 
-
     Event() {}
 
     Event(CreateEventDTO dto) {
@@ -37,7 +35,7 @@ class Event {
         this.name = dto.getName();
         this.location = GeoCodeHandler.getGeoCodedLocation(dto.getLocation());
         this.description = dto.getDescription();
-        this.date = dto.getDate();
+        this.startDateTime = dto.getDate();
         this.duration = dto.getDuration();
         this.recurring = dto.getRecurring();
         this.recursEvery = dto.getRecursEvery();
@@ -55,7 +53,7 @@ class Event {
         this.name = dto.getName();
         this.location = GeoCodeHandler.getGeoCodedLocation(dto.getLocation());
         this.description = dto.getDescription();
-        this.date = dto.getDate();
+        this.startDateTime = dto.getDate();
         this.duration = dto.getDuration();
         this.recurring = dto.getRecurring();
         this.recursEvery = dto.getRecursEvery();
@@ -98,19 +96,19 @@ class Event {
         this.description = description;
     }
 
-    public long getDate() {
-        return date;
+    public long getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setDate(long date) {
-        this.date = date;
+    public void setStartDateTime(long startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public float getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(float duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 

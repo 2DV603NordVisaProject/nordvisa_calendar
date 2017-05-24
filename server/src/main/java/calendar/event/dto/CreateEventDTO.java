@@ -1,7 +1,5 @@
 package calendar.event.dto;
 
-import calendar.image.Image;
-
 import java.util.List;
 
 public class CreateEventDTO {
@@ -10,7 +8,7 @@ public class CreateEventDTO {
     private String location;
     private String description;
     private long date;
-    private float duration;
+    private long duration;
     private boolean recurring;
     private int recursEvery;
     private long recursUntil;
@@ -53,11 +51,11 @@ public class CreateEventDTO {
         this.date = date;
     }
 
-    public float getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(float duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 
