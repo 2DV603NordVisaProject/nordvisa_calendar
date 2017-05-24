@@ -9,9 +9,9 @@ import com.google.maps.model.GeocodingResult;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GeoCodeHandler {
+abstract class GeoCodeHandler {
 
-    public static EventLocation getGeoCodedLocation(String address) {
+    static EventLocation getGeoCodedLocation(String address) {
 
         EventLocation eventLocation = new EventLocation();
 
