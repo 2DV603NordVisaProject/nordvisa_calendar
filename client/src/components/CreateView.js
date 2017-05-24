@@ -23,7 +23,8 @@ class CreateView extends Component {
       startTime: "",
       endTime: "",
       path: "",
-      imgName: ""
+      imgName: "",
+      createdBy: ""
     },
     fieldErrors: [],
     progress: "create",
@@ -31,11 +32,23 @@ class CreateView extends Component {
   }
 
   componentWillMount() {
+    const uri = "/api/user/current";
+
+    let fields = {};
+
     if (this.props.progress) {
       const progress =  this.props.progress;
-      const fields = Client.getEvent(this.props.id);
-      this.setState({ progress, fields, comeFrom: "event"})
+      fields = Client.getEvent(this.props.id);
+      this.setState({ progress, fields, comeFrom: "event"});
+    } else {
+      fields = this.state.fields;
     }
+
+    Client.get(uri)
+      .then(user => {
+        fields.createdBy = user.id;
+        this.setState({fields});
+    });
   }
 
   validate(fields) {
@@ -128,7 +141,8 @@ class CreateView extends Component {
       description: fields.desc,
       images: fields.imgName,
       duration: duration,
-      path: fields.path
+      path: fields.path,
+      createdBy: fields.createdBy
     };
 
     if(fields.recurring) {
