@@ -1,7 +1,5 @@
 package calendar.event.dto;
 
-import calendar.image.Image;
-
 import java.util.List;
 
 public class CreateEventDTO {

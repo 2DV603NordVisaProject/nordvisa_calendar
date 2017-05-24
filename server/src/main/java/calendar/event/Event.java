@@ -17,7 +17,7 @@ class Event {
     private String name;
     private EventLocation location;
     private String description;
-    private long date;
+    private long startDateTime;
     private float duration;
     private boolean recurring;
     private int recursEvery;
@@ -29,7 +29,6 @@ class Event {
     private String createdBy;
     private String editedBy;
 
-
     Event() {}
 
     Event(CreateEventDTO dto) {
@@ -37,7 +36,7 @@ class Event {
         this.name = dto.getName();
         this.location = GeoCodeHandler.getGeoCodedLocation(dto.getLocation());
         this.description = dto.getDescription();
-        this.date = dto.getDate();
+        this.startDateTime = dto.getDate();
         this.duration = dto.getDuration();
         this.recurring = dto.getRecurring();
         this.recursEvery = dto.getRecursEvery();
@@ -55,7 +54,7 @@ class Event {
         this.name = dto.getName();
         this.location = GeoCodeHandler.getGeoCodedLocation(dto.getLocation());
         this.description = dto.getDescription();
-        this.date = dto.getDate();
+        this.startDateTime = dto.getDate();
         this.duration = dto.getDuration();
         this.recurring = dto.getRecurring();
         this.recursEvery = dto.getRecursEvery();
@@ -98,12 +97,12 @@ class Event {
         this.description = description;
     }
 
-    public long getDate() {
-        return date;
+    public long getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setDate(long date) {
-        this.date = date;
+    public void setStartDateTime(long startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
     public float getDuration() {

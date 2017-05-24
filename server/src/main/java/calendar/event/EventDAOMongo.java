@@ -59,7 +59,6 @@ public class EventDAOMongo implements EventDAO {
                 "$lt: # } }", fromDate, toDate).as(Event.class));
     }
 
-    // TODO: Add to docs and diagrams
     public List<Event> getEventsByUserId(String id) {
         MongoCollection collection = client.getCollection("events");
         return cursorToArray(collection.find("{createdBy: \"" + id + "\"}").as(Event.class));
