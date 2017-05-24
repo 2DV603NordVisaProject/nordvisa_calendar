@@ -17,7 +17,7 @@ class Member extends Component {
               <option value="USER" className="capitalize" disabled={this.props.member.role === "SUPER_ADMIN" ? true : false}>{language.user}</option>
               <option value="ADMIN" className="capitalize" disabled={this.props.member.role === "SUPER_ADMIN" ? true : false}>{language.admin}</option>
               <option value="SUPER_ADMIN" className="capitalize">{language.superadmin}</option>
-              <option value="DETLETE" className="capitalize" disabled={this.props.member.role === "SUPER_ADMIN" ? true : false}>{language.delete}</option>
+              <option value="DELETE" className="capitalize" disabled={this.props.member.role === "SUPER_ADMIN" ? true : false}>{language.delete}</option>
             </select>
           </div>
         </div>
