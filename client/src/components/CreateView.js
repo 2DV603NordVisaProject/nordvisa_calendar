@@ -75,6 +75,7 @@ class CreateView extends Component {
 
     Client.get(uri)
       .then(user => {
+        let fields = this.state.fields;
         fields.createdBy = user.id;
         this.setState({fields});
     });
