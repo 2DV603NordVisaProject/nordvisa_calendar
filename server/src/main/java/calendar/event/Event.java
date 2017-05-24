@@ -29,6 +29,7 @@ class Event {
     private String createdBy;
     private String editedBy;
 
+
     Event() {}
 
     Event(CreateEventDTO dto) {
@@ -46,6 +47,7 @@ class Event {
         this.updatedAt = createdAt;
         this.createdBy = dto.getCreatedBy();
         this.editedBy = dto.getEditedBy();
+        this.path = dto.getPath();
     }
 
     Event(UpdateEventDTO dto) {
@@ -61,6 +63,7 @@ class Event {
         this.images = dto.getImages();
         this.updatedAt = DateTime.now().getMillis();
         this.editedBy = dto.getEditedBy();
+        this.path = dto.getPath();
     }
 
     public String getId() {

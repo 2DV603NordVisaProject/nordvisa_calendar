@@ -19,6 +19,7 @@ public class CreateEventDTO {
     private long updatedAt;
     private String createdBy;
     private String editedBy;
+    private String path;
 
     public String getName() {
         return name;
@@ -124,4 +125,11 @@ public class CreateEventDTO {
         this.editedBy = editedBy;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 }

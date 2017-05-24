@@ -6,6 +6,7 @@ import ErrorList from "./ErrorList";
 import Client from "../Client";
 import Redirect from "react-router/Redirect";
 import PropTypes from "prop-types";
+import Moment from "moment";
 
 class CreateView extends Component {
   state = {
@@ -14,7 +15,7 @@ class CreateView extends Component {
       date: "",
       recurring: false,
       recursuntil: "",
-      recurs: "",
+      recurs: 0,
       location: "",
       desc: "",
       img:  "",
@@ -64,7 +65,8 @@ class CreateView extends Component {
 
     if (event.target.name === "img") {
       fields[event.target.name] = URL.createObjectURL(event.target.files[0]);
-      fields.imgName = event.target.value;
+      const fileName = event.target.value.split("\\");
+      fields.imgName = fileName[fileName.length - 1];
       fields.file = event.target.files[0];
       console.log(fields);
     }
@@ -116,19 +118,25 @@ class CreateView extends Component {
 
     const fields = this.state.fields;
     const uri = "/api/event/create";
+    const date = Moment(fields.date).valueOf();
+    const duration = Moment(fields.date + " " + fields.endTime).valueOf() - Moment(fields.date + " " + fields.startTime).valueOf();
     const eventObj = {
       name: fields.name,
-      date: fields.date,
+      date: date,
       recurring: fields.recurring,
-      recursUntil: fields.recursuntil,
-      recursEvery: fields.recurs,
       location: fields.location,
       description: fields.desc,
-      images: [fields.imgName],
-      startTime: fields.startTime,
-      endTime: fields.endTime,
+      images: fields.imgName,
+      duration: duration,
       path: fields.path
     };
+
+    if(fields.recurring) {
+      eventObj.recursUntil = Moment(fields.recursuntil).valueOf();
+      eventObj.recursEvery = parseInt(fields.recurs, 10);
+    }
+
+    console.log(eventObj);
 
     Client.post(eventObj, uri).then(res => console.log(res));
 
@@ -241,9 +249,9 @@ class CreateView extends Component {
                   name="recurs"
                   value={this.state.fields.recurs}
                   onChange={this.onInputChange.bind(this)}>
-                  <option className="capitalize">{language.weekly}</option>
-                  <option className="capitalize">{language.monthly}</option>
-                  <option className="capitalize">{language.yearly}</option>
+                  <option selected className="capitalize" value="0">{language.weekly}</option>
+                  <option className="capitalize" value="1">{language.monthly}</option>
+                  <option className="capitalize" value="2">{language.yearly}</option>
                 </select>
               </div>
               <label htmlFor="location" className="capitalize">{language.location}:</label>

@@ -20,6 +20,7 @@ public class UpdateEventDTO {
     private long updatedAt;
     private String createdBy;
     private String editedBy;
+    private String path;
 
     public String getId() {
         return id;
@@ -131,5 +132,13 @@ public class UpdateEventDTO {
 
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }
