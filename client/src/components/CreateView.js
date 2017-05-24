@@ -29,6 +29,7 @@ class CreateView extends Component {
     },
     fieldErrors: [],
     progress: "create",
+    event: {},
     comeFrom: "",
   }
 
@@ -45,6 +46,7 @@ class CreateView extends Component {
         .then(event => {
           console.log(event);
           event = event[0];
+          this.setState({event});
 
           let date = Moment(event.date);
 
@@ -217,9 +219,13 @@ class CreateView extends Component {
             <div className="desc">
               <p>{this.state.fields.desc}</p>
             </div>
-            <div className="maps">
-              <EventsMap/>
-            </div>
+            {
+              this.state.event.hasOwnProperty("location") ? (
+              <div className="maps">
+                <EventsMap events={[this.state.event]} center={{lat: this.state.event.location.coordinates.coordinates[1], lng: this.state.event.location.coordinates.coordinates[0]}}/>
+              </div>) : ""
+            }
+
             <div className="action-container">
               {
                 this.state.progress === "preview" ? <button className="btn-primary" onClick={this.onSaveClick.bind(this)}>{language.save}</button> : ""

@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
-
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+import MapMarker from "./MapMarker"
 
 class EventsMap extends Component {
 
   static defaultProps = {
-    center: {lat: 59.95, lng: 30.33},
+    center: {lat: 59.329323, lng: 18.068581},
     zoom: 11
   };
 
   render() {
+
     return (
       <GoogleMapReact
         defaultCenter={this.props.center}
@@ -20,10 +20,15 @@ class EventsMap extends Component {
           language: 'en',
         }}
       >
-        <AnyReactComponent
-          lat={59.955413}
-          lng={30.337844}
-          text={'Kreyser Avrora'}
+
+      {
+        this.props.events.map(event => {
+          return <MapMarker lat={event.location.coordinates.coordinates[1]} lng={event.location.coordinates.coordinates[0]}/>
+        })
+      }
+        <MapMarker
+          lat={this.props.events[0].location.coordinates.coordinates[0]}
+          lng={this.props.events[0].location.coordinates.coordinates[1]}
         />
       </GoogleMapReact>
     );
