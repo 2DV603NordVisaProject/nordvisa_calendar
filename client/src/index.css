@@ -22,6 +22,10 @@ a {
   margin: 10px 0 0;
 }
 
+.small-form {
+  width: 100px;
+}
+
 .uppercase {
   text-transform: uppercase;
 }

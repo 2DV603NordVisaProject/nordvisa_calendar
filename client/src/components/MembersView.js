@@ -79,6 +79,10 @@ class MembersView extends Component {
         uri = "/api/super_admin/make_super_admin";
       }
 
+      if (user.role === "DELETE") {
+        uri = "/api/user/unregister";
+      }
+
       Client.post({id: user.id}, uri)
     }
 

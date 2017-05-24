@@ -61,18 +61,21 @@ export default {
     MembersView: {
       members: "members",
       email: "email",
-      access: "access level",
+      access: "Action",
       accMsg: "Are you sure you want to change access for",
       superadmin: "superadmin",
       admin: "admin",
       user: "user",
       save: "save",
+      delete: "delete"
     },
     PendingRegistrationsView: {
       pending: "pending registrations",
       email: "email",
       organization: "organization",
       approve: "approve",
+      deny: "deny",
+      action: "action",
     },
     MyAccountView: {
       myAccount: "my account",
