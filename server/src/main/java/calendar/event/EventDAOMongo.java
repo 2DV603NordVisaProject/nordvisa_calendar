@@ -54,9 +54,27 @@ public class EventDAOMongo implements EventDAO {
 
     public List<Event> getEventsWithinDates(long fromDate, long toDate) {
         MongoCollection collection = client.getCollection("events");
-        return cursorToArray(collection.find( "{ createdAt: { " +
+
+        List<Event> eventList = new ArrayList<>();
+
+        List<Event> events = cursorToArray(collection.find("{ startDateTime: { " +
                 "$gte: #," +
                 "$lt: # } }", fromDate, toDate).as(Event.class));
+
+        List<Event> recurringEvents = cursorToArray(collection.find("{ recurring: true }").as(Event.class));
+
+        for (Event event : events) {
+
+            for (Event recurringEvent : recurringEvents) {
+                if (!recurringEvent.getId().equals(event.getId()) && recurringEvent.getRecursUntil() <= toDate) {
+                    eventList.add(recurringEvent);
+                }
+            }
+
+            eventList.add(event);
+        }
+
+        return eventList;
     }
 
     public List<Event> getEventsByUserId(String id) {

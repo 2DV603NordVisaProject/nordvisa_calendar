@@ -19,7 +19,7 @@ class Event {
     private long startDateTime;
     private long duration;
     private boolean recurring;
-    private int recursEvery;
+    private String recursEvery;
     private long recursUntil;
     private String path;
     private List<String> images;
@@ -120,11 +120,11 @@ class Event {
         this.recurring = recurring;
     }
 
-    public int getRecursEvery() {
+    public String getRecursEvery() {
         return recursEvery;
     }
 
-    public void setRecursEvery(int recursEvery) {
+    public void setRecursEvery(String recursEvery) {
         this.recursEvery = recursEvery;
     }
 
