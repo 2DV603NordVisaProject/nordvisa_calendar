@@ -56,7 +56,7 @@ class CreateView extends Component {
             recurring: event.recursive,
             recursuntil: event.recursUntil,
             recurs: event.recursEvery,
-            location: event.address,
+            location: event.location.address,
             desc: event.description,
             img:  event.images,
             file: null,
