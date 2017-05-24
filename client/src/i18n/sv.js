@@ -86,7 +86,7 @@ export default {
     previewEvent: "förhandsgranskning",
     description: "beskrivning",
     save: "spara",
-    edit: "redigere",
+    edit: "redigera",
     newEvent: "nytt evenemang",
     name: "namn",
     date: "datum",
