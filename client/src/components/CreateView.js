@@ -45,13 +45,15 @@ class CreateView extends Component {
           console.log(event);
           event = event[0];
 
+          let date = Moment(event.date);
+
           const fields = {
             name: event.name,
-            date: event.date,
+            date: date.format("M/D/YYYY H:mm"),
             recurring: event.recursive,
             recursuntil: event.recursUntil,
             recurs: event.recursEvery,
-            location: event.location,
+            location: event.address,
             desc: event.description,
             img:  event.images,
             file: null,
