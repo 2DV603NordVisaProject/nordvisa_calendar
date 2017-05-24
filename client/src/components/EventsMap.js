@@ -26,10 +26,6 @@ class EventsMap extends Component {
           return <MapMarker lat={event.location.coordinates.coordinates[1]} lng={event.location.coordinates.coordinates[0]}/>
         })
       }
-        <MapMarker
-          lat={this.props.events[0].location.coordinates.coordinates[0]}
-          lng={this.props.events[0].location.coordinates.coordinates[1]}
-        />
       </GoogleMapReact>
     );
   }
