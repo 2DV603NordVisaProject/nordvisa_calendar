@@ -21,12 +21,12 @@ class Event {
     private boolean recurring;
     private String recursEvery;
     private long recursUntil;
-    private String path;
     private List<String> images;
     private long createdAt;
     private long updatedAt;
     private String createdBy;
     private String editedBy;
+    private String path;
 
     Event() {}
 
@@ -35,7 +35,7 @@ class Event {
         this.name = dto.getName();
         this.location = GeoCodeHandler.getGeoCodedLocation(dto.getLocation());
         this.description = dto.getDescription();
-        this.startDateTime = dto.getDate();
+        this.startDateTime = dto.getStartDateTime();
         this.duration = dto.getDuration();
         this.recurring = dto.getRecurring();
         this.recursEvery = dto.getRecursEvery();
@@ -53,7 +53,7 @@ class Event {
         this.name = dto.getName();
         this.location = GeoCodeHandler.getGeoCodedLocation(dto.getLocation());
         this.description = dto.getDescription();
-        this.startDateTime = dto.getDate();
+        this.startDateTime = dto.getStartDateTime();
         this.duration = dto.getDuration();
         this.recurring = dto.getRecurring();
         this.recursEvery = dto.getRecursEvery();
