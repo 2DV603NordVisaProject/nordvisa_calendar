@@ -7,6 +7,7 @@ import Client from "../Client";
 import Redirect from "react-router/Redirect";
 import PropTypes from "prop-types";
 import Moment from "moment";
+import EventsMap from "./EventsMap";
 
 class CreateView extends Component {
   state = {
@@ -217,7 +218,7 @@ class CreateView extends Component {
               <p>{this.state.fields.desc}</p>
             </div>
             <div className="maps">
-              <p>G Maps Goes here</p>
+              <EventsMap/>
             </div>
             <div className="action-container">
               {

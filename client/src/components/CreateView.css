@@ -93,6 +93,7 @@ p.preview-text {
   border: 1px solid;
   margin: 20px auto;
   width: 90%;
+  height: 300px;
 }
 
 .action-container {
