@@ -38,8 +38,32 @@ class CreateView extends Component {
 
     if (this.props.progress) {
       const progress =  this.props.progress;
-      fields = Client.getEvent(this.props.id);
-      this.setState({ progress, fields, comeFrom: "event"});
+
+      let eventUri = `/api/event/get?id=${this.props.id}&token=dashboard`;
+      Client.get(eventUri)
+        .then(event => {
+          console.log(event);
+          event = event[0];
+
+          const fields = {
+            name: event.name,
+            date: event.date,
+            recurring: event.recursive,
+            recursuntil: event.recursUntil,
+            recurs: event.recursEvery,
+            location: event.location,
+            desc: event.description,
+            img:  event.images,
+            file: null,
+            startTime: "",
+            endTime: "",
+            path: "",
+            imgName: "",
+            createdBy: event.createdBy
+          }
+
+          this.setState({ progress, fields, comeFrom: "event"});
+        })
     } else {
       fields = this.state.fields;
     }
