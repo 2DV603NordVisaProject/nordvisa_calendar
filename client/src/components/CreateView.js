@@ -48,7 +48,9 @@ class CreateView extends Component {
           event = event[0];
           this.setState({event});
 
-          let date = Moment(event.date);
+          let date = Moment(event.startDateTime);
+
+          let endTime = Moment(Moment(event.date).valueOf() + Moment(event.duration).valueOf());
 
           const fields = {
             name: event.name,
@@ -61,7 +63,7 @@ class CreateView extends Component {
             img:  event.images,
             file: null,
             startTime: date.format("HH:mm"),
-            endTime: "",
+            endTime: endTime.format("HH:mm"),
             path: event.path,
             imgName: "",
             createdBy: event.createdBy
