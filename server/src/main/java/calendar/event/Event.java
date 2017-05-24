@@ -2,7 +2,6 @@ package calendar.event;
 
 import calendar.event.dto.CreateEventDTO;
 import calendar.event.dto.UpdateEventDTO;
-import calendar.image.Image;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
@@ -18,7 +17,7 @@ class Event {
     private EventLocation location;
     private String description;
     private long startDateTime;
-    private float duration;
+    private long duration;
     private boolean recurring;
     private int recursEvery;
     private long recursUntil;
@@ -105,11 +104,11 @@ class Event {
         this.startDateTime = startDateTime;
     }
 
-    public float getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(float duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 
