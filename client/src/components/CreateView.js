@@ -52,7 +52,7 @@ class CreateView extends Component {
 
           const fields = {
             name: event.name,
-            date: date.format("M/D/YYYY H:mm"),
+            date: date.format("YYYY/M/D"),
             recurring: event.recursive,
             recursuntil: event.recursUntil,
             recurs: event.recursEvery,
