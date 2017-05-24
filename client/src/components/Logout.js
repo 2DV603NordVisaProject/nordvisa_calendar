@@ -7,7 +7,9 @@ class Logout extends Component {
     super();
     Client.logout();
   }
+
   render() {
+
     return (
       <Redirect
         to='/login'

@@ -26,6 +26,7 @@ class LoginView extends Component {
     Client.login(user, uri).then((res) => {
       if (res === "success") {
         this.setState({ shouldRedirect: true })
+        this.forceUpdate();
       } else {
         const fieldErrors = ["Login failed!"];
         this.setState({ loginInProgress: false, fieldErrors });
