@@ -1,6 +1,5 @@
 package calendar.token;
 
-import calendar.user.User;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
@@ -14,14 +13,12 @@ public class Token {
     private int maxRequests;
     private long createdAt;
     private long validUntil;
-    private boolean isValid;
 
-    Token(String token, int maxRequests, long createdAt, long validUntil, boolean isValid) {
+    Token(String token, int maxRequests, long createdAt, long validUntil) {
         this.token = token;
         this.maxRequests = maxRequests;
         this.createdAt = createdAt;
         this.validUntil = validUntil;
-        this.isValid = isValid;
     }
 
     public String getId() {
@@ -64,14 +61,6 @@ public class Token {
         this.validUntil = validUntil;
     }
 
-    public boolean isValid() {
-        return isValid;
-    }
-
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
-
     public String getToken() {
         return token;
     }
@@ -89,7 +78,6 @@ public class Token {
                 ", maxRequests=" + maxRequests +
                 ", createdAt=" + createdAt +
                 ", validUntil=" + validUntil +
-                ", isValid=" + isValid +
                 '}';
     }
 }
