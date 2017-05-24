@@ -13,8 +13,8 @@ class MenuList extends Component {
         {
           Client.getUserLevel() > 1 ? (
             <div>
-              <li><Link to="/admin/members" className="menu-link">Members</Link></li>
-              <li><Link to="/admin/pending-registrations" className="menu-link">Pending Registrations</Link></li>
+              <li><Link to="/admin/members" className="menu-link">{language.members}</Link></li>
+              <li><Link to="/admin/pending-registrations" className="menu-link">{language.pendingReg}</Link></li>
             </div>
           ) : (
             <div></div>
@@ -23,10 +23,10 @@ class MenuList extends Component {
         {
           Client.isLogedIn() ? (
             <div>
-              <li><Link to="/user/account" className="menu-link">My Account</Link></li>
-              <li><Link to="/user/event/create" className="menu-link">Create Event</Link></li>
-              <li><Link to="/user/event" className="menu-link">My Events</Link></li>
-              <li><Link to="/logout" className="menu-link">Logout</Link></li>
+              <li><Link to="/user/account" className="menu-link">{language.myAccount}</Link></li>
+              <li><Link to="/user/event/create" className="menu-link">{language.createEvent}</Link></li>
+              <li><Link to="/user/event" className="menu-link">{language.myEvents}</Link></li>
+              <li><Link to="/logout" className="menu-link">{language.logout}</Link></li>
             </div>
           ) : (
             <div>

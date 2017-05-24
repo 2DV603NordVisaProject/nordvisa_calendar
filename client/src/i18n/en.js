@@ -51,6 +51,12 @@ export default {
       register: "register",
       forgot: "forgot password",
       generate: "generate widget",
+      pendingReg: "Pending Registrations",
+      myAccount: "My Account",
+      createEvent: "Create Event",
+      myEvents: "My Events",
+      logout: "Logout",
+      members: "Members",
     },
     MembersView: {
       members: "members",

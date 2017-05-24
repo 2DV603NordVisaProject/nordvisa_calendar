@@ -14,8 +14,8 @@ class RecoverView extends Component {
 
   validate(fields) {
     const errors = [];
-    if (!isEmail(fields.email)) errors.push("Invalid Email");
-    if (!fields.email) errors.push("You must enter a email!");
+    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
+    if (!fields.email) errors.push(this.context.language.Errors.invalidEmail);
     return errors;
   }
 

@@ -51,6 +51,12 @@ export default {
     register: "registrera",
     forgot: "glömt lösenord",
     generate: "generera widget",
+    pendingReg: "Väntande Registreringar",
+    myAccount: "Mitt Konto",
+    createEvent: "Skapa Evenemang",
+    myEvents: "Mina Evenemang",
+    logout: "Logga ut",
+    members: "Medlemmar",
   },
   MembersView: {
     members: "medlemmar",
