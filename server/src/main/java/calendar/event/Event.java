@@ -60,6 +60,7 @@ class Event {
         this.recursUntil = dto.getRecursUntil();
         this.images = dto.getImages();
         this.updatedAt = DateTime.now().getMillis();
+        this.createdBy = dto.getCreatedBy();
         this.editedBy = dto.getEditedBy();
         this.path = dto.getPath();
     }
