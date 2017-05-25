@@ -141,7 +141,6 @@ public class EventController {
         return dao.createEvent(event);
     }
 
-    // TODO: Update seq diagram
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public void deleteEvent(@ModelAttribute DeleteEventDTO deleteEventDTO) {
         Event event = dao.getEvent(new ObjectId(deleteEventDTO.getId())).get(0);
@@ -151,7 +150,6 @@ public class EventController {
         }
     }
 
-    // TODO: Update seq diagram
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Event updateEvent(@ModelAttribute UpdateEventDTO updateEventDTO) {
         Event event = new Event(updateEventDTO);
