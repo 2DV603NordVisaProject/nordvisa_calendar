@@ -335,7 +335,7 @@ class CreateView extends Component {
               <input
                 type="file"
                 name="img"
-                accept="image/*"
+                accept="image/jpeg,image/png"
                 onChange={this.onInputChange.bind(this)}>
               </input>
               <ErrorList className={this.state.progress === "saved" ? "success" : ""} errors={this.state.fieldErrors}/>
