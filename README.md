@@ -1,4 +1,4 @@
-# nordvisa_calendar
+# Nordvisa Calendar
 ## About
 This is the repository of a project done at Linnaeus University for the course 2DV603. This was done in collaboration with NordVisa.
 
