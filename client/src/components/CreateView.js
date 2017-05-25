@@ -50,10 +50,10 @@ class CreateView extends Component {
           this.setState({event});
 
           let date = Moment(event.startDateTime);
-          console.log(date);
+
 
           let endTime = Moment(date.valueOf() + event.duration);
-          console.log(endTime);
+
 
           const fields = {
             id: event.id,
@@ -64,16 +64,20 @@ class CreateView extends Component {
             recurs: event.recursEvery,
             location: event.location.address,
             desc: event.description,
-            img:  event.images,
+            img:  event.images[0],
             file: null,
             startTime: date.format("HH:mm"),
             endTime: endTime.format("HH:mm"),
             path: event.path,
             imgName: "",
             createdBy: event.createdBy
-          }
+          };
+
+          console.log(fields);
 
           this.setState({ progress, fields, comeFrom: "event"});
+
+          console.log(this.state);
         })
     } else {
       fields = this.state.fields;
@@ -229,7 +233,7 @@ class CreateView extends Component {
             <h4 className="preview-text">{this.state.fields.name}</h4>
             <p className="preview-text">{this.state.fields.location} - {this.state.fields.date} - {this.state.fields.startTime} - {this.state.fields.endTime}</p>
             {
-              this.state.fields.path === "" ? "" : <div className="img-container" style={ this.state.comeFrom === "event" ? {backgroundImage: `url(${resourceURI}/${this.state.fields.path}/${this.state.fields.img})`} : {backgroundImage: `url(${this.state.fields.img})`}}></div>
+              this.state.fields.path === "" ? "" : <div className="img-container" style={ this.state.comeFrom === "event" ? {backgroundImage: `url("${resourceURI}/${this.state.fields.path}/${this.state.fields.img}")`} : {backgroundImage: `url(${this.state.fields.img})`}}></div>
             }
             <h4 className="preview-text capitalize">{language.description}:</h4>
             <div className="desc">

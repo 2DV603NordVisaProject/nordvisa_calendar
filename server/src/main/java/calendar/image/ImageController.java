@@ -49,7 +49,6 @@ public class ImageController {
 
         for (MultipartFile file : files) {
             String name = file.getOriginalFilename();
-            System.out.print(name);
 
             try {
                 InputStream is = new BufferedInputStream(file.getInputStream());
