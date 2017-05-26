@@ -3,6 +3,11 @@ package calendar.image;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
+/**
+ * Image class.
+ *
+ * @author Francis Menkes (fmenkes)
+ */
 public class Image {
 
     @MongoId
@@ -13,6 +18,9 @@ public class Image {
     private byte[] file;
     private String type;
 
+    /**
+     * Empty constructor used by Jackson
+     */
     Image() {}
 
     Image(String name, byte[] file, String path, String type) {
@@ -29,6 +37,8 @@ public class Image {
         this.type = type;
         this.path = path;
     }
+
+    // Getters and setters
 
     public String getName() {
         return name;
