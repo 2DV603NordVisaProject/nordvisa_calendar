@@ -26,7 +26,7 @@ class UpdatePassword extends Component {
       this.setState({fields});
       })
   }
-  
+
   validate(fields) {
     const errors = [];
     if (!fields.newpassword || !fields.confirmpassword || !fields.oldpassword) errors.push(this.context.language.Errors.passwordRequired);
@@ -55,7 +55,6 @@ class UpdatePassword extends Component {
     Client.post(user, uri)
       .then(res => {
         if (res.hasOwnProperty("message")) {
-          const fieldErrors = [];
           fieldErrors.push(res.message);
           this.setState({fieldErrors});
           this.forceUpdate();
