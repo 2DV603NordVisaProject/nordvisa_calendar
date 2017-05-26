@@ -2,13 +2,18 @@ package calendar.event.dto;
 
 import java.util.List;
 
+/**
+ * Class UpdateEventDTO
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
 public class UpdateEventDTO {
 
     private String id;
     private String name;
     private String location;
     private String description;
-    private long date;
+    private long startDateTime;
     private long duration;
     private boolean recurring;
     private String recursEvery;
@@ -52,14 +57,13 @@ public class UpdateEventDTO {
         this.description = description;
     }
 
-    public long getDate() {
-        return date;
+    public long getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setDate(long date) {
-        this.date = date;
+    public void setStartDateTime(long startDateTime) {
+        this.startDateTime = startDateTime;
     }
-
     public long getDuration() {
         return duration;
     }

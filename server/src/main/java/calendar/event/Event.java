@@ -5,9 +5,13 @@ import calendar.event.dto.UpdateEventDTO;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
-
 import java.util.List;
 
+/**
+ * Class Event
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
 class Event {
 
     @MongoId
@@ -21,21 +25,26 @@ class Event {
     private boolean recurring;
     private String recursEvery;
     private long recursUntil;
-    private String path;
     private List<String> images;
     private long createdAt;
     private long updatedAt;
     private String createdBy;
     private String editedBy;
+    private String path;
 
     Event() {}
 
+    /**
+     * Constructor used when creating a new event.
+     *
+     * @param dto   DTO to receive data for the created event.
+     */
     Event(CreateEventDTO dto) {
         long createdAt = DateTime.now().getMillis();
         this.name = dto.getName();
         this.location = GeoCodeHandler.getGeoCodedLocation(dto.getLocation());
         this.description = dto.getDescription();
-        this.startDateTime = dto.getDate();
+        this.startDateTime = dto.getStartDateTime();
         this.duration = dto.getDuration();
         this.recurring = dto.getRecurring();
         this.recursEvery = dto.getRecursEvery();
@@ -48,18 +57,24 @@ class Event {
         this.path = dto.getPath();
     }
 
+    /**
+     * Constructor used when updating an event.
+     *
+     * @param dto   DTO to receive the updated information for an event.
+     */
     Event(UpdateEventDTO dto) {
         this.id = dto.getId();
         this.name = dto.getName();
         this.location = GeoCodeHandler.getGeoCodedLocation(dto.getLocation());
         this.description = dto.getDescription();
-        this.startDateTime = dto.getDate();
+        this.startDateTime = dto.getStartDateTime();
         this.duration = dto.getDuration();
         this.recurring = dto.getRecurring();
         this.recursEvery = dto.getRecursEvery();
         this.recursUntil = dto.getRecursUntil();
         this.images = dto.getImages();
         this.updatedAt = DateTime.now().getMillis();
+        this.createdBy = dto.getCreatedBy();
         this.editedBy = dto.getEditedBy();
         this.path = dto.getPath();
     }

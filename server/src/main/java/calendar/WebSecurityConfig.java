@@ -43,8 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .antMatchers("/api/super_admin/**").hasAuthority("SUPER_ADMIN")
 //                    .antMatchers("/api/event/create",
 //                            "/api/event/detete",
-//                            "/api/event/update").hasAuthority("USER")
-//                    .antMatchers("/api/upload/**").hasAuthority("USER")
+//                            "/api/event/update").authenticated()
+//                    .antMatchers("/api/upload/**").authenticated()
                     .anyRequest().permitAll()
                     .and()
                 .formLogin()

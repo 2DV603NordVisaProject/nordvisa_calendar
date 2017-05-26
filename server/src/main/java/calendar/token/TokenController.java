@@ -20,8 +20,7 @@ public class TokenController {
         Token token = new Token(strToken,
                 10000,
                 DateTime.now().getMillis(),
-                DateTime.now().plusYears(1).getMillis(),
-                true
+                DateTime.now().plusYears(1).getMillis()
         );
 
         dao.add(token);

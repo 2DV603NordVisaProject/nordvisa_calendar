@@ -1,5 +1,10 @@
 package calendar.event.exceptions;
 
+/**
+ * Class Error
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
 public class Error {
     private int status;
     private String message;

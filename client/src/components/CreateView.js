@@ -12,11 +12,12 @@ import EventsMap from "./EventsMap";
 class CreateView extends Component {
   state = {
     fields: {
+      id: "",
       name: "",
       date: "",
       recurring: false,
       recursuntil: "",
-      recurs: 0,
+      recurs: "",
       location: "",
       desc: "",
       img:  "",
@@ -50,26 +51,33 @@ class CreateView extends Component {
 
           let date = Moment(event.startDateTime);
 
-          let endTime = Moment(Moment(event.date).valueOf() + Moment(event.duration).valueOf());
+
+          let endTime = Moment(date.valueOf() + event.duration);
+
 
           const fields = {
+            id: event.id,
             name: event.name,
             date: date.format("YYYY-MM-DD"),
-            recurring: event.recursive,
+            recurring: event.recurring,
             recursuntil: event.recursUntil,
             recurs: event.recursEvery,
             location: event.location.address,
             desc: event.description,
-            img:  event.images,
+            img:  event.images[0],
             file: null,
             startTime: date.format("HH:mm"),
             endTime: endTime.format("HH:mm"),
             path: event.path,
             imgName: "",
             createdBy: event.createdBy
-          }
+          };
+
+          console.log(fields);
 
           this.setState({ progress, fields, comeFrom: "event"});
+
+          console.log(this.state);
         })
     } else {
       fields = this.state.fields;
@@ -163,11 +171,14 @@ class CreateView extends Component {
     const fields = this.state.fields;
     const uri = "/api/event/create";
     const editUri = "/api/event/update";
-    const date = Moment(fields.date).valueOf();
+    console.log(fields.date + " " + fields.startTime);
+    const date = Moment(fields.date + " " + fields.startTime).valueOf();
+    console.log(date);
     const duration = Moment(fields.date + " " + fields.endTime).valueOf() - Moment(fields.date + " " + fields.startTime).valueOf();
     const eventObj = {
+      id: fields.id,
       name: fields.name,
-      date: date,
+      startDateTime: date,
       recurring: fields.recurring,
       location: fields.location,
       description: fields.desc,
@@ -179,7 +190,7 @@ class CreateView extends Component {
 
     if(fields.recurring) {
       eventObj.recursUntil = Moment(fields.recursuntil).valueOf();
-      eventObj.recursEvery = parseInt(fields.recurs, 10);
+      eventObj.recursEvery = fields.recurs;
     }
 
     console.log(eventObj);
@@ -222,7 +233,7 @@ class CreateView extends Component {
             <h4 className="preview-text">{this.state.fields.name}</h4>
             <p className="preview-text">{this.state.fields.location} - {this.state.fields.date} - {this.state.fields.startTime} - {this.state.fields.endTime}</p>
             {
-              this.state.fields.path === "" ? "" : <div className="img-container" style={ this.state.comeFrom === "event" ? {backgroundImage: `url(${resourceURI}/${this.state.fields.path}/${this.state.fields.img})`} : {backgroundImage: `url(${this.state.fields.img})`}}></div>
+              this.state.fields.path === "" ? "" : <div className="img-container" style={ this.state.progress === "view" ? {backgroundImage: `url("${resourceURI}/${this.state.fields.path}/${this.state.fields.img}")`} : {backgroundImage: `url(${this.state.fields.img})`}}></div>
             }
             <h4 className="preview-text capitalize">{language.description}:</h4>
             <div className="desc">
@@ -328,7 +339,7 @@ class CreateView extends Component {
               <input
                 type="file"
                 name="img"
-                accept="image/*"
+                accept="image/jpeg,image/png"
                 onChange={this.onInputChange.bind(this)}>
               </input>
               <ErrorList className={this.state.progress === "saved" ? "success" : ""} errors={this.state.fieldErrors}/>

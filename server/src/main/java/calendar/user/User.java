@@ -52,7 +52,7 @@ public class User {
     User(RegistrationDTO dto) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        this.email = "";
+        this.email = dto.getEmail();
         this.password = encoder.encode(dto.getPassword());
         this.role = "USER";
 
@@ -229,7 +229,7 @@ public class User {
     }
 
     public boolean valid() {
-        return organization.isApproved();
+        return organization.isApproved() && !email.equals(emailChange);
     }
 
     /**

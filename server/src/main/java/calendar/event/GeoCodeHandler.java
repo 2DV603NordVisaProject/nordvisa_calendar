@@ -5,13 +5,28 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.GeocodingApiRequest;
 import com.google.maps.model.AddressComponent;
 import com.google.maps.model.GeocodingResult;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GeoCodeHandler {
+/**
+ * Class GeoCodeHandler
+ *
+ * This class contains the getGeoCodedLocation method which takes an address
+ * and uses the Google Maps geocoding API to return geocoded information about
+ * the given address.
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
+abstract class GeoCodeHandler {
 
-    public static EventLocation getGeoCodedLocation(String address) {
+    /**
+     * With the supplied address, this method uses the Google Maps API to retrieve geocoded
+     * information, such as coordinates, postalcode, city, country etc.
+     *
+     * @param address       The address to geocode.
+     * @return              An EventLocation object containing all geocoded data.
+     */
+    static EventLocation getGeoCodedLocation(String address) {
 
         EventLocation eventLocation = new EventLocation();
 

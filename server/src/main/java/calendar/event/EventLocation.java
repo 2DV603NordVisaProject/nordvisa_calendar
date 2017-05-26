@@ -1,5 +1,10 @@
 package calendar.event;
 
+/**
+ * Class EventLocation
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
 public class EventLocation {
 
     private EventLocationCoordinates coordinates;

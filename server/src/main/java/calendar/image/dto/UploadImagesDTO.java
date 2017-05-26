@@ -1,7 +1,9 @@
 package calendar.image.dto;
 
 /**
- * Created by francis on 5/19/17.
+ * UploadImagesDTO class
+ *
+ * @author Francis Menkes (fmenkes)
  */
 public class UploadImagesDTO {
     private String path;

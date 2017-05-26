@@ -1,9 +1,16 @@
 package calendar.event;
 
 import org.bson.types.ObjectId;
-
 import java.util.List;
 
+/**
+ * Interface EventDAO
+ *
+ * The interface between the application and the database driver. Any database driver should
+ * implement this interface.
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
 public interface EventDAO {
     List<Event> getEvent(ObjectId id);
     List<Event> getEvents();

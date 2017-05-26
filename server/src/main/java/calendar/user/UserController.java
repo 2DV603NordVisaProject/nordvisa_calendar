@@ -148,7 +148,6 @@ public class UserController {
      * @param dto           Object containing user details to be updated
      * @throws Exception    Invalid data or database errors
      */
-    // TODO: Update seq
     @RequestMapping(value = "/update_user_details", method = RequestMethod.POST)
     public void updateUserDetails(@ModelAttribute UserDetailsUpdateDTO dto) throws Exception {
         validator.validate(dto);
