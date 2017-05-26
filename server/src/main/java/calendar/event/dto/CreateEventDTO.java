@@ -2,6 +2,11 @@ package calendar.event.dto;
 
 import java.util.List;
 
+/**
+ * Class CreateEventDTO
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
 public class CreateEventDTO {
 
     private String name;

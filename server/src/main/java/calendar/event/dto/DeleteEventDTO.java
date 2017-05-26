@@ -1,5 +1,10 @@
 package calendar.event.dto;
 
+/**
+ * Class DeleteEventDTO
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
 public class DeleteEventDTO {
     private String id;
 

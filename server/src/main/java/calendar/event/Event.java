@@ -5,9 +5,13 @@ import calendar.event.dto.UpdateEventDTO;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
-
 import java.util.List;
 
+/**
+ * Class Event
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
 class Event {
 
     @MongoId
@@ -30,6 +34,11 @@ class Event {
 
     Event() {}
 
+    /**
+     * Constructor used when creating a new event.
+     *
+     * @param dto   DTO to receive data for the created event.
+     */
     Event(CreateEventDTO dto) {
         long createdAt = DateTime.now().getMillis();
         this.name = dto.getName();
@@ -48,6 +57,11 @@ class Event {
         this.path = dto.getPath();
     }
 
+    /**
+     * Constructor used when updating an event.
+     *
+     * @param dto   DTO to receive the updated information for an event.
+     */
     Event(UpdateEventDTO dto) {
         this.id = dto.getId();
         this.name = dto.getName();

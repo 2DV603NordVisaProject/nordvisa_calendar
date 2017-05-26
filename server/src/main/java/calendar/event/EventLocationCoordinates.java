@@ -2,6 +2,14 @@ package calendar.event;
 
 import java.util.List;
 
+/**
+ * Class EventLocationCoordinates
+ *
+ * This class is used to properly format event coordinates for storing
+ * and indexing in a MongoDB database.
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
 public class EventLocationCoordinates {
     private String type;
     private List<Double> coordinates;

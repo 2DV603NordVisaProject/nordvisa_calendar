@@ -2,6 +2,11 @@ package calendar.event.dto;
 
 import java.util.List;
 
+/**
+ * Class UpdateEventDTO
+ *
+ * @author Leif Karlsson (leifkarlsson)
+ */
 public class UpdateEventDTO {
 
     private String id;
