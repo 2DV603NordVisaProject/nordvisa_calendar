@@ -35,11 +35,11 @@ class RecoverView extends Component {
         this.setState({fieldErrors, fields: {
           email: "",
         }});
-      })
+      });
 
 
 
-    this.setState({ })
+    this.setState({ });
   }
 
   onInputChange(event) {

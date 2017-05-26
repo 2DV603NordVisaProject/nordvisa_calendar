@@ -63,7 +63,7 @@ public class UserDAOMongo implements UserDAO {
      */
     public User getUserByPasswordRecoveryLink(String urlId) {
         MongoCollection collection = client.getCollection("users");
-        return collection.findOne("{validateEmailLink.url: \"" + urlId + "\"}").as(User.class);
+        return collection.findOne("{resetPasswordLink.url: \"" + urlId + "\"}").as(User.class);
     }
 
     /**

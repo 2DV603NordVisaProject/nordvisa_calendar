@@ -39,6 +39,7 @@ class UpdatePasswordView extends Component {
     if (fieldErrors.length) return;
 
     const uri = "/api/visitor/recover_password";
+    console.log(this.state.fields);
     Client.post(this.state.fields, uri)
       .then(res =>{
         if(res.hasOwnProperty("message")) {
@@ -46,9 +47,7 @@ class UpdatePasswordView extends Component {
           this.setState({fieldErrors});
         } else {
           fieldErrors.push("Password updated!");
-          this.setState({ fieldErrors })
-
-          this.setState({ fields: {
+          this.setState({fieldErrors, fields: {
             urlId: "",
             password: "",
             passwordConfirmation: ""
