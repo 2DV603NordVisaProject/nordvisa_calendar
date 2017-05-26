@@ -131,7 +131,7 @@ export default {
       longPassword: "Password is too long!",
       chooseRegion: "You must choose a region!",
       nameNeeded: "You need to enter a name!",
-      dateNeeded: "You need to ender a date!",
+      dateNeeded: "You need to enter a date!",
       locationNeeded: "You need to enter a location!",
       descriptionNeeded: "You need to enter a description!",
       startNeeded: "Start time is required!",
