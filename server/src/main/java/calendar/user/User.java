@@ -229,7 +229,7 @@ public class User {
     }
 
     public boolean valid() {
-        return organization.isApproved();
+        return organization.isApproved() && !email.equals(emailChange);
     }
 
     /**
