@@ -105,7 +105,7 @@ export default {
     recurs: "återkommer",
     weekly: "veckovis",
     monthly: "månadsvis",
-    yearly: "årsvis",
+    yearly: "årligt",
     location: "plats",
     image: "bild",
     preview: "förhandsgranska",
@@ -135,7 +135,7 @@ export default {
     locationNeeded: "Du måste ange en plats!",
     descriptionNeeded: "Du måste ange en beskrivning!",
     startNeeded: "Du måste ange start tid!",
-    endNeeded: "Du måste ang slut tid!",
+    endNeeded: "Du måste ange slut tid!",
     incorrectTime: "Ogiltligt tid format!",
     eventSaved: "Evenemanget har skapats!",
   }
