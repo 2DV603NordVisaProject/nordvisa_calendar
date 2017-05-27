@@ -4,11 +4,13 @@ import Client from "../Client";
 import MembersList from "./MembersList";
 import ConfirmMessage from "./ConfirmMessage";
 import PropTypes from "prop-types";
+import ErrorList from "./ErrorList";
 
 class MembersView extends Component {
   state = {
     members: [],
     updated: [],
+    fieldErrors: [],
     popup: {
       pop: false,
       msg: "",
@@ -84,6 +86,14 @@ class MembersView extends Component {
       }
 
       Client.post({id: user.id}, uri)
+        .then(() => {
+          const uri = "/api/admin/manageableUsers";
+
+          Client.get(uri)
+            .then(members => {
+              this.setState({members})
+            })
+        })
     }
 
     updated = [];
@@ -91,7 +101,10 @@ class MembersView extends Component {
       pop: false,
       msg: "",
     }
-    this.setState({updated, popup});
+    const fieldErrors = [];
+    fieldErrors.push(this.context.language.Errors.accessUpdated);
+    this.setState({updated, popup, fieldErrors});
+    this.forceUpdate();
   }
 
   render() {
@@ -103,6 +116,7 @@ class MembersView extends Component {
         <h2 className="uppercase">{language.members}</h2>
         <form onSubmit={this.onFormSubmit.bind(this)}>
           <MembersList members={this.state.members} onChange={this.onInputChange.bind(this)}/>
+          <ErrorList errors={this.state.fieldErrors}/>
           <input type="submit" value={language.save} className="btn-primary"></input>
         </form>
         <ConfirmMessage popup={this.state.popup} onClick={this.onConfirmClick.bind(this)}/>

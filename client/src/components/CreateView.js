@@ -32,6 +32,7 @@ class CreateView extends Component {
     progress: "create",
     event: {},
     comeFrom: "",
+    _redirect: false,
   }
 
   componentWillMount() {
@@ -204,7 +205,7 @@ class CreateView extends Component {
     const fieldErrors = [];
     fieldErrors.push(this.context.language.Errors.eventSaved);
     this.setState({fieldErrors});
-    this.setState({ progress: "saved"});
+    this.setState({ progress: "saved", _redirect: true});
     this.setState({ fields: {
       name: "",
       date: "",
@@ -221,6 +222,12 @@ class CreateView extends Component {
 
     const resourceURI = "/api/upload"
     const language = this.context.language.CreateView;
+
+    if (this.state._redirect) {
+      return (
+        <Redirect to="/user/event"/>
+      );
+    }
 
     if (this.state.progress === "preview" || this.state.progress === "view") {
       return (

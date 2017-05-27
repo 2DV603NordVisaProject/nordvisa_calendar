@@ -123,7 +123,10 @@ class RegisterView extends Component {
       );
     } else if (this.state._redirect) {
       return (
-        <Redirect to="/login"/>
+        <Redirect to={{
+            pathname: "/login",
+            state:  { referrer: "/register" }
+            }}/>
       );
     } else {
       return (

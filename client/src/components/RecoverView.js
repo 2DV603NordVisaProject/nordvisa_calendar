@@ -3,6 +3,7 @@ import { isEmail } from "validator";
 import ErrorList from "./ErrorList";
 import PropTypes from "prop-types";
 import Client from "../Client";
+import Redirect from "react-router/Redirect";
 
 class RecoverView extends Component {
   state = {
@@ -10,6 +11,7 @@ class RecoverView extends Component {
       email: "",
     },
     fieldErrors: [],
+    _redirect: false,
   }
 
   validate(fields) {
@@ -39,7 +41,7 @@ class RecoverView extends Component {
 
 
 
-    this.setState({ });
+    this.setState({ fields: {}, _redirect: true });
   }
 
   onInputChange(event) {
@@ -51,22 +53,31 @@ class RecoverView extends Component {
 
     const language = this.context.language.RecoverView;
 
-    return (
-      <div className="lightbox login">
-        <h2 className="uppercase">{language.recover}</h2>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
-          <label htmlFor="email" className="capitalize">{language.email}:</label>
-          <input
-            name="email"
-            type="text"
-            value={this.state.fields.email}
-            onChange={this.onInputChange.bind(this)}>
-          </input>
-          <ErrorList errors={this.state.fieldErrors}/>
-          <input type="submit" value={language.request} className="btn-primary uppercase"></input>
-        </form>
-      </div>
-    );
+    if (this.state._redirect) {
+      return (
+        <Redirect to={{
+            pathname: "/login",
+            state:  { referrer: "/recover-password" }
+            }}/>
+      );
+    } else {
+      return (
+        <div className="lightbox login">
+          <h2 className="uppercase">{language.recover}</h2>
+          <form onSubmit={this.onFormSubmit.bind(this)}>
+            <label htmlFor="email" className="capitalize">{language.email}:</label>
+            <input
+              name="email"
+              type="text"
+              value={this.state.fields.email}
+              onChange={this.onInputChange.bind(this)}>
+            </input>
+            <ErrorList errors={this.state.fieldErrors}/>
+            <input type="submit" value={language.request} className="btn-primary uppercase"></input>
+          </form>
+        </div>
+      );
+    }
   }
 }
 

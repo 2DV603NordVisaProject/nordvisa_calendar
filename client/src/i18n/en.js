@@ -4,6 +4,8 @@ export default {
         forgot: "forgot password?",
         email: "email",
         password: "password",
+        registration: "registration is being verified!",
+        recover: "An email has been sent to your address",
     },
     TopBar: {
         swedish: 'swedish',
@@ -138,5 +140,6 @@ export default {
       endNeeded: "End time is required!",
       incorrectTime: "Incorrect time format!",
       eventSaved: "The event is now saved!",
+      accessUpdated: "Access level is updated!",
     }
 };

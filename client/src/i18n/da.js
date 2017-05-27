@@ -4,6 +4,8 @@ export default {
         forgot: "glemme adgangskode?",
         email: "email",
         password: "adgangskode",
+        registration: "registreringen er bekræftet!",
+        recover: "En email er blevet sendt til din adresse",
     },
     TopBar: {
         swedish: 'svensk',
@@ -138,5 +140,6 @@ export default {
       endNeeded: "Du skal indstille sluttidspunktet!",
       incorrectTime: "Ugyldigt tidsformat!",
       eventSaved: "Begivenhed er blevet oprettet!",
+      accessUpdated: "Adgangsniveau er opdateret!",
     }
 };

@@ -56,7 +56,7 @@ class WidgetView extends Component {
   }
 
   generateHeadCode() {
-    return `<script src="example.com/widget.js></script>`;
+    return `<script src="${location.protocol}//${location.host}/widget.js}></script>`;
   }
 
   generateBodyCode(region) {

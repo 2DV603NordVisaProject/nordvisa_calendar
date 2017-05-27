@@ -4,6 +4,8 @@ export default {
         forgot: "gleyma lykilorð?",
         email: "tölvupóstur",
         password: "lykilorð",
+        registration: "skráningin er staðfest!",
+        recover: "Tölvupóstur hefur verið sendur á netfangið þitt",
     },
     TopBar: {
         swedish: 'sænska',
@@ -75,15 +77,7 @@ export default {
       organization: "skipulag",
       approve: "samþykkja",
       deny: "neita",
-      action: "aðgerð",
-    },
-    MyAccountView: {
-      myAccount: "reikningurinn minn",
-      updateDetails: "upplýsingar uppfæra reikning",
-      email: "tölvupóstur",
-      organization: "skipulag",
-      save: "spara",
-      updatePassword: "uppfæra lykilorð",
+      action: "aðgerð",accessUpdated: "Access level is updated!",
       oldPassword: "gamalt lykilorð",
       newPassword: "nýtt lykilorð",
       confirmPassword: "staðfesta lykilorð",
@@ -138,5 +132,6 @@ export default {
       endNeeded: "Lokadagur er krafist!",
       incorrectTime: "Rangt tímasnið!",
       eventSaved: "Atburðurinn er ekki vistaður!",
+      accessUpdated: "Aðgangsstig er uppfært!",
     }
 };

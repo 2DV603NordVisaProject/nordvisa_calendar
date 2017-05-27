@@ -20,6 +20,22 @@ class LoginView extends Component {
     shouldRedirect: false,
   }
 
+  componentWillMount() {
+    const fieldErrors = this.state.fieldErrors;
+
+    if (this.props.location.state) {
+      if (this.props.location.state.referrer === "/register") {
+        fieldErrors.push(this.context.language.LoginView.registration);
+      }
+      if (this.props.location.state.referrer === "/recover-password") {
+        fieldErrors.push(this.context.language.LoginView.recover);
+      }
+
+    }
+
+    this.setState(fieldErrors);
+  }
+
   performLogin(user) {
     this.setState({ loginInProgress: true });
     const uri = "/login";
