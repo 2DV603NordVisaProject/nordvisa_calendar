@@ -22,7 +22,7 @@ export default {
       email: "email",
       password: "adgangskode",
       confirmPassword: "bekræft adgangskoden",
-      organization: "organisation"
+      organization: "organisation",
       newOrganization: "ny organisation",
       registerBtn: "rekord",
     },
