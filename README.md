@@ -2,6 +2,15 @@
 ## About
 This is the repository of a project done at Linnaeus University for the course 2DV603. This was done in collaboration with NordVisa.
 
+## Run in development environemnt
+The application is currently configured to run on localhost:8080. This makes it posible to run localy on your machine without doing any changes to the code. The easiest way is to use the vagrant machine to run the application. To install Vagrant see [Installing Vagrant](https://www.vagrantup.com/docs/installation/. After it's installed just run `vagrant up` and when that is done run `vagrant ssh`
+
+Next follow these steps.
+1. Move into the client directory and run `npm install`
+1. Move back into to root directory and run the build script `./buildToServer.sh`
+1. Move into the server/ folder and run gradle bootRun
+1. When spring has launched the application should be available at localhost:8080 
+
 ## Packaging
 To install this software it has to be built from source for everything to work. This is because
 both server and clients need to be configured to fit the URL of the website which the application
