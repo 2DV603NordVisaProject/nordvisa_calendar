@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #0d47a1;
+  height: 30px;
+}
+
+.input {
+  background: #0d47a1;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 16px;
+  text-transform: capitalize;
+  border: none;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.btn {
+  cursor: pointer;
+}

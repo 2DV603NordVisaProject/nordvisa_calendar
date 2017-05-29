@@ -1,0 +1,39 @@
+.event-item {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  line-height: 30px;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: darkblue;
+}
+
+.event-item:nth-child(2n+1) {
+  background: lightBlue;
+}
+
+.event-item:nth-child(2n) {
+  background: #58a0f4;
+}
+
+.date {
+  padding: 0 10px;
+  width: 90px;
+}
+
+.name {
+  text-transform: capitalize;
+}
+
+.event-link {
+  color: darkblue;
+  text-decoration: none;
+}
+
+.event-link:hover {
+  text-decoration: underline;
+}
+
+.event-link:visited {
+  color: darkblue;
+}
