@@ -12,12 +12,15 @@ build
 
 # dependencies
 /client/node_modules
+node_modules
 
 # testing
 /client/coverage
+/widget/coverage
 
 # production
 /client/build
+/widget/build
 
 # misc
 .DS_Store
@@ -26,3 +29,8 @@ build
 /client/yarn-debug.log*
 /client/yarn-error.log*
 /client/todos.md
+/widget/.env
+/widget/npm-debug.log*
+/widget/yarn-debug.log*
+/widget/yarn-error.log*
+/widget/todos.md
