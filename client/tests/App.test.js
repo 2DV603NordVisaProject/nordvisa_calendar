@@ -3,6 +3,8 @@ import ReactDom from "react-dom"
 import { shallow } from "enzyme";
 import App from "../src/App";
 
+// TODO; Integration testing for child components
+
 describe('App', () => {
   let wrapper;
 
