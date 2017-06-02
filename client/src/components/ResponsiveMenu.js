@@ -5,21 +5,35 @@ import MenuList from "./MenuList";
 
 class ResponsiveMenu extends Component {
 
+  state = {
+    menu: {
+      isCollapsed: false,
+    },
+  }
+
   onCollapseMenuClick(event) {
     event.preventDefault();
-    document.querySelector(".menu-btn").classList.toggle("change");
-    document.querySelector(".responsive-menu").classList.toggle("expand");
+
+    let isCollapsed;
+
+    if (this.state.menu.isCollapsed) {
+      isCollapsed = false;
+    } else {
+      isCollapsed = true;
+    }
+
+    this.setState({ menu: { isCollapsed }})
   }
 
   render() {
     return (
       <div>
-        <div className="menu-btn" onClick={this.onCollapseMenuClick}>
+        <div className={this.state.menu.isCollapsed ? "menu-btn change" : "menu-btn"} onClick={this.onCollapseMenuClick.bind(this)}>
 	        <div className="bar1"></div>
 	        <div className="bar2"></div>
 	        <div className="bar3"></div>
         </div>
-        <div className="responsive-menu">
+        <div className={this.state.menu.isCollapsed ? "responsive-menu expand" : "responsive-menu"}>
           <MenuList/>
         </div>
       </div>
