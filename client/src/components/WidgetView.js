@@ -13,6 +13,7 @@ class WidgetView extends Component {
       province: "",
     },
     fieldErrors: [],
+    showProvince: false,
     isGenerated: false,
     headCode: "",
     bodyCode: "",
@@ -36,7 +37,6 @@ class WidgetView extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-    console.log(this.state.fields)
     const fieldErrors = this.validate(this.state.fields);
     this.setState({ fieldErrors });
 
@@ -63,13 +63,15 @@ class WidgetView extends Component {
     fields[event.target.name] = event.target.value;
     this.setState({fields});
 
+    let showProvince;
+
     if (event.target.value !== "") {
-      const province = document.querySelector("#on-province-select");
-      province.classList.remove("hidden");
+      showProvince = true;
     } else {
-      const province = document.querySelector("#on-province-select");
-      province.classList.add("hidden");
+      showProvince = false;
     }
+
+    this.setState({ showProvince });
   }
 
   render() {
@@ -92,7 +94,7 @@ class WidgetView extends Component {
             <option value="denmark" className="capitalize">{language.denmark}</option>
             <option value="iceland" className="capitalize">{language.iceland}</option>
           </select>
-          <div id="on-province-select" className="hidden">
+          <div className={this.state.showProvince ? "" : "hidden"}>
             <ProvinceSelect
               region={this.state.fields.region}
               onChange={this.onInputChange.bind(this)}/>
