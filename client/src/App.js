@@ -9,6 +9,7 @@ import da from "./i18n/da";
 import is from "./i18n/is";
 import PropTypes from "prop-types";
 
+
 class App extends Component {
   getChildContext() {
     return {

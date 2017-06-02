@@ -16,9 +16,12 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
+    "enzyme": "^2.8.2",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-react": "^7.0.1",
-    "react-scripts": "0.9.5"
+    "react-addons-test-utils": "^15.5.1",
+    "react-scripts": "0.9.5",
+    "react-test-render": "^1.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
