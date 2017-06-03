@@ -1,12 +1,3 @@
-/*
-- Render li som innehåller allt annat.
-- Inga states.
-- Language context.
-- props member.email och member.role and id
-- onChange på select
-- disabled options om SUPER_ADMIN
-
- */
 import React from "react";
 import { shallow } from "enzyme"
 import Member from "../src/components/Member";
