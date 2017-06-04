@@ -3,8 +3,8 @@ import Redirect from "react-router/Redirect";
 import Client from "../Client";
 
 class Logout extends Component {
-  constructor() {
-    super();
+  
+  componentWillMount() {
     Client.logout();
   }
 
