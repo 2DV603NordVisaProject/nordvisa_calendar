@@ -70,6 +70,7 @@ As a administrator you can manage and delete users access to the system.
 
 ### Manage Your Account
 ![Screenshot](./documentation/howToUse/account.gif)
+
 Change your email, password or organization.
 
 ### Create Events
