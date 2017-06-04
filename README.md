@@ -51,6 +51,22 @@ When you have created your .jar file you can run it using the following command 
 
 ### Register
 ![Screenshot](./documentation/howToUse/register.gif)
+Register a new account. Joint an existing organization, create a new one or do not join one at all.
+
+### Request Reset Password Link & Update Password
+![Screenshot](./documentation/howToUse/reset.gif)
+Request a reset password link to be sent to your email, which allow you to change your password.
+
+### Login
+![Screenshot](./documentation/howToUse/login.gif)
+
+### Approve and Deny Registrations
+![Screenshot](./documentation/howToUse/pending.gif)
+As a administrator you can approve and deny registrations manually.
+
+### Manage Users Access
+![Screenshot](./documentation/howToUse/access.gif)
+As a administrator you can manage and delete users access to the system.
 
 ## License
 ### MIT
