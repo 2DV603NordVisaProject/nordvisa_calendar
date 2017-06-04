@@ -9,7 +9,7 @@ Next follow these steps.
 1. Move into the client directory and run `npm install`
 1. Move back into to root directory and run the build script `./buildToServer.sh`
 1. Move into the server/ folder and run gradle bootRun
-1. When spring has launched the application should be available at localhost:8080 
+1. When spring has launched the application should be available at localhost:8080
 
 ## Packaging
 To install this software it has to be built from source for everything to work. This is because
@@ -46,6 +46,11 @@ To run the application you will need some software installed.
 * MongoDB
 
 When you have created your .jar file you can run it using the following command `java -jar nordvisa_calendar-0.1.0.jar`.
+
+## How to use / Features
+
+### Register
+![Screenshot](./documentation/howToUse/register.gif)
 
 ## License
 ### MIT
