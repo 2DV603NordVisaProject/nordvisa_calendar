@@ -68,6 +68,26 @@ As a administrator you can approve and deny registrations manually.
 ![Screenshot](./documentation/howToUse/access.gif)
 As a administrator you can manage and delete users access to the system.
 
+### Manage Your Account
+![Screenshot](./documentation/howToUse/account.gif)
+Change your email, password or organization.
+
+### Create Events
+![Screenshot](./documentation/howToUse/create.gif)
+
+### View Events
+![Screenshot](./documentation/howToUse/view.gif)
+
+### Delete & Edit Events
+![Screenshot](./documentation/howToUse/edit.gif)
+
+### Multi Language Support
+![Screenshot](./documentation/howToUse/language.gif)
+
+### Generate Widget Code
+![Screenshot](./documentation/howToUse/generate.gif)
+Generate code snippets and past them into your website to embedd a event calendar widget.
+
 ## License
 ### MIT
 Copyright 2017 NordVisa, Axel Nilsson, Johan Gudmundsson, Leif Karlsson, Francis Menkes, Feiyu Xiong
