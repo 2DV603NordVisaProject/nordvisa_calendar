@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/2DV603NordVisaProject/nordvisa_calendar.svg?branch=master)](https://travis-ci.org/2DV603NordVisaProject/nordvisa_calendar)
+[![Code Coverage](https://img.shields.io/codecov/c/github/2DV603NordVisaProject/nordvisa_calendar.svg)](https://codecov.io/gh/2DV603NordVisaProject/nordvisa_calendar)
 # Nordvisa Calendar
 ## About
 This is the repository of a project done at Linnaeus University for the course 2DV603. This was done in collaboration with NordVisa.
