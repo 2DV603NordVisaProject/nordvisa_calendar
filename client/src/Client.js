@@ -1,6 +1,6 @@
 "use strict";
 
-const url = "http://localhost:8080"
+const url = location.protocol + "//" + location.host
 
 const serialize = function(obj) {
   var str = [];
