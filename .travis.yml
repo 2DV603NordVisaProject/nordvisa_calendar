@@ -16,17 +16,19 @@ matrix:
           - $HOME/.gradle/wrapper/
       after_success:
         bash <(curl -s https://codecov.io/bash) -cF java
-    # - language: node_js
-    #   node_js:
-    #     - "node"
-    #   before_script:
-    #     - cd client
-    #     - npm install
-    #   cache:
-    #     directories:
-    #       - "node_modules"
-    #   script:
-    #     - npm test
+    - language: node_js
+      node_js:
+        - "node"
+      before_script:
+        - cd client
+        - npm install
+      cache:
+        directories:
+          - "node_modules"
+      script:
+        - npm test
+    #   after_success:
+    #     bash <(curl -s https://codecov.io/bash) -cF javascript
 
 notifications:
     email: false
