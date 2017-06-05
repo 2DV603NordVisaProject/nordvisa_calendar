@@ -1,5 +1,5 @@
-# language: java
-# jdk: oraclejdk8
+language: java
+jdk: oraclejdk8
 #
 # before_script: cd server
 #
@@ -17,8 +17,8 @@
 #
 
 matrix:
-    include:
-        - language: java
+  include:
+    - language: java
         jdk: oraclejdk8
         before_script:
             - cd server
