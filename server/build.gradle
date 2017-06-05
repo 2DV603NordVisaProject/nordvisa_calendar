@@ -1,5 +1,5 @@
 group 'nordvisa'
-version '1.0'
+version '0.1'
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -37,7 +37,7 @@ buildscript {
 
 jar {
     baseName = 'nordvisa_calendar'
-    version =  '0.1.0'
+    version =  '0.1.1'
 }
 
 jacoco {
