@@ -24,6 +24,11 @@ matrix:
         - cd server
       script:
         - gradle check
+    - language: node_js
+      before_script:
+        - cd client
+      script:
+        - npm test
 
 notifications:
     email: false
