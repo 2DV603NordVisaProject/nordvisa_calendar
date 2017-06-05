@@ -23,7 +23,7 @@ matrix:
       before_script:
         - cd server
       script:
-        - ./gradle check
+        - gradle check
 
 notifications:
     email: false
