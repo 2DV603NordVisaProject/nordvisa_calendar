@@ -1,4 +1,0 @@
-{ "_id" : ObjectId("5921d68dddf33e147e569e7b"), "email" : "test@test.com", "password" : "$2a$10$vooN43V5RoiQJx1i/Isj9.0Tcrgz2srNxOeKN2OnzVVGJ/cX.1Cim", "role" :
- "SUPER_ADMIN", "resetPasswordLink" : { "url" : "", "timestamp" : NumberLong(0) }, "validateEmailLink" : { "url" : "", "timestamp" : NumberLong(0) }, "createdAt
-" : NumberLong("1495389837291"), "updatedAt" : NumberLong("1495389837446"), "organization" : { "name" : "", "approved" : true, "changePending" : "" }, "valid" :
- true }
