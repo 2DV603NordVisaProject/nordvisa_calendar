@@ -19,11 +19,11 @@ jdk: oraclejdk8
 matrix:
   include:
     - language: java
-        jdk: oraclejdk8
-        before_script:
-            - cd server
-        script:
-            - ./gradle check
+      jdk: oraclejdk8
+      before_script:
+        - cd server
+      script:
+        - ./gradle check
 
 notifications:
     email: false
