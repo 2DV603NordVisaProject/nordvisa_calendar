@@ -1,9 +1,3 @@
-/*
-- is defined
-- is rendered
-- contains title
-- contains child component
- */
 import React from "react";
 import { shallow } from "enzyme";
 import MyAccountView from "../src/components/MyAccountView";
