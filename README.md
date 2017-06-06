@@ -15,43 +15,43 @@ The application is divided into two parts, the administrative dashboard and the 
 
 ## How to use / Features
 ### Register
-![Screenshot](./documentation/howToUse/register.gif)
+![Screenshot](./__documentation__/howToUse/register.gif)
 Register a new account. Joint an existing organization, create a new one or do not join one at all.
 
 ### Request Reset Password Link & Update Password
-![Screenshot](./documentation/howToUse/reset.gif)
+![Screenshot](./__documentation__/howToUse/reset.gif)
 Request a reset password link to be sent to your email, which allow you to change your password.
 
 ### Login
-![Screenshot](./documentation/howToUse/login.gif)
+![Screenshot](./__documentation__/howToUse/login.gif)
 
 ### Approve and Deny Registrations
-![Screenshot](./documentation/howToUse/pending.gif)
+![Screenshot](./__documentation__/howToUse/pending.gif)
 As a administrator you can approve and deny registrations manually.
 
 ### Manage Users Access
-![Screenshot](./documentation/howToUse/access.gif)
+![Screenshot](./__documentation__/howToUse/access.gif)
 As a administrator you can manage and delete users access to the system.
 
 ### Manage Your Account
-![Screenshot](./documentation/howToUse/account.gif)
+![Screenshot](./__documentation__/howToUse/account.gif)
 
 Change your email, password or organization.
 
 ### Create Events
-![Screenshot](./documentation/howToUse/create.gif)
+![Screenshot](./__documentation__/howToUse/create.gif)
 
 ### View Events
-![Screenshot](./documentation/howToUse/view.gif)
+![Screenshot](./__documentation__/howToUse/view.gif)
 
 ### Delete & Edit Events
-![Screenshot](./documentation/howToUse/edit.gif)
+![Screenshot](./__documentation__/howToUse/edit.gif)
 
 ### Multi Language Support
-![Screenshot](./documentation/howToUse/language.gif)
+![Screenshot](./__documentation__/howToUse/language.gif)
 
 ### Generate Widget Code
-![Screenshot](./documentation/howToUse/generate.gif)
+![Screenshot](./__documentation__/howToUse/generate.gif)
 Generate code snippets and past them into your website to embedd a event calendar widget.
 
 ## Set up development environment
