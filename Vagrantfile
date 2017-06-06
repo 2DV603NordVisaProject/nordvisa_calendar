@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
     config.vm.provider "virtualbox" do |vb|
         vb.memory = "2048"
     end
-    
+
     config.vm.network "forwarded_port", guest: 8080, host: 8080
     config.vm.network "forwarded_port", guest: 27017, host: 27017
 
@@ -38,5 +38,12 @@ Vagrant.configure(2) do |config|
         echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
         apt-get update
         apt-get install -y mongodb-org
+    SHELL
+
+    # Installing NodeJS
+    config.vm.provision "shell", privileged: true, inline: <<-SHELL
+        echo "export NODE_ENV=development" >> /home/vagrant/.bashrc
+        curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+        apt-get install -y nodejs
     SHELL
 end
