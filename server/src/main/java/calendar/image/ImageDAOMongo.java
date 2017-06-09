@@ -2,9 +2,9 @@ package calendar.image;
 
 import calendar.databaseConnections.MongoDBClient;
 import com.mongodb.WriteResult;
-import org.jongo.Jongo;
 import org.jongo.MongoCollection;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,15 +15,10 @@ import java.io.IOException;
  *
  * @author Francis Menkes (fmenkes)
  */
-@Component
+@Repository
 class ImageDAOMongo implements ImageDAO {
-
-    private Jongo client;
-
-    // Default constructor
-    ImageDAOMongo() {
-        client = MongoDBClient.getClient();
-    }
+    @Autowired
+    private MongoDBClient client;
 
     /**
      * Saves an image in the database.
@@ -46,7 +41,7 @@ class ImageDAOMongo implements ImageDAO {
         }
 
         Image image = new Image(name, imageByteArray, path, type);
-        MongoCollection collection = client.getCollection("images");
+        MongoCollection collection = client.getClient().getCollection("images");
         collection.insert(image);
 
         return true;
@@ -61,7 +56,7 @@ class ImageDAOMongo implements ImageDAO {
      */
     @Override
     public Image getImage(String path, String name) {
-        MongoCollection collection = client.getCollection("images");
+        MongoCollection collection = client.getClient().getCollection("images");
         Image image = collection.findOne("{path: '" + path + "', name: '" + name + "'}").as(Image.class);
 
         if(image == null) {
@@ -82,7 +77,7 @@ class ImageDAOMongo implements ImageDAO {
      */
     @Override
     public boolean deleteImage(String path, String name) {
-        MongoCollection collection = client.getCollection("images");
+        MongoCollection collection = client.getClient().getCollection("images");
         WriteResult r = collection.remove("{path: '" + path + "', name: '" + name + "'}");
 
         return r.getN() == 1;
@@ -95,7 +90,7 @@ class ImageDAOMongo implements ImageDAO {
      */
     @Override
     public void deleteAllImages(String path) {
-        MongoCollection collection = client.getCollection("images");
+        MongoCollection collection = client.getClient().getCollection("images");
         collection.remove("{path: '" + path + "'}");
     }
 
@@ -107,7 +102,7 @@ class ImageDAOMongo implements ImageDAO {
      */
     @Override
     public boolean pathExists(String path) {
-        MongoCollection collection = client.getCollection("images");
+        MongoCollection collection = client.getClient().getCollection("images");
         return collection.count("{path: '" + path + "'}") > 0;
     }
 }

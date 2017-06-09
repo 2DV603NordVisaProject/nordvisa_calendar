@@ -2,16 +2,18 @@ package calendar.databaseConnections;
 
 import com.mongodb.MongoClient;
 import org.jongo.Jongo;
+import org.springframework.stereotype.Component;
 
 /**
  * Class MongoDBClient
  *
  * @author Axel Nilsson (axnion)
  */
+@Component
 public class MongoDBClient {
     private static Jongo jongo;
 
-    public static Jongo getClient() {
+    public Jongo getClient() {
         if(jongo == null) {
             createConnection();
         }

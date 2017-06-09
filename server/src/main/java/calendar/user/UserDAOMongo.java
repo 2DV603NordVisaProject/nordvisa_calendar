@@ -3,10 +3,10 @@ package calendar.user;
 import calendar.databaseConnections.MongoDBClient;
 import org.bson.types.ObjectId;
 import org.jongo.Distinct;
-import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,16 +20,10 @@ import java.util.List;
  *
  * @author Axel Nilsson (axnion)
  */
-@Component
+@Repository
 public class UserDAOMongo implements UserDAO {
-    private Jongo client;
-
-    /**
-     * Default constructor
-     */
-    public UserDAOMongo() {
-        client = MongoDBClient.getClient();
-    }
+    @Autowired
+    private MongoDBClient client;
 
     /**
      * Takes the id of a potential User and returns the User object. If user does not exist null
@@ -39,7 +33,7 @@ public class UserDAOMongo implements UserDAO {
      * @return      A User object with matching id as argument
      */
     public User getUserById(String id) {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
         return collection.findOne(new ObjectId(id)).as(User.class);
     }
 
@@ -51,7 +45,7 @@ public class UserDAOMongo implements UserDAO {
      * @return      A User object with matching email as argument
      */
     public User getUserByEmail(String email) {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
         return collection.findOne("{email: \"" + email + "\"}").as(User.class);
     }
 
@@ -62,7 +56,7 @@ public class UserDAOMongo implements UserDAO {
      * @return      A User which has a password recovery link which matches the given urlId
      */
     public User getUserByPasswordRecoveryLink(String urlId) {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
         return collection.findOne("{resetPasswordLink.url: \"" + urlId + "\"}").as(User.class);
     }
 
@@ -73,7 +67,7 @@ public class UserDAOMongo implements UserDAO {
      * @return      A User with a matching urlId to the given urlId
      */
     public User getUserByEmailVerificationLink(String urlId) {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
         return collection.findOne("{validateEmailLink.url: \"" + urlId + "\"}")
                 .as(User.class);
     }
@@ -85,7 +79,7 @@ public class UserDAOMongo implements UserDAO {
      * @return                  An Arraylist containing all Users within the argument organization.
      */
     public ArrayList<User> getUsersByOrganization(String organizationName) {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
         return cursorToArray(collection.find(
                 "{organization.name: \"" + organizationName + "\"}").as(User.class)
         );
@@ -98,7 +92,7 @@ public class UserDAOMongo implements UserDAO {
      * @throws Exception    Database errors
      */
     public ArrayList<User> getAllUsers() throws Exception {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
         return cursorToArray(collection.find("{}").as(User.class));
     }
 
@@ -113,7 +107,7 @@ public class UserDAOMongo implements UserDAO {
      * @throws Exception    Database errors
      */
     public ArrayList<User> getPendingRegistrations(String organization) throws Exception {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
 
         ArrayList<User> finalList = new ArrayList<>();
         ArrayList<User> unapproved = cursorToArray(collection.find(
@@ -162,7 +156,7 @@ public class UserDAOMongo implements UserDAO {
      * @return  A list of organization namesA list of organization names
      */
     public List<String> getOrganizations() {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
         Distinct distinct = collection.distinct("organization.name");
         return distinct.as(String.class);
     }
@@ -173,7 +167,7 @@ public class UserDAOMongo implements UserDAO {
      * @param user  The User object to be inserted into the database
      */
     public void add(User user) {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
         collection.insert(user);
     }
 
@@ -182,7 +176,7 @@ public class UserDAOMongo implements UserDAO {
      * @param id    Id of the User to be deleted
      */
     public void delete(String id) {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
         collection.remove(new ObjectId(id));
     }
 
@@ -191,7 +185,7 @@ public class UserDAOMongo implements UserDAO {
      * @param user  An updates User object
      */
     public void update(User user) {
-        MongoCollection collection = client.getCollection("users");
+        MongoCollection collection = client.getClient().getCollection("users");
         collection.update(new ObjectId(user.getId())).with(user);
     }
 
