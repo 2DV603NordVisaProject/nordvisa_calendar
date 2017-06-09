@@ -265,16 +265,89 @@ public class UserDAOMongoTest {
         MongoCollection collection = mock(MongoCollection.class);
         Find find = mock(Find.class);
         MongoCursor<User> cursor = mock(MongoCursor.class);
+        User userMock1 = mock(User.class);
+        User userMock2 = mock(User.class);
 
         when(db.getClient()).thenReturn(client);
         when(client.getCollection("users")).thenReturn(collection);
         when(collection.find("{}")).thenReturn(find);
         when(find.as(User.class)).thenReturn(cursor);
         when(cursor.hasNext()).thenReturn(false);
+        when(cursor.next()).thenReturn(null);
 
         ArrayList<User> users = sut.getAllUsers();
 
         assertEquals(0, users.size());
     }
 
+    @Test
+    public void getPendingRegistrationsBothRegistrationAndChangeOrgAsGlobalAdmin() {
+        Jongo client = mock(Jongo.class);
+        MongoCollection collection = mock(MongoCollection.class);
+        when(db.getClient()).thenReturn(client);
+        when(client.getCollection("users")).thenReturn(collection);
+
+        MongoCursor<User> regCursor= mock(MongoCursor.class);
+        User regUser1 = mock(User.class);
+        User regUser2 = mock(User.class);
+        Find regFind = mock(Find.class);
+        when(collection.find()).thenReturn(regFind);
+        when(regFind.as(User.class)).thenReturn(regCursor);
+        when(regCursor.hasNext()).thenReturn(true, true, false);
+        when(regCursor.next()).thenReturn(regUser1, regUser2);
+
+        MongoCursor<User> changeCursor = mock(MongoCursor.class);
+        User changeUser1 = mock(User.class);
+        User changeUser2 = mock(User.class);
+        Find changeFind = mock(Find.class);
+        when(collection.find()).thenReturn(changeFind);
+        when(changeFind.as(User.class)).thenReturn(changeCursor);
+        when(changeCursor.hasNext()).thenReturn(true, true, false);
+        when(changeCursor.next()).thenReturn(changeUser1, changeUser2);
+
+        ArrayList<User> users = sut.getPendingRegistrations("");
+
+        assertEquals(4, users.size());
+
+        users.remove(regUser1);
+        users.remove(regUser2);
+        users.remove(changeUser1);
+        users.remove(changeUser2);
+        assertEquals(0, users.size());
+    }
+
+    @Test
+    public void getPendingRegistrationsOnlyRegistrationsAsGlobalAdmin() {
+
+    }
+
+    @Test
+    public void getPendingRegistrationsOnlyChangeOrgAsGlobalAdmin() {
+
+    }
+
+    @Test
+    public void getPendingRegistrationsNoneExistAsGlobalAdmin() {
+
+    }
+
+    @Test
+    public void getPendingRegistrationsBothRegistrationAndChangeOrgAsOrganizationAdmin() {
+
+    }
+
+    @Test
+    public void getPendingRegistrationsOnlyRegistrationsAsOrganizationAdmin() {
+
+    }
+
+    @Test
+    public void getPendingRegistrationsOnlyChangeOrgAsOrganizationAdmin() {
+
+    }
+
+    @Test
+    public void getPendingRegistrationsNoneExistAsOrganizationAdmin() {
+
+    }
 }

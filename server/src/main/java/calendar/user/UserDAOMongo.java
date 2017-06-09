@@ -105,7 +105,7 @@ public class UserDAOMongo implements UserDAO {
      *                      organizaton changes relevant to the administrator
      * @throws Exception    Database errors
      */
-    public ArrayList<User> getPendingRegistrations(String organization) throws Exception {
+    public ArrayList<User> getPendingRegistrations(String organization) {
         MongoCollection collection = db.getClient().getCollection("users");
 
         ArrayList<User> finalList = new ArrayList<>();
@@ -115,16 +115,9 @@ public class UserDAOMongo implements UserDAO {
 
         ArrayList<User> changingOrg;
 
-        if(organization.equals("")) {
-            changingOrg = cursorToArray(collection.find(
-                    "{organization.changePending: \"\"}"
-            ).as(User.class));
-        }
-        else {
-            changingOrg = cursorToArray(collection.find(
-                    "{organization.changePending: \"" + organization + "\"}"
-            ).as(User.class));
-        }
+        changingOrg = cursorToArray(collection.find(
+                "{organization.changePending: \"" + organization + "\"}"
+        ).as(User.class));
 
         Iterator<User> changingOrgIterator = changingOrg.iterator();
 
