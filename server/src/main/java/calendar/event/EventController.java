@@ -39,7 +39,6 @@ import java.util.List;
 @RequestMapping("/api/event")
 public class EventController {
 
-    // TODO: Update class diagram
     @Autowired
     private EventDAO dao;
     private TokenValidator tokenValidator = new TokenValidator();
