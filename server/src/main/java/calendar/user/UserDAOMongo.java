@@ -97,12 +97,12 @@ public class UserDAOMongo implements UserDAO {
 
 
     /**
-     * Find all pending registraitons and organization changes which are relevent to the
+     * Find all pending registrations and organization changes which are relevant to the
      * administrator based on their organization.
      *
      * @param organization  Organization of the administrator
-     * @return              An ArrayList containing User which have pending registrations or
-     *                      organizaton changes relevant to the administrator
+     * @return              An ArrayList containing Users who have pending registrations or
+     *                      organization changes relevant to the administrator
      * @throws Exception    Database errors
      */
     public ArrayList<User> getPendingRegistrations(String organization) {
@@ -110,24 +110,34 @@ public class UserDAOMongo implements UserDAO {
 
         ArrayList<User> finalList = new ArrayList<>();
         ArrayList<User> unapproved = cursorToArray(collection.find(
-                "{organization.approved: false}"
+                "{\"organization.approved\": false}"
         ).as(User.class));
 
         ArrayList<User> changingOrg;
 
-        changingOrg = cursorToArray(collection.find(
-                "{organization.changePending: \"" + organization + "\"}"
-        ).as(User.class));
+        // If the organization is an empty string, it means that the user is a global admin,
+        // so retrieve every user that has a change pending.
+        if(organization.equals("")) {
+            changingOrg = cursorToArray(collection.find(
+                    "{\"organization.changePending\": {$ne: \"\"}}"
+            ).as(User.class));
+        } else {
+            changingOrg = cursorToArray(collection.find(
+                    "{\"organization.changePending\": \"" + organization + "\"}"
+            ).as(User.class));
+        }
 
-        Iterator<User> changingOrgIterator = changingOrg.iterator();
+        //Iterator<User> changingOrgIterator = changingOrg.iterator();
 
-        while(changingOrgIterator.hasNext()) {
+        changingOrg.removeIf(user -> user.getOrganization().getChangePending().equals(""));
+
+  /*      while(changingOrgIterator.hasNext()) {
             User next = changingOrgIterator.next();
 
             if(next.getOrganization().getChangePending().equals("")) {
                 changingOrgIterator.remove();
             }
-        }
+        }*/
 
         addToList(finalList, unapproved);
         addToList(finalList, changingOrg);

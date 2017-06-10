@@ -18,7 +18,7 @@ public class AuthorizationChecker {
     private UserDAO dao;
 
     /**
-     * A facade method which helps other pacakges check if the current logged in user can manage
+     * A facade method which helps other packages check if the current logged in user can manage
      * another users account.
      *
      * @param id    The id of the target user
@@ -36,6 +36,8 @@ public class AuthorizationChecker {
         try {
             users = dao.getAllUsers();
         } catch (Exception expt) {
+            System.err.println("Could not retrieve users.");
+            expt.printStackTrace();
             return null;
         }
 

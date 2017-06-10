@@ -282,6 +282,8 @@ public class UserDAOMongoTest {
 
     @Test
     public void getPendingRegistrationsBothRegistrationAndChangeOrgAsGlobalAdmin() {
+        String changeOrgName = "TestOrg";
+
         Jongo client = mock(Jongo.class);
         MongoCollection collection = mock(MongoCollection.class);
         when(db.getClient()).thenReturn(client);
@@ -291,19 +293,27 @@ public class UserDAOMongoTest {
         User regUser1 = mock(User.class);
         User regUser2 = mock(User.class);
         Find regFind = mock(Find.class);
-        when(collection.find()).thenReturn(regFind);
+        when(collection.find("{\"organization.approved\": false}")).thenReturn(regFind);
         when(regFind.as(User.class)).thenReturn(regCursor);
         when(regCursor.hasNext()).thenReturn(true, true, false);
         when(regCursor.next()).thenReturn(regUser1, regUser2);
+        when(regUser1.getId()).thenReturn("1");
+        when(regUser2.getId()).thenReturn("2");
 
         MongoCursor<User> changeCursor = mock(MongoCursor.class);
+        Organization changeOrg = mock(Organization.class);
         User changeUser1 = mock(User.class);
         User changeUser2 = mock(User.class);
         Find changeFind = mock(Find.class);
-        when(collection.find()).thenReturn(changeFind);
+        when(collection.find("{\"organization.changePending\": {$ne: \"\"}}")).thenReturn(changeFind);
         when(changeFind.as(User.class)).thenReturn(changeCursor);
         when(changeCursor.hasNext()).thenReturn(true, true, false);
         when(changeCursor.next()).thenReturn(changeUser1, changeUser2);
+        when(changeUser1.getOrganization()).thenReturn(changeOrg);
+        when(changeUser2.getOrganization()).thenReturn(changeOrg);
+        when(changeUser1.getId()).thenReturn("3");
+        when(changeUser2.getId()).thenReturn("4");
+        when(changeOrg.getChangePending()).thenReturn(changeOrgName);
 
         ArrayList<User> users = sut.getPendingRegistrations("");
 
