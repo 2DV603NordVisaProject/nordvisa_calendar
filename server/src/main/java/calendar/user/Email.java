@@ -15,6 +15,10 @@ import org.springframework.stereotype.Component;
 class Email {
     @Value("${base_url}")
     private String baseUrl; //Base url for the website
+    @Value("${smtp.host}")
+    private String smtpHost;
+    @Value("${smtp.sender}")
+    private String smtpSender;
 
     /**
      * Send a verification email to the specified email. The email will contain a link which will
@@ -26,6 +30,12 @@ class Email {
      */
     void sendVerificationEmail(String id, String email) {
         System.out.println("Sent to (" + email + ")http://" + baseUrl + "/api/visitor/verify_email?id=" + id);
+        String link = "http://" + baseUrl + "/api/visitor/verify_email?id=" + id;
+        String title = "Verify Email";
+        String message = "Hello!\n Someone has created an account for this account. If this was " +
+                "not you then just ignore this message. If it was you then click the link bellow" +
+                "\n\n" + link;
+        sendMessage(email, title, message);
     }
 
     /**
@@ -37,7 +47,12 @@ class Email {
      * @param email The email address which the email should be sent to
      */
     void sendPasswordResetEmail(String id, String email) {
-        System.out.println("Sent to (" + email + ") http://" + baseUrl + "/update-password/" + id);
+        String link = "http://" + baseUrl + "/update-password/" + id;
+        String title = "Password recovery";
+        String message = "Hello!\n Someone has requested a password recovery on this email. If this" +
+                "was not you then just ignore this message. If not then click the link bellow. " +
+                "\n\n" + link;
+        sendMessage(email, title, message);
     }
 
     /**
@@ -48,7 +63,9 @@ class Email {
      * @param type  The type of action, registration or organization change
      */
     void sendSuccessEmail(String email, String type) {
-        System.out.println("To " + email + ": Your " + type + " has been successful");
+        String title = "Your " + type + " was successful";
+        String message = "Hello!\n Your " + type + " was accepted by an administrator";
+        sendMessage(email, title, message);
     }
 
     /**
@@ -60,6 +77,14 @@ class Email {
      */
 
     void sendDenialEmail(String email, String type) {
-        System.out.println("To " + email + ": Your " + type + " has been declined");
+        String title = "Your " + type + " was denied";
+        String message = "Hello!\n Your " + type + " was denied by an administrator";
+        sendMessage(email, title, message);
+    }
+
+    private void sendMessage(String to, String title, String message) {
+        System.out.println("Sent to " + to);
+        System.out.println(title);
+        System.out.println(message);
     }
 }
