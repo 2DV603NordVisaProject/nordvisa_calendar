@@ -306,7 +306,7 @@ public class UserDAOMongoTest {
         User changeUser1 = mock(User.class);
         User changeUser2 = mock(User.class);
         Find changeFind = mock(Find.class);
-        when(collection.find("{\"organization.changePending\": {$ne: \"\"}}"))
+        when(collection.find("{\"organization.changePending\": {$ne: \"_\"}}"))
                 .thenReturn(changeFind);
         when(changeFind.as(User.class)).thenReturn(changeCursor);
         when(changeCursor.hasNext()).thenReturn(true, true, false);
