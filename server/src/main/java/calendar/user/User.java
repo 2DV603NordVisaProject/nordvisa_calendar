@@ -47,7 +47,7 @@ public class User {
     /**
      * Constructor used during registration. It fills in the nessecary parts of the User.
      *
-     * @param dto A DTO used to recive registration data.
+     * @param dto A DTO used to receive registration data.
      */
     User(RegistrationDTO dto) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -63,7 +63,14 @@ public class User {
         this.updatedAt = DateTime.now().getMillis();
 
         this.organization = new Organization();
-        this.organization.setChangePending(dto.getOrganization());
+
+        if(dto.getOrganization().equals("")) {
+            this.organization.setChangePending("_");
+        }
+        else {
+            this.organization.setChangePending(dto.getOrganization());
+        }
+
         this.organization.setApproved(false);
 
         this.emailChange = dto.getEmail();

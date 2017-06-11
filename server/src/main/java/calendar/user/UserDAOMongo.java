@@ -2,14 +2,12 @@ package calendar.user;
 
 import calendar.databaseConnections.MongoDBClient;
 import org.bson.types.ObjectId;
-import org.jongo.Distinct;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -103,7 +101,6 @@ public class UserDAOMongo implements UserDAO {
      * @param organization  Organization of the administrator
      * @return              An ArrayList containing Users who have pending registrations or
      *                      organization changes relevant to the administrator
-     * @throws Exception    Database errors
      */
     public ArrayList<User> getPendingRegistrations(String organization) {
         MongoCollection collection = db.getClient().getCollection("users");
@@ -117,9 +114,11 @@ public class UserDAOMongo implements UserDAO {
 
         // If the organization is an empty string, it means that the user is a global admin,
         // so retrieve every user that has a change pending.
+        // When changePending has value "_" it means it's empty. This is so a user can change to be
+        // without an organization from being in an organization.
         if(organization.equals("")) {
             changingOrg = cursorToArray(collection.find(
-                    "{\"organization.changePending\": {$ne: \"\"}}"
+                    "{\"organization.changePending\": {$ne: \"_\"}}"
             ).as(User.class));
         } else {
             changingOrg = cursorToArray(collection.find(
@@ -129,7 +128,7 @@ public class UserDAOMongo implements UserDAO {
 
         //Iterator<User> changingOrgIterator = changingOrg.iterator();
 
-        changingOrg.removeIf(user -> user.getOrganization().getChangePending().equals(""));
+        changingOrg.removeIf(user -> user.getOrganization().getChangePending().equals("_"));
 
   /*      while(changingOrgIterator.hasNext()) {
             User next = changingOrgIterator.next();
