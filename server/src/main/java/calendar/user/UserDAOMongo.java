@@ -159,8 +159,7 @@ public class UserDAOMongo implements UserDAO {
      */
     public List<String> getOrganizations() {
         MongoCollection collection = db.getClient().getCollection("users");
-        Distinct distinct = collection.distinct("organization.name");
-        return distinct.as(String.class);
+        return collection.distinct("organization.name").as(String.class);
     }
 
     /**

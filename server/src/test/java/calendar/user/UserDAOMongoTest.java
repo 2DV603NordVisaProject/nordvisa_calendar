@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -305,7 +306,8 @@ public class UserDAOMongoTest {
         User changeUser1 = mock(User.class);
         User changeUser2 = mock(User.class);
         Find changeFind = mock(Find.class);
-        when(collection.find("{\"organization.changePending\": {$ne: \"\"}}")).thenReturn(changeFind);
+        when(collection.find("{\"organization.changePending\": {$ne: \"\"}}"))
+                .thenReturn(changeFind);
         when(changeFind.as(User.class)).thenReturn(changeCursor);
         when(changeCursor.hasNext()).thenReturn(true, true, false);
         when(changeCursor.next()).thenReturn(changeUser1, changeUser2);
@@ -359,5 +361,98 @@ public class UserDAOMongoTest {
     @Test
     public void getPendingRegistrationsNoneExistAsOrganizationAdmin() {
 
+    }
+
+    @Test
+    public void getExistingOrganizations() {
+        Jongo client = mock(Jongo.class);
+        MongoCollection collection = mock(MongoCollection.class);
+        Distinct distinct = mock(Distinct.class);
+        List<String> orgs = new ArrayList<>();
+        orgs.add("");
+        orgs.add("my_org");
+        orgs.add("other_org");
+
+        when(db.getClient()).thenReturn(client);
+        when(client.getCollection("users")).thenReturn(collection);
+        when(collection.distinct("organization.name")).thenReturn(distinct);
+        when(distinct.as(String.class)).thenReturn(orgs);
+
+        List<String> returnedOrgs = sut.getOrganizations();
+
+        assertEquals(orgs, returnedOrgs);
+    }
+
+    @Test
+    public void getNonExistingOrganizations() {
+        Jongo client = mock(Jongo.class);
+        MongoCollection collection = mock(MongoCollection.class);
+        Distinct distinct = mock(Distinct.class);
+        List<String> orgs = new ArrayList<>();
+
+        when(db.getClient()).thenReturn(client);
+        when(client.getCollection("users")).thenReturn(collection);
+        when(collection.distinct("organization.name")).thenReturn(distinct);
+        when(distinct.as(String.class)).thenReturn(orgs);
+
+        List<String> returnedOrgs = sut.getOrganizations();
+
+        assertEquals(orgs, returnedOrgs);
+        assertTrue(returnedOrgs.isEmpty());
+    }
+
+    @Test
+    public void addUser(){
+        Jongo client = mock(Jongo.class);
+        MongoCollection collection = mock(MongoCollection.class);
+        User userMock = mock(User.class);
+
+        when(db.getClient()).thenReturn(client);
+        when(client.getCollection("users")).thenReturn(collection);
+        when(collection.insert(userMock)).thenReturn(null);
+
+        sut.add(userMock);
+
+        verify(db, times(1)).getClient();
+        verify(client, timeout(1)).getCollection("users");
+        verify(collection, times(1)).insert(userMock);
+    }
+
+    @Test
+    public void deleteUser(){
+        Jongo client = mock(Jongo.class);
+        MongoCollection collection = mock(MongoCollection.class);
+        User userMock = mock(User.class);
+
+        when(db.getClient()).thenReturn(client);
+        when(client.getCollection("users")).thenReturn(collection);
+        when(collection.remove(any(ObjectId.class))).thenReturn(null);
+
+        sut.delete("507f1f77bcf86cd799439011");
+
+        verify(db, times(1)).getClient();
+        verify(client, timeout(1)).getCollection("users");
+        verify(collection, times(1)).remove(any(ObjectId.class));
+    }
+
+    @Test
+    public void updateUser(){
+        Jongo client = mock(Jongo.class);
+        MongoCollection collection = mock(MongoCollection.class);
+        User userMock = mock(User.class);
+        Update update = mock(Update.class);
+
+        when(userMock.getId()).thenReturn("507f1f77bcf86cd799439011");
+        when(db.getClient()).thenReturn(client);
+        when(client.getCollection("users")).thenReturn(collection);
+        when(collection.update(any(ObjectId.class))).thenReturn(update);
+        when(update.with(userMock)).thenReturn(null);
+
+        sut.update(userMock);
+
+        verify(db, times(1)).getClient();
+        verify(client, timeout(1)).getCollection("users");
+        verify(collection, times(1)).update(any(ObjectId.class));
+        verify(update, times(1)).with(userMock);
     }
 }
