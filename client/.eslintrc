@@ -1,1 +1,14 @@
-"extends": "eslint-config-airbnb"
+{
+  "extends": "eslint-config-airbnb",
+  "plugins": ["react", "jest"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "jest/globals": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "strict": 0
+  }
+}
