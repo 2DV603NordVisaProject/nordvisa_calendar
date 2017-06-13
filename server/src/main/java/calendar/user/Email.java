@@ -56,7 +56,7 @@ class Email {
     }
 
     /**
-     * Sends an email to the email address telling them a recent action has been successfull. This
+     * Sends an email to the email address telling them a recent action has been successful. This
      * could be registration or organization change.
      *
      * @param email The email address email should be sent to

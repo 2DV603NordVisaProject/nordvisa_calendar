@@ -3,6 +3,7 @@ package calendar.user;
 import calendar.databaseConnections.MongoDBClient;
 import org.bson.types.ObjectId;
 import org.jongo.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -30,22 +31,27 @@ public class UserDAOMongoTest {
     @InjectMocks
     private UserDAOMongo sut;
 
+    private Jongo client;
+    private MongoCollection collection;
+
+    @Before
+    public void setup() {
+        client = mock(Jongo.class);
+        collection = mock(MongoCollection.class);
+        when(db.getClient()).thenReturn(client);
+        when(client.getCollection("users")).thenReturn(collection);
+    }
+
     @Test
     public void getExistingUserByValidId() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         FindOne findOne = mock(FindOne.class);
         User userMock = mock(User.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.findOne(any(ObjectId.class))).thenReturn(findOne);
         when(findOne.as(User.class)).thenReturn(userMock);
 
         User user = sut.getUserById("507f1f77bcf86cd799439011");
 
-        verify(db, times(1)).getClient();
-        verify(client, timeout(1)).getCollection("users");
         verify(collection, times(1)).findOne(any(ObjectId.class));
         verify(findOne, times(1)).as(User.class);
         assertEquals(user, userMock);
@@ -53,19 +59,13 @@ public class UserDAOMongoTest {
 
     @Test
     public void getNonExistingUserWithValidId() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         FindOne findOne = mock(FindOne.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.findOne(any(ObjectId.class))).thenReturn(findOne);
         when(findOne.as(User.class)).thenReturn(null);
 
         User user = sut.getUserById("507f1f77bcf86cd799439011");
 
-        verify(db, times(1)).getClient();
-        verify(client, timeout(1)).getCollection("users");
         verify(collection, times(1)).findOne(any(ObjectId.class));
         verify(findOne, times(1)).as(User.class);
         assertNull(user);
@@ -73,18 +73,14 @@ public class UserDAOMongoTest {
 
     @Test
     public void getUserWithInvalidId() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         FindOne findOne = mock(FindOne.class);
         User userMock = mock(User.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.findOne(any(ObjectId.class))).thenReturn(findOne);
         when(findOne.as(User.class)).thenReturn(userMock);
 
         try {
-            User user = sut.getUserById("ljkjjkkjjljkjk");
+            sut.getUserById("ljkjjkkjjljkjk");
             fail();
         } catch (IllegalArgumentException expt) {
             expt.getMessage();
@@ -93,13 +89,9 @@ public class UserDAOMongoTest {
 
     @Test
     public void getExistingUserByEmail() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         FindOne findOne = mock(FindOne.class);
         User userMock = mock(User.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.findOne("{email: \"test@test.com\"}")).thenReturn(findOne);
         when(findOne.as(User.class)).thenReturn(userMock);
 
@@ -110,12 +102,8 @@ public class UserDAOMongoTest {
 
     @Test
     public void getNonExistingUserByEmail() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         FindOne findOne = mock(FindOne.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.findOne("{email: \"test@test.com\"}")).thenReturn(findOne);
         when(findOne.as(User.class)).thenReturn(null);
 
@@ -126,13 +114,9 @@ public class UserDAOMongoTest {
 
     @Test
     public void getExistingUserByPasswordRecoveryLink() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         FindOne findOne = mock(FindOne.class);
         User userMock = mock(User.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.findOne("{resetPasswordLink.url: \"random_string_12345\"}"))
                 .thenReturn(findOne);
         when(findOne.as(User.class)).thenReturn(userMock);
@@ -144,14 +128,9 @@ public class UserDAOMongoTest {
 
     @Test
     public void getNonExistingUserByPasswordRecoveryLink() {
-
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         FindOne findOne = mock(FindOne.class);
         User userMock = mock(User.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.findOne("{resetPasswordLink.url: \"random_string_12345\"}"))
                 .thenReturn(findOne);
         when(findOne.as(User.class)).thenReturn(null);
@@ -163,13 +142,9 @@ public class UserDAOMongoTest {
 
     @Test
     public void getExistingUserByEmailVerificationLink() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         FindOne findOne = mock(FindOne.class);
         User userMock = mock(User.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.findOne("{validateEmailLink.url: \"random_string_12345\"}"))
                 .thenReturn(findOne);
         when(findOne.as(User.class)).thenReturn(userMock);
@@ -181,12 +156,8 @@ public class UserDAOMongoTest {
 
     @Test
     public void getNonExistingUserByEmailVerificationLink() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         FindOne findOne = mock(FindOne.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.findOne("{validateEmailLink.url: \"random_string_12345\"}"))
                 .thenReturn(findOne);
         when(findOne.as(User.class)).thenReturn(null);
@@ -198,15 +169,11 @@ public class UserDAOMongoTest {
 
     @Test
     public void getUsersByExistingOrganization() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         Find find = mock(Find.class);
         MongoCursor<User> cursor = mock(MongoCursor.class);
         User userMock1 = mock(User.class);
         User userMock2 = mock(User.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.find("{organization.name: \"org\"}")).thenReturn(find);
         when(find.as(User.class)).thenReturn(cursor);
         when(cursor.hasNext()).thenReturn(true, true, false);
@@ -221,13 +188,9 @@ public class UserDAOMongoTest {
 
     @Test
     public void getUsersByNonExistingOrganization() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         Find find = mock(Find.class);
         MongoCursor<User> cursor = mock(MongoCursor.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.find("{organization.name: \"org\"}")).thenReturn(find);
         when(find.as(User.class)).thenReturn(cursor);
         when(cursor.hasNext()).thenReturn(false);
@@ -239,15 +202,11 @@ public class UserDAOMongoTest {
 
     @Test
     public void getAllUsers() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         Find find = mock(Find.class);
         MongoCursor<User> cursor = mock(MongoCursor.class);
         User userMock1 = mock(User.class);
         User userMock2 = mock(User.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.find("{}")).thenReturn(find);
         when(find.as(User.class)).thenReturn(cursor);
         when(cursor.hasNext()).thenReturn(true, true, false);
@@ -262,15 +221,9 @@ public class UserDAOMongoTest {
 
     @Test
     public void getAllUsersWhenNoneExist() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         Find find = mock(Find.class);
         MongoCursor<User> cursor = mock(MongoCursor.class);
-        User userMock1 = mock(User.class);
-        User userMock2 = mock(User.class);
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.find("{}")).thenReturn(find);
         when(find.as(User.class)).thenReturn(cursor);
         when(cursor.hasNext()).thenReturn(false);
@@ -284,11 +237,6 @@ public class UserDAOMongoTest {
     @Test
     public void getPendingRegistrationsBothRegistrationAndChangeOrgAsGlobalAdmin() {
         String changeOrgName = "TestOrg";
-
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
 
         MongoCursor<User> regCursor= mock(MongoCursor.class);
         User regUser1 = mock(User.class);
@@ -306,7 +254,7 @@ public class UserDAOMongoTest {
         User changeUser1 = mock(User.class);
         User changeUser2 = mock(User.class);
         Find changeFind = mock(Find.class);
-        when(collection.find("{\"organization.changePending\": {$ne: \"\"}}"))
+        when(collection.find("{\"organization.changePending\": {$ne: \"_\"}}"))
                 .thenReturn(changeFind);
         when(changeFind.as(User.class)).thenReturn(changeCursor);
         when(changeCursor.hasNext()).thenReturn(true, true, false);
@@ -365,16 +313,12 @@ public class UserDAOMongoTest {
 
     @Test
     public void getExistingOrganizations() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         Distinct distinct = mock(Distinct.class);
         List<String> orgs = new ArrayList<>();
         orgs.add("");
         orgs.add("my_org");
         orgs.add("other_org");
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.distinct("organization.name")).thenReturn(distinct);
         when(distinct.as(String.class)).thenReturn(orgs);
 
@@ -385,13 +329,9 @@ public class UserDAOMongoTest {
 
     @Test
     public void getNonExistingOrganizations() {
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         Distinct distinct = mock(Distinct.class);
         List<String> orgs = new ArrayList<>();
 
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.distinct("organization.name")).thenReturn(distinct);
         when(distinct.as(String.class)).thenReturn(orgs);
 
@@ -403,56 +343,48 @@ public class UserDAOMongoTest {
 
     @Test
     public void addUser(){
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         User userMock = mock(User.class);
-
-        when(db.getClient()).thenReturn(client);
-        when(client.getCollection("users")).thenReturn(collection);
         when(collection.insert(userMock)).thenReturn(null);
-
         sut.add(userMock);
-
-        verify(db, times(1)).getClient();
-        verify(client, timeout(1)).getCollection("users");
         verify(collection, times(1)).insert(userMock);
     }
 
     @Test
     public void deleteUser(){
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
-        User userMock = mock(User.class);
-
-        when(db.getClient()).thenReturn(client);
         when(client.getCollection("users")).thenReturn(collection);
         when(collection.remove(any(ObjectId.class))).thenReturn(null);
 
         sut.delete("507f1f77bcf86cd799439011");
 
-        verify(db, times(1)).getClient();
-        verify(client, timeout(1)).getCollection("users");
         verify(collection, times(1)).remove(any(ObjectId.class));
     }
 
     @Test
     public void updateUser(){
-        Jongo client = mock(Jongo.class);
-        MongoCollection collection = mock(MongoCollection.class);
         User userMock = mock(User.class);
         Update update = mock(Update.class);
 
         when(userMock.getId()).thenReturn("507f1f77bcf86cd799439011");
-        when(db.getClient()).thenReturn(client);
         when(client.getCollection("users")).thenReturn(collection);
         when(collection.update(any(ObjectId.class))).thenReturn(update);
         when(update.with(userMock)).thenReturn(null);
 
         sut.update(userMock);
 
-        verify(db, times(1)).getClient();
-        verify(client, timeout(1)).getCollection("users");
         verify(collection, times(1)).update(any(ObjectId.class));
         verify(update, times(1)).with(userMock);
+    }
+
+    private User createUserMock(String id, String email, String changePending) {
+        User user = mock(User.class);
+        Organization org = mock(Organization.class);
+
+        when(user.getId()).thenReturn(id);
+        when(user.getEmail()).thenReturn(email);
+        when(user.getOrganization()).thenReturn(org);
+
+        when(org.getChangePending()).thenReturn(changePending);
+
+        return user;
     }
 }
