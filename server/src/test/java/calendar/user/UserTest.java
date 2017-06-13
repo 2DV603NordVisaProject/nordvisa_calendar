@@ -1,9 +1,13 @@
 package calendar.user;
 
+import calendar.user.dto.RegistrationDTO;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
@@ -28,6 +32,80 @@ public class UserTest {
         sut = new User();
 
         sut.setOrganization(organization);
+    }
+
+    @Test
+    public void createUserFromRegistratonDTO() {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        RegistrationDTO dto = mock(RegistrationDTO.class);
+
+        String email = "test@test.com";
+        String password = "my_password";
+        String organization = "";
+        when(dto.getEmail()).thenReturn(email);
+        when(dto.getPassword()).thenReturn(password);
+        when(dto.getOrganization()).thenReturn(organization);
+
+        User user = new User(dto);
+
+        assertEquals(email, user.getEmail());
+        assertTrue(encoder.matches(password, user.getPassword()));
+        assertEquals("USER", user.getRole());
+
+        assertEquals("", user.getResetPasswordLink().getUrl());
+        assertEquals(0, user.getResetPasswordLink().getTimestamp());
+        assertEquals("", user.getValidateEmailLink().getUrl());
+        assertEquals(0, user.getValidateEmailLink().getTimestamp());
+
+        assertTrue(DateTime.now().isAfter(user.getCreatedAt()));
+        assertTrue(DateTime.now().minusSeconds(1).isBefore(user.getCreatedAt()));
+        assertTrue(DateTime.now().isAfter(user.getUpdatedAt()));
+        assertTrue(DateTime.now().minusSeconds(1).isBefore(user.getUpdatedAt()));
+
+        assertNotNull(user.getOrganization());
+        assertEquals("_", user.getOrganization().getChangePending());
+
+        assertFalse(user.getOrganization().isApproved());
+
+        assertEquals(email, user.getEmailChange());
+    }
+
+    @Test
+    public void createUserFromRegistratonDTOWithOrg() {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        RegistrationDTO dto = mock(RegistrationDTO.class);
+
+        String email = "test@test.com";
+        String password = "my_password";
+        String organization = "org";
+        when(dto.getEmail()).thenReturn(email);
+        when(dto.getPassword()).thenReturn(password);
+        when(dto.getOrganization()).thenReturn(organization);
+
+        User user = new User(dto);
+
+        assertEquals(email, user.getEmail());
+        assertTrue(encoder.matches(password, user.getPassword()));
+        assertEquals("USER", user.getRole());
+
+        assertEquals("", user.getResetPasswordLink().getUrl());
+        assertEquals(0, user.getResetPasswordLink().getTimestamp());
+        assertEquals("", user.getValidateEmailLink().getUrl());
+        assertEquals(0, user.getValidateEmailLink().getTimestamp());
+
+        assertTrue(DateTime.now().isAfter(user.getCreatedAt()));
+        assertTrue(DateTime.now().minusSeconds(1).isBefore(user.getCreatedAt()));
+        assertTrue(DateTime.now().isAfter(user.getUpdatedAt()));
+        assertTrue(DateTime.now().minusSeconds(1).isBefore(user.getUpdatedAt()));
+
+        assertNotNull(user.getOrganization());
+        assertEquals("org", user.getOrganization().getChangePending());
+
+        assertFalse(user.getOrganization().isApproved());
+
+        assertEquals(email, user.getEmailChange());
     }
 
     @Test
