@@ -20,6 +20,8 @@ import static org.mockito.Mockito.*;
 /**
  * Class UserDAOMongoTest
  *
+ * TODO: Add comments
+ *
  * @author Axel Nilsson (axnion)
  */
 @RunWith(SpringRunner.class)
@@ -235,35 +237,26 @@ public class UserDAOMongoTest {
     }
 
     @Test
-    public void getPendingRegistrationsBothRegistrationAndChangeOrgAsGlobalAdmin() {
-        String changeOrgName = "TestOrg";
-
+    public void getPendingRegistrationsAsGlobalAdmin() {
         MongoCursor<User> regCursor= mock(MongoCursor.class);
-        User regUser1 = mock(User.class);
-        User regUser2 = mock(User.class);
+        User regUser1 = createUserMock("1", "test1@test.com", "org1");
+        User regUser2 = createUserMock("2", "test2@test.com", "_");
         Find regFind = mock(Find.class);
         when(collection.find("{\"organization.approved\": false}")).thenReturn(regFind);
         when(regFind.as(User.class)).thenReturn(regCursor);
         when(regCursor.hasNext()).thenReturn(true, true, false);
         when(regCursor.next()).thenReturn(regUser1, regUser2);
-        when(regUser1.getId()).thenReturn("1");
-        when(regUser2.getId()).thenReturn("2");
 
         MongoCursor<User> changeCursor = mock(MongoCursor.class);
-        Organization changeOrg = mock(Organization.class);
-        User changeUser1 = mock(User.class);
-        User changeUser2 = mock(User.class);
+        User changeUser1 = createUserMock("3", "test3@test.com", "org1");
+        User changeUser2 = createUserMock("4", "test4@test.com", "_");
+        User changeUser3 = createUserMock("5", "test5@test.com", "");
         Find changeFind = mock(Find.class);
         when(collection.find("{\"organization.changePending\": {$ne: \"_\"}}"))
                 .thenReturn(changeFind);
         when(changeFind.as(User.class)).thenReturn(changeCursor);
-        when(changeCursor.hasNext()).thenReturn(true, true, false);
-        when(changeCursor.next()).thenReturn(changeUser1, changeUser2);
-        when(changeUser1.getOrganization()).thenReturn(changeOrg);
-        when(changeUser2.getOrganization()).thenReturn(changeOrg);
-        when(changeUser1.getId()).thenReturn("3");
-        when(changeUser2.getId()).thenReturn("4");
-        when(changeOrg.getChangePending()).thenReturn(changeOrgName);
+        when(changeCursor.hasNext()).thenReturn(true, true, true, true, false);
+        when(changeCursor.next()).thenReturn(changeUser1, changeUser2, changeUser3, regUser1);
 
         ArrayList<User> users = sut.getPendingRegistrations("");
 
@@ -272,43 +265,36 @@ public class UserDAOMongoTest {
         users.remove(regUser1);
         users.remove(regUser2);
         users.remove(changeUser1);
-        users.remove(changeUser2);
+        users.remove(changeUser3);
         assertEquals(0, users.size());
     }
 
     @Test
-    public void getPendingRegistrationsOnlyRegistrationsAsGlobalAdmin() {
+    public void getPendingRegistrationsAsOrgAdmin() {
+        MongoCursor<User> regCursor= mock(MongoCursor.class);
+        User regUser1 = createUserMock("1", "test1@test.com", "org1");
+        Find regFind = mock(Find.class);
+        when(collection.find("{\"organization.approved\": false}")).thenReturn(regFind);
+        when(regFind.as(User.class)).thenReturn(regCursor);
+        when(regCursor.hasNext()).thenReturn(true, false);
+        when(regCursor.next()).thenReturn(regUser1);
 
-    }
+        MongoCursor<User> changeCursor = mock(MongoCursor.class);
+        User changeUser1 = createUserMock("5", "test5@test.com", "org1");
+        Find changeFind = mock(Find.class);
+        when(collection.find("{\"organization.changePending\": \"org1\"}"))
+                .thenReturn(changeFind);
+        when(changeFind.as(User.class)).thenReturn(changeCursor);
+        when(changeCursor.hasNext()).thenReturn(true, true, false);
+        when(changeCursor.next()).thenReturn(changeUser1, regUser1);
 
-    @Test
-    public void getPendingRegistrationsOnlyChangeOrgAsGlobalAdmin() {
+        ArrayList<User> users = sut.getPendingRegistrations("org1");
 
-    }
+        assertEquals(2, users.size());
 
-    @Test
-    public void getPendingRegistrationsNoneExistAsGlobalAdmin() {
-
-    }
-
-    @Test
-    public void getPendingRegistrationsBothRegistrationAndChangeOrgAsOrganizationAdmin() {
-
-    }
-
-    @Test
-    public void getPendingRegistrationsOnlyRegistrationsAsOrganizationAdmin() {
-
-    }
-
-    @Test
-    public void getPendingRegistrationsOnlyChangeOrgAsOrganizationAdmin() {
-
-    }
-
-    @Test
-    public void getPendingRegistrationsNoneExistAsOrganizationAdmin() {
-
+        users.remove(regUser1);
+        users.remove(changeUser1);
+        assertEquals(0, users.size());
     }
 
     @Test

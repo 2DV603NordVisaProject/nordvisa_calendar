@@ -126,17 +126,7 @@ public class UserDAOMongo implements UserDAO {
             ).as(User.class));
         }
 
-        //Iterator<User> changingOrgIterator = changingOrg.iterator();
-
         changingOrg.removeIf(user -> user.getOrganization().getChangePending().equals("_"));
-
-  /*      while(changingOrgIterator.hasNext()) {
-            User next = changingOrgIterator.next();
-
-            if(next.getOrganization().getChangePending().equals("")) {
-                changingOrgIterator.remove();
-            }
-        }*/
 
         addToList(finalList, unapproved);
         addToList(finalList, changingOrg);
