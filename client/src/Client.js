@@ -45,9 +45,8 @@ const Client = {
         }
 
         return '';
-
       })
-      .then(json => {
+      .then((json) => {
         return json;
       })
       .catch(err => {
