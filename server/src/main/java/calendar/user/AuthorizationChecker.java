@@ -1,6 +1,7 @@
 package calendar.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  *
  * @author Axel Nilsson (axnion)
  */
+@Component
 public class AuthorizationChecker {
     @Autowired
     private UserDAO dao;
@@ -37,7 +39,7 @@ public class AuthorizationChecker {
             users = dao.getAllUsers();
         } catch (Exception expt) {
             System.err.println("Could not retrieve users.");
-            expt.printStackTrace();
+
             return null;
         }
 

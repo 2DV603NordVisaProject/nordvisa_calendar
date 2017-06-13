@@ -1,5 +1,6 @@
 package calendar.event;
 
+import calendar.token.TokenValidator;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,9 @@ public class EventControllerTest {
     private Event event;
 
     @Mock
+    private TokenValidator tokenValidator;
+
+    @Mock
     private EventLocation eventLocation;
 
     @Mock
@@ -40,6 +44,8 @@ public class EventControllerTest {
         when(event.getId()).thenReturn("5925b4aac274ad1921de196e");
         when(event.getName()).thenReturn("Event name");
         when(event.getDescription()).thenReturn("Event description");
+
+        when(tokenValidator.validate("dashboard")).thenReturn(true);
 
         when(dao.getEvent(new ObjectId("5925b4aac274ad1921de196e"))).thenReturn(testEvents);
 

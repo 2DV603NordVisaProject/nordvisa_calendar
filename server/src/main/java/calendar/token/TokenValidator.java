@@ -1,12 +1,17 @@
 package calendar.token;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 /**
  * Class TokenValidator
  *
  * @author Axel Nilsson (axnion)
  */
+@Component
 public class TokenValidator {
-    private TokenDAO dao = new TokenDAOMongo();
+    @Autowired
+    private TokenDAO dao;
 
     public boolean validate(String tokenKey) {
         if(tokenKey.equals("dashboard")) {

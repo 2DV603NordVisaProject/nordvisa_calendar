@@ -1,5 +1,5 @@
-import React, { Component} from "react";
-import "./ConfirmMessage.css";
+import React, { Component } from 'react';
+import './ConfirmMessage.css';
 
 class ConfirmMessage extends Component {
   state = {
@@ -8,12 +8,12 @@ class ConfirmMessage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.popup.pop !== this.state.pop) {
-      this.setState({pop: nextProps.popup.pop})
+      this.setState({ pop: nextProps.popup.pop });
     }
   }
 
   onNoClick() {
-    this.setState({ pop: false})
+    this.setState({ pop: false });
   }
 
   onYesClick() {
@@ -24,11 +24,11 @@ class ConfirmMessage extends Component {
   render()  {
     if (this.state.pop) {
       return (
-        <div className="confirm-message">
+        <div className='confirm-message'>
           <p>{this.props.popup.msg}</p>
-          <div className="answer">
-            <button className="btn-success" onClick={this.onYesClick.bind(this)}>yes</button>
-            <button className="btn-error" onClick={this.onNoClick.bind(this)}>no</button>
+          <div className='answer'>
+            <button className='btn-success' onClick={this.onYesClick.bind(this)}>yes</button>
+            <button className='btn-error' onClick={this.onNoClick.bind(this)}>no</button>
           </div>
           </div>
       );
