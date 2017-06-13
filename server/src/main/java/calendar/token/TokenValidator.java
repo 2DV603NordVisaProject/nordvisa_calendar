@@ -1,10 +1,13 @@
 package calendar.token;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Class TokenValidator
  *
  * @author Axel Nilsson (axnion)
  */
+@Component
 public class TokenValidator {
     private TokenDAO dao = new TokenDAOMongo();
 
