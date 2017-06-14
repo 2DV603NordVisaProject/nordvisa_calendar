@@ -3,8 +3,14 @@ import PropTypes from 'prop-types';
 import './ConfirmMessage.css';
 
 class ConfirmMessage extends Component {
-  state = {
-    pop: null,
+  constructor() {
+    super();
+    this.state = {
+      pop: null,
+    };
+
+    this.onYesClick = this.onYesClick.bind(this);
+    this.onNoClick = this.onNoClick.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,8 +35,8 @@ class ConfirmMessage extends Component {
         <div className="confirm-message">
           <p>{this.props.popup.msg}</p>
           <div className="answer">
-            <button className="btn-success" onClick={this.onYesClick.bind(this)}>yes</button>
-            <button className="btn-error" onClick={this.onNoClick.bind(this)}>no</button>
+            <button className="btn-success" onClick={this.onYesClick}>yes</button>
+            <button className="btn-error" onClick={this.onNoClick}>no</button>
           </div>
         </div>
       );
