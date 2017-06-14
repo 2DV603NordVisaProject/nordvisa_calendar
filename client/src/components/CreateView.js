@@ -124,11 +124,11 @@ class CreateView extends Component {
     const file = this.state.fields.file;
     if (file) {
       Client.uploadImage(file).then((res) => {
-        if (res.hasOwnProperty('message')) {
+        if (Object.prototype.hasOwnProperty.call(res, 'message')) {
           let err = '';
-          if (res.message == '415') {
+          if (res.message === '415') {
             err = 'Unsupported file type!';
-          } else if (res.message == '413') {
+          } else if (res.message === '413') {
             err = 'File size too large!';
           } else {
             err = 'Internal Server Error';
