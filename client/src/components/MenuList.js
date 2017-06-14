@@ -1,11 +1,10 @@
-import React, { Component } from "react";
-import Client from "../Client";
-import Link from "react-router/Link";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import Client from '../Client';
+import Link from 'react-router/Link';
+import PropTypes from 'prop-types';
 
 class MenuList extends Component {
   render() {
-
     const language = this.context.language.MenuList;
 
     return (
@@ -17,7 +16,7 @@ class MenuList extends Component {
               <li><Link to="/admin/pending-registrations" className="menu-link">{language.pendingReg}</Link></li>
             </div>
           ) : (
-            <div></div>
+            <div />
           )
         }
         {
@@ -38,12 +37,13 @@ class MenuList extends Component {
         }
         <li><Link to="/generate-widget" className="menu-link capitalize">{language.generate}</Link></li>
       </ul>
-    )
+    );
   }
 }
 
+
 MenuList.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 export default MenuList;

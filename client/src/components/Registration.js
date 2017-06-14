@@ -1,10 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Registration extends Component {
 
   render() {
-
     const language = this.context.language.PendingRegistrationsView;
 
     return (
@@ -18,7 +17,7 @@ class Registration extends Component {
           </div>
           <div className="approve-action">
             <select onChange={this.props.onInputChange.bind(this)} className="capitalize small-form" name={this.props.registration.id}>
-              <option classname="capitalize">{language.action}</option>
+              <option className="capitalize">{language.action}</option>
               <option className="capitalize small-form" value="approve">{language.approve}</option>
               <option className="capitalize small-form" value="deny">{language.deny}</option>
             </select>
@@ -29,8 +28,9 @@ class Registration extends Component {
   }
 }
 
+
 Registration.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 export default Registration;

@@ -1,10 +1,9 @@
-import React, { Component } from "react";
-import Link from "react-router/Link";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import Link from 'react-router/Link';
+import PropTypes from 'prop-types';
 
 class Event extends Component {
   render() {
-
     const language = this.context.language.MyEventsView;
 
     return (
@@ -22,8 +21,9 @@ class Event extends Component {
   }
 }
 
+
 Event.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 export default Event;

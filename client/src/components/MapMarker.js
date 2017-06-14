@@ -12,4 +12,5 @@ class MapMarker extends Component {
   }
 }
 
+
 export default MapMarker;

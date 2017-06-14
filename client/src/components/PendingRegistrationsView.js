@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import "./PendingRegistrationsView.css";
-import RegistrationsList from "./RegistrationsList";
-import Client from "../Client";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import './PendingRegistrationsView.css';
+import RegistrationsList from './RegistrationsList';
+import Client from '../Client';
+import PropTypes from 'prop-types';
 
 class PendingRegistrationsView extends Component {
   state = {
@@ -12,26 +12,24 @@ class PendingRegistrationsView extends Component {
   }
 
   componentWillMount() {
-    const uri = "/api/admin/registrations";
+    const uri = '/api/admin/registrations';
     Client.get(uri)
-      .then(registrations => {
+      .then((registrations) => {
         console.log(registrations);
         this.setState({ registrations });
       });
   }
+
 
   onInputChange(event) {
     let approve = this.state.approve;
     let deny = this.state.deny;
 
     // Is Approved
-    if (event.target.value === "approve") {
-
+    if (event.target.value === 'approve') {
       // If it is in deny array, remove it
       if (deny.includes(event.target.name)) {
-        deny = deny.filter((id) => {
-          return id !== event.target.name;
-        });
+        deny = deny.filter(id => id !== event.target.name);
       }
 
       // Push user ID to approve array
@@ -39,47 +37,40 @@ class PendingRegistrationsView extends Component {
 
     // Is Denied
     } else {
-
       // If it is in approved array, remove it.
       if (approve.includes(event.target.name)) {
-        approve = approve.filter((id) => {
-          return id !== event.target.name;
-        });
+        approve = approve.filter(id => id !== event.target.name);
       }
 
       // Push user ID to deny array.
       deny.push(event.target.name);
-
     }
 
-    this.setState({approve});
-    this.setState({deny});
+    this.setState({ approve });
+    this.setState({ deny });
   }
 
   onFormSubmit(event) {
     event.preventDefault();
-    const uri = "/api/admin/registrations";
+    const uri = '/api/admin/registrations';
     const approve = this.state.approve;
     const deny = this.state.deny;
-    let oldRegistrations = this.state.registrations;
+    const oldRegistrations = this.state.registrations;
 
     // Remove registrations from users who have been denied or approved.
 
-    let actions = [...approve, ...deny];
+    const actions = [...approve, ...deny];
     const registrations = [];
 
-    oldRegistrations.forEach(registration => {
-
+    oldRegistrations.forEach((registration) => {
       let hasAction = false;
-      approve.forEach(id => {
-
+      approve.forEach((id) => {
         if (registration.id === id) {
           hasAction = true;
         }
-
       });
 
-      deny.forEach(id => {
+      deny.forEach((id) => {
         if (registration.id === id) {
           hasAction = true;
         }
@@ -88,7 +79,6 @@ class PendingRegistrationsView extends Component {
       if (!hasAction) {
         registrations.push(registration);
       }
-
     });
 
 
@@ -96,18 +86,18 @@ class PendingRegistrationsView extends Component {
     while (approve.length > 0) {
       const obj = {
         id: approve.shift(),
-        approved: true
-      }
-      Client.post(obj, uri)
+        approved: true,
+      };
+      Client.post(obj, uri);
     }
 
     // Empty deny array, and perform API action.
     while (deny.length > 0) {
       const obj = {
         id: deny.shift(),
-        approved: false
-      }
-      Client.post(obj, uri)
+        approved: false,
+      };
+      Client.post(obj, uri);
     }
 
     this.setState({ approve });
@@ -118,7 +108,6 @@ class PendingRegistrationsView extends Component {
   }
 
   render() {
-
     const language = this.context.language.PendingRegistrationsView;
 
     return (
@@ -130,8 +119,8 @@ class PendingRegistrationsView extends Component {
           <p className="capitalize">{language.approve}</p>
         </div>
         <form onSubmit={this.onFormSubmit.bind(this)}>
-          <RegistrationsList registrations={this.state.registrations} onInputChange={this.onInputChange.bind(this)}/>
-        <input type="submit" className="btn-primary" value={language.approve}></input>
+          <RegistrationsList registrations={this.state.registrations} onInputChange={this.onInputChange.bind(this)} />
+          <input type="submit" className="btn-primary" value={language.approve} />
         </form>
       </div>
     );
@@ -140,6 +129,6 @@ class PendingRegistrationsView extends Component {
 
 PendingRegistrationsView.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 export default PendingRegistrationsView;

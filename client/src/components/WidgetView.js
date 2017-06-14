@@ -1,38 +1,39 @@
-import React, { Component } from "react";
-import "./WidgetView.css";
-import ErrorList from "./ErrorList";
-import ProvinceSelect from "./ProvinceSelect";
-import PropTypes from "prop-types";
-import Client from "../Client";
+import React, { Component } from 'react';
+import './WidgetView.css';
+import ErrorList from './ErrorList';
+import ProvinceSelect from './ProvinceSelect';
+import PropTypes from 'prop-types';
+import Client from '../Client';
 
 
 class WidgetView extends Component {
   state = {
     fields: {
-      region: "",
-      province: "",
+      region: '',
+      province: '',
     },
     fieldErrors: [],
     showProvince: false,
     isGenerated: false,
-    headCode: "",
-    bodyCode: "",
-    token: "",
+    headCode: '',
+    bodyCode: '',
+    token: '',
   }
 
+
   componentWillMount() {
-    const uri = "/api/token";
+    const uri = '/api/token';
     Client.get(uri)
-      .then(res => {
+      .then((res) => {
         const token = res.token;
         this.setState({ token });
-      })
+      });
   }
 
   validate(fields) {
-    const errors = []
+    const errors = [];
     if (!fields.region) errors.push(this.context.language.Errors.chooseRegion);
-    return errors
+    return errors;
   }
 
   onFormSubmit(event) {
@@ -45,9 +46,9 @@ class WidgetView extends Component {
 
     const bodyCode = this.generateBodyCode(this.state.fields.region, this.state.fields.province);
 
-    this.setState({isGenerated: true});
-    this.setState({headCode: this.generateHeadCode()})
-    this.setState({bodyCode: bodyCode})
+    this.setState({ isGenerated: true });
+    this.setState({ headCode: this.generateHeadCode() });
+    this.setState({ bodyCode });
   }
 
   generateHeadCode() {
@@ -58,14 +59,14 @@ class WidgetView extends Component {
     return `<div id="visa-widget" data-country="${region}" data-region="${province}" data-token="${this.state.token}"></div>`;
   }
 
-  onInputChange(event)  {
-    let fields = this.state.fields;
+  onInputChange(event) {
+    const fields = this.state.fields;
     fields[event.target.name] = event.target.value;
-    this.setState({fields});
+    this.setState({ fields });
 
     let showProvince;
 
-    if (event.target.value !== "") {
+    if (event.target.value !== '') {
       showProvince = true;
     } else {
       showProvince = false;
@@ -75,7 +76,6 @@ class WidgetView extends Component {
   }
 
   render() {
-
     const language = this.context.language.WidgetView;
 
     return (
@@ -86,7 +86,8 @@ class WidgetView extends Component {
             className="capitalize"
             name="region"
             onChange={this.onInputChange.bind(this)}
-            defaultValue={this.state.fields.region}>
+            defaultValue={this.state.fields.region}
+          >
             <option value="" className="capitalize">{language.chooseRegion}</option>
             <option value="all" className="capitalize">{language.allNordic}</option>
             <option value="sweden" className="capitalize">{language.sweden}</option>
@@ -94,24 +95,25 @@ class WidgetView extends Component {
             <option value="denmark" className="capitalize">{language.denmark}</option>
             <option value="iceland" className="capitalize">{language.iceland}</option>
           </select>
-          <div className={this.state.showProvince ? "" : "hidden"}>
+          <div className={this.state.showProvince ? '' : 'hidden'}>
             <ProvinceSelect
               region={this.state.fields.region}
-              onChange={this.onInputChange.bind(this)}/>
+              onChange={this.onInputChange.bind(this)}
+            />
           </div>
-          <ErrorList errors={this.state.fieldErrors}/>
+          <ErrorList errors={this.state.fieldErrors} />
           <button className="btn-primary" onClick={this.onFormSubmit.bind(this)}>{language.generate}</button>
         </form>
         {
           this.state.isGenerated ? (
             <div className="code-container">
               <p>{language.headCode}:</p>
-              <textarea className="widget-code" defaultValue={this.state.headCode} disabled></textarea>
+              <textarea className="widget-code" defaultValue={this.state.headCode} disabled />
               <p>{language.bodyCode}:</p>
-              <textarea className="widget-code" defaultValue={this.state.bodyCode} disabled></textarea>
+              <textarea className="widget-code" defaultValue={this.state.bodyCode} disabled />
             </div>
           ) : (
-            <div></div>
+            <div />
           )
         }
       </div>
@@ -121,6 +123,6 @@ class WidgetView extends Component {
 
 WidgetView.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 export default WidgetView;

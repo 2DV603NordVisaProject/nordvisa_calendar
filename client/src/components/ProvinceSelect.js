@@ -1,13 +1,12 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 
 class ProvinceSelect extends Component {
   render() {
-
     const language = this.context.language.WidgetView;
 
-    if (this.props.region === "sweden") {
+    if (this.props.region === 'sweden') {
       return (
         <select defaultValue="" name="province" onChange={this.props.onChange.bind(this)} className="capitalize">
           <option value="" className="capitalize">{language.chooseProvince}</option>
@@ -38,7 +37,7 @@ class ProvinceSelect extends Component {
           <option value="ostergotland">Östergötland</option>
         </select>
       );
-    } else if(this.props.region === "norway") {
+    } else if (this.props.region === 'norway') {
       return (
         <select name="province" defaultValue="" onChange={this.props.onChange.bind(this)} className="capitalize">
           <option value="" className="capitalize">{language.chooseProvince}</option>
@@ -72,7 +71,7 @@ class ProvinceSelect extends Component {
           <option value="osterdalen">Østerdalen</option>
         </select>
       );
-    } else if (this.props.region === "iceland") {
+    } else if (this.props.region === 'iceland') {
       return (
         <select name="province" defaultValue="" onChange={this.props.onChange.bind(this)} className="capitalize">
           <option value="" className="capitalize">{language.chooseProvince}</option>
@@ -102,7 +101,7 @@ class ProvinceSelect extends Component {
           <option value="vesturskaftafellssysla">Vestur-Skaftafellssýsla</option>
         </select>
       );
-    } else if (this.props.region === "denmark") {
+    } else if (this.props.region === 'denmark') {
       return (
         <select defaultValue="" name="province" onChange={this.props.onChange.bind(this)} className="capitalize">
           <option value="" className="capitalize">{language.chooseProvince}</option>
@@ -114,16 +113,15 @@ class ProvinceSelect extends Component {
           <option value="sjaelland">Sjælland</option>
         </select>
       );
-    } else {
-      return (
-        <div></div>
-      );
     }
+    return (
+      <div />
+    );
   }
 }
 
 ProvinceSelect.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 export default ProvinceSelect;

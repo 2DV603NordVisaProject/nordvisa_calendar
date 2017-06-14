@@ -12,6 +12,7 @@ class ConfirmMessage extends Component {
     }
   }
 
+
   onNoClick() {
     this.setState({ pop: false });
   }

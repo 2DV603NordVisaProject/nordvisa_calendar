@@ -1,39 +1,40 @@
-import React, { Component } from "react";
-import { isEmail } from "validator";
-import ErrorList from "./ErrorList";
-import PropTypes from "prop-types";
-import Client from "../Client";
+import React, { Component } from 'react';
+import { isEmail } from 'validator';
+import ErrorList from './ErrorList';
+import PropTypes from 'prop-types';
+import Client from '../Client';
+
 
 class UpdateAccount extends Component {
   state = {
     fields: {
       id: null,
-      email: "",
-      org: "",
-      neworg: "",
+      email: '',
+      org: '',
+      neworg: '',
     },
     organizations: [],
     fieldErrors: [],
   }
 
   componentWillMount() {
-    const uri = "/api/user/current";
+    const uri = '/api/user/current';
     Client.get(uri)
-      .then(user => {
-      const fields = {
-        id: user.id,
-        email: user.email,
-        org: user.organization,
-        neworg: ""
-      }
-      this.setState({fields});
-      })
+      .then((user) => {
+        const fields = {
+          id: user.id,
+          email: user.email,
+          org: user.organization,
+          neworg: '',
+        };
+        this.setState({ fields });
+      });
 
-    const orgUri = "/api/visitor/organizations";
+    const orgUri = '/api/visitor/organizations';
     Client.get(orgUri)
-      .then(organizations => {
+      .then((organizations) => {
         this.setState({ organizations });
-      })
+      });
   }
 
   validate(fields) {
@@ -50,12 +51,12 @@ class UpdateAccount extends Component {
     fields[name] = value;
     this.setState({ fields });
 
-    const hiddenForm = document.querySelector("#on-select-change");
+    const hiddenForm = document.querySelector('#on-select-change');
 
-    if (this.state.fields.org === "new") {
-      hiddenForm.classList.remove("hidden");
+    if (this.state.fields.org === 'new') {
+      hiddenForm.classList.remove('hidden');
     } else {
-      hiddenForm.classList.add("hidden");
+      hiddenForm.classList.add('hidden');
     }
   }
 
@@ -67,27 +68,26 @@ class UpdateAccount extends Component {
     // Return on Errors
     if (fieldErrors.length) return;
 
-    const uri = "/api/user/update_user_details";
+    const uri = '/api/user/update_user_details';
     const user = {
       id: this.state.fields.id,
       email: this.state.fields.email,
-      organization: this.state.fields.neworg || this.state.fields.org
+      organization: this.state.fields.neworg || this.state.fields.org,
     };
 
-    Client.post(user, uri)
+    Client.post(user, uri);
 
-    fieldErrors.push("Account updated!");
-    this.setState({ fieldErrors })
+    fieldErrors.push('Account updated!');
+    this.setState({ fieldErrors });
 
-    this.setState({fields: {
-      email: "",
-      org: "",
-      neworg: "",
-    }})
+    this.setState({ fields: {
+      email: '',
+      org: '',
+      neworg: '',
+    } });
   }
 
   render() {
-
     const language = this.context.language.MyAccountView;
 
     return (
@@ -95,18 +95,17 @@ class UpdateAccount extends Component {
         <h3 className="capitalize">{language.updateDetails}</h3>
         <form onSubmit={this.onFormSubmit.bind(this)}>
           <label htmlFor="email" className="capitalize">{language.email}:</label>
-          <input type="text" name="email" value={this.state.fields.email} onChange={this.onInputChange.bind(this)}></input>
+          <input type="text" name="email" value={this.state.fields.email} onChange={this.onInputChange.bind(this)} />
           <label htmlFor="org" className="capitalize">{language.organization}:</label>
           <select
             className="capitalize"
             name="org"
             onChange={this.onInputChange.bind(this)}
             value={this.state.fields.org}
-            defaultValue="">
+            defaultValue=""
+          >
             {
-              this.state.organizations.map(org => {
-                return <option className="capitalize" value={org}>{org}</option>
-              })
+              this.state.organizations.map(org => <option className="capitalize" value={org}>{org}</option>)
             }
             <option value="new" className="capitalize">{language.newOrganization}</option>
             <option value="" className="capitalize">{language.noOrganization}</option>
@@ -117,11 +116,11 @@ class UpdateAccount extends Component {
               name="neworg"
               value={this.state.fields.neworg}
               onChange={this.onInputChange.bind(this)}
-              type="text">
-            </input>
+              type="text"
+            />
           </div>
-          <ErrorList errors={this.state.fieldErrors}/>
-          <input type="submit" value={language.save} className="btn-primary"></input>
+          <ErrorList errors={this.state.fieldErrors} />
+          <input type="submit" value={language.save} className="btn-primary" />
         </form>
       </div>
     );
@@ -130,6 +129,6 @@ class UpdateAccount extends Component {
 
 UpdateAccount.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 export default UpdateAccount;

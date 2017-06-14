@@ -1,10 +1,9 @@
-import React, { Component } from "react";
-import Event from "./Event";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import Event from './Event';
+import PropTypes from 'prop-types';
 
 class EventsList extends Component {
   render() {
-
     const language = this.context.language.MyEventsView;
 
     return (
@@ -15,7 +14,7 @@ class EventsList extends Component {
         <ul>
           {
             this.props.events.map((event, i) => (
-              <Event key={i} event={event} delete={this.props.delete}/>
+              <Event key={i} event={event} delete={this.props.delete} />
             ))
           }
         </ul>
@@ -24,8 +23,9 @@ class EventsList extends Component {
   }
 }
 
+
 EventsList.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 export default EventsList;

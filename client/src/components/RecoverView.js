@@ -1,18 +1,19 @@
-import React, { Component } from "react";
-import { isEmail } from "validator";
-import ErrorList from "./ErrorList";
-import PropTypes from "prop-types";
-import Client from "../Client";
-import Redirect from "react-router/Redirect";
+import React, { Component } from 'react';
+import { isEmail } from 'validator';
+import ErrorList from './ErrorList';
+import PropTypes from 'prop-types';
+import Client from '../Client';
+import Redirect from 'react-router/Redirect';
 
 class RecoverView extends Component {
   state = {
     fields: {
-      email: "",
+      email: '',
     },
     fieldErrors: [],
     _redirect: false,
   }
+
 
   validate(fields) {
     const errors = [];
@@ -29,16 +30,16 @@ class RecoverView extends Component {
     // Return on error.
     if (fieldErrors.length) return;
 
-    const uri = "/api/visitor/request_password_recovery";
+    const uri = '/api/visitor/request_password_recovery';
 
     Client.post(this.state.fields, uri)
-      .then(res => {
-        const fieldErrors = ["Email sent!"];
-        this.setState({fieldErrors, fields: {
-          email: "",
-        }});
+      .then((res) => {
+        const fieldErrors = ['Email sent!'];
+        this.setState({ fieldErrors,
+          fields: {
+            email: '',
+          } });
       });
-
 
 
     this.setState({ fields: {}, _redirect: true });
@@ -50,39 +51,38 @@ class RecoverView extends Component {
     this.setState({ fields });
   }
   render() {
-
     const language = this.context.language.RecoverView;
 
     if (this.state._redirect) {
       return (
         <Redirect to={{
-            pathname: "/login",
-            state:  { referrer: "/recover-password" }
-            }}/>
-      );
-    } else {
-      return (
-        <div className="lightbox login">
-          <h2 className="uppercase">{language.recover}</h2>
-          <form onSubmit={this.onFormSubmit.bind(this)}>
-            <label htmlFor="email" className="capitalize">{language.email}:</label>
-            <input
-              name="email"
-              type="text"
-              value={this.state.fields.email}
-              onChange={this.onInputChange.bind(this)}>
-            </input>
-            <ErrorList errors={this.state.fieldErrors}/>
-            <input type="submit" value={language.request} className="btn-primary uppercase"></input>
-          </form>
-        </div>
+          pathname: '/login',
+          state: { referrer: '/recover-password' },
+        }}
+        />
       );
     }
+    return (
+      <div className="lightbox login">
+        <h2 className="uppercase">{language.recover}</h2>
+        <form onSubmit={this.onFormSubmit.bind(this)}>
+          <label htmlFor="email" className="capitalize">{language.email}:</label>
+          <input
+            name="email"
+            type="text"
+            value={this.state.fields.email}
+            onChange={this.onInputChange.bind(this)}
+          />
+          <ErrorList errors={this.state.fieldErrors} />
+          <input type="submit" value={language.request} className="btn-primary uppercase" />
+        </form>
+      </div>
+    );
   }
 }
 
 RecoverView.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 export default RecoverView;

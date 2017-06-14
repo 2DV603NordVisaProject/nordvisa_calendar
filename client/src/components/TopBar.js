@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import "./TopBar.css";
-import ResponsiveMenu from "./ResponsiveMenu";
-import Link from "react-router/Link";
-import PropTypes from "prop-types";
+import './TopBar.css';
+import ResponsiveMenu from './ResponsiveMenu';
+import Link from 'react-router/Link';
+import PropTypes from 'prop-types';
 
 
 class TopBar extends Component {
   render() {
-
-    const language = this.context.language.TopBar
+    const language = this.context.language.TopBar;
 
     return (
       <div className="topbar">
         <div className="brand">
           <Link to="/user/event">Event Dashboard</Link>
         </div>
-        <ResponsiveMenu/>
+        <ResponsiveMenu />
         <select defaultValue="en" onChange={this.props.onLanguageChange.bind(this)} className="capitalize">
           <option value="sv" className="capitalize">{language.swedish}</option>
           <option value="en" className="capitalize">{language.english}</option>

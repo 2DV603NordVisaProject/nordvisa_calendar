@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import "./LoginView.css";
-import { isEmail } from "validator";
-import ErrorList from "./ErrorList";
-import Client from "../Client";
-import Redirect from "react-router/Redirect";
-import Loader from "./Loader";
-import Link from "react-router/Link";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import './LoginView.css';
+import { isEmail } from 'validator';
+import ErrorList from './ErrorList';
+import Client from '../Client';
+import Redirect from 'react-router/Redirect';
+import Loader from './Loader';
+import Link from 'react-router/Link';
+import PropTypes from 'prop-types';
 
 class LoginView extends Component {
   state = {
     fields: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
 
     },
     fieldErrors: [],
@@ -20,17 +20,17 @@ class LoginView extends Component {
     shouldRedirect: false,
   }
 
+
   componentWillMount() {
     const fieldErrors = this.state.fieldErrors;
 
     if (this.props.location.state) {
-      if (this.props.location.state.referrer === "/register") {
+      if (this.props.location.state.referrer === '/register') {
         fieldErrors.push(this.context.language.LoginView.registration);
       }
-      if (this.props.location.state.referrer === "/recover-password") {
+      if (this.props.location.state.referrer === '/recover-password') {
         fieldErrors.push(this.context.language.LoginView.recover);
       }
-
     }
 
     this.setState(fieldErrors);
@@ -38,10 +38,10 @@ class LoginView extends Component {
 
   performLogin(user) {
     this.setState({ loginInProgress: true });
-    const uri = "/login";
+    const uri = '/login';
     Client.login(user, uri).then((res) => {
-      if (res === "success") {
-        this.setState({ shouldRedirect: true })
+      if (res === 'success') {
+        this.setState({ shouldRedirect: true });
         this.forceUpdate();
       } else {
         const fieldErrors = [this.context.language.Errors.loginFailed];
@@ -51,7 +51,7 @@ class LoginView extends Component {
   }
 
   validate(fields) {
-    const errors = []
+    const errors = [];
     if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
     if (!fields.password) errors.push(this.context.language.Errors.emptyPassword);
     if (fields.password.length < 10) errors.push(this.context.language.Errors.incorrectPassword);
@@ -70,57 +70,55 @@ class LoginView extends Component {
 
     const user = {
       username: this.state.fields.email,
-      password: this.state.fields.password
-    }
+      password: this.state.fields.password,
+    };
 
-    //TODO Might change
+    // TODO Might change
     this.performLogin(user);
-    this.setState({fields: {email: "", password: ""}})
+    this.setState({ fields: { email: '', password: '' } });
   }
 
   onInputChange(event) {
-    let fields = this.state.fields;
+    const fields = this.state.fields;
     fields[event.target.name] = event.target.value;
-    this.setState({fields});
+    this.setState({ fields });
   }
   render() {
-
     const language = this.context.language;
 
     if (this.state.shouldRedirect) {
       return (
-        <Redirect to="/user/event"/>
+        <Redirect to="/user/event" />
       );
     } else if (this.state.loginInProgress) {
       return (
-        <Loader/>
-      );
-    } else {
-      return (
-        <div className="lightbox login">
-          <h2 className="uppercase">{language.LoginView.login}</h2>
-          <form onSubmit={this.onFormSubmit.bind(this)}>
-            <label htmlFor="email" className="capitalize">{language.LoginView.email}:</label>
-            <input
-              name="email"
-              value={this.state.fields.email}
-              onChange={this.onInputChange.bind(this)}
-              type="text">
-            </input>
-            <label htmlFor="password" className="capitalize">{language.LoginView.password}:</label>
-            <input
-              name="password"
-              onChange={this.onInputChange.bind(this)}
-              value={this.state.fields.password}
-              type="password">
-            </input>
-            <ErrorList errors={this.state.fieldErrors}/>
-            <input type="submit" className="btn-primary" value={language.LoginView.login}></input>
-          </form>
-          <Link to="/recover-password" className="capitalize">{language.LoginView.forgot}</Link>
-        </div>
+        <Loader />
       );
     }
+    return (
+      <div className="lightbox login">
+        <h2 className="uppercase">{language.LoginView.login}</h2>
+        <form onSubmit={this.onFormSubmit.bind(this)}>
+          <label htmlFor="email" className="capitalize">{language.LoginView.email}:</label>
+          <input
+            name="email"
+            value={this.state.fields.email}
+            onChange={this.onInputChange.bind(this)}
+            type="text"
+          />
+          <label htmlFor="password" className="capitalize">{language.LoginView.password}:</label>
+          <input
+            name="password"
+            onChange={this.onInputChange.bind(this)}
+            value={this.state.fields.password}
+            type="password"
+          />
+          <ErrorList errors={this.state.fieldErrors} />
+          <input type="submit" className="btn-primary" value={language.LoginView.login} />
+        </form>
+        <Link to="/recover-password" className="capitalize">{language.LoginView.forgot}</Link>
+      </div>
+    );
   }
 }
 

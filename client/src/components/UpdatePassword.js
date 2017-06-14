@@ -1,30 +1,31 @@
-import React, { Component } from "react";
-import ErrorList from "./ErrorList";
-import PropTypes from "prop-types";
-import Client from "../Client";
+import React, { Component } from 'react';
+import ErrorList from './ErrorList';
+import PropTypes from 'prop-types';
+import Client from '../Client';
+
 
 class UpdatePassword extends Component {
   state = {
     fields: {
-      oldpassword: "",
-      newpassword: "",
-      confirmpassword: "",
+      oldpassword: '',
+      newpassword: '',
+      confirmpassword: '',
     },
     fieldErrors: [],
   }
 
   componentWillMount() {
-    const uri = "/api/user/current";
+    const uri = '/api/user/current';
     Client.get(uri)
-      .then(user => {
-      const fields = {
-        id: user.id,
-        oldpassword: "",
-        newpassword: "",
-        confirmpassword: "",
-      }
-      this.setState({fields});
-      })
+      .then((user) => {
+        const fields = {
+          id: user.id,
+          oldpassword: '',
+          newpassword: '',
+          confirmpassword: '',
+        };
+        this.setState({ fields });
+      });
   }
 
   validate(fields) {
@@ -44,7 +45,7 @@ class UpdatePassword extends Component {
     // Return on Errors
     if (fieldErrors.length) return;
 
-    const uri = "/api/user/change_password";
+    const uri = '/api/user/change_password';
     const user = {
       id: this.state.fields.id,
       oldPassword: this.state.fields.oldpassword,
@@ -53,22 +54,22 @@ class UpdatePassword extends Component {
     };
 
     Client.post(user, uri)
-      .then(res => {
-        if (res.hasOwnProperty("message")) {
+      .then((res) => {
+        if (res.hasOwnProperty('message')) {
           fieldErrors.push(res.message);
-          this.setState({fieldErrors});
+          this.setState({ fieldErrors });
           this.forceUpdate();
         } else {
-          fieldErrors.push("Password updated!");
-          this.setState({ fieldErrors })
+          fieldErrors.push('Password updated!');
+          this.setState({ fieldErrors });
 
-          this.setState({fields: {
-            oldpassword: "",
-            newpassword: "",
-            confirmpassword: "",
-          }});
+          this.setState({ fields: {
+            oldpassword: '',
+            newpassword: '',
+            confirmpassword: '',
+          } });
         }
-      })
+      });
   }
 
   onInputChange(event) {
@@ -80,7 +81,6 @@ class UpdatePassword extends Component {
   }
 
   render() {
-
     const language = this.context.language.MyAccountView;
 
     return (
@@ -92,24 +92,24 @@ class UpdatePassword extends Component {
             type="password"
             name="oldpassword"
             value={this.state.fields.oldpassword}
-            onChange={this.onInputChange.bind(this)}>
-          </input>
+            onChange={this.onInputChange.bind(this)}
+          />
           <label htmlFor="newpassword" className="capitalize">{language.newPassword}:</label>
           <input
             type="password"
             name="newpassword"
             value={this.state.fields.newpassword}
-            onChange={this.onInputChange.bind(this)}>
-          </input>
+            onChange={this.onInputChange.bind(this)}
+          />
           <label htmlFor="confirmpassword" className="capitalize">{language.confirmPassword}:</label>
           <input
             type="password"
             name="confirmpassword"
             value={this.state.fields.confirmpassword}
-            onChange={this.onInputChange.bind(this)}>
-          </input>
-          <ErrorList errors={this.state.fieldErrors}/>
-          <input type="submit" value={language.save} className="btn-primary"></input>
+            onChange={this.onInputChange.bind(this)}
+          />
+          <ErrorList errors={this.state.fieldErrors} />
+          <input type="submit" value={language.save} className="btn-primary" />
         </form>
       </div>
     );
@@ -117,7 +117,7 @@ class UpdatePassword extends Component {
 }
 UpdatePassword.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 
 export default UpdatePassword;

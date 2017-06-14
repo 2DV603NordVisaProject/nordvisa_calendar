@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import "./ResponsiveMenu.css";
-import MenuList from "./MenuList";
+import React, { Component } from 'react';
+import './ResponsiveMenu.css';
+import MenuList from './MenuList';
 
 
 class ResponsiveMenu extends Component {
+
 
   state = {
     menu: {
@@ -22,19 +23,19 @@ class ResponsiveMenu extends Component {
       isCollapsed = true;
     }
 
-    this.setState({ menu: { isCollapsed }})
+    this.setState({ menu: { isCollapsed } });
   }
 
   render() {
     return (
       <div>
-        <div className={this.state.menu.isCollapsed ? "menu-btn change" : "menu-btn"} onClick={this.onCollapseMenuClick.bind(this)}>
-	        <div className="bar1"></div>
-	        <div className="bar2"></div>
-	        <div className="bar3"></div>
+        <div className={this.state.menu.isCollapsed ? 'menu-btn change' : 'menu-btn'} onClick={this.onCollapseMenuClick.bind(this)}>
+          <div className="bar1" />
+          <div className="bar2" />
+          <div className="bar3" />
         </div>
-        <div className={this.state.menu.isCollapsed ? "responsive-menu expand" : "responsive-menu"}>
-          <MenuList/>
+        <div className={this.state.menu.isCollapsed ? 'responsive-menu expand' : 'responsive-menu'}>
+          <MenuList />
         </div>
       </div>
     );
