@@ -9,29 +9,32 @@ import './CreateView.css';
 
 
 class CreateView extends Component {
-  state = {
-    fields: {
-      id: '',
-      name: '',
-      date: '',
-      recurring: false,
-      recursuntil: '',
-      recurs: '',
-      location: '',
-      desc: '',
-      img: '',
-      file: null,
-      startTime: '',
-      endTime: '',
-      path: '',
-      imgName: '',
-      createdBy: '',
-    },
-    fieldErrors: [],
-    progress: 'create',
-    event: {},
-    comeFrom: '',
-    _redirect: false,
+  constructor() {
+    super();
+    this.state = {
+      fields: {
+        id: '',
+        name: '',
+        date: '',
+        recurring: false,
+        recursuntil: '',
+        recurs: '',
+        location: '',
+        desc: '',
+        img: '',
+        file: null,
+        startTime: '',
+        endTime: '',
+        path: '',
+        imgName: '',
+        createdBy: '',
+      },
+      fieldErrors: [],
+      progress: 'create',
+      event: {},
+      comeFrom: '',
+      _redirect: false,
+    };
   }
 
   componentWillMount() {
