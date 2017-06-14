@@ -1,6 +1,6 @@
 import React from 'react';
-import Event from './Event';
 import PropTypes from 'prop-types';
+import Event from './Event';
 
 const EventsList = (props) => {
   const language = this.context.language.MyEventsView;
@@ -12,8 +12,8 @@ const EventsList = (props) => {
       </div>
       <ul>
         {
-          this.props.events.map((event, i) => (
-            <Event key={i} event={event} delete={this.props.delete} />
+          props.events.map(event => (
+            <Event key={null} event={event} delete={props.delete} />
           ))
         }
       </ul>
@@ -24,6 +24,11 @@ const EventsList = (props) => {
 
 EventsList.contextTypes = {
   language: PropTypes.object,
+};
+
+EventsList.propTypes = {
+  events: PropTypes.arrayOf(PropTypes.object).isRequired,
+  delete: PropTypes.func.isRequired,
 };
 
 export default EventsList;
