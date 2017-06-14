@@ -21,22 +21,21 @@ class ConfirmMessage extends Component {
     this.onNoClick();
   }
 
-  render()  {
+  render() {
     if (this.state.pop) {
       return (
-        <div className='confirm-message'>
+        <div className="confirm-message">
           <p>{this.props.popup.msg}</p>
-          <div className='answer'>
-            <button className='btn-success' onClick={this.onYesClick.bind(this)}>yes</button>
-            <button className='btn-error' onClick={this.onNoClick.bind(this)}>no</button>
+          <div className="answer">
+            <button className="btn-success" onClick={this.onYesClick.bind(this)}>yes</button>
+            <button className="btn-error" onClick={this.onNoClick.bind(this)}>no</button>
           </div>
-          </div>
+        </div>
       );
-    } else {
-      return (
-        <div></div>
-      )
     }
+    return (
+        null
+    );
   }
 }
 

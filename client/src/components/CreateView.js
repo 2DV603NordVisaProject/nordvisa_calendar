@@ -1,95 +1,94 @@
-import React, { Component } from "react";
-import { DateField } from "react-date-picker";
-import "react-date-picker/index.css";
-import "./CreateView.css";
-import ErrorList from "./ErrorList";
-import Client from "../Client";
-import Redirect from "react-router/Redirect";
-import PropTypes from "prop-types";
-import Moment from "moment";
-import EventsMap from "./EventsMap";
+import React, { Component } from 'react';
+import Redirect from 'react-router/Redirect';
+import PropTypes from 'prop-types';
+import Moment from 'moment';
+import ErrorList from './ErrorList';
+import Client from '../Client';
+import EventsMap from './EventsMap';
+import './CreateView.css';
+
 
 class CreateView extends Component {
   state = {
     fields: {
-      id: "",
-      name: "",
-      date: "",
+      id: '',
+      name: '',
+      date: '',
       recurring: false,
-      recursuntil: "",
-      recurs: "",
-      location: "",
-      desc: "",
-      img:  "",
+      recursuntil: '',
+      recurs: '',
+      location: '',
+      desc: '',
+      img: '',
       file: null,
-      startTime: "",
-      endTime: "",
-      path: "",
-      imgName: "",
-      createdBy: ""
+      startTime: '',
+      endTime: '',
+      path: '',
+      imgName: '',
+      createdBy: '',
     },
     fieldErrors: [],
-    progress: "create",
+    progress: 'create',
     event: {},
-    comeFrom: "",
+    comeFrom: '',
     _redirect: false,
   }
 
   componentWillMount() {
-    const uri = "/api/user/current";
+    const uri = '/api/user/current';
 
     let fields = {};
 
     if (this.props.progress) {
-      const progress =  this.props.progress;
+      const progress = this.props.progress;
 
-      let eventUri = `/api/event/get?id=${this.props.id}&token=dashboard`;
+      const eventUri = `/api/event/get?id=${this.props.id}&token=dashboard`;
       Client.get(eventUri)
-        .then(event => {
+        .then((event) => {
           console.log(event);
           event = event[0];
-          this.setState({event});
+          this.setState({ event });
 
-          let date = Moment(event.startDateTime);
+          const date = Moment(event.startDateTime);
 
 
-          let endTime = Moment(date.valueOf() + event.duration);
+          const endTime = Moment(date.valueOf() + event.duration);
 
 
           const fields = {
             id: event.id,
             name: event.name,
-            date: date.format("YYYY-MM-DD"),
+            date: date.format('YYYY-MM-DD'),
             recurring: event.recurring,
             recursuntil: event.recursUntil,
             recurs: event.recursEvery,
             location: event.location.address,
             desc: event.description,
-            img:  event.images[0],
+            img: event.images[0],
             file: null,
-            startTime: date.format("HH:mm"),
-            endTime: endTime.format("HH:mm"),
+            startTime: date.format('HH:mm'),
+            endTime: endTime.format('HH:mm'),
             path: event.path,
-            imgName: "",
-            createdBy: event.createdBy
+            imgName: '',
+            createdBy: event.createdBy,
           };
 
           console.log(fields);
 
-          this.setState({ progress, fields, comeFrom: "event"});
+          this.setState({ progress, fields, comeFrom: 'event' });
 
           console.log(this.state);
-        })
+        });
     } else {
       fields = this.state.fields;
     }
 
     Client.get(uri)
-      .then(user => {
-        let fields = this.state.fields;
+      .then((user) => {
+        const fields = this.state.fields;
         fields.createdBy = user.id;
-        this.setState({fields});
-    });
+        this.setState({ fields });
+      });
   }
 
   validate(fields) {
@@ -108,17 +107,17 @@ class CreateView extends Component {
     const fields = this.state.fields;
     fields[event.target.name] = event.target.value;
 
-    if (event.target.name === "recurring") {
+    if (event.target.name === 'recurring') {
       fields[event.target.name] = event.target.checked;
       if (event.target.checked === true) {
-        document.querySelector(".recurring").classList.add("hidden");
-        document.querySelector(".is-recurring").classList.remove("hidden");
+        document.querySelector('.recurring').classList.add('hidden');
+        document.querySelector('.is-recurring').classList.remove('hidden');
       }
     }
 
-    if (event.target.name === "img") {
+    if (event.target.name === 'img') {
       fields[event.target.name] = URL.createObjectURL(event.target.files[0]);
-      const fileName = event.target.value.split("\\");
+      const fileName = event.target.value.split('\\');
       fields.imgName = fileName[fileName.length - 1];
       fields.file = event.target.files[0];
       console.log(fields);
@@ -129,53 +128,53 @@ class CreateView extends Component {
   onFormSubmit(event) {
     event.preventDefault();
     const fieldErrors = this.validate(this.state.fields);
-    this.setState({ fieldErrors});
+    this.setState({ fieldErrors });
 
     // Return on error.
     if (fieldErrors.length) return;
 
-    let file = this.state.fields.file;
+    const file = this.state.fields.file;
     if (file) {
-      Client.uploadImage(file).then(res => {
-        if(res.hasOwnProperty("message")) {
-          let err = "";
-          if(res.message == "415") {
-            err = "Unsupported file type!";
-          } else if(res.message == "413") {
-            err = "File size too large!";
+      Client.uploadImage(file).then((res) => {
+        if (res.hasOwnProperty('message')) {
+          let err = '';
+          if (res.message == '415') {
+            err = 'Unsupported file type!';
+          } else if (res.message == '413') {
+            err = 'File size too large!';
           } else {
-            err = "Internal Server Error";
+            err = 'Internal Server Error';
           }
           fieldErrors.push(err);
-          this.setState({fieldErrors});
+          this.setState({ fieldErrors });
           return;
         }
 
         const fields = this.state.fields;
         fields.path = res.path;
         this.setState({ fields });
-        this.setState({ progress: "preview" });
+        this.setState({ progress: 'preview' });
       });
     } else {
-      this.setState({ progress: "preview" });
+      this.setState({ progress: 'preview' });
     }
   }
 
   onEditClick(event) {
     event.preventDefault();
-    this.setState({progress: "edit"});
+    this.setState({ progress: 'edit' });
   }
 
   onSaveClick(event) {
     event.preventDefault();
 
     const fields = this.state.fields;
-    const uri = "/api/event/create";
-    const editUri = "/api/event/update";
-    console.log(fields.date + " " + fields.startTime);
-    const date = Moment(fields.date + " " + fields.startTime).valueOf();
+    const uri = '/api/event/create';
+    const editUri = '/api/event/update';
+    console.log(`${fields.date} ${fields.startTime}`);
+    const date = Moment(`${fields.date} ${fields.startTime}`).valueOf();
     console.log(date);
-    const duration = Moment(fields.date + " " + fields.endTime).valueOf() - Moment(fields.date + " " + fields.startTime).valueOf();
+    const duration = Moment(`${fields.date} ${fields.endTime}`).valueOf() - Moment(`${fields.date} ${fields.startTime}`).valueOf();
     const eventObj = {
       id: fields.id,
       name: fields.name,
@@ -184,19 +183,19 @@ class CreateView extends Component {
       location: fields.location,
       description: fields.desc,
       images: fields.imgName,
-      duration: duration,
+      duration,
       path: fields.path,
-      createdBy: fields.createdBy
+      createdBy: fields.createdBy,
     };
 
-    if(fields.recurring) {
+    if (fields.recurring) {
       eventObj.recursUntil = Moment(fields.recursuntil).valueOf();
       eventObj.recursEvery = fields.recurs;
     }
 
     console.log(eventObj);
 
-    if (this.state.comeFrom === "event") {
+    if (this.state.comeFrom === 'event') {
       Client.post(eventObj, editUri).then(res => console.log(res));
     } else {
       Client.post(eventObj, uri).then(res => console.log(res));
@@ -204,166 +203,166 @@ class CreateView extends Component {
 
     const fieldErrors = [];
     fieldErrors.push(this.context.language.Errors.eventSaved);
-    this.setState({fieldErrors});
-    this.setState({ progress: "saved", _redirect: true});
+    this.setState({ fieldErrors });
+    this.setState({ progress: 'saved', _redirect: true });
     this.setState({ fields: {
-      name: "",
-      date: "",
+      name: '',
+      date: '',
       recurring: false,
-      recursuntil: "",
-      recurs: "",
-      location: "",
-      desc: "",
-      img:  "",
-    }});
+      recursuntil: '',
+      recurs: '',
+      location: '',
+      desc: '',
+      img: '',
+    } });
   }
 
   render() {
-
-    const resourceURI = "/api/upload"
+    const resourceURI = '/api/upload';
     const language = this.context.language.CreateView;
 
     if (this.state._redirect) {
       return (
-        <Redirect to="/user/event"/>
+        <Redirect to="/user/event" />
       );
     }
 
-    if (this.state.progress === "preview" || this.state.progress === "view") {
+    if (this.state.progress === 'preview' || this.state.progress === 'view') {
       return (
         <div className="view preview">
           <h2 className="capitalize">{language.createEvent}</h2>
           <div className="box">
             {
-              this.state.progress === "preview" ? <h3 className="capitalize">{language.previewEvent}</h3> : <h3 className="capitalize">{language.viewEvent}</h3>
+              this.state.progress === 'preview' ? <h3 className="capitalize">{language.previewEvent}</h3> : <h3 className="capitalize">{language.viewEvent}</h3>
             }
             <h4 className="preview-text">{this.state.fields.name}</h4>
             <p className="preview-text">{this.state.fields.location} - {this.state.fields.date} - {this.state.fields.startTime} - {this.state.fields.endTime}</p>
             {
-              this.state.fields.path === "" ? "" : <div className="img-container" style={ this.state.progress === "view" ? {backgroundImage: `url("${resourceURI}/${this.state.fields.path}/${this.state.fields.img}")`} : {backgroundImage: `url(${this.state.fields.img})`}}></div>
+              this.state.fields.path === '' ? '' : <div className="img-container" style={this.state.progress === 'view' ? { backgroundImage: `url("${resourceURI}/${this.state.fields.path}/${this.state.fields.img}")` } : { backgroundImage: `url(${this.state.fields.img})` }} />
             }
             <h4 className="preview-text capitalize">{language.description}:</h4>
             <div className="desc">
               <p>{this.state.fields.desc}</p>
             </div>
             {
-              this.state.event.hasOwnProperty("location") ? (
-              <div className="maps">
-                <EventsMap events={[this.state.event]} center={{lat: this.state.event.location.coordinates.coordinates[1], lng: this.state.event.location.coordinates.coordinates[0]}}/>
-              </div>) : ""
+              this.state.event.hasOwnProperty('location') ? (
+                <div className="maps">
+                  <EventsMap events={[this.state.event]} center={{ lat: this.state.event.location.coordinates.coordinates[1], lng: this.state.event.location.coordinates.coordinates[0] }} />
+                </div>) : ''
             }
 
             <div className="action-container">
               {
-                this.state.progress === "preview" ? <button className="btn-primary" onClick={this.onSaveClick.bind(this)}>{language.save}</button> : ""
+                this.state.progress === 'preview' ? <button className="btn-primary" onClick={this.onSaveClick.bind(this)}>{language.save}</button> : ''
               }
               <button className="btn-primary" onClick={this.onEditClick.bind(this)}>{language.edit}</button>
             </div>
           </div>
         </div>
-      )
-    } else {
-      return (
-        <div className="view create-event">
-          <h2 className="capitalize">{language.createEvent}</h2>
-          <div className="box">
-            <h3 className="capitalize">{language.newEvent}</h3>
-            <form onSubmit={this.onFormSubmit.bind(this)}>
-              <label htmlFor="name" className="capitalize">{language.name}:</label>
-              <input
-                name="name"
-                type="text"
-                value={this.state.fields.name}
-                onChange={this.onInputChange.bind(this)}>
-              </input>
-              <br/>
-              <label htmlFor="date" className="capitalize">{language.date}:</label>
-              <input
-                type="date"
-                name="date"
-                value={this.state.fields.date}
-                onChange={this.onInputChange.bind(this)}>
-              </input>
-              <label htmlFor="time" className="capitalize">{language.time}:</label>
-              <input
-                name="startTime"
-                type="time"
-                value={this.state.fields.startTime}
-                onChange={this.onInputChange.bind(this)}
-                className="time-form">
-              </input>
-              <input
-                name="endTime"
-                type="time"
-                value={this.state.fields.endTime}
-                onChange={this.onInputChange.bind(this)}
-                placeholder="16.30..."
-                className="time-form end-time">
-              </input>
-              <div className="recurring">
-                <label htmlFor="recurring" className="capitalize">{language.recurring}:</label>
-                <input
-                  name="recurring"
-                  type="checkbox"
-                  className="approve"
-                  checked={this.state.fields.recurring}
-                  onChange={this.onInputChange.bind(this)}></input>
-              </div>
-              <div className="is-recurring hidden">
-                <label htmlFor="recursuntil" className="capitalize">{language.recursUntil}:</label>
-                <input
-                  type="date"
-                  name="recursuntil"
-                  value={this.state.fields.recursuntil}
-                  onChange={this.onInputChange.bind(this)}>
-                </input>
-                <label htmlFor="recurs" className="capitalize">{language.recurs}:</label>
-                <select
-                  className="capitalize"
-                  name="recurs"
-                  value={this.state.fields.recurs}
-                  onChange={this.onInputChange.bind(this)}>
-                  <option selected className="capitalize" value="0">{language.weekly}</option>
-                  <option className="capitalize" value="1">{language.monthly}</option>
-                  <option className="capitalize" value="2">{language.yearly}</option>
-                </select>
-              </div>
-              <label htmlFor="location" className="capitalize">{language.location}:</label>
-              <input
-                name="location"
-                type="text"
-                value={this.state.fields.location}
-                onChange={this.onInputChange.bind(this)}>
-              </input>
-              <br/>
-              <label htmlFor="desc" className="capitalize">{language.description}:</label>
-              <textarea
-                name="desc"
-                value={this.state.fields.desc}
-                onChange={this.onInputChange.bind(this)}>
-              </textarea>
-              <label htmlFor="img" className="capitalize">{language.image}:</label>
-              <input
-                type="file"
-                name="img"
-                accept="image/jpeg,image/png"
-                onChange={this.onInputChange.bind(this)}>
-              </input>
-              <ErrorList className={this.state.progress === "saved" ? "success" : ""} errors={this.state.fieldErrors}/>
-              <input type="submit" value={language.preview} className="btn-primary"></input>
-                {
-                  this.state.comeFrom === "event" ? this.state.progress === "saved" ? <Redirect to="/user/event"/> : "" : ""
-                }
-            </form>
-          </div>
-        </div>
       );
     }
+    return (
+      <div className="view create-event">
+        <h2 className="capitalize">{language.createEvent}</h2>
+        <div className="box">
+          <h3 className="capitalize">{language.newEvent}</h3>
+          <form onSubmit={this.onFormSubmit.bind(this)}>
+            <label htmlFor="name" className="capitalize">{language.name}:</label>
+            <input
+              name="name"
+              type="text"
+              value={this.state.fields.name}
+              onChange={this.onInputChange.bind(this)}
+            />
+            <br />
+            <label htmlFor="date" className="capitalize">{language.date}:</label>
+            <input
+              type="date"
+              name="date"
+              value={this.state.fields.date}
+              onChange={this.onInputChange.bind(this)}
+            />
+            <label htmlFor="time" className="capitalize">{language.time}:</label>
+            <input
+              name="startTime"
+              type="time"
+              value={this.state.fields.startTime}
+              onChange={this.onInputChange.bind(this)}
+              className="time-form"
+            />
+            <input
+              name="endTime"
+              type="time"
+              value={this.state.fields.endTime}
+              onChange={this.onInputChange.bind(this)}
+              placeholder="16.30..."
+              className="time-form end-time"
+            />
+            <div className="recurring">
+              <label htmlFor="recurring" className="capitalize">{language.recurring}:</label>
+              <input
+                name="recurring"
+                type="checkbox"
+                className="approve"
+                checked={this.state.fields.recurring}
+                onChange={this.onInputChange.bind(this)}
+              />
+            </div>
+            <div className="is-recurring hidden">
+              <label htmlFor="recursuntil" className="capitalize">{language.recursUntil}:</label>
+              <input
+                type="date"
+                name="recursuntil"
+                value={this.state.fields.recursuntil}
+                onChange={this.onInputChange.bind(this)}
+              />
+              <label htmlFor="recurs" className="capitalize">{language.recurs}:</label>
+              <select
+                className="capitalize"
+                name="recurs"
+                value={this.state.fields.recurs}
+                onChange={this.onInputChange.bind(this)}
+              >
+                <option selected className="capitalize" value="0">{language.weekly}</option>
+                <option className="capitalize" value="1">{language.monthly}</option>
+                <option className="capitalize" value="2">{language.yearly}</option>
+              </select>
+            </div>
+            <label htmlFor="location" className="capitalize">{language.location}:</label>
+            <input
+              name="location"
+              type="text"
+              value={this.state.fields.location}
+              onChange={this.onInputChange.bind(this)}
+            />
+            <br />
+            <label htmlFor="desc" className="capitalize">{language.description}:</label>
+            <textarea
+              name="desc"
+              value={this.state.fields.desc}
+              onChange={this.onInputChange.bind(this)}
+            />
+            <label htmlFor="img" className="capitalize">{language.image}:</label>
+            <input
+              type="file"
+              name="img"
+              accept="image/jpeg,image/png"
+              onChange={this.onInputChange.bind(this)}
+            />
+            <ErrorList className={this.state.progress === 'saved' ? 'success' : ''} errors={this.state.fieldErrors} />
+            <input type="submit" value={language.preview} className="btn-primary" />
+            {
+                  this.state.comeFrom === 'event' ? this.state.progress === 'saved' ? <Redirect to="/user/event" /> : '' : ''
+                }
+          </form>
+        </div>
+      </div>
+    );
   }
 }
 
 CreateView.contextTypes = {
   language: PropTypes.object,
-}
+};
 
 export default CreateView;
