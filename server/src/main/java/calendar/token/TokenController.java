@@ -9,11 +9,9 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/api/token")
-// TODO: change widget package to token package in docs
 public class TokenController {
     private TokenDAO dao = new TokenDAOMongo();
 
-    // TODO: Diagrams
     @RequestMapping(value = "", method = RequestMethod.GET)
     public TokenDTO getToken() {
         String strToken = generateRandomString();

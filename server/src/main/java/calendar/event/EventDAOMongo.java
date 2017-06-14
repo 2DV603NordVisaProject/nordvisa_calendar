@@ -3,10 +3,11 @@ package calendar.event;
 import calendar.databaseConnections.MongoDBClient;
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
-import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +19,10 @@ import java.util.List;
  *
  * @author Leif Karlsson (leifkarlsson)
  */
-@Component
+@Repository
 public class EventDAOMongo implements EventDAO {
-
-    private Jongo client;
-
-    public EventDAOMongo() {
-        client = MongoDBClient.getClient();
-    }
+    @Autowired
+    private MongoDBClient client;
 
     /**
      * Takes the specified id and fetches the corresponding event from the database.
@@ -34,7 +31,7 @@ public class EventDAOMongo implements EventDAO {
      * @return      A list containing the single event.
      */
     public List<Event> getEvent(ObjectId id) {
-        MongoCollection collection = client.getCollection("events");
+        MongoCollection collection = client.getClient().getCollection("events");
         List<Event> eventList = new ArrayList<>();
         eventList.add(collection.findOne(id).as(Event.class));
         return eventList;
@@ -46,7 +43,7 @@ public class EventDAOMongo implements EventDAO {
      * @return      A list of events.
      */
     public List<Event> getEvents() {
-        MongoCollection collection = client.getCollection("events");
+        MongoCollection collection = client.getClient().getCollection("events");
         return cursorToArray(collection.find().as(Event.class));
     }
 
@@ -57,7 +54,7 @@ public class EventDAOMongo implements EventDAO {
      * @return          A list of events.
      */
     public List<Event> getEventsFromCounty(String county) {
-        MongoCollection collection = client.getCollection("events");
+        MongoCollection collection = client.getClient().getCollection("events");
         return cursorToArray(collection.find("{ location.county: # }", county).as(Event.class));
     }
 
@@ -68,7 +65,7 @@ public class EventDAOMongo implements EventDAO {
      * @return          A list of events.
      */
     public List<Event> getEventsFromCountry(String country) {
-        MongoCollection collection = client.getCollection("events");
+        MongoCollection collection = client.getClient().getCollection("events");
         return cursorToArray(collection.find("{ location.country: # }", country).as(Event.class));
     }
 
@@ -82,7 +79,7 @@ public class EventDAOMongo implements EventDAO {
      * @return              A list of events.
      */
     public List<Event> getEventsWithinRadius(double longitude, double latitude, double radius) {
-        MongoCollection collection = client.getCollection("events");
+        MongoCollection collection = client.getClient().getCollection("events");
         return cursorToArray(collection.find("{ location.coordinates: { " +
                 "$near: { " +
                 "$geometry: { " +
@@ -100,7 +97,7 @@ public class EventDAOMongo implements EventDAO {
      * @return              A list of events.
      */
     public List<Event> getEventsWithinDates(long fromDate, long toDate) {
-        MongoCollection collection = client.getCollection("events");
+        MongoCollection collection = client.getClient().getCollection("events");
 
         List<Event> eventList = new ArrayList<>();
 
@@ -131,7 +128,7 @@ public class EventDAOMongo implements EventDAO {
      * @return      A list of events.
      */
     public List<Event> getEventsByUserId(String id) {
-        MongoCollection collection = client.getCollection("events");
+        MongoCollection collection = client.getClient().getCollection("events");
         return cursorToArray(collection.find("{createdBy: \"" + id + "\"}").as(Event.class));
     }
 
@@ -142,7 +139,7 @@ public class EventDAOMongo implements EventDAO {
      * @return          The created event.
      */
     public Event createEvent(Event event) {
-        MongoCollection collection = client.getCollection("events");
+        MongoCollection collection = client.getClient().getCollection("events");
         collection.ensureIndex("{ location.coordinates: '2dsphere' }");
         collection.insert(event);
         return event;
@@ -154,7 +151,7 @@ public class EventDAOMongo implements EventDAO {
      * @param id    Id of event to be deleted.
      */
     public void deleteEvent(String id) {
-        MongoCollection collection = client.getCollection("events");
+        MongoCollection collection = client.getClient().getCollection("events");
         collection.remove(new ObjectId(id));
     }
 
@@ -165,7 +162,7 @@ public class EventDAOMongo implements EventDAO {
      * @return          The updated event.
      */
     public Event updateEvent(Event event) {
-        MongoCollection collection = client.getCollection("events");
+        MongoCollection collection = client.getClient().getCollection("events");
         Event eventToUpdate = collection.findOne(new ObjectId(event.getId())).as(Event.class);
         event.setCreatedBy(eventToUpdate.getCreatedBy());
         event.setCreatedAt(eventToUpdate.getCreatedAt());

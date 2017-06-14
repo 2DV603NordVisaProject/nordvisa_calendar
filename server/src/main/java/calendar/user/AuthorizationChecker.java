@@ -1,5 +1,8 @@
 package calendar.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +14,13 @@ import java.util.List;
  *
  * @author Axel Nilsson (axnion)
  */
+@Component
 public class AuthorizationChecker {
+    @Autowired
+    private UserDAO dao;
 
     /**
-     * A facade method which helps other pacakges check if the current logged in user can manage
+     * A facade method which helps other packages check if the current logged in user can manage
      * another users account.
      *
      * @param id    The id of the target user
@@ -23,20 +29,17 @@ public class AuthorizationChecker {
     public boolean currentUserCanManage(String id) {
         CurrentUser currentUser = new CurrentUser();
         String email = currentUser.getEmailAddress();
-        UserDAO dao = new UserDAOMongo();
         return dao.getUserByEmail(email).canManage(dao.getUserById(id));
     }
 
-    // TODO: add to docs and diagrams
-    // Class diagram done
-    // Seq done
     public List<String> getAllUserIds() {
-        UserDAO dao = new UserDAOMongo();
         ArrayList<User> users;
 
         try {
             users = dao.getAllUsers();
         } catch (Exception expt) {
+            System.err.println("Could not retrieve users.");
+
             return null;
         }
 

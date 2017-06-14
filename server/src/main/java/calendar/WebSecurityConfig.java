@@ -2,9 +2,9 @@ package calendar;
 
 import calendar.user.User;
 import calendar.user.UserDAO;
-import calendar.user.UserDAOMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,7 +19,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,20 +31,29 @@ import java.io.IOException;
  * @author Axel Nilsson (axnion)
  */
 @Configuration
+@ComponentScan
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private UserDAO dao;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                    .antMatchers("/api/user/**").hasAuthority("USER")
-//                    .antMatchers("/api/admin/**").hasAuthority("ADMIN")
-//                    .antMatchers("/api/super_admin/**").hasAuthority("SUPER_ADMIN")
-//                    .antMatchers("/api/event/create",
-//                            "/api/event/detete",
-//                            "/api/event/update").authenticated()
-//                    .antMatchers("/api/upload/**").authenticated()
-                    .anyRequest().permitAll()
+                    .antMatchers(
+                            "/login",
+                            "/api/visitor/**",
+                            "/api/event/get",
+                            "/api/event/get_all",
+                            "/api/upload/{path:.+}/{name:.+}",
+                            "/api/token",
+                            "/static/**"
+                    ).permitAll()
+                    .antMatchers("/api/user/**").hasAuthority("USER")
+                    .antMatchers("/api/admin/**").hasAuthority("ADMIN")
+                    .antMatchers("/api/super_admin").hasAuthority("SUPER_ADMIN")
+                    .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/")
@@ -75,11 +83,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .csrf()
                     .disable();
-
-//        http
-//                .authorizeRequests()
-//                .anyRequest().permitAll().and()
-//                .csrf().disable();
     }
 
     @Autowired
@@ -91,7 +94,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
             public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-                UserDAO dao = new UserDAOMongo();
                 User user = dao.getUserByEmail(email);
 
                 if(user != null) {

@@ -19,7 +19,7 @@ public class Organization {
     Organization() {
         name = "";
         approved = false;
-        changePending = "";
+        changePending = "_";
     }
 
     /**

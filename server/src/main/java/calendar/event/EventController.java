@@ -39,11 +39,14 @@ import java.util.List;
 @RequestMapping("/api/event")
 public class EventController {
 
-    // TODO: Update class diagram
     @Autowired
     private EventDAO dao;
-    private TokenValidator tokenValidator = new TokenValidator();
-    private AuthorizationChecker auth = new AuthorizationChecker();
+    @Autowired
+    private TokenValidator tokenValidator;
+    @Autowired
+    private AuthorizationChecker auth;
+    //private TokenValidator tokenValidator = new TokenValidator();
+    //private AuthorizationChecker auth = new AuthorizationChecker();
 
     /**
      * This method accepts multiple parameters in various configurations to fetch events

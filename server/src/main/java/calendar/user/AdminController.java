@@ -110,7 +110,7 @@ public class AdminController {
 
             user.getOrganization().setApproved(true);
             user.getOrganization().setName(user.getOrganization().getChangePending());
-            user.getOrganization().setChangePending("");
+            user.getOrganization().setChangePending("_");
             dao.update(user);
 
             if(isRegistered) {
@@ -121,7 +121,7 @@ public class AdminController {
         }
         else {
             if(user.getOrganization().isApproved()) {
-                user.getOrganization().setChangePending("");
+                user.getOrganization().setChangePending("_");
                 dao.update(user);
                 email.sendDenialEmail(dao.getUserById(dto.getId()).getEmail(),
                         "organization change");
