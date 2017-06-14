@@ -33,7 +33,7 @@ class CreateView extends Component {
       progress: 'create',
       event: {},
       comeFrom: '',
-      _redirect: false,
+      redirect: false,
     };
 
     this.onSaveClick = this.onSaveClick.bind(this);
@@ -132,7 +132,7 @@ class CreateView extends Component {
     const file = this.state.fields.file;
     if (file) {
       Client.uploadImage(file).then((res) => {
-        if (res.hasOwnProperty('message')) {
+        if (Object.prototype.hasOwnProperty.call(res, 'message')) {
           let err = '';
           if (res.message == '415') {
             err = 'Unsupported file type!';
@@ -200,7 +200,7 @@ class CreateView extends Component {
     const fieldErrors = [];
     fieldErrors.push(this.context.language.Errors.eventSaved);
     this.setState({ fieldErrors });
-    this.setState({ progress: 'saved', _redirect: true });
+    this.setState({ progress: 'saved', redirect: true });
     this.setState({ fields: {
       name: '',
       date: '',
@@ -229,7 +229,7 @@ class CreateView extends Component {
     const resourceURI = '/api/upload';
     const language = this.context.language.CreateView;
 
-    if (this.state._redirect) {
+    if (this.state.redirect) {
       return (
         <Redirect to="/user/event" />
       );
@@ -253,7 +253,7 @@ class CreateView extends Component {
               <p>{this.state.fields.desc}</p>
             </div>
             {
-              this.state.event.hasOwnProperty('location') ? (
+              Object.prototype.hasOwnProperty.call(this.state.event, 'location') ? (
                 <div className="maps">
                   <EventsMap
                     events={[this.state.event]}
@@ -366,8 +366,12 @@ class CreateView extends Component {
             <ErrorList className={this.state.progress === 'saved' ? 'success' : ''} errors={this.state.fieldErrors} />
             <input type="submit" value={language.preview} className="btn-primary" />
             {
-                  this.state.comeFrom === 'event' ? this.state.progress === 'saved' ? <Redirect to="/user/event" /> : '' : ''
-                }
+              this.state.comeFrom === 'event'
+              ? this.state.progress === 'saved'
+                ? <Redirect to="/user/event" />
+                : null
+              : null
+            }
           </form>
         </div>
       </div>
@@ -380,8 +384,8 @@ CreateView.contextTypes = {
 };
 
 CreateView.propTypes = {
-  progress: PropTypes.string,
-  id: PropTypes.number,
+  progress: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default CreateView;
