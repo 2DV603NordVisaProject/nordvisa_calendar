@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Event from './Event';
 
-const EventsList = (props) => {
-  const language = this.context.language.MyEventsView;
+const EventsList = (props, context) => {
+  const language = context.language.MyEventsView;
 
   return (
     <div className="event-list">
