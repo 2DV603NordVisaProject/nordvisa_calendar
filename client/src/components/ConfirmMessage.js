@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './ConfirmMessage.css';
 
 class ConfirmMessage extends Component {
@@ -39,5 +40,10 @@ class ConfirmMessage extends Component {
     );
   }
 }
+
+ConfirmMessage.propTypes = {
+  popup: PropTypes.Object.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 export default ConfirmMessage;
