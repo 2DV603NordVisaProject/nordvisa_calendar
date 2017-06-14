@@ -379,7 +379,7 @@ CreateView.contextTypes = {
   language: PropTypes.object,
 };
 
-CreateView.PropTypes = {
+CreateView.propTypes = {
   progress: PropTypes.string,
   id: PropTypes.number,
 };
