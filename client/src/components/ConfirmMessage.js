@@ -48,7 +48,10 @@ class ConfirmMessage extends Component {
 }
 
 ConfirmMessage.propTypes = {
-  popup: PropTypes.Object.isRequired,
+  popup: PropTypes.shape({
+    pop: PropTypes.boolean,
+    msg: PropTypes.string,
+  }).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

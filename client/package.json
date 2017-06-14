@@ -15,6 +15,7 @@
     "validator": "^7.0.0"
   },
   "devDependencies": {
+    "amdefine": "^1.0.1",
     "babel-eslint": "^7.2.3",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
