@@ -44,9 +44,8 @@ class CreateView extends Component {
 
       const eventUri = `/api/event/get?id=${this.props.id}&token=dashboard`;
       Client.get(eventUri)
-        .then((event) => {
-          console.log(event);
-          event = event[0];
+        .then((events) => {
+          event = events[0];
           this.setState({ event });
 
           const date = Moment(event.startDateTime);
@@ -55,7 +54,7 @@ class CreateView extends Component {
           const endTime = Moment(date.valueOf() + event.duration);
 
 
-          const fields = {
+          fields = {
             id: event.id,
             name: event.name,
             date: date.format('YYYY-MM-DD'),
@@ -91,17 +90,6 @@ class CreateView extends Component {
       });
   }
 
-  validate(fields) {
-    const errors = [];
-    if (!fields.name) errors.push(this.context.language.Errors.nameNeeded);
-    if (!fields.date) errors.push(this.context.language.Errors.dateNeeded);
-    if (!fields.location) errors.push(this.context.language.Errors.locationNeeded);
-    if (!fields.desc) errors.push(this.context.language.Errors.descriptionNeeded);
-    if (!fields.startTime) errors.push(this.context.language.Errors.startNeeded);
-    if (!fields.endTime) errors.push(this.context.language.Errors.endNeeded);
-
-    return errors;
-  }
 
   onInputChange(event) {
     const fields = this.state.fields;
@@ -217,6 +205,18 @@ class CreateView extends Component {
     } });
   }
 
+  validate(fields) {
+    const errors = [];
+    if (!fields.name) errors.push(this.context.language.Errors.nameNeeded);
+    if (!fields.date) errors.push(this.context.language.Errors.dateNeeded);
+    if (!fields.location) errors.push(this.context.language.Errors.locationNeeded);
+    if (!fields.desc) errors.push(this.context.language.Errors.descriptionNeeded);
+    if (!fields.startTime) errors.push(this.context.language.Errors.startNeeded);
+    if (!fields.endTime) errors.push(this.context.language.Errors.endNeeded);
+
+    return errors;
+  }
+
   render() {
     const resourceURI = '/api/upload';
     const language = this.context.language.CreateView;
@@ -247,7 +247,13 @@ class CreateView extends Component {
             {
               this.state.event.hasOwnProperty('location') ? (
                 <div className="maps">
-                  <EventsMap events={[this.state.event]} center={{ lat: this.state.event.location.coordinates.coordinates[1], lng: this.state.event.location.coordinates.coordinates[0] }} />
+                  <EventsMap
+                    events={[this.state.event]}
+                    center={{
+                      lat: this.state.event.location.coordinates.coordinates[1],
+                      lng: this.state.event.location.coordinates.coordinates[0],
+                    }}
+                  />
                 </div>) : ''
             }
 
@@ -363,6 +369,11 @@ class CreateView extends Component {
 
 CreateView.contextTypes = {
   language: PropTypes.object,
+};
+
+CreateView.PropTypes = {
+  progress: PropTypes.string,
+  id: PropTypes.number,
 };
 
 export default CreateView;
