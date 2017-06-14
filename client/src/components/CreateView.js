@@ -35,6 +35,11 @@ class CreateView extends Component {
       comeFrom: '',
       _redirect: false,
     };
+
+    this.onSaveClick = this.onSaveClick.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onEditClick = this.onEditClick.bind(this);
   }
 
   componentWillMount() {
@@ -262,9 +267,9 @@ class CreateView extends Component {
 
             <div className="action-container">
               {
-                this.state.progress === 'preview' ? <button className="btn-primary" onClick={this.onSaveClick.bind(this)}>{language.save}</button> : ''
+                this.state.progress === 'preview' ? <button className="btn-primary" onClick={this.onSaveClick}>{language.save}</button> : ''
               }
-              <button className="btn-primary" onClick={this.onEditClick.bind(this)}>{language.edit}</button>
+              <button className="btn-primary" onClick={this.onEditClick}>{language.edit}</button>
             </div>
           </div>
         </div>
@@ -275,13 +280,13 @@ class CreateView extends Component {
         <h2 className="capitalize">{language.createEvent}</h2>
         <div className="box">
           <h3 className="capitalize">{language.newEvent}</h3>
-          <form onSubmit={this.onFormSubmit.bind(this)}>
+          <form onSubmit={this.onFormSubmit}>
             <label htmlFor="name" className="capitalize">{language.name}:</label>
             <input
               name="name"
               type="text"
               value={this.state.fields.name}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
             />
             <br />
             <label htmlFor="date" className="capitalize">{language.date}:</label>
@@ -289,21 +294,21 @@ class CreateView extends Component {
               type="date"
               name="date"
               value={this.state.fields.date}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
             />
             <label htmlFor="time" className="capitalize">{language.time}:</label>
             <input
               name="startTime"
               type="time"
               value={this.state.fields.startTime}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
               className="time-form"
             />
             <input
               name="endTime"
               type="time"
               value={this.state.fields.endTime}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
               placeholder="16.30..."
               className="time-form end-time"
             />
@@ -314,7 +319,7 @@ class CreateView extends Component {
                 type="checkbox"
                 className="approve"
                 checked={this.state.fields.recurring}
-                onChange={this.onInputChange.bind(this)}
+                onChange={this.onInputChange}
               />
             </div>
             <div className="is-recurring hidden">
@@ -323,14 +328,14 @@ class CreateView extends Component {
                 type="date"
                 name="recursuntil"
                 value={this.state.fields.recursuntil}
-                onChange={this.onInputChange.bind(this)}
+                onChange={this.onInputChange}
               />
               <label htmlFor="recurs" className="capitalize">{language.recurs}:</label>
               <select
                 className="capitalize"
                 name="recurs"
                 value={this.state.fields.recurs}
-                onChange={this.onInputChange.bind(this)}
+                onChange={this.onInputChange}
               >
                 <option selected className="capitalize" value="0">{language.weekly}</option>
                 <option className="capitalize" value="1">{language.monthly}</option>
@@ -342,21 +347,21 @@ class CreateView extends Component {
               name="location"
               type="text"
               value={this.state.fields.location}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
             />
             <br />
             <label htmlFor="desc" className="capitalize">{language.description}:</label>
             <textarea
               name="desc"
               value={this.state.fields.desc}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
             />
             <label htmlFor="img" className="capitalize">{language.image}:</label>
             <input
               type="file"
               name="img"
               accept="image/jpeg,image/png"
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
             />
             <ErrorList className={this.state.progress === 'saved' ? 'success' : ''} errors={this.state.fieldErrors} />
             <input type="submit" value={language.preview} className="btn-primary" />
