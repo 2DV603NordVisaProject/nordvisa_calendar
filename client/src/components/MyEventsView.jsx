@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './MyEventsView.css';
 import EventsList from './EventsList';
 import Client from '../Client';
 import ConfirmMessage from './ConfirmMessage';
-import PropTypes from 'prop-types';
 
 
 class MyEventsView extends Component {
