@@ -34,7 +34,7 @@ class ResponsiveMenu extends Component {
   render() {
     return (
       <div>
-        <div className={this.state.menu.isCollapsed ? 'menu-btn change' : 'menu-btn'} onClick={this.onCollapseMenuClick}>
+        <div role="menu" className={this.state.menu.isCollapsed ? 'menu-btn change' : 'menu-btn'} onClick={this.onCollapseMenuClick}>
           <div className="bar1" />
           <div className="bar2" />
           <div className="bar3" />
