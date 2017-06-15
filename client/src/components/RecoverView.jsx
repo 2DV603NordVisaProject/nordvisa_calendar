@@ -18,7 +18,7 @@ class RecoverView extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-    const fieldErrors = this.validate(this.state.fields);
+    let fieldErrors = this.validate(this.state.fields);
     this.setState({ fieldErrors });
 
     // Return on error.
@@ -28,7 +28,7 @@ class RecoverView extends Component {
 
     Client.post(this.state.fields, uri)
       .then(() => {
-        const fieldErrors = ['Email sent!'];
+        fieldErrors = ['Email sent!'];
         this.setState({ fieldErrors,
           fields: {
             email: '',
