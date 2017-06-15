@@ -5,6 +5,12 @@ import Client from '../Client';
 
 
 class UpdatePassword extends Component {
+  constructor() {
+    super();
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
   state = {
     fields: {
       oldpassword: '',
@@ -90,27 +96,27 @@ class UpdatePassword extends Component {
     return (
       <div className="box">
         <h3 className="capitalize">{language.updatePassword}</h3>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
+        <form onSubmit={this.onFormSubmit}>
           <label htmlFor="oldpassword" className="capitalize">{language.oldPassword}:</label>
           <input
             type="password"
             name="oldpassword"
             value={this.state.fields.oldpassword}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
           />
           <label htmlFor="newpassword" className="capitalize">{language.newPassword}:</label>
           <input
             type="password"
             name="newpassword"
             value={this.state.fields.newpassword}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
           />
           <label htmlFor="confirmpassword" className="capitalize">{language.confirmPassword}:</label>
           <input
             type="password"
             name="confirmpassword"
             value={this.state.fields.confirmpassword}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
           />
           <ErrorList errors={this.state.fieldErrors} />
           <input type="submit" value={language.save} className="btn-primary" />
