@@ -27,4 +27,11 @@ MembersList.contextTypes = {
   language: PropTypes.object,
 };
 
+MembersList.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  members: PropTypes.arrayOf(
+    PropTypes.object,
+  ).isRequired,
+};
+
 export default MembersList;
