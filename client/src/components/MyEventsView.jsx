@@ -10,6 +10,7 @@ class MyEventsView extends Component {
     super(props);
 
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.onYesClick = this.onYesClick.bind(this);
   }
   state = {
     events: [],
@@ -67,7 +68,7 @@ class MyEventsView extends Component {
       <div className="view">
         <h2 className="capitalize">{language.myEvents}</h2>
         <EventsList events={this.state.events} delete={this.handleDeleteClick} />
-        <ConfirmMessage popup={this.state.popup} onClick={this.onYesClick.bind(this)} />
+        <ConfirmMessage popup={this.state.popup} onClick={this.onYesClick} />
       </div>
     );
   }
