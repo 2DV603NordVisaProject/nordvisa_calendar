@@ -18,6 +18,8 @@ import static org.mockito.Mockito.*;
 /**
  * Class VisitorControllerTest
  *
+ * // TODO: Add comments
+ *
  * @author Axel Nilsson (axnion)
  */
 @RunWith(SpringRunner.class)
