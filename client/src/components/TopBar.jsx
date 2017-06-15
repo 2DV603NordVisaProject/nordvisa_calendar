@@ -28,4 +28,8 @@ TopBar.contextTypes = {
   language: PropTypes.object,
 };
 
+TopBar.propTypes = {
+  onLanguageChange: PropTypes.func.isRequired,
+};
+
 export default TopBar;
