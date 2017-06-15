@@ -135,4 +135,10 @@ LoginView.contextTypes = {
   language: PropTypes.object,
 };
 
+LoginView.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.string,
+  }).isRequired,
+};
+
 export default LoginView;
