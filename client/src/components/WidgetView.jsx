@@ -7,6 +7,14 @@ import Client from '../Client';
 
 
 class WidgetView extends Component {
+
+  constructor() {
+    super();
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
+
   state = {
     fields: {
       region: '',
@@ -85,7 +93,7 @@ class WidgetView extends Component {
           <select
             className="capitalize"
             name="region"
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             defaultValue={this.state.fields.region}
           >
             <option value="" className="capitalize">{language.chooseRegion}</option>
@@ -98,11 +106,11 @@ class WidgetView extends Component {
           <div className={this.state.showProvince ? '' : 'hidden'}>
             <ProvinceSelect
               region={this.state.fields.region}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
             />
           </div>
           <ErrorList errors={this.state.fieldErrors} />
-          <button className="btn-primary" onClick={this.onFormSubmit.bind(this)}>{language.generate}</button>
+          <button className="btn-primary" onClick={this.onFormSubmit}>{language.generate}</button>
         </form>
         {
           this.state.isGenerated ? (
