@@ -86,7 +86,7 @@ class MembersView extends Component {
 
       Client.post({ id: user.id }, uri)
         .then(() => {
-          const uri = '/api/admin/manageableUsers';
+          uri = '/api/admin/manageableUsers';
 
           Client.get(uri)
             .then((members) => {
