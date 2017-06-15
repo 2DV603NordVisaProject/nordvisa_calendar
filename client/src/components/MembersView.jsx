@@ -28,7 +28,9 @@ class MembersView extends Component {
 
     Client.get(uri)
       .then((members) => {
-        this.setState({ members });
+        if (members.isArray) {
+          this.setState({ members });
+        }
       });
   }
 
