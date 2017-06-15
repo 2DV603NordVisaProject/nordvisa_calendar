@@ -5,7 +5,6 @@ import EventsList from './EventsList';
 import Client from '../Client';
 import ConfirmMessage from './ConfirmMessage';
 
-
 class MyEventsView extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +30,19 @@ class MyEventsView extends Component {
       });
   }
 
+
+  onYesClick() {
+    const uri = '/api/event/delete';
+    const event = {
+      id: this.state.toDelete,
+    };
+
+    Client.post(event, uri);
+
+    const events = this.state.events.filter(event => event.id !== this.state.toDelete);
+    this.setState({ events });
+  }
+
   handleDeleteClick(evt) {
     evt.preventDefault();
     const eventName = this.state.events.filter((event) => {
@@ -46,18 +58,6 @@ class MyEventsView extends Component {
     };
     this.setState({ popup });
     this.setState({ toDelete: eventName.id });
-  }
-
-  onYesClick() {
-    const uri = '/api/event/delete';
-    const event = {
-      id: this.state.toDelete,
-    };
-
-    Client.post(event, uri);
-
-    const events = this.state.events.filter(event => event.id !== this.state.toDelete);
-    this.setState({ events });
   }
 
   render() {
