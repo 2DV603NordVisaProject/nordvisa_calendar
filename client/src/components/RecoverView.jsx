@@ -27,7 +27,7 @@ class RecoverView extends Component {
     const uri = '/api/visitor/request_password_recovery';
 
     Client.post(this.state.fields, uri)
-      .then((res) => {
+      .then(() => {
         const fieldErrors = ['Email sent!'];
         this.setState({ fieldErrors,
           fields: {
