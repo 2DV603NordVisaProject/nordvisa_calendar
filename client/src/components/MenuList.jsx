@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'react-router/Link';
 import Client from '../Client';
 
-const MenuList = (context) => {
+const MenuList = (props, context) => {
   const language = context.language.MenuList;
 
   return (
