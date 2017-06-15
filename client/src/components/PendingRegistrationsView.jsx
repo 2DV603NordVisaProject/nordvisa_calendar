@@ -5,6 +5,12 @@ import RegistrationsList from './RegistrationsList';
 import Client from '../Client';
 
 class PendingRegistrationsView extends Component {
+  constructor() {
+    super();
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
   state = {
     registrations: [],
     approve: [],
@@ -118,8 +124,8 @@ class PendingRegistrationsView extends Component {
           <p className="capitalize">{language.organization}</p>
           <p className="capitalize">{language.approve}</p>
         </div>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
-          <RegistrationsList registrations={this.state.registrations} onInputChange={this.onInputChange.bind(this)} />
+        <form onSubmit={this.onFormSubmit}>
+          <RegistrationsList registrations={this.state.registrations} onInputChange={this.onInputChange} />
           <input type="submit" className="btn-primary" value={language.approve} />
         </form>
       </div>
