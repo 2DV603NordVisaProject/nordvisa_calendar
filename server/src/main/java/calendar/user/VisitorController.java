@@ -27,16 +27,12 @@ import java.util.Random;
 @RestController
 @RequestMapping("/api/visitor")
 public class VisitorController {
-    private UserDAO dao;
-    private Email email;
-    private UserInformationValidator validator;
-
     @Autowired
-    public VisitorController(UserDAOMongo dao, Email email, UserInformationValidator validator) {
-        this.dao = dao;
-        this.email = email;
-        this.validator= validator;
-    }
+    private UserDAO dao;
+    @Autowired
+    private Email email;
+    @Autowired
+    private UserInformationValidator validator;
 
     /**
      * Runs on POST call to /api/visitor/registration. It registers a user account to the database.
