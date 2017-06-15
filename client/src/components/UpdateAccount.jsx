@@ -36,13 +36,6 @@ class UpdateAccount extends Component {
       });
   }
 
-  validate(fields) {
-    const errors = [];
-    if (!fields.email) errors.push(this.context.language.Errors.emailRequired);
-    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
-    return errors;
-  }
-
   onInputChange(event) {
     const value = event.target.value;
     const name = event.target.name;
@@ -84,6 +77,13 @@ class UpdateAccount extends Component {
       org: '',
       neworg: '',
     } });
+  }
+
+  validate(fields) {
+    const errors = [];
+    if (!fields.email) errors.push(this.context.language.Errors.emailRequired);
+    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
+    return errors;
   }
 
   render() {
