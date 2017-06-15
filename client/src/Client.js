@@ -169,105 +169,18 @@ const Client = {
     return true;
   },
   getUserLevel: () => {
-    // TODO: accessLevel is used before it's defined. Will always return undefined?
-    if (getCookie(accessLevel) === null) {
-      return;
+    if (getCookie('accessLevel') === null) {
+      return 0;
     }
 
-    const userLevel = getCookie(accessLevel);
+    const userLevel = getCookie('accessLevel');
 
-    let accessLevel = 0;
     if (userLevel === 'ADMIN') {
-      accessLevel = 1;
+      return 1;
     } else if (userLevel === 'SUPER_ADMIN') {
-      accessLevel = 2;
+      return 2;
     }
-    return accessLevel;
-  },
-  getMembers: () =>
-    [
-      {
-        email: 'sample1@gmail.com',
-        userLevel: 'user',
-      },
-      {
-        email: 'sample2@gmail.com',
-        userLevel: 'admin',
-      },
-      {
-        email: 'sample3@gmail.com',
-        userLevel: 'superadmin',
-      },
-    ],
-  getRegistrations: () =>
-    [
-      {
-        email: 'johan.gudmundsson2012@gmail.com',
-        org: 'The long sample organization',
-      },
-      {
-        email: 'johan.gudmundsson2012@gmail.com',
-        org: 'sample org',
-      },
-      {
-        email: 'axel@gmail.com',
-        org: 'NordVisa',
-      },
-    ],
-  getEvents: () =>
-    [
-      {
-        name: 'Sample Event One',
-        id: 1,
-        date: '2020 July',
-        location: 'YOLO Land',
-        desc: 'test test test test test test test test test',
-      },
-      {
-        name: 'Sample Event Two',
-        id: 2,
-        name: 'Swag?',
-        date: '2020 July',
-        location: 'YOLO Land',
-        desc: 'test test test test test test test test test',
-      },
-      {
-        name: 'Sample Event Three',
-        id: 3,
-        name: 'Swag?',
-        date: '2020 July',
-        location: 'YOLO Land',
-        desc: 'test test test test test test test test test',
-      },
-    ],
-  getEvent: (id) => {
-    const events = [
-      {
-        name: 'Sample Event One',
-        id: 1,
-        date: '2020 July',
-        location: 'YOLO Land',
-        desc: 'test test test test test test test test test',
-      },
-      {
-        name: 'Sample Event Two',
-        id: 2,
-        name: 'Swag?',
-        date: '2020 July',
-        location: 'YOLO Land',
-        desc: 'test test test test test test test test test',
-      },
-      {
-        name: 'Sample Event Three',
-        id: 3,
-        name: 'Swag?',
-        date: '2020 July',
-        location: 'YOLO Land',
-        desc: 'test test test test test test test test test',
-      },
-    ];
-
-    return events.find(event => event.id === id);
+    return 0;
   },
 };
 

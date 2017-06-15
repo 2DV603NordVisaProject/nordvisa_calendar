@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './PendingRegistrationsView.css';
 import RegistrationsList from './RegistrationsList';
 import Client from '../Client';
-import PropTypes from 'prop-types';
 
 class PendingRegistrationsView extends Component {
+  constructor() {
+    super();
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
   state = {
     registrations: [],
     approve: [],
@@ -16,7 +22,9 @@ class PendingRegistrationsView extends Component {
     Client.get(uri)
       .then((registrations) => {
         console.log(registrations);
-        this.setState({ registrations });
+        if (registrations.isArray) {
+          this.setState({ registrations });
+        }
       });
   }
 
@@ -58,8 +66,6 @@ class PendingRegistrationsView extends Component {
     const oldRegistrations = this.state.registrations;
 
     // Remove registrations from users who have been denied or approved.
-
-    const actions = [...approve, ...deny];
     const registrations = [];
 
     oldRegistrations.forEach((registration) => {
@@ -118,8 +124,11 @@ class PendingRegistrationsView extends Component {
           <p className="capitalize">{language.organization}</p>
           <p className="capitalize">{language.approve}</p>
         </div>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
-          <RegistrationsList registrations={this.state.registrations} onInputChange={this.onInputChange.bind(this)} />
+        <form onSubmit={this.onFormSubmit}>
+          <RegistrationsList
+            registrations={this.state.registrations}
+            onInputChange={this.onInputChange}
+          />
           <input type="submit" className="btn-primary" value={language.approve} />
         </form>
       </div>

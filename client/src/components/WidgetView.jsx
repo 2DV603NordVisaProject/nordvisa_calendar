@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './WidgetView.css';
 import ErrorList from './ErrorList';
 import ProvinceSelect from './ProvinceSelect';
-import PropTypes from 'prop-types';
 import Client from '../Client';
 
 
 class WidgetView extends Component {
+
+  constructor() {
+    super();
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
+
   state = {
     fields: {
       region: '',
@@ -30,12 +38,6 @@ class WidgetView extends Component {
       });
   }
 
-  validate(fields) {
-    const errors = [];
-    if (!fields.region) errors.push(this.context.language.Errors.chooseRegion);
-    return errors;
-  }
-
   onFormSubmit(event) {
     event.preventDefault();
     const fieldErrors = this.validate(this.state.fields);
@@ -45,18 +47,11 @@ class WidgetView extends Component {
     if (fieldErrors.length) return;
 
     const bodyCode = this.generateBodyCode(this.state.fields.region, this.state.fields.province);
+    const headCode = `<script src="${location.protocol}//${location.host}/widget.js}></script>`;
 
     this.setState({ isGenerated: true });
-    this.setState({ headCode: this.generateHeadCode() });
+    this.setState({ headCode });
     this.setState({ bodyCode });
-  }
-
-  generateHeadCode() {
-    return `<script src="${location.protocol}//${location.host}/widget.js}></script>`;
-  }
-
-  generateBodyCode(region, province) {
-    return `<div id="visa-widget" data-country="${region}" data-region="${province}" data-token="${this.state.token}"></div>`;
   }
 
   onInputChange(event) {
@@ -75,6 +70,16 @@ class WidgetView extends Component {
     this.setState({ showProvince });
   }
 
+  validate(fields) {
+    const errors = [];
+    if (!fields.region) errors.push(this.context.language.Errors.chooseRegion);
+    return errors;
+  }
+
+  generateBodyCode(region, province) {
+    return `<div id="visa-widget" data-country="${region}" data-region="${province}" data-token="${this.state.token}"></div>`;
+  }
+
   render() {
     const language = this.context.language.WidgetView;
 
@@ -85,7 +90,7 @@ class WidgetView extends Component {
           <select
             className="capitalize"
             name="region"
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             defaultValue={this.state.fields.region}
           >
             <option value="" className="capitalize">{language.chooseRegion}</option>
@@ -98,11 +103,11 @@ class WidgetView extends Component {
           <div className={this.state.showProvince ? '' : 'hidden'}>
             <ProvinceSelect
               region={this.state.fields.region}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
             />
           </div>
           <ErrorList errors={this.state.fieldErrors} />
-          <button className="btn-primary" onClick={this.onFormSubmit.bind(this)}>{language.generate}</button>
+          <button className="btn-primary" onClick={this.onFormSubmit}>{language.generate}</button>
         </form>
         {
           this.state.isGenerated ? (

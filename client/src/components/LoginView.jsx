@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
-import './LoginView.css';
-import { isEmail } from 'validator';
-import ErrorList from './ErrorList';
-import Client from '../Client';
-import Redirect from 'react-router/Redirect';
-import Loader from './Loader';
 import Link from 'react-router/Link';
 import PropTypes from 'prop-types';
+import { isEmail } from 'validator';
+import Redirect from 'react-router/Redirect';
+import './LoginView.css';
+import ErrorList from './ErrorList';
+import Client from '../Client';
+import Loader from './Loader';
+
 
 class LoginView extends Component {
+  constructor() {
+    super();
+
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+  }
   state = {
     fields: {
       email: '',
@@ -36,28 +43,6 @@ class LoginView extends Component {
     this.setState(fieldErrors);
   }
 
-  performLogin(user) {
-    this.setState({ loginInProgress: true });
-    const uri = '/login';
-    Client.login(user, uri).then((res) => {
-      if (res === 'success') {
-        this.setState({ shouldRedirect: true });
-        this.forceUpdate();
-      } else {
-        const fieldErrors = [this.context.language.Errors.loginFailed];
-        this.setState({ loginInProgress: false, fieldErrors });
-      }
-    });
-  }
-
-  validate(fields) {
-    const errors = [];
-    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
-    if (!fields.password) errors.push(this.context.language.Errors.emptyPassword);
-    if (fields.password.length < 10) errors.push(this.context.language.Errors.incorrectPassword);
-    if (fields.password.length > 255) errors.push(this.context.language.Errors.incorrectPassword);
-    return errors;
-  }
 
   onFormSubmit(event) {
     event.preventDefault();
@@ -83,6 +68,30 @@ class LoginView extends Component {
     fields[event.target.name] = event.target.value;
     this.setState({ fields });
   }
+
+  validate(fields) {
+    const errors = [];
+    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
+    if (!fields.password) errors.push(this.context.language.Errors.emptyPassword);
+    if (fields.password.length < 10) errors.push(this.context.language.Errors.incorrectPassword);
+    if (fields.password.length > 255) errors.push(this.context.language.Errors.incorrectPassword);
+    return errors;
+  }
+
+  performLogin(user) {
+    this.setState({ loginInProgress: true });
+    const uri = '/login';
+    Client.login(user, uri).then((res) => {
+      if (res === 'success') {
+        this.setState({ shouldRedirect: true });
+        this.forceUpdate();
+      } else {
+        const fieldErrors = [this.context.language.Errors.loginFailed];
+        this.setState({ loginInProgress: false, fieldErrors });
+      }
+    });
+  }
+
   render() {
     const language = this.context.language;
 
@@ -98,18 +107,18 @@ class LoginView extends Component {
     return (
       <div className="lightbox login">
         <h2 className="uppercase">{language.LoginView.login}</h2>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
+        <form onSubmit={this.onFormSubmit}>
           <label htmlFor="email" className="capitalize">{language.LoginView.email}:</label>
           <input
             name="email"
             value={this.state.fields.email}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             type="text"
           />
           <label htmlFor="password" className="capitalize">{language.LoginView.password}:</label>
           <input
             name="password"
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             value={this.state.fields.password}
             type="password"
           />
@@ -124,6 +133,12 @@ class LoginView extends Component {
 
 LoginView.contextTypes = {
   language: PropTypes.object,
+};
+
+LoginView.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.string,
+  }).isRequired,
 };
 
 export default LoginView;

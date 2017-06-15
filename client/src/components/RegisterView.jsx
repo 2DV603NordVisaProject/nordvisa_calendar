@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
+import Redirect from 'react-router/Redirect';
+import Recaptcha from 'react-gcaptcha';
+import PropTypes from 'prop-types';
 import { isEmail } from 'validator';
 import './RegisterView.css';
 import ErrorList from './ErrorList';
-import PropTypes from 'prop-types';
 import Client from '../Client';
-import Recaptcha from 'react-gcaptcha';
 import Loader from './Loader';
-import Redirect from 'react-router/Redirect';
-
 
 class RegisterView extends Component {
+  constructor() {
+    super();
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
   state = {
     fields: {
       email: '',
@@ -22,8 +27,8 @@ class RegisterView extends Component {
     organizations: [],
     newOrg: 'hidden',
     fieldErrors: [],
-    _loading: false,
-    _redirect: false,
+    loading: false,
+    redirect: false,
   }
 
   componentWillMount() {
@@ -36,23 +41,6 @@ class RegisterView extends Component {
       });
   }
 
-  validate(fields) {
-    const errors = [];
-    if (!fields.email) errors.push(this.context.language.Errors.emailRequired);
-    if (!fields.password || !fields.confirmpassword) errors.push(this.context.language.Errors.passwordRequired);
-    if (fields.password !== fields.confirmpassword) errors.push(this.context.language.Errors.passwordDoesNotMatch);
-    if (!fields.recaptcha) errors.push(this.context.language.Errors.captchaFails);
-    if (fields.password.length < 10) errors.push(this.context.language.Errors.shortPassword);
-    if (fields.password.length > 255) errors.push(this.context.language.Errors.longPassword);
-    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
-    return errors;
-  }
-
-  callback = function (key) {
-    const fields = this.state.fields;
-    fields.recaptcha = key;
-    this.setState(fields);
-  }
 
   onInputChange(event) {
     const value = event.target.value;
@@ -60,8 +48,6 @@ class RegisterView extends Component {
     const fields = this.state.fields;
     fields[name] = value;
     this.setState({ fields });
-
-    const hiddenForm = document.querySelector('#on-select-change');
 
     if (this.state.fields.org === 'new') {
       const newOrg = '';
@@ -71,10 +57,11 @@ class RegisterView extends Component {
       this.setState({ newOrg });
     }
   }
+
   onFormSubmit(event) {
     event.preventDefault();
     this.setState({ fieldErrors: [] });
-    const fieldErrors = this.validate(this.state.fields);
+    let fieldErrors = this.validate(this.state.fields);
     this.setState({ fieldErrors });
 
 
@@ -82,7 +69,7 @@ class RegisterView extends Component {
     if (fieldErrors.length) return;
 
     // Do registration
-    this.setState({ _loading: true });
+    this.setState({ loading: true });
     const uri = '/api/visitor/registration';
     const user = {
       email: this.state.fields.email,
@@ -92,16 +79,15 @@ class RegisterView extends Component {
       gRecaptchaResponse: this.state.fields.recaptcha,
     };
 
-
     Client.post(user, uri).then((res) => {
-      this.setState({ _loading: false });
-      if (res.hasOwnProperty('message')) {
-        const fieldErrors = [];
+      this.setState({ loading: false });
+      if (Object.prototype.hasOwnProperty.call(res, 'message')) {
+        fieldErrors = [];
         fieldErrors.push(res.message);
         this.setState({ fieldErrors });
         this.forceUpdate();
       } else {
-        this.setState({ _redirect: true });
+        this.setState({ redirect: true });
         this.setState({ fields: {
           email: '',
           password: '',
@@ -114,14 +100,36 @@ class RegisterView extends Component {
     });
   }
 
+  callback = (key) => {
+    const fields = this.state.fields;
+    fields.recaptcha = key;
+    this.setState(fields);
+  }
+
+  validate(fields) {
+    const errors = [];
+    if (!fields.email) errors.push(this.context.language.Errors.emailRequired);
+    if (!fields.password || !fields.confirmpassword) {
+      errors.push(this.context.language.Errors.passwordRequired);
+    }
+    if (fields.password !== fields.confirmpassword) {
+      errors.push(this.context.language.Errors.passwordDoesNotMatch);
+    }
+    if (!fields.recaptcha) errors.push(this.context.language.Errors.captchaFails);
+    if (fields.password.length < 10) errors.push(this.context.language.Errors.shortPassword);
+    if (fields.password.length > 255) errors.push(this.context.language.Errors.longPassword);
+    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
+    return errors;
+  }
+
   render() {
     const language = this.context.language.RegisterView;
 
-    if (this.state._loading) {
+    if (this.state.loading) {
       return (
         <Loader />
       );
-    } else if (this.state._redirect) {
+    } else if (this.state.redirect) {
       return (
         <Redirect to={{
           pathname: '/login',
@@ -133,32 +141,32 @@ class RegisterView extends Component {
     return (
       <div className="lightbox register">
         <h2 className="uppercase">{language.register}</h2>
-        <form className="center" onSubmit={this.onFormSubmit.bind(this)}>
+        <form className="center" onSubmit={this.onFormSubmit}>
           <label htmlFor="email" className="capitalize">{language.email}:</label>
           <input
             name="email"
             type="text"
             value={this.state.fields.email}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
           />
           <label htmlFor="password" className="capitalize">{language.password}:</label>
           <input
             name="password"
             value={this.state.fields.password}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             type="password"
           />
           <label htmlFor="confirmpassword" className="capitalize">{language.confirmPassword}:</label>
           <input
             name="confirmpassword"
             value={this.state.fields.confirmpassword}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             type="password"
           />
           <label htmlFor="org" className="capitalize">{language.organization}:</label>
           <select
             name="org"
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             value={this.state.fields.org}
             defaultValue=""
           >
@@ -173,13 +181,13 @@ class RegisterView extends Component {
             <input
               name="neworg"
               value={this.state.fields.neworg}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
               type="text"
             />
           </div>
           <Recaptcha
             sitekey="6Le13yAUAAAAAC4D1Ml81bW3WlGN83bZo4FzHU7Z"
-            verifyCallback={this.callback.bind(this)}
+            verifyCallback={this.callback}
           />
           <ErrorList errors={this.state.fieldErrors} />
           <input
