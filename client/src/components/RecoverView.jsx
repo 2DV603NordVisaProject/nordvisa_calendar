@@ -18,7 +18,7 @@ class RecoverView extends Component {
       email: '',
     },
     fieldErrors: [],
-    _redirect: false,
+    redirect: false,
   }
 
 
@@ -42,7 +42,7 @@ class RecoverView extends Component {
       });
 
 
-    this.setState({ fields: {}, _redirect: true });
+    this.setState({ fields: {}, redirect: true });
   }
 
   onInputChange(event) {
@@ -61,7 +61,7 @@ class RecoverView extends Component {
   render() {
     const language = this.context.language.RecoverView;
 
-    if (this.state._redirect) {
+    if (this.state.redirect) {
       return (
         <Redirect to={{
           pathname: '/login',
