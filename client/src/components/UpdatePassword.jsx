@@ -73,8 +73,12 @@ class UpdatePassword extends Component {
 
   validate(fields) {
     const errors = [];
-    if (!fields.newpassword || !fields.confirmpassword || !fields.oldpassword) errors.push(this.context.language.Errors.passwordRequired);
-    if (fields.newpassword !== fields.confirmpassword) errors.push(this.context.language.Errors.passwordDoesNotMatch);
+    if (!fields.newpassword || !fields.confirmpassword || !fields.oldpassword) {
+      errors.push(this.context.language.Errors.passwordRequired);
+    }
+    if (fields.newpassword !== fields.confirmpassword) {
+      errors.push(this.context.language.Errors.passwordDoesNotMatch);
+    }
     if (fields.newpassword.length < 10) errors.push(this.context.language.Errors.shortPassword);
     if (fields.newpassword.length > 255) errors.push(this.context.language.Errors.longPassword);
     return errors;
