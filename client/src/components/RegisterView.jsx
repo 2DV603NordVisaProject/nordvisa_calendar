@@ -100,7 +100,7 @@ class RegisterView extends Component {
     });
   }
 
-  callback(key) {
+  callback = (key) => {
     const fields = this.state.fields;
     fields.recaptcha = key;
     this.setState(fields);
