@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import Miss from 'react-router/Miss';
+import Match from 'react-router/Match';
+import Redirect from 'react-router/Redirect';
 import './ViewContainer.css';
 import LoginView from './LoginView';
-import Match from 'react-router/Match';
 import RegisterView from './RegisterView';
 import RecoverView from './RecoverView';
 import UpdatePasswordView from './UpdatePasswordView';
@@ -11,11 +13,9 @@ import CreateView from './CreateView';
 import MyEventsView from './MyEventsView';
 import WidgetView from './WidgetView';
 import PendingRegistrationsView from './PendingRegistrationsView';
-import Redirect from 'react-router/Redirect';
 import Logout from './Logout';
 import MatchWhenLoggedIn from './MatchWhenLoggedIn';
 import MatchWhenAdmin from './MatchWhenAdmin';
-import Miss from 'react-router/Miss';
 import Client from '../Client';
 
 
