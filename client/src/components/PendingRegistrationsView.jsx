@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './PendingRegistrationsView.css';
 import RegistrationsList from './RegistrationsList';
 import Client from '../Client';
-import PropTypes from 'prop-types';
 
 class PendingRegistrationsView extends Component {
   state = {
