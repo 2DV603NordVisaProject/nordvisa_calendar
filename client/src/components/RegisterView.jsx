@@ -73,12 +73,6 @@ class RegisterView extends Component {
       gRecaptchaResponse: this.state.fields.recaptcha,
     };
 
-    callback = function (key) {
-      const fields = this.state.fields;
-      fields.recaptcha = key;
-      this.setState(fields);
-    };
-
     Client.post(user, uri).then((res) => {
       this.setState({ _loading: false });
       if (res.hasOwnProperty('message')) {
@@ -99,6 +93,12 @@ class RegisterView extends Component {
       }
     });
   }
+
+  callback = function (key) {
+    const fields = this.state.fields;
+    fields.recaptcha = key;
+    this.setState(fields);
+  };
 
   validate(fields) {
     const errors = [];
