@@ -45,14 +45,6 @@ class WidgetView extends Component {
     this.setState({ bodyCode });
   }
 
-  generateHeadCode() {
-    return `<script src="${location.protocol}//${location.host}/widget.js}></script>`;
-  }
-
-  generateBodyCode(region, province) {
-    return `<div id="visa-widget" data-country="${region}" data-region="${province}" data-token="${this.state.token}"></div>`;
-  }
-
   onInputChange(event) {
     const fields = this.state.fields;
     fields[event.target.name] = event.target.value;
@@ -73,6 +65,14 @@ class WidgetView extends Component {
     const errors = [];
     if (!fields.region) errors.push(this.context.language.Errors.chooseRegion);
     return errors;
+  }
+
+  generateHeadCode() {
+    return `<script src="${location.protocol}//${location.host}/widget.js}></script>`;
+  }
+
+  generateBodyCode(region, province) {
+    return `<div id="visa-widget" data-country="${region}" data-region="${province}" data-token="${this.state.token}"></div>`;
   }
 
   render() {
