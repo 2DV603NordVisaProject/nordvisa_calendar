@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const ProvinceSelect = (props, context) => {
   const language = context.language.WidgetView;
 
-  if (this.props.region === 'sweden') {
+  if (props.region === 'sweden') {
     return (
       <select defaultValue="" name="province" onChange={props.onChange} className="capitalize">
         <option value="" className="capitalize">{language.chooseProvince}</option>
@@ -35,7 +35,7 @@ const ProvinceSelect = (props, context) => {
         <option value="ostergotland">Östergötland</option>
       </select>
     );
-  } else if (this.props.region === 'norway') {
+  } else if (props.region === 'norway') {
     return (
       <select name="province" defaultValue="" onChange={props.onChange} className="capitalize">
         <option value="" className="capitalize">{language.chooseProvince}</option>
@@ -69,7 +69,7 @@ const ProvinceSelect = (props, context) => {
         <option value="osterdalen">Østerdalen</option>
       </select>
     );
-  } else if (this.props.region === 'iceland') {
+  } else if (props.region === 'iceland') {
     return (
       <select name="province" defaultValue="" onChange={props.onChange} className="capitalize">
         <option value="" className="capitalize">{language.chooseProvince}</option>
@@ -99,7 +99,7 @@ const ProvinceSelect = (props, context) => {
         <option value="vesturskaftafellssysla">Vestur-Skaftafellssýsla</option>
       </select>
     );
-  } else if (this.props.region === 'denmark') {
+  } else if (props.region === 'denmark') {
     return (
       <select defaultValue="" name="province" onChange={props.onChange} className="capitalize">
         <option value="" className="capitalize">{language.chooseProvince}</option>
