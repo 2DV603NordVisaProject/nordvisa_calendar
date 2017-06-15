@@ -81,7 +81,7 @@ class RegisterView extends Component {
 
     Client.post(user, uri).then((res) => {
       this.setState({ loading: false });
-      if (res.hasOwnProperty('message')) {
+      if (Object.prototype.hasOwnProperty.call(res, 'message')) {
         fieldErrors = [];
         fieldErrors.push(res.message);
         this.setState({ fieldErrors });
