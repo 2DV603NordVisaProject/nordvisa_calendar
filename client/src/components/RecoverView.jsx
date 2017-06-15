@@ -7,6 +7,12 @@ import Client from '../Client';
 
 
 class RecoverView extends Component {
+  constructor() {
+    super();
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
   state = {
     fields: {
       email: '',
@@ -67,13 +73,13 @@ class RecoverView extends Component {
     return (
       <div className="lightbox login">
         <h2 className="uppercase">{language.recover}</h2>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
+        <form onSubmit={this.onFormSubmit}>
           <label htmlFor="email" className="capitalize">{language.email}:</label>
           <input
             name="email"
             type="text"
             value={this.state.fields.email}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
           />
           <ErrorList errors={this.state.fieldErrors} />
           <input type="submit" value={language.request} className="btn-primary uppercase" />
