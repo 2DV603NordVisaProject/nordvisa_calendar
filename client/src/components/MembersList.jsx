@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Member from './Member';
 
-class MembersList extends Component {
-  render() {
-    const language = this.context.language.MembersView;
+const MembersList = (props, context) => {
+  const language = context.language.MembersView;
 
-    return (
-      <div className="members-list">
-        <div className="list-header">
-          <p className="capitalize">{language.email}</p>
-          <p className="capitalize">{language.access}</p>
-        </div>
-        <ul>
-          {
-            this.props.members.map((member, i) => (
-              <Member key={i} member={member} onChange={this.props.onChange} />
-            ))
-          }
-        </ul>
+  return (
+    <div className="members-list">
+      <div className="list-header">
+        <p className="capitalize">{language.email}</p>
+        <p className="capitalize">{language.access}</p>
       </div>
-    );
-  }
-}
+      <ul>
+        {
+          props.members.map((member, i) => (
+            <Member key={i} member={member} onChange={props.onChange} />
+          ))
+        }
+      </ul>
+    </div>
+  );
+};
 
 
 MembersList.contextTypes = {
