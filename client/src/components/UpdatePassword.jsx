@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ErrorList from './ErrorList';
 import PropTypes from 'prop-types';
+import ErrorList from './ErrorList';
 import Client from '../Client';
 
 
