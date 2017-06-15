@@ -125,7 +125,10 @@ class PendingRegistrationsView extends Component {
           <p className="capitalize">{language.approve}</p>
         </div>
         <form onSubmit={this.onFormSubmit}>
-          <RegistrationsList registrations={this.state.registrations} onInputChange={this.onInputChange} />
+          <RegistrationsList
+            registrations={this.state.registrations}
+            onInputChange={this.onInputChange}
+          />
           <input type="submit" className="btn-primary" value={language.approve} />
         </form>
       </div>
