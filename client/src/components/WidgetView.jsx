@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './WidgetView.css';
 import ErrorList from './ErrorList';
 import ProvinceSelect from './ProvinceSelect';
-import PropTypes from 'prop-types';
 import Client from '../Client';
 
 
