@@ -121,4 +121,8 @@ ProvinceSelect.contextTypes = {
   language: PropTypes.object,
 };
 
+ProvinceSelect.propTypes = {
+  onChange: PropTypes.func.isRequired,
+};
+
 export default ProvinceSelect;
