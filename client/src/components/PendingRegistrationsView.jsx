@@ -64,8 +64,6 @@ class PendingRegistrationsView extends Component {
     const oldRegistrations = this.state.registrations;
 
     // Remove registrations from users who have been denied or approved.
-
-    const actions = [...approve, ...deny];
     const registrations = [];
 
     oldRegistrations.forEach((registration) => {
