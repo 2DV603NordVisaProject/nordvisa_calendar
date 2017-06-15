@@ -379,6 +379,11 @@ class CreateView extends Component {
   }
 }
 
+CreateView.defaultProps = {
+  progress: '',
+  id: null,
+};
+
 CreateView.contextTypes = {
   language: PropTypes.object,
 };
