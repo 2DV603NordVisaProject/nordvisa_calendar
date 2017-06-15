@@ -16,13 +16,6 @@ class RecoverView extends Component {
   }
 
 
-  validate(fields) {
-    const errors = [];
-    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
-    if (!fields.email) errors.push(this.context.language.Errors.invalidEmail);
-    return errors;
-  }
-
   onFormSubmit(event) {
     event.preventDefault();
     const fieldErrors = this.validate(this.state.fields);
@@ -51,6 +44,14 @@ class RecoverView extends Component {
     fields[event.target.name] = event.target.value;
     this.setState({ fields });
   }
+
+  validate(fields) {
+    const errors = [];
+    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
+    if (!fields.email) errors.push(this.context.language.Errors.invalidEmail);
+    return errors;
+  }
+
   render() {
     const language = this.context.language.RecoverView;
 
