@@ -58,8 +58,9 @@ class MembersView extends Component {
           email: member.email,
         });
 
-        member.userLevel = event.target.value;
-        return member;
+        const user = Object.assign({}, member);
+        user.userLevel = event.target.value;
+        return user;
       }
       return member;
     });
