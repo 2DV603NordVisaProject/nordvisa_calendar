@@ -384,8 +384,8 @@ CreateView.contextTypes = {
 };
 
 CreateView.propTypes = {
-  progress: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  progress: PropTypes.string,
+  id: PropTypes.number,
 };
 
 export default CreateView;
