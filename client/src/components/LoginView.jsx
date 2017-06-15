@@ -43,28 +43,6 @@ class LoginView extends Component {
     this.setState(fieldErrors);
   }
 
-  performLogin(user) {
-    this.setState({ loginInProgress: true });
-    const uri = '/login';
-    Client.login(user, uri).then((res) => {
-      if (res === 'success') {
-        this.setState({ shouldRedirect: true });
-        this.forceUpdate();
-      } else {
-        const fieldErrors = [this.context.language.Errors.loginFailed];
-        this.setState({ loginInProgress: false, fieldErrors });
-      }
-    });
-  }
-
-  validate(fields) {
-    const errors = [];
-    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
-    if (!fields.password) errors.push(this.context.language.Errors.emptyPassword);
-    if (fields.password.length < 10) errors.push(this.context.language.Errors.incorrectPassword);
-    if (fields.password.length > 255) errors.push(this.context.language.Errors.incorrectPassword);
-    return errors;
-  }
 
   onFormSubmit(event) {
     event.preventDefault();
@@ -90,6 +68,30 @@ class LoginView extends Component {
     fields[event.target.name] = event.target.value;
     this.setState({ fields });
   }
+
+  validate(fields) {
+    const errors = [];
+    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
+    if (!fields.password) errors.push(this.context.language.Errors.emptyPassword);
+    if (fields.password.length < 10) errors.push(this.context.language.Errors.incorrectPassword);
+    if (fields.password.length > 255) errors.push(this.context.language.Errors.incorrectPassword);
+    return errors;
+  }
+
+  performLogin(user) {
+    this.setState({ loginInProgress: true });
+    const uri = '/login';
+    Client.login(user, uri).then((res) => {
+      if (res === 'success') {
+        this.setState({ shouldRedirect: true });
+        this.forceUpdate();
+      } else {
+        const fieldErrors = [this.context.language.Errors.loginFailed];
+        this.setState({ loginInProgress: false, fieldErrors });
+      }
+    });
+  }
+
   render() {
     const language = this.context.language;
 
