@@ -109,8 +109,12 @@ class RegisterView extends Component {
   validate(fields) {
     const errors = [];
     if (!fields.email) errors.push(this.context.language.Errors.emailRequired);
-    if (!fields.password || !fields.confirmpassword) errors.push(this.context.language.Errors.passwordRequired);
-    if (fields.password !== fields.confirmpassword) errors.push(this.context.language.Errors.passwordDoesNotMatch);
+    if (!fields.password || !fields.confirmpassword) {
+      errors.push(this.context.language.Errors.passwordRequired);
+    }
+    if (fields.password !== fields.confirmpassword) {
+      errors.push(this.context.language.Errors.passwordDoesNotMatch);
+    }
     if (!fields.recaptcha) errors.push(this.context.language.Errors.captchaFails);
     if (fields.password.length < 10) errors.push(this.context.language.Errors.shortPassword);
     if (fields.password.length > 255) errors.push(this.context.language.Errors.longPassword);
