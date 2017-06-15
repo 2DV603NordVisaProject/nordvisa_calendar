@@ -7,6 +7,12 @@ import ConfirmMessage from './ConfirmMessage';
 import ErrorList from './ErrorList';
 
 class MembersView extends Component {
+  constructor() {
+    super();
+
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+  }
   state = {
     members: [],
     updated: [],
@@ -112,12 +118,12 @@ class MembersView extends Component {
     return (
       <div className="members view">
         <h2 className="uppercase">{language.members}</h2>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
-          <MembersList members={this.state.members} onChange={this.onInputChange.bind(this)} />
+        <form onSubmit={this.onFormSubmit}>
+          <MembersList members={this.state.members} onChange={this.onInputChange} />
           <ErrorList errors={this.state.fieldErrors} />
           <input type="submit" value={language.save} className="btn-primary" />
         </form>
-        <ConfirmMessage popup={this.state.popup} onClick={this.onConfirmClick.bind(this)} />
+        <ConfirmMessage popup={this.state.popup} onClick={this.onConfirmClick} />
       </div>
     );
   }
