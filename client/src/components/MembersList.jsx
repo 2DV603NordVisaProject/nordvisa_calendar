@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Member from './Member';
 import PropTypes from 'prop-types';
+import Member from './Member';
 
 class MembersList extends Component {
   render() {
