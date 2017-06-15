@@ -22,7 +22,9 @@ class PendingRegistrationsView extends Component {
     Client.get(uri)
       .then((registrations) => {
         console.log(registrations);
-        this.setState({ registrations });
+        if (registrations.isArray) {
+          this.setState({ registrations });
+        }
       });
   }
 
