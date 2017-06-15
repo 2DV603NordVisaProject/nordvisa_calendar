@@ -8,6 +8,10 @@ import Client from '../Client';
 
 class WidgetView extends Component {
 
+  static generateHeadCode() {
+    return `<script src="${location.protocol}//${location.host}/widget.js}></script>`;
+  }
+
   constructor() {
     super();
 
@@ -73,10 +77,6 @@ class WidgetView extends Component {
     const errors = [];
     if (!fields.region) errors.push(this.context.language.Errors.chooseRegion);
     return errors;
-  }
-
-  generateHeadCode() {
-    return `<script src="${location.protocol}//${location.host}/widget.js}></script>`;
   }
 
   generateBodyCode(region, province) {
