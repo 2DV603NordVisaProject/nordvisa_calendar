@@ -46,7 +46,7 @@ class UpdatePassword extends Component {
 
     Client.post(user, uri)
       .then((res) => {
-        if (res.hasOwnProperty('message')) {
+        if (Object.prototype.hasOwnProperty.call(res, 'message')) {
           fieldErrors.push(res.message);
           this.setState({ fieldErrors });
           this.forceUpdate();
