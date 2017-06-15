@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { isEmail } from 'validator';
-import ErrorList from './ErrorList';
-import PropTypes from 'prop-types';
-import Client from '../Client';
 import Redirect from 'react-router/Redirect';
+import { isEmail } from 'validator';
+import PropTypes from 'prop-types';
+import ErrorList from './ErrorList';
+import Client from '../Client';
+
 
 class RecoverView extends Component {
   state = {
