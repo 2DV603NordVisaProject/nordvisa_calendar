@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
+import Redirect from 'react-router/Redirect';
+import Recaptcha from 'react-gcaptcha';
+import PropTypes from 'prop-types';
 import { isEmail } from 'validator';
 import './RegisterView.css';
 import ErrorList from './ErrorList';
-import PropTypes from 'prop-types';
 import Client from '../Client';
-import Recaptcha from 'react-gcaptcha';
 import Loader from './Loader';
-import Redirect from 'react-router/Redirect';
-
 
 class RegisterView extends Component {
   state = {
