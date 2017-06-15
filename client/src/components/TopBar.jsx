@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import './TopBar.css';
-import ResponsiveMenu from './ResponsiveMenu';
 import Link from 'react-router/Link';
 import PropTypes from 'prop-types';
-
+import './TopBar.css';
+import ResponsiveMenu from './ResponsiveMenu';
 
 class TopBar extends Component {
   render() {
