@@ -34,7 +34,7 @@ class UpdatePasswordView extends Component {
     console.log(this.state.fields);
     Client.post(this.state.fields, uri)
       .then((res) => {
-        if (res.hasOwnProperty('message')) {
+        if (Object.prototype.hasOwnProperty.call(res, 'message')) {
           fieldErrors.push(res.message);
           this.setState({ fieldErrors });
         } else {
