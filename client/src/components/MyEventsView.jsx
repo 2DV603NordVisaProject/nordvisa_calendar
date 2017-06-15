@@ -34,11 +34,11 @@ class MyEventsView extends Component {
 
   onYesClick() {
     const uri = '/api/event/delete';
-    const event = {
+    const eventToDelete = {
       id: this.state.toDelete,
     };
 
-    Client.post(event, uri);
+    Client.post(eventToDelete, uri);
 
     const events = this.state.events.filter(event => event.id !== this.state.toDelete);
     this.setState({ events });
