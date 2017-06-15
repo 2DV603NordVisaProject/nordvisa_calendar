@@ -91,4 +91,8 @@ UpdatePasswordView.contextTypes = {
   language: PropTypes.object,
 };
 
+UpdatePasswordView.propTypes = {
+  id: PropTypes.string.isRequired,
+};
+
 export default UpdatePasswordView;
