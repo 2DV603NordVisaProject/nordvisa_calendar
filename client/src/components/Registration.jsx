@@ -34,4 +34,13 @@ Registration.contextTypes = {
   language: PropTypes.object,
 };
 
+Registration.propTypes = {
+  registration: PropTypes.shape({
+    organization: PropTypes.string,
+    email: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
+  onInputChange: PropTypes.func.isRequired,
+};
+
 export default Registration;
