@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { isEmail } from 'validator';
-import ErrorList from './ErrorList';
 import PropTypes from 'prop-types';
+import ErrorList from './ErrorList';
 import Client from '../Client';
-
 
 class UpdateAccount extends Component {
   state = {
