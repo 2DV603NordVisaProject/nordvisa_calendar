@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import UpdatePassword from './UpdatePassword';
 import UpdateAccount from './UpdateAccount';
 
-const MyAccountView = (context) => {
+const MyAccountView = (props, context) => {
   const language = context.language.MyAccountView;
 
   return (
