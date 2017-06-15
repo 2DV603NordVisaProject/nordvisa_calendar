@@ -5,6 +5,12 @@ import Client from '../Client';
 
 
 class UpdatePasswordView extends Component {
+  constructor() {
+    super();
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
 
   state = {
     fields: {
@@ -68,11 +74,11 @@ class UpdatePasswordView extends Component {
     return (
       <div className="lightbox login">
         <h2 className="uppercase">{language.updatePassword}</h2>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
+        <form onSubmit={this.onFormSubmit}>
           <label htmlFor="password" className="capitalize">{language.newPassword}:</label>
-          <input name="password" type="password" onChange={this.onInputChange.bind(this)} />
+          <input name="password" type="password" onChange={this.onInputChange} />
           <label htmlFor="passwordConfirmation" className="capitalize">{language.confirmPassword}:</label>
-          <input name="passwordConfirmation" type="password" onChange={this.onInputChange.bind(this)} />
+          <input name="passwordConfirmation" type="password" onChange={this.onInputChange} />
           <ErrorList errors={this.state.fieldErrors} />
           <input type="submit" className="btn-primary" value={language.save} />
         </form>
