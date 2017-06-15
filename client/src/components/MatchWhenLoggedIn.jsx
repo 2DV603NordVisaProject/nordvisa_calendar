@@ -1,7 +1,8 @@
 import React from 'react';
-import Client from '../Client';
 import Match from 'react-router/Match';
 import Redirect from 'react-router/Redirect';
+import Client from '../Client';
+
 
 const MatchWhenLoggedIn = ({ component: Component, ...rest }) => (
   <Match
