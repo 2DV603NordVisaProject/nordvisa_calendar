@@ -51,10 +51,11 @@ class RegisterView extends Component {
       this.setState({ newOrg });
     }
   }
+
   onFormSubmit(event) {
     event.preventDefault();
     this.setState({ fieldErrors: [] });
-    const fieldErrors = this.validate(this.state.fields);
+    let fieldErrors = this.validate(this.state.fields);
     this.setState({ fieldErrors });
 
 
@@ -81,7 +82,7 @@ class RegisterView extends Component {
     Client.post(user, uri).then((res) => {
       this.setState({ _loading: false });
       if (res.hasOwnProperty('message')) {
-        const fieldErrors = [];
+        fieldErrors = [];
         fieldErrors.push(res.message);
         this.setState({ fieldErrors });
         this.forceUpdate();
