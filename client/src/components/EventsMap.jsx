@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import PropTypes from 'prop-types';
 import MapMarker from './MapMarker';
 
 class EventsMap extends Component {
@@ -21,7 +22,12 @@ class EventsMap extends Component {
       >
 
         {
-        this.props.events.map(event => <MapMarker lat={event.location.coordinates.coordinates[1]} lng={event.location.coordinates.coordinates[0]} />)
+        this.props.events.map(event => (
+          <MapMarker
+            lat={event.location.coordinates.coordinates[1]}
+            lng={event.location.coordinates.coordinates[0]}
+          />
+      ))
       }
       </GoogleMapReact>
     );
@@ -29,5 +35,15 @@ class EventsMap extends Component {
 
 }
 
+EventsMap.propTypes = {
+  center: PropTypes.shape({
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+  }),
+  zoom: PropTypes.number,
+  events: PropTypes.arrayOf(
+    PropTypes.object,
+  ).isRequired,
+};
 
 export default EventsMap;
