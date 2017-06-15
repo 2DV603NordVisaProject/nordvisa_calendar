@@ -35,23 +35,6 @@ class RegisterView extends Component {
       });
   }
 
-  validate(fields) {
-    const errors = [];
-    if (!fields.email) errors.push(this.context.language.Errors.emailRequired);
-    if (!fields.password || !fields.confirmpassword) errors.push(this.context.language.Errors.passwordRequired);
-    if (fields.password !== fields.confirmpassword) errors.push(this.context.language.Errors.passwordDoesNotMatch);
-    if (!fields.recaptcha) errors.push(this.context.language.Errors.captchaFails);
-    if (fields.password.length < 10) errors.push(this.context.language.Errors.shortPassword);
-    if (fields.password.length > 255) errors.push(this.context.language.Errors.longPassword);
-    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
-    return errors;
-  }
-
-  callback = function (key) {
-    const fields = this.state.fields;
-    fields.recaptcha = key;
-    this.setState(fields);
-  }
 
   onInputChange(event) {
     const value = event.target.value;
@@ -91,6 +74,11 @@ class RegisterView extends Component {
       gRecaptchaResponse: this.state.fields.recaptcha,
     };
 
+    callback = function (key) {
+      const fields = this.state.fields;
+      fields.recaptcha = key;
+      this.setState(fields);
+    };
 
     Client.post(user, uri).then((res) => {
       this.setState({ _loading: false });
@@ -111,6 +99,18 @@ class RegisterView extends Component {
         } });
       }
     });
+  }
+
+  validate(fields) {
+    const errors = [];
+    if (!fields.email) errors.push(this.context.language.Errors.emailRequired);
+    if (!fields.password || !fields.confirmpassword) errors.push(this.context.language.Errors.passwordRequired);
+    if (fields.password !== fields.confirmpassword) errors.push(this.context.language.Errors.passwordDoesNotMatch);
+    if (!fields.recaptcha) errors.push(this.context.language.Errors.captchaFails);
+    if (fields.password.length < 10) errors.push(this.context.language.Errors.shortPassword);
+    if (fields.password.length > 255) errors.push(this.context.language.Errors.longPassword);
+    if (!isEmail(fields.email)) errors.push(this.context.language.Errors.invalidEmail);
+    return errors;
   }
 
   render() {
