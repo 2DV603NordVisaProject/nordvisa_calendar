@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Registration from './Registration';
 
 const RegistrationsList = props => (
@@ -11,5 +12,11 @@ const RegistrationsList = props => (
   </ul>
 );
 
+RegistrationsList.propTypes = {
+  registrations: PropTypes.arrayOf(
+    PropTypes.object,
+  ).isRequired,
+  onInputChange: PropTypes.func.isRequired,
+};
 
 export default RegistrationsList;
