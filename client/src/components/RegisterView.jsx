@@ -9,6 +9,12 @@ import Client from '../Client';
 import Loader from './Loader';
 
 class RegisterView extends Component {
+  constructor() {
+    super();
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
   state = {
     fields: {
       email: '',
@@ -131,32 +137,32 @@ class RegisterView extends Component {
     return (
       <div className="lightbox register">
         <h2 className="uppercase">{language.register}</h2>
-        <form className="center" onSubmit={this.onFormSubmit.bind(this)}>
+        <form className="center" onSubmit={this.onFormSubmit}>
           <label htmlFor="email" className="capitalize">{language.email}:</label>
           <input
             name="email"
             type="text"
             value={this.state.fields.email}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
           />
           <label htmlFor="password" className="capitalize">{language.password}:</label>
           <input
             name="password"
             value={this.state.fields.password}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             type="password"
           />
           <label htmlFor="confirmpassword" className="capitalize">{language.confirmPassword}:</label>
           <input
             name="confirmpassword"
             value={this.state.fields.confirmpassword}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             type="password"
           />
           <label htmlFor="org" className="capitalize">{language.organization}:</label>
           <select
             name="org"
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             value={this.state.fields.org}
             defaultValue=""
           >
@@ -171,13 +177,13 @@ class RegisterView extends Component {
             <input
               name="neworg"
               value={this.state.fields.neworg}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
               type="text"
             />
           </div>
           <Recaptcha
             sitekey="6Le13yAUAAAAAC4D1Ml81bW3WlGN83bZo4FzHU7Z"
-            verifyCallback={this.callback.bind(this)}
+            verifyCallback={this.callback}
           />
           <ErrorList errors={this.state.fieldErrors} />
           <input
