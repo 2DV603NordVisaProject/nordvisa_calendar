@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Client from '../Client';
 import Link from 'react-router/Link';
+import Client from '../Client';
+
 
 class MenuList extends Component {
   render() {
