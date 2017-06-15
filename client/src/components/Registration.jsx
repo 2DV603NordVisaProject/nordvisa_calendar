@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const Registration = (props, context) => {
   const language = context.language.PendingRegistrationsView;
+  const organization = props.registration.organization;
 
   return (
     <li>
@@ -11,7 +12,11 @@ const Registration = (props, context) => {
           <p>{props.registration.email}</p>
         </div>
         <div className="org">
-          <p>{props.registration.organization.name || props.registration.organization.changePending}</p>
+          <p>
+            {
+              organization.name || organization.changePending
+            }
+          </p>
         </div>
         <div className="approve-action">
           <select onChange={props.onInputChange} className="capitalize small-form" name={props.registration.id}>
