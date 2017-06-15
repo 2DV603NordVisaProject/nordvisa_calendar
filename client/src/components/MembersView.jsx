@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './MembersView.css';
 import Client from '../Client';
 import MembersList from './MembersList';
 import ConfirmMessage from './ConfirmMessage';
-import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 
 class MembersView extends Component {
