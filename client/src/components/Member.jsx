@@ -29,4 +29,13 @@ Member.contextTypes = {
   language: PropTypes.object,
 };
 
+Member.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  member: PropTypes.shape({
+    id: PropTypes.string,
+    email: PropTypes.string,
+    role: PropTypes.string,
+  }).isRequired,
+};
+
 export default Member;
