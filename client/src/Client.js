@@ -169,20 +169,18 @@ const Client = {
     return true;
   },
   getUserLevel: () => {
-    // TODO: accessLevel is used before it's defined. Will always return undefined?
-    if (getCookie(accessLevel) === null) {
-      return;
+    if (getCookie('accessLevel') === null) {
+      return 0;
     }
 
-    const userLevel = getCookie(accessLevel);
+    const userLevel = getCookie('accessLevel');
 
-    let accessLevel = 0;
     if (userLevel === 'ADMIN') {
-      accessLevel = 1;
+      return 1;
     } else if (userLevel === 'SUPER_ADMIN') {
-      accessLevel = 2;
+      return 2;
     }
-    return accessLevel;
+    return 0;
   },
 };
 
