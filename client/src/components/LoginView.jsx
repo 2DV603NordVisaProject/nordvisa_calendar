@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import './LoginView.css';
-import { isEmail } from 'validator';
-import ErrorList from './ErrorList';
-import Client from '../Client';
-import Redirect from 'react-router/Redirect';
-import Loader from './Loader';
 import Link from 'react-router/Link';
 import PropTypes from 'prop-types';
+import { isEmail } from 'validator';
+import Redirect from 'react-router/Redirect';
+import './LoginView.css';
+import ErrorList from './ErrorList';
+import Client from '../Client';
+import Loader from './Loader';
+
 
 class LoginView extends Component {
   state = {
