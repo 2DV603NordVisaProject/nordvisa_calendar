@@ -1,7 +1,7 @@
 import React from 'react';
 import './Loader.css';
 
-const Loader = props => (
+const Loader = () => (
   <div className="load-container">
     <div className="loader" />
     <p className="load">Loading</p>
