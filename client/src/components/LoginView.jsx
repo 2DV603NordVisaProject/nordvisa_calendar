@@ -10,6 +10,12 @@ import Loader from './Loader';
 
 
 class LoginView extends Component {
+  constructor() {
+    super();
+
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+  }
   state = {
     fields: {
       email: '',
@@ -99,18 +105,18 @@ class LoginView extends Component {
     return (
       <div className="lightbox login">
         <h2 className="uppercase">{language.LoginView.login}</h2>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
+        <form onSubmit={this.onFormSubmit}>
           <label htmlFor="email" className="capitalize">{language.LoginView.email}:</label>
           <input
             name="email"
             value={this.state.fields.email}
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             type="text"
           />
           <label htmlFor="password" className="capitalize">{language.LoginView.password}:</label>
           <input
             name="password"
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             value={this.state.fields.password}
             type="password"
           />
