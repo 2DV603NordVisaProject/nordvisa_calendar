@@ -21,8 +21,8 @@ class RegisterView extends Component {
     organizations: [],
     newOrg: 'hidden',
     fieldErrors: [],
-    _loading: false,
-    _redirect: false,
+    loading: false,
+    redirect: false,
   }
 
   componentWillMount() {
@@ -63,7 +63,7 @@ class RegisterView extends Component {
     if (fieldErrors.length) return;
 
     // Do registration
-    this.setState({ _loading: true });
+    this.setState({ loading: true });
     const uri = '/api/visitor/registration';
     const user = {
       email: this.state.fields.email,
@@ -74,14 +74,14 @@ class RegisterView extends Component {
     };
 
     Client.post(user, uri).then((res) => {
-      this.setState({ _loading: false });
+      this.setState({ loading: false });
       if (res.hasOwnProperty('message')) {
         fieldErrors = [];
         fieldErrors.push(res.message);
         this.setState({ fieldErrors });
         this.forceUpdate();
       } else {
-        this.setState({ _redirect: true });
+        this.setState({ redirect: true });
         this.setState({ fields: {
           email: '',
           password: '',
@@ -115,11 +115,11 @@ class RegisterView extends Component {
   render() {
     const language = this.context.language.RegisterView;
 
-    if (this.state._loading) {
+    if (this.state.loading) {
       return (
         <Loader />
       );
-    } else if (this.state._redirect) {
+    } else if (this.state.redirect) {
       return (
         <Redirect to={{
           pathname: '/login',
