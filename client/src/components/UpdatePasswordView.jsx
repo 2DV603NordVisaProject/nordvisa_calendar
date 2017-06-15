@@ -21,15 +21,6 @@ class UpdatePasswordView extends Component {
     this.setState({ fields });
   }
 
-  validate(fields) {
-    const errors = [];
-    if (!fields.password || !fields.passwordConfirmation) errors.push(this.context.language.Errors.passwordRequired);
-    if (fields.password !== fields.passwordConfirmation) errors.push(this.context.language.Errors.passwordDoesNotMatch);
-    if (fields.password.length < 10) errors.push(this.context.language.Errors.shortPassword);
-    if (fields.password.length > 255) errors.push(this.context.language.Errors.longPassword);
-    return errors;
-  }
-
   onFormSubmit(event) {
     event.preventDefault();
 
@@ -56,6 +47,15 @@ class UpdatePasswordView extends Component {
             } });
         }
       });
+  }
+
+  validate(fields) {
+    const errors = [];
+    if (!fields.password || !fields.passwordConfirmation) errors.push(this.context.language.Errors.passwordRequired);
+    if (fields.password !== fields.passwordConfirmation) errors.push(this.context.language.Errors.passwordDoesNotMatch);
+    if (fields.password.length < 10) errors.push(this.context.language.Errors.shortPassword);
+    if (fields.password.length > 255) errors.push(this.context.language.Errors.longPassword);
+    return errors;
   }
 
   render() {
