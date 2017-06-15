@@ -12,7 +12,7 @@ const Member = (props) => {
           <p>{props.member.email}</p>
         </div>
         <div className="access-select">
-          <select className="select-full capitalize" onChange={props.onChange.bind(this)} name={props.member.id} defaultValue={props.member.role}>
+          <select className="select-full capitalize" onChange={props.onChange} name={props.member.id} defaultValue={props.member.role}>
             <option value="USER" className="capitalize" disabled={props.member.role === 'SUPER_ADMIN'}>{language.user}</option>
             <option value="ADMIN" className="capitalize" disabled={props.member.role === 'SUPER_ADMIN'}>{language.admin}</option>
             <option value="SUPER_ADMIN" className="capitalize">{language.superadmin}</option>
