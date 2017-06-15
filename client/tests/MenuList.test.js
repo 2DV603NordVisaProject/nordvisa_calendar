@@ -7,17 +7,16 @@ import en from '../src/i18n/en';
 describe('MenuList', () => {
   let wrapper;
 
-  let context = { language: en };
+  const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<MenuList/>, { context });
+    wrapper = shallow(<MenuList />, { context });
   });
 
   describe('user is not logged in', () => {
-
     const Client = {
       getUserLevel: jest.fn(),
-    }
+    };
 
     it('should have 4 menu items', () => {
       // Body...

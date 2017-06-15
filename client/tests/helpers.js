@@ -1,13 +1,13 @@
 const generateString = (length) => {
-  let text "";
-  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   let i;
-  for (i = 0; i < times; i++) {
+  for (i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
 
   return text;
-}
+};
 
-export default = { generateString }
+export default { generateString };

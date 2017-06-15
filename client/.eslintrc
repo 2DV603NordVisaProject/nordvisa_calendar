@@ -9,6 +9,7 @@
   },
   "parser": "babel-eslint",
   "rules": {
+    "allowForLoopAfterthoughts": 0,
     "no-console": 0,
     "strict": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
