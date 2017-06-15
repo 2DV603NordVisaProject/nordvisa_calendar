@@ -30,12 +30,6 @@ class WidgetView extends Component {
       });
   }
 
-  validate(fields) {
-    const errors = [];
-    if (!fields.region) errors.push(this.context.language.Errors.chooseRegion);
-    return errors;
-  }
-
   onFormSubmit(event) {
     event.preventDefault();
     const fieldErrors = this.validate(this.state.fields);
@@ -73,6 +67,12 @@ class WidgetView extends Component {
     }
 
     this.setState({ showProvince });
+  }
+
+  validate(fields) {
+    const errors = [];
+    if (!fields.region) errors.push(this.context.language.Errors.chooseRegion);
+    return errors;
   }
 
   render() {
