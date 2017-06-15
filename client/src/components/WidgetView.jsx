@@ -8,10 +8,6 @@ import Client from '../Client';
 
 class WidgetView extends Component {
 
-  static generateHeadCode() {
-    return `<script src="${location.protocol}//${location.host}/widget.js}></script>`;
-  }
-
   constructor() {
     super();
 
@@ -51,9 +47,10 @@ class WidgetView extends Component {
     if (fieldErrors.length) return;
 
     const bodyCode = this.generateBodyCode(this.state.fields.region, this.state.fields.province);
+    const headCode = `<script src="${location.protocol}//${location.host}/widget.js}></script>`;
 
     this.setState({ isGenerated: true });
-    this.setState({ headCode: this.generateHeadCode() });
+    this.setState({ headCode });
     this.setState({ bodyCode });
   }
 
