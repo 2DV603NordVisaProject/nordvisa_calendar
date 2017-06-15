@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import UpdatePassword from './UpdatePassword';
 import UpdateAccount from './UpdateAccount';
-import PropTypes from 'prop-types';
 
 class MyAccountView extends Component {
   render() {
