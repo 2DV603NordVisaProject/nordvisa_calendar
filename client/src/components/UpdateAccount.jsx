@@ -5,6 +5,13 @@ import ErrorList from './ErrorList';
 import Client from '../Client';
 
 class UpdateAccount extends Component {
+  constructor() {
+    super();
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
+
   state = {
     fields: {
       id: null,
@@ -92,14 +99,14 @@ class UpdateAccount extends Component {
     return (
       <div className="box">
         <h3 className="capitalize">{language.updateDetails}</h3>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
+        <form onSubmit={this.onFormSubmit}>
           <label htmlFor="email" className="capitalize">{language.email}:</label>
-          <input type="text" name="email" value={this.state.fields.email} onChange={this.onInputChange.bind(this)} />
+          <input type="text" name="email" value={this.state.fields.email} onChange={this.onInputChange} />
           <label htmlFor="org" className="capitalize">{language.organization}:</label>
           <select
             className="capitalize"
             name="org"
-            onChange={this.onInputChange.bind(this)}
+            onChange={this.onInputChange}
             value={this.state.fields.org}
             defaultValue=""
           >
@@ -114,7 +121,7 @@ class UpdateAccount extends Component {
             <input
               name="neworg"
               value={this.state.fields.neworg}
-              onChange={this.onInputChange.bind(this)}
+              onChange={this.onInputChange}
               type="text"
             />
           </div>
