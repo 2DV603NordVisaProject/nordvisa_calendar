@@ -43,8 +43,6 @@ class RegisterView extends Component {
     fields[name] = value;
     this.setState({ fields });
 
-    const hiddenForm = document.querySelector('#on-select-change');
-
     if (this.state.fields.org === 'new') {
       const newOrg = '';
       this.setState({ newOrg });
