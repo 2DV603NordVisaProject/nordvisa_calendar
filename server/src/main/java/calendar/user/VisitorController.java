@@ -1,6 +1,8 @@
 package calendar.user;
 
 import calendar.user.dto.*;
+import calendar.user.exceptions.InvalidLinkException;
+import calendar.user.exceptions.UserDoesNotExistException;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -74,12 +76,16 @@ public class VisitorController {
      * link, and then calls sendPasswordResetEmail on Email object.
      *
      * @param dto           Object containing data sent to server from client
-     * @throws Exception    Invalid data, database errors
      */
     @RequestMapping(value = "/request_password_recovery", method = RequestMethod.POST)
-    public void requestPasswordRecovery(@ModelAttribute PasswordRecoveryRequestDTO dto)
-            throws Exception {
+    public void requestPasswordRecovery(@ModelAttribute PasswordRecoveryRequestDTO dto) throws
+            UserDoesNotExistException {
         User user = dao.getUserByEmail(dto.getEmail());
+
+        if(user == null) {
+            throw new UserDoesNotExistException("No user with email " + dto.getEmail() + " exists");
+        }
+
         user.setResetPasswordLink(new AuthenticationLink(generateRandomString(),
                 DateTime.now().getMillis()));
         dao.update(user);
@@ -102,11 +108,11 @@ public class VisitorController {
         User user = dao.getUserByPasswordRecoveryLink(dto.getUrlId());
 
         if (user == null) {
-            throw new Exception("This link is invalid");
+            throw new InvalidLinkException("This password recovery link is not valid");
         }
 
         if(user.getResetPasswordLink().hasExpired()) {
-            throw new Exception("This link has expired");
+            throw new InvalidLinkException("This password recovery request has expired");
         }
 
         user.setResetPasswordLink(new AuthenticationLink("", 0));
@@ -131,27 +137,26 @@ public class VisitorController {
         if(user == null) {
             return "This link is invalid";
         }
-        else if(user.getValidateEmailLink().hasExpired()) {
+
+        if(user.getValidateEmailLink().hasExpired()) {
             return "This link has expired";
         }
-        else {
-            user.setValidateEmailLink(new AuthenticationLink("", 0));
-            user.setEmail(user.getEmailChange());
-            user.setEmailChange("");
-            dao.update(user);
-            response.sendRedirect("/");
-            return "";
-        }
+
+        user.setValidateEmailLink(new AuthenticationLink("", 0));
+        user.setEmail(user.getEmailChange());
+        user.setEmailChange("");
+        dao.update(user);
+        response.sendRedirect("/");
+        return "";
     }
 
     /**
      * Sends names of all organization to the requester
      *
      * @return              A List of String with names of each organization in the system
-     * @throws Exception    Database errors
      */
     @RequestMapping(value = "/organizations", method = RequestMethod.GET)
-    public List<String> getOrganizations() throws Exception {
+    public List<String> getOrganizations() {
         return dao.getOrganizations();
     }
 
