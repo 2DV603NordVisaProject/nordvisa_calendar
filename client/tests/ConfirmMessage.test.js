@@ -71,7 +71,7 @@ describe('ConfirmMessage', () => {
       });
 
       it("should call prop func. 'onClick'", () => {
-        // Body...
+        expect(onClick.mock.calls.length).toBe(1);
       });
     });
   });
