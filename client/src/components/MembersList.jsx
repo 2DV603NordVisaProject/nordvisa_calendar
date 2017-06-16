@@ -5,8 +5,8 @@ import Member from './Member';
 const MembersList = (props, context) => (
   <div className="members-list">
     <div className="list-header">
-      <p className="capitalize">{context.language.MembersView.language.email}</p>
-      <p className="capitalize">{context.language.MembersView.language.access}</p>
+      <p className="capitalize">{context.language.MembersView.email}</p>
+      <p className="capitalize">{context.language.MembersView.access}</p>
     </div>
     <ul>
       {

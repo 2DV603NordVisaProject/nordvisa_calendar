@@ -5,7 +5,7 @@ import Event from './Event';
 const EventsList = (props, context) => (
   <div className="event-list">
     <div className="list-header">
-      <p className="capitalize">{context.language.MyEventsVeiw.events}</p>
+      <p className="capitalize">{context.language.MyEventsView.events}</p>
     </div>
     <ul>
       {

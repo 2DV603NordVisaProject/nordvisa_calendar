@@ -64,7 +64,6 @@ class MyEventsView extends Component {
   }
 
   render() {
-    console.log(this);
     const language = this.context.language.MyEventsView;
 
     return (
