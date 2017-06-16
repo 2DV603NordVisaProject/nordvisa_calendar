@@ -28,7 +28,7 @@ class MyEventsView extends Component {
       .then((events) => {
         console.log(events);
         if (Array.isArray(events)) {
-          this.setState({ events }, () => { console.log(this.state); });
+          this.setState({ events });
         }
       });
   }

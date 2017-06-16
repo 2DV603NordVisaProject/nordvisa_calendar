@@ -28,7 +28,7 @@ class MembersView extends Component {
 
     Client.get(uri)
       .then((members) => {
-        if (Array.isArray(members)) {
+        if (members.isArray) {
           this.setState({ members });
         }
       });
@@ -116,7 +116,6 @@ class MembersView extends Component {
   }
 
   render() {
-    console.log(this);
     const language = this.context.language.MembersView;
 
     return (
