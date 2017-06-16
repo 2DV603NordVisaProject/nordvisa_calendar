@@ -26,7 +26,7 @@ class ConfirmMessage extends Component {
 
   onYesClick() {
     this.props.onClick();
-    this.onNoClick();
+    this.setState({ pop: false });
   }
 
   render() {

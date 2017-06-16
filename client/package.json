@@ -24,6 +24,9 @@
     "eslint-plugin-jest": "^20.0.3",
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.1.0",
+    "jest": "^20.0.4",
+    "jest-resolve-dependencies": "^20.0.3",
+    "jest-runtime": "^19.0.4",
     "react-addons-test-utils": "^15.5.1",
     "react-scripts": "0.9.5",
     "react-test-render": "^1.0.3"
