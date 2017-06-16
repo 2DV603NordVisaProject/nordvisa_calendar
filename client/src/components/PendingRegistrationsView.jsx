@@ -114,7 +114,6 @@ class PendingRegistrationsView extends Component {
   }
 
   render() {
-    console.log(this);
     const language = this.context.language.PendingRegistrationsView;
 
     return (

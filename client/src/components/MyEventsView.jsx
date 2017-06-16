@@ -26,7 +26,6 @@ class MyEventsView extends Component {
     const uri = '/api/event/get_manageable';
     Client.get(uri)
       .then((events) => {
-        console.log(events);
         if (Array.isArray(events)) {
           this.setState({ events });
         }

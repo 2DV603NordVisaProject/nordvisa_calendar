@@ -10,7 +10,7 @@ const EventsList = (props, context) => (
     <ul>
       {
         props.events.map(event => (
-          <Event key={null} event={event} delete={props.delete} />
+          <Event key={event.id} event={event} delete={props.delete} />
         ))
       }
     </ul>

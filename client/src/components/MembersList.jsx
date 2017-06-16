@@ -11,7 +11,7 @@ const MembersList = (props, context) => (
     <ul>
       {
         props.members.map(member => (
-          <Member key={null} member={member} onChange={props.onChange} />
+          <Member key={member.id} member={member} onChange={props.onChange} />
         ))
       }
     </ul>

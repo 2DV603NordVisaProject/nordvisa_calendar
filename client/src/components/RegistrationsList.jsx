@@ -6,7 +6,11 @@ const RegistrationsList = props => (
   <ul>
     {
       props.registrations.map(registration => (
-        <Registration key={null} registration={registration} onInputChange={props.onInputChange} />
+        <Registration
+          key={registration.id}
+          registration={registration}
+          onInputChange={props.onInputChange}
+        />
       ))
     }
   </ul>
