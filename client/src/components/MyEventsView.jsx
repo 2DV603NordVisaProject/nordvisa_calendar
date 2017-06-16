@@ -26,7 +26,7 @@ class MyEventsView extends Component {
     const uri = '/api/event/get_manageable';
     Client.get(uri)
       .then((events) => {
-        if (events.isArray) {
+        if (Array.isArray(events)) {
           this.setState({ events });
         }
       });
@@ -75,8 +75,8 @@ class MyEventsView extends Component {
   }
 }
 
-export default MyEventsView;
-
 MyEventsView.contextTypes = {
   language: PropTypes.object,
 };
+
+export default MyEventsView;
