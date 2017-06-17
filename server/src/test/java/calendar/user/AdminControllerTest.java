@@ -127,6 +127,7 @@ public class AdminControllerTest {
         verify(dao, never()).update(any(User.class));
     }
 
+    // TODO: Update using createUserMock and createOrganizationMock
     @Test
     public void getPendingRegistrations() {
         String adminEmail = "test@test.com";
@@ -278,5 +279,73 @@ public class AdminControllerTest {
         verify(dao, times(1)).update(user);
         verify(email, times(1)).sendDenialEmail(user.getEmail(),
                 "organization change");
+    }
+
+    @Test
+    public void getManageableUsersAsGlobalAdmin() {
+        Organization adminOrg = createOrganizationMock("my_org", true, "_");
+        User admin = createUserMock("1", "admin@test.com", "ADMIN", 111, 112, adminOrg);
+
+        Organization manageableUserOrg = createOrganizationMock("my_org", true, "_");
+        User manageableUser = createUserMock("2", "user1@test.com", "USER", 222, 223, manageableUserOrg);
+
+        Organization nonManageableUserOrg = createOrganizationMock("", true, "_");
+        User nonManageableUser = createUserMock("3", "user2@test.com", "USER", 333, 334, nonManageableUserOrg);
+
+        ArrayList<User> allUsers = new ArrayList<>();
+        allUsers.add(admin);
+        allUsers.add(manageableUser);
+        allUsers.add(nonManageableUser);
+
+        when(currentUser.getEmailAddress()).thenReturn("admin@test.com");
+        when(dao.getUserByEmail("admin@test.com")).thenReturn(admin);
+        when(dao.getAllUsers()).thenReturn(allUsers);
+
+        when(admin.canManage(admin)).thenReturn(true);
+        when(admin.canManage(manageableUser)).thenReturn(true);
+        when(admin.canManage(nonManageableUser)).thenReturn(false);
+
+        ArrayList<UserDTO> results = sut.getManageableUsers();
+
+        assertEquals(2, results.size());
+
+        assertEquals(admin.getId(), results.get(0).getId());
+        assertEquals(admin.getEmail(), results.get(0).getEmail());
+        assertEquals(admin.getRole(), results.get(0).getRole());
+        assertEquals(admin.getCreatedAt(), results.get(0).getCreatedAt());
+        assertEquals(admin.getUpdatedAt(), results.get(0).getUpdatedAt());
+        assertEquals(admin.getOrganization(), results.get(0).getOrganization());
+
+        assertEquals(manageableUser.getId(), results.get(1).getId());
+        assertEquals(manageableUser.getEmail(), results.get(1).getEmail());
+        assertEquals(manageableUser.getRole(), results.get(1).getRole());
+        assertEquals(manageableUser.getCreatedAt(), results.get(1).getCreatedAt());
+        assertEquals(manageableUser.getUpdatedAt(), results.get(1).getUpdatedAt());
+        assertEquals(manageableUser.getOrganization(), results.get(1).getOrganization());
+    }
+
+    private User createUserMock(String id, String email, String role, long createdAt,
+                                long updatedAt, Organization organization) {
+        User user = mock(User.class);
+
+        when(user.getId()).thenReturn(id);
+        when(user.getEmailChange()).thenReturn(email);
+        when(user.getRole()).thenReturn(role);
+        when(user.getCreatedAt()).thenReturn(createdAt);
+        when(user.getUpdatedAt()).thenReturn(updatedAt);
+        when(user.getOrganization()).thenReturn(organization);
+
+        return user;
+    }
+
+    private Organization createOrganizationMock(String name, boolean approved,
+                                                String changePending) {
+        Organization organization = mock(Organization.class);
+
+        when(organization.getName()).thenReturn(name);
+        when(organization.isApproved()).thenReturn(approved);
+        when(organization.getChangePending()).thenReturn(changePending);
+
+        return organization;
     }
 }

@@ -135,34 +135,21 @@ public class AdminController {
      * events created by the user.
      *
      * @return              An ArrayList containing UserDTOs of all user the current user can manage
-     * @throws Exception    Database errors
      */
     @RequestMapping(value = "/manageableUsers", method = RequestMethod.GET)
-    public ArrayList<UserDTO> getManageableUsers() throws Exception {
+    public ArrayList<UserDTO> getManageableUsers() {
         String email = currentUser.getEmailAddress();
-        User user = dao.getUserByEmail(email);
+        User admin = dao.getUserByEmail(email);
 
-        String adminOrg = user.getOrganization().getName(); // TODO: NullPointerException
+        ArrayList<User> allUsers = dao.getAllUsers();
+        ArrayList<UserDTO> manageableUsers = new ArrayList<>();
 
-        ArrayList<User> users = new ArrayList<>();
-
-        if(adminOrg.equals("")) {
-            List<String> orgs = dao.getOrganizations();
-
-            for(String org : orgs) {
-                users.addAll(dao.getUsersByOrganization(org));
+        for (User user : allUsers) {
+            if(admin.canManage(user)) {
+                manageableUsers.add(new UserDTO(user));
             }
         }
-        else {
-            users.addAll(dao.getUsersByOrganization(adminOrg));
-        }
 
-        ArrayList<UserDTO> dto = new ArrayList<>();
-
-        for(User orgUser : users) {
-            dto.add(new UserDTO(orgUser));
-        }
-
-        return dto;
+        return manageableUsers;
     }
 }
