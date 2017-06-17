@@ -109,11 +109,38 @@ public class UserTest {
     }
 
     @Test
+    public void canNotManageUserWhoIsNull() {
+        sut.setId("1");
+        sut.setRole("USER");
+
+        assertFalse(sut.canManage(null));
+    }
+
+    @Test
+    public void canNotManageUnApprovedUser() {
+        sut.setId("1");
+        sut.setRole("USER");
+
+        Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(false);
+        when(organization.compare(targetOrgMock)).thenReturn(true);
+        when(organization.getName()).thenReturn("");
+
+        User target = mock(User.class);
+        when(target.getId()).thenReturn("1");
+        when(target.getRole()).thenReturn("USER");
+        when(target.getOrganization()).thenReturn(targetOrgMock);
+
+        assertFalse(sut.canManage(target));
+    }
+
+    @Test
     public void userCanManageHimself() {
         sut.setId("1");
         sut.setRole("USER");
 
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -131,6 +158,7 @@ public class UserTest {
         sut.setRole("USER");
 
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -148,6 +176,7 @@ public class UserTest {
         sut.setRole("USER");
 
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -165,6 +194,7 @@ public class UserTest {
         sut.setRole("USER");
 
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -182,6 +212,7 @@ public class UserTest {
         sut.setRole("ADMIN");
 
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("my_org");
 
@@ -200,6 +231,7 @@ public class UserTest {
         sut.setRole("ADMIN");
 
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("my_org");
 
@@ -218,6 +250,7 @@ public class UserTest {
         sut.setRole("ADMIN");
 
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(false);
         when(organization.getName()).thenReturn("my_org");
 
@@ -236,6 +269,7 @@ public class UserTest {
         sut.setRole("ADMIN");
 
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("my_org");
 
@@ -254,6 +288,7 @@ public class UserTest {
         sut.setRole("ADMIN");
 
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -272,6 +307,7 @@ public class UserTest {
         sut.setRole("ADMIN");
 
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -289,6 +325,7 @@ public class UserTest {
         sut.setId("1");
         sut.setRole("ADMIN");
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(false);
         when(organization.getName()).thenReturn("");
 
@@ -306,6 +343,7 @@ public class UserTest {
         sut.setId("1");
         sut.setRole("ADMIN");
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(false);
         when(organization.getName()).thenReturn("");
 
@@ -323,6 +361,7 @@ public class UserTest {
         sut.setId("1");
         sut.setRole("ADMIN");
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -340,6 +379,7 @@ public class UserTest {
         sut.setId("1");
         sut.setRole("ADMIN");
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -357,6 +397,7 @@ public class UserTest {
         sut.setId("1");
         sut.setRole("SUPER_ADMIN");
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -374,6 +415,7 @@ public class UserTest {
         sut.setId("1");
         sut.setRole("SUPER_ADMIN");
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -391,6 +433,7 @@ public class UserTest {
         sut.setId("1");
         sut.setRole("SUPER_ADMIN");
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(false);
         when(organization.getName()).thenReturn("");
 
@@ -408,6 +451,7 @@ public class UserTest {
         sut.setId("1");
         sut.setRole("SUPER_ADMIN");
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(false);
         when(organization.getName()).thenReturn("");
 
@@ -425,6 +469,7 @@ public class UserTest {
         sut.setId("1");
         sut.setRole("SUPER_ADMIN");
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 
@@ -442,6 +487,7 @@ public class UserTest {
         sut.setId("1");
         sut.setRole("SUPER_ADMIN");
         Organization targetOrgMock = mock(Organization.class);
+        when(targetOrgMock.isApproved()).thenReturn(true);
         when(organization.compare(targetOrgMock)).thenReturn(true);
         when(organization.getName()).thenReturn("");
 

@@ -249,7 +249,10 @@ public class User {
      */
     boolean canManage(User target) {
         if(target == null) {
-            return getRole().equals("SUPER_ADMIN");
+            return false;
+        }
+        else if(!target.getOrganization().isApproved()) {
+            return false;
         }
         else if(getId().equals(target.getId())) {
             return true;
