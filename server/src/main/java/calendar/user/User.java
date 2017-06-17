@@ -1,17 +1,12 @@
 package calendar.user;
 
 import calendar.user.dto.RegistrationDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Class User
@@ -112,7 +107,7 @@ public class User {
      * Getter
      * @return The reset password link for this User
      */
-    public AuthenticationLink getResetPasswordLink() {
+    AuthenticationLink getResetPasswordLink() {
         return resetPasswordLink;
     }
 
@@ -120,7 +115,7 @@ public class User {
      * Getter
      * @return The validate email link of this User
      */
-    public AuthenticationLink getValidateEmailLink() {
+    AuthenticationLink getValidateEmailLink() {
         return validateEmailLink;
     }
 
@@ -148,7 +143,7 @@ public class User {
         return organization;
     }
 
-    public String getEmailChange() {
+    String getEmailChange() {
         return emailChange;
     }
 
@@ -235,6 +230,11 @@ public class User {
         return roles;
     }
 
+    /**
+     * Returns a boolean value which describes if the User is approved and has validated email
+     *
+     * @return True if User is valid, false if not.
+     */
     public boolean valid() {
         return organization.isApproved() && !email.equals(emailChange);
     }

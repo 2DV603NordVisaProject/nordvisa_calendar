@@ -108,6 +108,151 @@ public class UserTest {
         assertEquals(email, user.getEmailChange());
     }
 
+    @Test
+    public void getterSetterId() {
+        String id = "id";
+        sut.setId(id);
+        assertEquals(id, sut.getId());
+    }
+
+    @Test
+    public void getterSetterEmail() {
+        String email = "test@test.com";
+        sut.setEmail(email);
+        assertEquals(email, sut.getEmail());
+    }
+
+    @Test
+    public void getterSetterPassword() {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        String password = "my_password";
+        sut.setPassword(password);
+        assertTrue(encoder.matches(password, sut.getPassword()));
+    }
+
+    @Test
+    public void getterSetterRole() {
+        String role = "USER";
+        sut.setRole(role);
+        assertEquals(role, sut.getRole());
+    }
+
+    @Test
+    public void getterSetterResetPasswordLink() {
+        AuthenticationLink resetPasswordLink = mock(AuthenticationLink.class);
+        sut.setResetPasswordLink(resetPasswordLink);
+        assertEquals(resetPasswordLink, sut.getResetPasswordLink());
+    }
+
+    @Test
+    public void getterSetterValidateEmailLink() {
+        AuthenticationLink resetPasswordLink = mock(AuthenticationLink.class);
+        sut.setValidateEmailLink(resetPasswordLink);
+        assertEquals(resetPasswordLink, sut.getValidateEmailLink());
+    }
+
+    @Test
+    public void getterSetterOrganization() {
+        Organization org = mock(Organization.class);
+        sut.setOrganization(org);
+        assertEquals(org, sut.getOrganization());
+    }
+
+    @Test
+    public void getterSetterEmailChange() {
+        String emailChange = "test@test.com";
+        sut.setEmailChange(emailChange);
+        assertEquals(emailChange, sut.getEmailChange());
+    }
+
+    @Test
+    public void fetchAuthoritiesUser() {
+        sut.setRole("USER");
+
+        String[] auth = sut.fetchAuthorities();
+
+        assertEquals(1, auth.length);
+        assertEquals(auth[0], "USER");
+    }
+
+    @Test
+    public void fetchAuthoritiesAdmin() {
+        sut.setRole("ADMIN");
+
+        String[] auth = sut.fetchAuthorities();
+
+        assertEquals(2, auth.length);
+        assertEquals(auth[0], "USER");
+        assertEquals(auth[1], "ADMIN");
+    }
+
+    @Test
+    public void fetchAuthoritiesSuperAdmin() {
+        sut.setRole("SUPER_ADMIN");
+
+        String[] auth = sut.fetchAuthorities();
+
+        assertEquals(3, auth.length);
+        assertEquals(auth[0], "USER");
+        assertEquals(auth[1], "ADMIN");
+        assertEquals(auth[2], "SUPER_ADMIN");
+    }
+
+    @Test
+    public void userApprovedAndValidatedEmailIsValid() {
+        Organization org = mock(Organization.class);
+        when(org.isApproved()).thenReturn(true);
+        sut.setEmail("test@test.com");
+        sut.setEmailChange("");
+        sut.setOrganization(org);
+
+        assertTrue(sut.valid());
+    }
+
+    @Test
+    public void userApprovedButInEmailChangeIsValid() {
+        Organization org = mock(Organization.class);
+        when(org.isApproved()).thenReturn(true);
+        sut.setEmail("test@test.com");
+        sut.setEmailChange("test2@test.com");
+        sut.setOrganization(org);
+
+        assertTrue(sut.valid());
+    }
+
+    @Test
+    public void userApprovedAndButUnvalidatedEmailIsInvalid() {
+        Organization org = mock(Organization.class);
+        when(org.isApproved()).thenReturn(true);
+        sut.setEmail("test@test.com");
+        sut.setEmailChange("test@test.com");
+        sut.setOrganization(org);
+
+        assertFalse(sut.valid());
+    }
+
+    @Test
+    public void userValidEmailButNotApprovedIsInvalid() {
+        Organization org = mock(Organization.class);
+        when(org.isApproved()).thenReturn(false);
+        sut.setEmail("test@test.com");
+        sut.setEmailChange("");
+        sut.setOrganization(org);
+
+        assertFalse(sut.valid());
+    }
+
+    @Test
+    public void userNotApprovedAndEmailNotValidatedIsInvalid() {
+        Organization org = mock(Organization.class);
+        when(org.isApproved()).thenReturn(false);
+        sut.setEmail("test@test.com");
+        sut.setEmailChange("test@test.com");
+        sut.setOrganization(org);
+
+        assertFalse(sut.valid());
+    }
+
     /*
      * ----- CAN MANAGE ----------------------------------------------------------------------------
      */
