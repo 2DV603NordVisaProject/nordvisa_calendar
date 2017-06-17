@@ -98,7 +98,6 @@ public class AdminController {
      *
      * @param dto           Id and approved boolean in an object
      */
-    // TODO: Update sequence diagrams, this method was totaly remade
     @RequestMapping(value = "/registrations", method = RequestMethod.POST)
     public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) {
         User user = dao.getUserById(dto.getId());

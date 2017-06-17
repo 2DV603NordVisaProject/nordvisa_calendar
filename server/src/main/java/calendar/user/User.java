@@ -243,7 +243,6 @@ public class User {
      * The method determines if this user is authorized to manage the other account. Manage involves
      * editing of events created by target user, unregister the account.
      *
-     * TODO: Check/Add logic so a user who's registration is not approved can not be managed.
      * @param target    The target user which this user want to do at action on.
      * @return          True if this user can manage the target user
      */
