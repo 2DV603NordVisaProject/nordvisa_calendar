@@ -272,8 +272,7 @@ public class User {
                     return true;
                 }
             }
-            else if(getOrganization().compare(target.getOrganization()) &&
-                    target.getRole().equals("USER")) {
+            else if(getOrganization().compare(target.getOrganization())) {
                 return true;
             }
         }
