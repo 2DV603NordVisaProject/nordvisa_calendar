@@ -290,7 +290,10 @@ public class User {
      * @return          True if this user is allowed this action. False if not
      */
     boolean canChangeRoleTo(User target, String newRole) {
-        if(getRole().equals("USER")) {
+        if(target == null) {
+            return false;
+        }
+        else if(getRole().equals("USER")) {
             return false;
         }
         else if(target.getRole().equals("SUPER_ADMIN")) {
@@ -322,7 +325,7 @@ public class User {
                 return true;
             }
         }
-        else if(newRole.equals("SUPER_ADMIN") && getRole().equals("SUPER_ADMIN")) {
+        else if(getRole().equals("SUPER_ADMIN")) {
                 return true;
         }
 

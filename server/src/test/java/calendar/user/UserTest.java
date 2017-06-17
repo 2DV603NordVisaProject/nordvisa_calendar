@@ -108,6 +108,10 @@ public class UserTest {
         assertEquals(email, user.getEmailChange());
     }
 
+    /*
+     * ----- CAN MANAGE ----------------------------------------------------------------------------
+     */
+
     @Test
     public void canNotManageUserWhoIsNull() {
         sut.setId("1");
@@ -500,6 +504,35 @@ public class UserTest {
         assertFalse(sut.canManage(target));
     }
 
+    /*
+     * ----- CAN CHANGE ROLE TO --------------------------------------------------------------------
+     */
+
+    @Test
+    public void canNotPromoteUserWhoIsNull() {
+        sut.setId("1");
+        sut.setRole("USER");
+
+        assertFalse(sut.canChangeRoleTo(null, "ADMIN"));
+    }
+
+    @Test
+    public void userCanNotPromoteUserToUser() {
+        sut.setId("1");
+        sut.setRole("USER");
+        Organization targetOrgMock = mock(Organization.class);
+        when(organization.compare(targetOrgMock)).thenReturn(true);
+        when(organization.getName()).thenReturn("");
+
+        User target = mock(User.class);
+        when(target.getId()).thenReturn("2");
+        when(target.getRole()).thenReturn("USER");
+        when(target.getOrganization()).thenReturn(targetOrgMock);
+        when(targetOrgMock.getName()).thenReturn("");
+
+        assertFalse(sut.canChangeRoleTo(target, "USER"));
+    }
+
     @Test
     public void userCanNotPromoteUserToAdmin() {
         sut.setId("1");
@@ -552,6 +585,23 @@ public class UserTest {
     }
 
     @Test
+    public void userCanNotPromoteAdminToAdmin() {
+        sut.setId("1");
+        sut.setRole("USER");
+        Organization targetOrgMock = mock(Organization.class);
+        when(organization.compare(targetOrgMock)).thenReturn(true);
+        when(organization.getName()).thenReturn("");
+
+        User target = mock(User.class);
+        when(target.getId()).thenReturn("2");
+        when(target.getRole()).thenReturn("ADMIN");
+        when(target.getOrganization()).thenReturn(targetOrgMock);
+        when(targetOrgMock.getName()).thenReturn("");
+
+        assertFalse(sut.canChangeRoleTo(target, "ADMIN"));
+    }
+
+    @Test
     public void userCanNotPromoteAdminToSuperAdmin() {
         sut.setId("1");
         sut.setRole("USER");
@@ -586,6 +636,23 @@ public class UserTest {
     }
 
     @Test
+    public void userCanNotPromoteSuperAdminToSuperAdmin() {
+        sut.setId("1");
+        sut.setRole("USER");
+        Organization targetOrgMock = mock(Organization.class);
+        when(organization.compare(targetOrgMock)).thenReturn(true);
+        when(organization.getName()).thenReturn("");
+
+        User target = mock(User.class);
+        when(target.getId()).thenReturn("2");
+        when(target.getRole()).thenReturn("SUPER_ADMIN");
+        when(target.getOrganization()).thenReturn(targetOrgMock);
+        when(targetOrgMock.getName()).thenReturn("");
+
+        assertFalse(sut.canChangeRoleTo(target, "SUPER_ADMIN"));
+    }
+
+    @Test
     public void userCanNotDemoteSuperAdminToAdmin() {
         sut.setId("1");
         sut.setRole("USER");
@@ -602,12 +669,6 @@ public class UserTest {
         assertFalse(sut.canChangeRoleTo(target, "ADMIN"));
     }
 
-
-/*
----- Administrator ---------------------------------------------------------------------------------
-*/
-
-
     @Test
     public void adminCanNotPromoteUserToSuperAdmin() {
         sut.setId("1");
@@ -619,6 +680,57 @@ public class UserTest {
         User target = mock(User.class);
         when(target.getId()).thenReturn("2");
         when(target.getRole()).thenReturn("USER");
+        when(target.getOrganization()).thenReturn(targetOrgMock);
+        when(targetOrgMock.getName()).thenReturn("");
+
+        assertFalse(sut.canChangeRoleTo(target, "SUPER_ADMIN"));
+    }
+
+    @Test
+    public void adminCanNotPromoteUserToUser() {
+        sut.setId("1");
+        sut.setRole("ADMIN");
+        Organization targetOrgMock = mock(Organization.class);
+        when(organization.compare(targetOrgMock)).thenReturn(true);
+        when(organization.getName()).thenReturn("");
+
+        User target = mock(User.class);
+        when(target.getId()).thenReturn("2");
+        when(target.getRole()).thenReturn("USER");
+        when(target.getOrganization()).thenReturn(targetOrgMock);
+        when(targetOrgMock.getName()).thenReturn("");
+
+        assertFalse(sut.canChangeRoleTo(target, "USER"));
+    }
+
+    @Test
+    public void adminCanNotPromoteAdminToAdmin() {
+        sut.setId("1");
+        sut.setRole("ADMIN");
+        Organization targetOrgMock = mock(Organization.class);
+        when(organization.compare(targetOrgMock)).thenReturn(true);
+        when(organization.getName()).thenReturn("");
+
+        User target = mock(User.class);
+        when(target.getId()).thenReturn("2");
+        when(target.getRole()).thenReturn("ADMIN");
+        when(target.getOrganization()).thenReturn(targetOrgMock);
+        when(targetOrgMock.getName()).thenReturn("");
+
+        assertFalse(sut.canChangeRoleTo(target, "ADMIN"));
+    }
+
+    @Test
+    public void adminCanNotPromoteSuperAdminToSuperAdmin() {
+        sut.setId("1");
+        sut.setRole("ADMIN");
+        Organization targetOrgMock = mock(Organization.class);
+        when(organization.compare(targetOrgMock)).thenReturn(true);
+        when(organization.getName()).thenReturn("");
+
+        User target = mock(User.class);
+        when(target.getId()).thenReturn("2");
+        when(target.getRole()).thenReturn("SUPER_ADMIN");
         when(target.getOrganization()).thenReturn(targetOrgMock);
         when(targetOrgMock.getName()).thenReturn("");
 
@@ -675,10 +787,6 @@ public class UserTest {
 
         assertFalse(sut.canChangeRoleTo(target, "USER"));
     }
-
-/*
----- Organization Admin ----------------------------------------------------------------------------
-*/
 
     @Test
     public void orgAdminCanPromoteUserToAdminWithinOrg() {
@@ -765,10 +873,6 @@ public class UserTest {
         assertFalse(sut.canChangeRoleTo(target, "USER"));
     }
 
-/*
----- Global Admin ----------------------------------------------------------------------------------
-*/
-
     @Test
     public void globalAdminCanPromoteUserWithOrgToAdmin() {
         sut.setId("1");
@@ -820,9 +924,22 @@ public class UserTest {
         assertFalse(sut.canChangeRoleTo(target, "USER"));
     }
 
-/*
----- SUPER ADMIN -----------------------------------------------------------------------------------
-*/
+    @Test
+    public void superAdminCanNotPromoteUserToUser() {
+        sut.setId("1");
+        sut.setRole("SUPER_ADMIN");
+        Organization targetOrgMock = mock(Organization.class);
+        when(organization.compare(targetOrgMock)).thenReturn(false);
+        when(organization.getName()).thenReturn("");
+
+        User target = mock(User.class);
+        when(target.getId()).thenReturn("2");
+        when(target.getRole()).thenReturn("USER");
+        when(target.getOrganization()).thenReturn(targetOrgMock);
+        when(targetOrgMock.getName()).thenReturn("");
+
+        assertFalse(sut.canChangeRoleTo(target, "USER"));
+    }
 
     @Test
     public void superAdminCanPromoteUserToAdmin() {
@@ -859,6 +976,23 @@ public class UserTest {
     }
 
     @Test
+    public void superAdminCanNotPromoteAdminToAdmin() {
+        sut.setId("1");
+        sut.setRole("SUPER_ADMIN");
+        Organization targetOrgMock = mock(Organization.class);
+        when(organization.compare(targetOrgMock)).thenReturn(false);
+        when(organization.getName()).thenReturn("");
+
+        User target = mock(User.class);
+        when(target.getId()).thenReturn("2");
+        when(target.getRole()).thenReturn("ADMIN");
+        when(target.getOrganization()).thenReturn(targetOrgMock);
+        when(targetOrgMock.getName()).thenReturn("");
+
+        assertFalse(sut.canChangeRoleTo(target, "ADMIN"));
+    }
+
+    @Test
     public void superAdminCanPromoteAdminToSuperAdmin() {
         sut.setId("1");
         sut.setRole("SUPER_ADMIN");
@@ -890,6 +1024,23 @@ public class UserTest {
         when(targetOrgMock.getName()).thenReturn("");
 
         assertTrue(sut.canChangeRoleTo(target, "USER"));
+    }
+
+    @Test
+    public void superAdminCanNotPromoteSuperAdminToSuperAdmin() {
+        sut.setId("1");
+        sut.setRole("SUPER_ADMIN");
+        Organization targetOrgMock = mock(Organization.class);
+        when(organization.compare(targetOrgMock)).thenReturn(false);
+        when(organization.getName()).thenReturn("");
+
+        User target = mock(User.class);
+        when(target.getId()).thenReturn("2");
+        when(target.getRole()).thenReturn("SUPER_ADMIN");
+        when(target.getOrganization()).thenReturn(targetOrgMock);
+        when(targetOrgMock.getName()).thenReturn("");
+
+        assertFalse(sut.canChangeRoleTo(target, "SUPER_ADMIN"));
     }
 
     @Test
