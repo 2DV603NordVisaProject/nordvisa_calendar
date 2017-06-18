@@ -1,17 +1,12 @@
 package calendar.user;
 
 import calendar.user.dto.RegistrationDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Class User
@@ -112,7 +107,7 @@ public class User {
      * Getter
      * @return The reset password link for this User
      */
-    public AuthenticationLink getResetPasswordLink() {
+    AuthenticationLink getResetPasswordLink() {
         return resetPasswordLink;
     }
 
@@ -120,7 +115,7 @@ public class User {
      * Getter
      * @return The validate email link of this User
      */
-    public AuthenticationLink getValidateEmailLink() {
+    AuthenticationLink getValidateEmailLink() {
         return validateEmailLink;
     }
 
@@ -148,7 +143,7 @@ public class User {
         return organization;
     }
 
-    public String getEmailChange() {
+    String getEmailChange() {
         return emailChange;
     }
 
@@ -235,6 +230,11 @@ public class User {
         return roles;
     }
 
+    /**
+     * Returns a boolean value which describes if the User is approved and has validated email
+     *
+     * @return True if User is valid, false if not.
+     */
     public boolean valid() {
         return organization.isApproved() && !email.equals(emailChange);
     }
@@ -248,7 +248,10 @@ public class User {
      */
     boolean canManage(User target) {
         if(target == null) {
-            return getRole().equals("SUPER_ADMIN");
+            return false;
+        }
+        else if(!target.getOrganization().isApproved()) {
+            return false;
         }
         else if(getId().equals(target.getId())) {
             return true;
@@ -268,8 +271,7 @@ public class User {
                     return true;
                 }
             }
-            else if(getOrganization().compare(target.getOrganization()) &&
-                    target.getRole().equals("USER")) {
+            else if(getOrganization().compare(target.getOrganization())) {
                 return true;
             }
         }
@@ -286,7 +288,10 @@ public class User {
      * @return          True if this user is allowed this action. False if not
      */
     boolean canChangeRoleTo(User target, String newRole) {
-        if(getRole().equals("USER")) {
+        if(target == null) {
+            return false;
+        }
+        else if(getRole().equals("USER")) {
             return false;
         }
         else if(target.getRole().equals("SUPER_ADMIN")) {
@@ -318,7 +323,7 @@ public class User {
                 return true;
             }
         }
-        else if(newRole.equals("SUPER_ADMIN") && getRole().equals("SUPER_ADMIN")) {
+        else if(getRole().equals("SUPER_ADMIN")) {
                 return true;
         }
 

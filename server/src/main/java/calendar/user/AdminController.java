@@ -74,11 +74,10 @@ public class AdminController {
      * to the client.
      *
      * @return              ArrayList if User objects of which are waiting to be approved or denied
-     * @throws Exception    Database errors
      */
     @RequestMapping(value = "/registrations", method = RequestMethod.GET)
     @ResponseBody
-    public ArrayList<UserDTO> getPendingRegistrations() throws Exception {
+    public ArrayList<UserDTO> getPendingRegistrations() {
         String organization = dao.getUserByEmail(currentUser.getEmailAddress())
                 .getOrganization().getName();
         ArrayList<UserDTO> dto = new ArrayList<>();
@@ -98,11 +97,9 @@ public class AdminController {
      * registration was approved, and deletes the user if the registration was denied.
      *
      * @param dto           Id and approved boolean in an object
-     * @throws Exception    Database errors.
      */
-    // TODO: Update sequence diagrams, this method was totaly remade
     @RequestMapping(value = "/registrations", method = RequestMethod.POST)
-    public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) throws Exception {
+    public void registrationDecision(@ModelAttribute RegistrationDecisionDTO dto) {
         User user = dao.getUserById(dto.getId());
 
         if(dto.isApproved()) {
@@ -114,22 +111,20 @@ public class AdminController {
             dao.update(user);
 
             if(isRegistered) {
-                email.sendSuccessEmail(dto.getId(), "organization change");
+                email.sendSuccessEmail(user.getEmail(), "organization change");
             } else {
-                email.sendSuccessEmail(dto.getId(), "registration");
+                email.sendSuccessEmail(user.getEmail(), "registration");
             }
         }
         else {
             if(user.getOrganization().isApproved()) {
                 user.getOrganization().setChangePending("_");
                 dao.update(user);
-                email.sendDenialEmail(dao.getUserById(dto.getId()).getEmail(),
-                        "organization change");
+                email.sendDenialEmail(user.getEmail(), "organization change");
             }
             else {
                 dao.delete(dto.getId());
-                email.sendDenialEmail(dao.getUserById(dto.getId()).getEmail(),
-                        "registration");
+                email.sendDenialEmail(user.getEmail(), "registration");
             }
         }
     }
@@ -139,34 +134,21 @@ public class AdminController {
      * events created by the user.
      *
      * @return              An ArrayList containing UserDTOs of all user the current user can manage
-     * @throws Exception    Database errors
      */
     @RequestMapping(value = "/manageableUsers", method = RequestMethod.GET)
-    public ArrayList<UserDTO> getManageableUsers() throws Exception {
+    public ArrayList<UserDTO> getManageableUsers() {
         String email = currentUser.getEmailAddress();
-        User user = dao.getUserByEmail(email);
+        User admin = dao.getUserByEmail(email);
 
-        String adminOrg = user.getOrganization().getName(); // TODO: NullPointerException
+        ArrayList<User> allUsers = dao.getAllUsers();
+        ArrayList<UserDTO> manageableUsers = new ArrayList<>();
 
-        ArrayList<User> users = new ArrayList<>();
-
-        if(adminOrg.equals("")) {
-            List<String> orgs = dao.getOrganizations();
-
-            for(String org : orgs) {
-                users.addAll(dao.getUsersByOrganization(org));
+        for (User user : allUsers) {
+            if(admin.canManage(user)) {
+                manageableUsers.add(new UserDTO(user));
             }
         }
-        else {
-            users.addAll(dao.getUsersByOrganization(adminOrg));
-        }
 
-        ArrayList<UserDTO> dto = new ArrayList<>();
-
-        for(User orgUser : users) {
-            dto.add(new UserDTO(orgUser));
-        }
-
-        return dto;
+        return manageableUsers;
     }
 }

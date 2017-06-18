@@ -1,7 +1,5 @@
 package calendar.user;
 
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +14,15 @@ import java.util.List;
 public interface UserDAO {
     User getUserById(String id);
     User getUserByEmail(String email);
-    User getUserByPasswordRecoveryLink(String urlId) throws Exception;
-    User getUserByEmailVerificationLink(String urlId) throws Exception;
-    ArrayList<User> getUsersByOrganization(String organizationName) throws Exception;
-    ArrayList<User> getAllUsers() throws Exception;
-    List<String> getOrganizations() throws Exception;
+    User getUserByPasswordRecoveryLink(String urlId);
+    User getUserByEmailVerificationLink(String urlId);
+    ArrayList<User> getUsersByOrganization(String organizationName);
+    ArrayList<User> getAllUsers();
+    List<String> getOrganizations();
 
-    ArrayList<User> getPendingRegistrations(String orgazniation) throws Exception;
+    ArrayList<User> getPendingRegistrations(String orgazniation);
 
-    void add(User user) throws Exception;
-    void delete(String id) throws Exception;
-    void update(User user) throws Exception;
+    void add(User user);
+    void delete(String id);
+    void update(User user);
 }

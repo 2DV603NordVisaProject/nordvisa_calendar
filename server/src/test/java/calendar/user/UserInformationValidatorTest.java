@@ -1,10 +1,21 @@
 package calendar.user;
 
-import calendar.user.dto.ChangePasswordDTO;
-import calendar.user.dto.RegistrationDTO;
-import calendar.user.dto.UserDetailsUpdateDTO;
+import calendar.user.dto.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -14,12 +25,21 @@ import static org.mockito.Mockito.*;
  *
  * @author Axel Nilsson (axnion)
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class UserInformationValidatorTest {
-    private UserInformationValidator sut;
+    @Mock
+    private RestTemplate rest;
+    @Mock
     private UserDAO dao;
+
+    @InjectMocks
+    private UserInformationValidator sut;
+
     private RegistrationDTO registrationDTO;
     private UserDetailsUpdateDTO userDetailsUpdateDTO;
     private ChangePasswordDTO changePasswordDTO;
+    private RecoverPasswordDTO recoverPasswordDTO;
 
     private final String validPassword = "valid_password";
     private final String shortPassword = "9letpassw";
@@ -35,160 +55,71 @@ public class UserInformationValidatorTest {
 
     @Before
     public void setup() {
-        dao = mock(UserDAO.class);
         registrationDTO = mock(RegistrationDTO.class);
         userDetailsUpdateDTO = mock(UserDetailsUpdateDTO.class);
         changePasswordDTO = mock(ChangePasswordDTO.class);
+        recoverPasswordDTO = mock(RecoverPasswordDTO.class);
 
-        sut = new UserInformationValidator(dao);
+        User userMock = mock(User.class);
+        when(userMock.getPassword()).thenReturn(
+                "$2a$06$qsEYqk81cRBD.00f1vC4duYX/wh5/6KUkxno.lvQnXttnbi7TeYJu"
+        );
+        when(dao.getUserById("0")).thenReturn(userMock);
     }
 
     @Test
     public void registrationDTOValid() throws Exception {
         when(dao.getUserByEmail("test@test.com")).thenReturn(null);
-
-        registrationDTOMockSetup(
-                "test@test.com",
-                validPassword,
-                validPassword,
-                ""
-        );
-
-        try{
-            sut.validate(registrationDTO);
-        } catch (Exception expt) {
-            fail();
-        }
+        registrationDTOMockSetup("test@test.com", validPassword, validPassword, "");
+        sut.validate(registrationDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void registrationDTOInvalidEmailAddress() throws Exception {
-        registrationDTOMockSetup(
-                "abcdefghijk...if",
-                validPassword,
-                validPassword,
-                ""
-        );
-
-        try {
-            sut.validate(registrationDTO);
-            fail();
-        } catch (Exception expt) {
-            expt.getMessage();
-        }
+        registrationDTOMockSetup("abcdefghijk...if", validPassword, validPassword, "");
+        sut.validate(registrationDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void registrationDTOValidEmailAlreadyRegistered() throws Exception{
         when(dao.getUserByEmail("test@test.com")).thenReturn(mock(User.class));
-
-        registrationDTOMockSetup(
-                "test@test.com",
-                validPassword,
-                validPassword,
-                ""
-        );
-
-        try {
-            sut.validate(registrationDTO);
-            fail();
-        } catch (Exception expt) {
-            expt.getMessage();
-        }
+        registrationDTOMockSetup("test@test.com", validPassword, validPassword, "");
+        sut.validate(registrationDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void registrationDTOPasswordConfirmationMismatch() throws Exception {
         when(dao.getUserByEmail("test@test.com")).thenReturn(null);
-
-        registrationDTOMockSetup(
-                "test@test.com",
-                validPassword,
-                "mismatched_password",
-                ""
-        );
-
-        try {
-            sut.validate(registrationDTO);
-            fail();
-        } catch (Exception expt) {
-
-            expt.getMessage();
-        }
+        registrationDTOMockSetup("test@test.com", validPassword, "mismatched_password", "");
+        sut.validate(registrationDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void registraitonDTOPasswordShort() throws Exception {
         when(dao.getUserByEmail("test@test.com")).thenReturn(null);
-
-        registrationDTOMockSetup(
-                "test@test.com",
-                shortPassword,
-                shortPassword,
-                ""
-        );
-
-        try {
-            sut.validate(registrationDTO);
-            fail();
-        } catch (Exception expt) {
-            expt.getMessage();
-        }
+        registrationDTOMockSetup("test@test.com", shortPassword, shortPassword, "");
+        sut.validate(registrationDTO);
     }
 
     @Test
     public void registraitonDTOPasswordMinimum() throws Exception {
         when(dao.getUserByEmail("test@test.com")).thenReturn(null);
-
-        registrationDTOMockSetup(
-                "test@test.com",
-                minimumPassword,
-                minimumPassword,
-                ""
-        );
-
-        try {
-            sut.validate(registrationDTO);
-        } catch (Exception expt) {
-            fail();
-        }
+        registrationDTOMockSetup("test@test.com", minimumPassword, minimumPassword, "");
+        sut.validate(registrationDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void registrationDTOPasswordLong() throws Exception {
         when(dao.getUserByEmail("test@test.com")).thenReturn(null);
-
-        registrationDTOMockSetup(
-                "test@test.com",
-                longPassword,
-                longPassword,
-                ""
-        );
-
-        try {
-            sut.validate(registrationDTO);
-            fail();
-        } catch (Exception expt) {
-            expt.getMessage();
-        }
+        registrationDTOMockSetup("test@test.com", longPassword, longPassword, "");
+        sut.validate(registrationDTO);
     }
 
     @Test
     public void registrationDTOPasswordMaximum() throws Exception {
         when(dao.getUserByEmail("test@test.com")).thenReturn(null);
-
-        registrationDTOMockSetup(
-                "test@test.com",
-                maximumPassword,
-                maximumPassword,
-                ""
-        );
-
-        try {
-            sut.validate(registrationDTO);
-        } catch (Exception expt) {
-            fail();
-        }
+        registrationDTOMockSetup("test@test.com", maximumPassword, maximumPassword, "");
+        sut.validate(registrationDTO);
     }
 
     @Test
@@ -202,18 +133,9 @@ public class UserInformationValidatorTest {
 
         when(dao.getUserById(id)).thenReturn(userMock);
         when(dao.getUserByEmail(email)).thenReturn(userMock);
-        userDetailsUpdateDTOMockSetup(
-                id,
-                email,
-                org
-        );
+        userDetailsUpdateDTOMockSetup(id, email, org);
 
-        try {
-            sut.validate(userDetailsUpdateDTO);
-        }
-        catch (Exception expt) {
-            fail(expt.getMessage());
-        }
+        sut.validate(userDetailsUpdateDTO);
     }
 
     @Test
@@ -226,21 +148,12 @@ public class UserInformationValidatorTest {
 
         when(dao.getUserById(id)).thenReturn(userMock);
         when(dao.getUserByEmail("test1@test.com")).thenReturn(userMock);
-        userDetailsUpdateDTOMockSetup(
-                id,
-                "test2@test.com",
-                org
-        );
+        userDetailsUpdateDTOMockSetup(id, "test2@test.com", org);
 
-        try {
-            sut.validate(userDetailsUpdateDTO);
-        }
-        catch (Exception expt) {
-            fail(expt.getMessage());
-        }
+        sut.validate(userDetailsUpdateDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void userDetailsUpdateDTOUserDoesNotExist() throws Exception {
         String id = "0";
         String email = "test@test.com";
@@ -251,22 +164,12 @@ public class UserInformationValidatorTest {
 
         when(dao.getUserById(id)).thenReturn(null);
         when(dao.getUserByEmail(email)).thenReturn(userMock);
-        userDetailsUpdateDTOMockSetup(
-                id,
-                email,
-                org
-        );
+        userDetailsUpdateDTOMockSetup(id, email, org);
 
-        try {
-            sut.validate(userDetailsUpdateDTO);
-            fail();
-        }
-        catch (Exception expt) {
-            expt.getMessage();
-        }
+        sut.validate(userDetailsUpdateDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void userDetailsUpdateDTOInvalidEmailFormat() throws Exception {
         String id = "0";
         String email = "test@test.com";
@@ -277,22 +180,12 @@ public class UserInformationValidatorTest {
 
         when(dao.getUserById(id)).thenReturn(userMock);
         when(dao.getUserByEmail(email)).thenReturn(userMock);
-        userDetailsUpdateDTOMockSetup(
-                id,
-                "notValidEmail",
-                org
-        );
+        userDetailsUpdateDTOMockSetup(id, "notValidEmail", org);
 
-        try {
-            sut.validate(userDetailsUpdateDTO);
-            fail();
-        }
-        catch (Exception expt) {
-            expt.getMessage();
-        }
+        sut.validate(userDetailsUpdateDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void userDetailsUpdateDTOEmailBelongsToSomeoneElse() throws Exception {
         String id1 = "1";
         String email1 = "test1@test.com";
@@ -310,193 +203,140 @@ public class UserInformationValidatorTest {
         when(dao.getUserByEmail(email1)).thenReturn(userMock);
         when(dao.getUserById(id2)).thenReturn(otherUserMock);
         when(dao.getUserByEmail(email2)).thenReturn(otherUserMock);
-        userDetailsUpdateDTOMockSetup(
-                id1,
-                email2,
-                ""
-        );
+        userDetailsUpdateDTOMockSetup(id1, email2, "");
 
-        try {
-            sut.validate(userDetailsUpdateDTO);
-            fail();
-        }
-        catch (Exception expt) {
-            expt.getMessage();
-        }
+        sut.validate(userDetailsUpdateDTO);
     }
 
     @Test
     public void changePasswordDTOValid() throws Exception {
-        User userMock = mock(User.class);
-        when(userMock.getPassword()).thenReturn(
-                "$2a$06$qsEYqk81cRBD.00f1vC4duYX/wh5/6KUkxno.lvQnXttnbi7TeYJu"
-        );
-
-        when(dao.getUserById("0")).thenReturn(userMock);
-
-        changePasswordDTOMockSetup(
-                "0",
-                "old_password",
-                validPassword,
-                validPassword
-        );
-
-        try {
-            sut.validate(changePasswordDTO);
-        }
-        catch (Exception expt) {
-            fail(expt.getMessage());
-        }
+        changePasswordDTOMockSetup("0", "old_password", validPassword, validPassword);
+        sut.validate(changePasswordDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void changePasswordDTOInvalidOldPassword() throws Exception {
-        User userMock = mock(User.class);
-        when(userMock.getPassword()).thenReturn(
-                "$2a$06$qsEYqk81cRBD.00f1vC4duYX/wh5/6KUkxno.lvQnXttnbi7TeYJu"
-        );
-
-        when(dao.getUserById("0")).thenReturn(userMock);
-
-        changePasswordDTOMockSetup(
-                "0",
-                "invalid_old_password",
-                validPassword,
-                validPassword
-        );
-
-        try {
-            sut.validate(changePasswordDTO);
-            fail();
-        }
-        catch (Exception expt) {
-            expt.getMessage();
-        }
+        changePasswordDTOMockSetup("0", "invalid_old_password", validPassword, validPassword);
+        sut.validate(changePasswordDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void changePasswordDTOPasswordDoesNotMatch() throws Exception {
-        User userMock = mock(User.class);
-        when(userMock.getPassword()).thenReturn(
-                "$2a$06$qsEYqk81cRBD.00f1vC4duYX/wh5/6KUkxno.lvQnXttnbi7TeYJu"
-        );
-
-        when(dao.getUserById("0")).thenReturn(userMock);
-
-        changePasswordDTOMockSetup(
-                "0",
-                "old_password",
-                validPassword,
-                "mismatch_password"
-        );
-
-        try {
-            sut.validate(changePasswordDTO);
-            fail();
-        }
-        catch (Exception expt) {
-            expt.getMessage();
-        }
+        changePasswordDTOMockSetup("0", "old_password", validPassword, "mismatch_password");
+        sut.validate(changePasswordDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void changePasswordDTOShortPassword() throws Exception {
-        User userMock = mock(User.class);
-        when(userMock.getPassword()).thenReturn(
-                "$2a$06$qsEYqk81cRBD.00f1vC4duYX/wh5/6KUkxno.lvQnXttnbi7TeYJu"
-        );
-
-        when(dao.getUserById("0")).thenReturn(userMock);
-
-        changePasswordDTOMockSetup(
-                "0",
-                "old_password",
-                shortPassword,
-                shortPassword
-        );
-
-        try {
-            sut.validate(changePasswordDTO);
-            fail();
-        }
-        catch (Exception expt) {
-            expt.getMessage();
-        }
+        changePasswordDTOMockSetup("0", "old_password", shortPassword, shortPassword);
+        sut.validate(changePasswordDTO);
     }
 
     @Test
     public void changePasswordDTOMinimumPassword() throws Exception {
-        User userMock = mock(User.class);
-        when(userMock.getPassword()).thenReturn(
-                "$2a$06$qsEYqk81cRBD.00f1vC4duYX/wh5/6KUkxno.lvQnXttnbi7TeYJu"
-        );
-
-        when(dao.getUserById("0")).thenReturn(userMock);
-
-        changePasswordDTOMockSetup(
-                "0",
-                "old_password",
-                minimumPassword,
-                minimumPassword
-        );
-
-        try {
-            sut.validate(changePasswordDTO);
-        }
-        catch (Exception expt) {
-            fail(expt.getMessage());
-        }
+        changePasswordDTOMockSetup("0", "old_password", minimumPassword, minimumPassword);
+        sut.validate(changePasswordDTO);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void changePasswordDTOLongPassword() throws Exception {
-        User userMock = mock(User.class);
-        when(userMock.getPassword()).thenReturn(
-                "$2a$06$qsEYqk81cRBD.00f1vC4duYX/wh5/6KUkxno.lvQnXttnbi7TeYJu"
-        );
-
-        when(dao.getUserById("0")).thenReturn(userMock);
-
-        changePasswordDTOMockSetup(
-                "0",
-                "old_password",
-                longPassword,
-                longPassword
-        );
-
-        try {
-            sut.validate(changePasswordDTO);
-            fail();
-        }
-        catch (Exception expt) {
-            expt.getMessage();
-        }
+        changePasswordDTOMockSetup("0", "old_password", longPassword, longPassword);
+        sut.validate(changePasswordDTO);
     }
 
     @Test
     public void changePasswordDTOMaximumPassword() throws Exception {
-        User userMock = mock(User.class);
-        when(userMock.getPassword()).thenReturn(
-                "$2a$06$qsEYqk81cRBD.00f1vC4duYX/wh5/6KUkxno.lvQnXttnbi7TeYJu"
-        );
+        changePasswordDTOMockSetup("0", "old_password", maximumPassword, maximumPassword);
+        sut.validate(changePasswordDTO);
+    }
 
-        when(dao.getUserById("0")).thenReturn(userMock);
+    @Test
+    public void recoverPasswordValid() throws Exception {
+        recoverPasswordDTOMockSetup("", validPassword, validPassword);
+        sut.validate(recoverPasswordDTO);
+    }
 
-        changePasswordDTOMockSetup(
-                "0",
-                "old_password",
-                maximumPassword,
-                maximumPassword
-        );
+    @Test(expected = Exception.class)
+    public void recoverPasswordMismatch() throws Exception {
+        recoverPasswordDTOMockSetup("", validPassword, "other_valid_password");
+        sut.validate(recoverPasswordDTO);
+    }
 
+    @Test(expected = Exception.class)
+    public void recoverPasswordShortPassword() throws Exception {
+        recoverPasswordDTOMockSetup("", shortPassword, shortPassword);
+        sut.validate(recoverPasswordDTO);
+    }
+
+    @Test
+    public void recoverPasswordMinimumPassword() throws Exception {
+        recoverPasswordDTOMockSetup("",minimumPassword, minimumPassword);
+        sut.validate(recoverPasswordDTO);
+    }
+
+    @Test(expected = Exception.class)
+    public void recoverPasswordLongPassword() throws Exception {
+        recoverPasswordDTOMockSetup("", longPassword, longPassword);
+        sut.validate(recoverPasswordDTO);
+    }
+
+    @Test
+    public void recoverPasswordMaximumPassword() throws Exception {
+        recoverPasswordDTOMockSetup("", maximumPassword, maximumPassword);
+        sut.validate(recoverPasswordDTO);
+    }
+
+    @Test
+    public void validateRecaptcha() throws Exception {
+        String url = "http://someurl.com";
+        String secret = "shhhhhh";
+        String secretFromClient = "SSSSSSSSSSSSHHHH!!!";
+        ReflectionTestUtils.setField(sut, "recaptchaUrl", url);
+        ReflectionTestUtils.setField(sut, "recaptchaRes", secret);
+
+        ResponseEntity<RecaptchaResponseDTO> responseEntity = mock(ResponseEntity.class);
+        RecaptchaResponseDTO dto = mock(RecaptchaResponseDTO.class);
+
+        when(rest.postForEntity(eq(url), any(MultiValueMap.class), eq(RecaptchaResponseDTO.class)))
+                .thenReturn(responseEntity);
+        when(responseEntity.getBody()).thenReturn(dto);
+
+        RecaptchaResponseDTO response = sut.validateRecaptcha(secretFromClient);
+
+        assertEquals(dto, response);
+
+        ArgumentCaptor<MultiValueMap> captor = ArgumentCaptor.forClass(MultiValueMap.class);
+        verify(rest, times(1)).postForEntity(eq(url), captor.capture(), eq(RecaptchaResponseDTO.class));
+        MultiValueMap<String, String> body = captor.getValue();
+
+        assertEquals(secretFromClient, body.getFirst("secret"));
+        assertEquals(secret, body.getFirst("response"));
+    }
+
+    @Test
+    public void validateRecaptchaConnectionError() {
+        String url = "http://someurl.com";
+        String secret = "shhhhhh";
+        String secretFromClient = "SSSSSSSSSSSSHHHH!!!";
+        ReflectionTestUtils.setField(sut, "recaptchaUrl", url);
+        ReflectionTestUtils.setField(sut, "recaptchaRes", secret);
+
+        when(rest.postForEntity(eq(url), any(MultiValueMap.class), eq(RecaptchaResponseDTO.class)))
+                .thenThrow(new RestClientException("Connection failed"));
         try {
-            sut.validate(changePasswordDTO);
+            sut.validateRecaptcha(secretFromClient);
+            fail();
         }
-        catch (Exception expt) {
-            fail(expt.getMessage());
+        catch(Exception expt) {
+            expt.getMessage();
         }
     }
 
+    private void recoverPasswordDTOMockSetup(String urlId, String password, String passwordConf) {
+        when(recoverPasswordDTO.getUrlId()).thenReturn(urlId);
+        when(recoverPasswordDTO.getPassword()).thenReturn(password);
+        when(recoverPasswordDTO.getPasswordConfirmation()).thenReturn(passwordConf);
+    }
 
     private void registrationDTOMockSetup(String email, String password,
                                                      String passwordConfirmation,

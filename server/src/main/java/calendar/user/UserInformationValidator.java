@@ -1,7 +1,9 @@
 package calendar.user;
 
 import calendar.user.dto.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -10,7 +12,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.Registration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,16 +22,16 @@ import java.util.regex.Pattern;
  */
 @Component
 class UserInformationValidator {
+    @Autowired
+    private RestTemplate rest;
+
+    @Autowired
     private UserDAO dao;
 
-    @Value("${recaptcha.url}")
+    @Value("${captchaUrl}")
     private String recaptchaUrl;
-    @Value("${recaptcha.secret}")
+    @Value("${captchaSecret}")
     private String recaptchaRes;
-
-    UserInformationValidator(UserDAO dao) {
-        this.dao = dao;
-    }
 
     /**
      * Validates the content of a RegistraitonDTO.
@@ -117,9 +118,9 @@ class UserInformationValidator {
      * @throws Exception    Problems contacting recaptcha
      */
     RecaptchaResponseDTO validateRecaptcha(String secret) throws Exception {
-        RestTemplate rest = new RestTemplate();
         RecaptchaResponseDTO responseDTO;
 
+        // TODO: Remove this backdoor, make dev mode boolean in properties file
         if(recaptchaRes.equals("secret_key")) {
             responseDTO = new RecaptchaResponseDTO();
             responseDTO.setSuccess(true);
@@ -131,7 +132,6 @@ class UserInformationValidator {
                         createBody(secret, recaptchaRes),
                         RecaptchaResponseDTO.class
                 ).getBody();
-
             }
             catch (RestClientException expt) {
                 throw new Exception("Could not verify captcha");
@@ -237,4 +237,10 @@ class UserInformationValidator {
         User user = dao.getUserById(id);
         return !encoder.matches(oldPassword, user.getPassword());
     }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 }
+
