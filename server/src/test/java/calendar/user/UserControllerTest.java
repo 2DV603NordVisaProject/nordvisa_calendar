@@ -37,7 +37,33 @@ public class UserControllerTest {
     private UserController sut;
 
     @Test
-    public void getUserById() throws Exception {
+    public void getCurrentUser() {
+        String email = "test@test.com";
+
+        User user = mock(User.class);
+        Organization org = mock(Organization.class);
+        when(user.getId()).thenReturn("1");
+        when(user.getEmail()).thenReturn(email);
+        when(user.getRole()).thenReturn("USER");
+        when(user.getCreatedAt()).thenReturn(111L);
+        when(user.getUpdatedAt()).thenReturn(111L);
+        when(user.getOrganization()).thenReturn(org);
+
+        when(currentUser.getEmailAddress()).thenReturn(email);
+        when(dao.getUserByEmail(email)).thenReturn(user);
+
+        UserDTO dto = sut.getCurrentUser();
+
+        assertEquals(user.getId(), dto.getId());
+        assertEquals(user.getEmail(), dto.getEmail());
+        assertEquals(user.getRole(), dto.getRole());
+        assertEquals(user.getCreatedAt(), dto.getCreatedAt());
+        assertEquals(user.getUpdatedAt(), dto.getUpdatedAt());
+        assertEquals(user.getOrganization(), dto.getOrganization());
+    }
+
+    @Test
+    public void getUserById() {
         long longNumber = 12351;
 
         User user = mock(User.class);
@@ -66,7 +92,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUserByEmail() throws Exception {
+    public void getUserByEmail() {
         long longNumber = 12351;
 
         User user = mock(User.class);
@@ -94,14 +120,44 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUsersByOrganization() throws Exception {
-        sut.getUsersByOrganization("my_org");
+    public void getUsersByOrganization() {
+        ArrayList<User> users = new ArrayList<>();
+        User user = mock(User.class);
+        Organization org = mock(Organization.class);
+        when(user.getId()).thenReturn("1");
+        when(user.getEmail()).thenReturn("test@test.com");
+        when(user.getRole()).thenReturn("USER");
+        when(user.getCreatedAt()).thenReturn(111L);
+        when(user.getUpdatedAt()).thenReturn(111L);
+        when(user.getOrganization()).thenReturn(org);
+        users.add(user);
+        when(dao.getUsersByOrganization("my_org")).thenReturn(users);
+
+        ArrayList<UserDTO> results = sut.getUsersByOrganization("my_org");
+
+        assertEquals(1, results.size());
+        assertEquals("1", results.get(0).getId());
         verify(dao, times(1)).getUsersByOrganization("my_org");
     }
 
     @Test
-    public void getAllUsers() throws Exception {
-        sut.getAllUsers();
+    public void getAllUsers() {
+        ArrayList<User> users = new ArrayList<>();
+        User user = mock(User.class);
+        Organization org = mock(Organization.class);
+        when(user.getId()).thenReturn("1");
+        when(user.getEmail()).thenReturn("test@test.com");
+        when(user.getRole()).thenReturn("USER");
+        when(user.getCreatedAt()).thenReturn(111L);
+        when(user.getUpdatedAt()).thenReturn(111L);
+        when(user.getOrganization()).thenReturn(org);
+        users.add(user);
+        when(dao.getAllUsers()).thenReturn(users);
+
+        ArrayList<UserDTO> results = sut.getAllUsers();
+
+        assertEquals(1, results.size());
+        assertEquals("1", results.get(0).getId());
         verify(dao, times(1)).getAllUsers();
     }
 
@@ -118,17 +174,12 @@ public class UserControllerTest {
         when(actorMock.canManage(targetMock)).thenReturn(true);
         when(idMock.getId()).thenReturn("1");
 
-        try {
-            sut.unregister(idMock);
-        }
-        catch (Exception expt) {
-            fail();
-        }
+        sut.unregister(idMock);
 
         verify(dao, times(1)).delete("1");
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void unregisterNonexistentUser() throws Exception {
         User actorMock = mock(User.class);
         User targetMock = mock(User.class);
@@ -141,18 +192,12 @@ public class UserControllerTest {
         when(actorMock.canManage(targetMock)).thenReturn(true);
         when(idMock.getId()).thenReturn("1");
 
-        try {
-            sut.unregister(idMock);
-            fail();
-        }
-        catch (Exception expt) {
-            expt.getMessage();
-        }
+        sut.unregister(idMock);
 
         verify(dao, never()).delete("1");
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void unregisterCanNotManage() throws Exception {
         User actorMock = mock(User.class);
         User targetMock = mock(User.class);
@@ -165,12 +210,7 @@ public class UserControllerTest {
         when(actorMock.canManage(targetMock)).thenReturn(false);
         when(idMock.getId()).thenReturn("1");
 
-        try {
-            sut.unregister(idMock);
-            fail();
-        } catch (Exception expt) {
-            expt.getMessage();
-        }
+        sut.unregister(idMock);
 
         verify(dao, never()).delete("1");
     }
@@ -192,12 +232,7 @@ public class UserControllerTest {
         when(dtoMock.getOrganization()).thenReturn("new_org");
         when(validateEmailLink.getUrl()).thenReturn("urlid");
 
-        try {
-            sut.updateUserDetails(dtoMock);
-        }
-        catch (Exception expt) {
-            fail(expt.getMessage());
-        }
+        sut.updateUserDetails(dtoMock);
 
         verify(validator).validate(dtoMock);
         verify(userMock, times(1)).setEmailChange("test2@test.com");
@@ -226,12 +261,7 @@ public class UserControllerTest {
         when(dtoMock.getOrganization()).thenReturn("new_org");
         when(validateEmailLink.getUrl()).thenReturn("urlid");
 
-        try {
-            sut.updateUserDetails(dtoMock);
-        }
-        catch (Exception expt) {
-            fail(expt.getMessage());
-        }
+        sut.updateUserDetails(dtoMock);
 
         verify(validator).validate(dtoMock);
         verify(userMock, never()).setEmail(anyString());

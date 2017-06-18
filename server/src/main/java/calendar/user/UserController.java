@@ -41,11 +41,10 @@ public class UserController {
     /**
      * Respond with the currently logged in used.
      * @return              A UserDTO object with the data of the currently logged in user
-     * @throws Exception    Database errors
      */
     @RequestMapping(value = "/current", method = RequestMethod.GET)
-    public UserDTO getCurrentUser() throws Exception {
-        String email = new CurrentUser().getEmailAddress();
+    public UserDTO getCurrentUser() {
+        String email = currentUser.getEmailAddress();
         User user = dao.getUserByEmail(email);
         return new UserDTO(user);
     }
@@ -56,10 +55,9 @@ public class UserController {
      *
      * @param id            The ID of the user to be returned
      * @return              User object serialized to JSON format
-     * @throws Exception    Database errors
      */
     @RequestMapping(value = "", params = "id", method = RequestMethod.GET)
-    public UserDTO getUserById(@RequestParam("id") String id) throws Exception {
+    public UserDTO getUserById(@RequestParam("id") String id) {
         return new UserDTO(dao.getUserById(id));
     }
 
@@ -69,10 +67,9 @@ public class UserController {
      *
      * @param email         Email of the user to be returned
      * @return              User object serialized to JSON format
-     * @throws Exception    Database errors
      */
     @RequestMapping(value = "", params = "email", method = RequestMethod.GET)
-    public UserDTO getUserByEmail(@RequestParam("email") String email) throws Exception {
+    public UserDTO getUserByEmail(@RequestParam("email") String email) {
         return new UserDTO(dao.getUserByEmail(email));
     }
 
@@ -82,11 +79,10 @@ public class UserController {
      *
      * @param organization  The name of the organization which users should be returned
      * @return              ArrayList of User objects serialized to JSON format
-     * @throws Exception    Database errors
      */
     @RequestMapping(value = "", params = "organization", method = RequestMethod.GET)
     public ArrayList<UserDTO> getUsersByOrganization(
-            @RequestParam("organization") String organization) throws Exception {
+            @RequestParam("organization") String organization) {
         ArrayList<UserDTO> dto = new ArrayList<>();
 
         for (User user : dao.getUsersByOrganization(organization)) {
@@ -100,10 +96,9 @@ public class UserController {
      * Runs on GET call to /api/user. It will return all users in the whole system.
      *
      * @return              ArrayList of User objects serialized to JSON format
-     * @throws Exception    Database errors
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ArrayList<UserDTO> getAllUsers() throws Exception {
+    public ArrayList<UserDTO> getAllUsers() {
         ArrayList<UserDTO> dto = new ArrayList<>();
 
         for (User user : dao.getAllUsers()) {
