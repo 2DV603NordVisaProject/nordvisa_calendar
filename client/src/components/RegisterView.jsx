@@ -7,6 +7,7 @@ import './RegisterView.css';
 import ErrorList from './ErrorList';
 import Client from '../Client';
 import Loader from './Loader';
+import PageTitle from './PageTitle';
 
 class RegisterView extends Component {
   constructor() {
@@ -140,7 +141,7 @@ class RegisterView extends Component {
     }
     return (
       <div className="lightbox register">
-        <h2 className="uppercase">{language.register}</h2>
+        <PageTitle>{language.register}</PageTitle>
         <form className="center" onSubmit={this.onFormSubmit}>
           <label htmlFor="email" className="capitalize">{language.email}:</label>
           <input

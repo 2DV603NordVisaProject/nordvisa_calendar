@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import UpdatePasswordView from '../src/components/UpdatePasswordView';
 import ErrorList from '../src/components/ErrorList';
 import en from '../src/i18n/en';
+import PageTitle from '../src/components/PageTitle';
 
 /*
 - updates states on input.
@@ -24,6 +25,10 @@ describe('UpdatePasswordView', () => {
 
   it('should be rendered', () => {
     expect(wrapper.find('div').length).toBeGreaterThan(0);
+  });
+
+  it('should contain a PageTitle-component', () => {
+    expect(wrapper.find(PageTitle).length).toBe(1);
   });
 
   it('should render 2 input', () => {

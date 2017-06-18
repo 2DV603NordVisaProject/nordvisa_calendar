@@ -4,6 +4,7 @@ import './WidgetView.css';
 import ErrorList from './ErrorList';
 import ProvinceSelect from './ProvinceSelect';
 import Client from '../Client';
+import PageTitle from './PageTitle';
 
 
 class WidgetView extends Component {
@@ -85,7 +86,7 @@ class WidgetView extends Component {
 
     return (
       <div className="lightbox widget-view">
-        <h2 className="uppercase">{language.generateWidgetCode}</h2>
+        <PageTitle>{language.generateWidgetCode}</PageTitle>
         <form>
           <select
             className="capitalize"

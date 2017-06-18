@@ -5,6 +5,7 @@ import Client from '../Client';
 import MembersList from './MembersList';
 import ConfirmMessage from './ConfirmMessage';
 import ErrorList from './ErrorList';
+import PageTitle from './PageTitle';
 
 class MembersView extends Component {
   constructor() {
@@ -121,7 +122,7 @@ class MembersView extends Component {
 
     return (
       <div className="members view">
-        <h2 className="uppercase">{language.members}</h2>
+        <PageTitle>{language.members}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
           <MembersList members={this.state.members} onChange={this.onInputChange} />
           <ErrorList errors={this.state.fieldErrors} />

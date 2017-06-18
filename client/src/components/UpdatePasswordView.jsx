@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Client from '../Client';
+import PageTitle from './PageTitle';
 
 
 class UpdatePasswordView extends Component {
@@ -73,7 +74,7 @@ class UpdatePasswordView extends Component {
 
     return (
       <div className="lightbox login">
-        <h2 className="uppercase">{language.updatePassword}</h2>
+        <PageTitle>{language.updatePassword}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
           <label htmlFor="password" className="capitalize">{language.newPassword}:</label>
           <input name="password" type="password" onChange={this.onInputChange} />

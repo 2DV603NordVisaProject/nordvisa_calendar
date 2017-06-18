@@ -6,6 +6,7 @@ import ErrorList from './ErrorList';
 import Client from '../Client';
 import EventsMap from './EventsMap';
 import './CreateView.css';
+import PageTitle from './PageTitle';
 
 
 class CreateView extends Component {
@@ -238,7 +239,7 @@ class CreateView extends Component {
     if (this.state.progress === 'preview' || this.state.progress === 'view') {
       return (
         <div className="view preview">
-          <h2 className="capitalize">{language.createEvent}</h2>
+          <PageTitle>{language.createEvent}</PageTitle>
           <div className="box">
             {
               this.state.progress === 'preview' ? <h3 className="capitalize">{language.previewEvent}</h3> : <h3 className="capitalize">{language.viewEvent}</h3>
@@ -277,7 +278,7 @@ class CreateView extends Component {
     }
     return (
       <div className="view create-event">
-        <h2 className="capitalize">{language.createEvent}</h2>
+        <PageTitle>{language.createEvent}</PageTitle>
         <div className="box">
           <h3 className="capitalize">{language.newEvent}</h3>
           <form onSubmit={this.onFormSubmit}>

@@ -7,6 +7,7 @@ import './LoginView.css';
 import ErrorList from './ErrorList';
 import Client from '../Client';
 import Loader from './Loader';
+import PageTitle from './PageTitle';
 
 
 class LoginView extends Component {
@@ -106,7 +107,7 @@ class LoginView extends Component {
     }
     return (
       <div className="lightbox login">
-        <h2 className="uppercase">{language.LoginView.login}</h2>
+        <PageTitle>{language.LoginView.login}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
           <label htmlFor="email" className="capitalize">{language.LoginView.email}:</label>
           <input

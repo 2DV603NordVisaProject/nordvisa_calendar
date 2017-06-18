@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UpdatePassword from './UpdatePassword';
 import UpdateAccount from './UpdateAccount';
+import PageTitle from './PageTitle';
 
 const MyAccountView = (props, context) => {
   const language = context.language.MyAccountView;
 
   return (
     <div className="view">
-      <h2 className="capitalize">{language.myAccount}</h2>
+      <PageTitle>{language.myAccount}</PageTitle>
       <UpdateAccount />
       <UpdatePassword />
     </div>

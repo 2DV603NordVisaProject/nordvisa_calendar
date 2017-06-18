@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import LoginView from '../src/components/LoginView';
 import en from '../src/i18n/en';
 import helpers from './helpers';
+import PageTitle from '../src/components/PageTitle';
 
 describe('LoginView', () => {
   let wrapper;
@@ -23,6 +24,10 @@ describe('LoginView', () => {
 
   it('should render', () => {
     expect(wrapper.find('div').length).toBeGreaterThan(0);
+  });
+
+  it('should contain a PageTitle-component', () => {
+    expect(wrapper.find(PageTitle).length).toBe(1);
   });
 
   it('should contain Link-component', () => {

@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import en from '../src/i18n/en';
 import WidgetView from '../src/components/WidgetView';
 import ProvinceSelect from '../src/components/ProvinceSelect';
+import PageTitle from '../src/components/PageTitle';
 
 // TODO; Integration test with child components
 
@@ -16,6 +17,10 @@ describe('WidgetView', () => {
 
   it('should render component', () => {
     expect(wrapper.find('.widget-view').length).toBe(1);
+  });
+
+  it('should contain PageTitle-component', () => {
+    expect(wrapper.find(PageTitle).length).toBe(1);
   });
 
   it('should not show ProvinceSelect', () => {

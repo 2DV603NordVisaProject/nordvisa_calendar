@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import MyAccountView from '../src/components/MyAccountView';
 import UpdateAccount from '../src/components/UpdateAccount';
 import UpdatePassword from '../src/components/UpdatePassword';
+import PageTitle from '../src/components/PageTitle';
 import en from '../src/i18n/en';
 
 describe('MyAccountView', () => {
@@ -21,8 +22,8 @@ describe('MyAccountView', () => {
     expect(wrapper.find('div').length).toBeGreaterThan(0);
   });
 
-  it('should contain title', () => {
-    expect(wrapper.find('h2').length).toBe(1);
+  it('should contain a PageTitle-component', () => {
+    expect(wrapper.find(PageTitle).length).toBe(1);
   });
 
   it('should contain the component <UpdateAccount/>', () => {

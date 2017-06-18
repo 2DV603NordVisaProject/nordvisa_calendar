@@ -4,6 +4,7 @@ import { isEmail } from 'validator';
 import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Client from '../Client';
+import PageTitle from './PageTitle';
 
 
 class RecoverView extends Component {
@@ -72,7 +73,7 @@ class RecoverView extends Component {
     }
     return (
       <div className="lightbox login">
-        <h2 className="uppercase">{language.recover}</h2>
+        <PageTitle>{language.recover}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
           <label htmlFor="email" className="capitalize">{language.email}:</label>
           <input

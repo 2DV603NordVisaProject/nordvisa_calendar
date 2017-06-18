@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './PendingRegistrationsView.css';
 import RegistrationsList from './RegistrationsList';
 import Client from '../Client';
+import PageTitle from './PageTitle';
 
 class PendingRegistrationsView extends Component {
   constructor() {
@@ -118,7 +119,7 @@ class PendingRegistrationsView extends Component {
 
     return (
       <div className="view pending-view">
-        <h2 className="uppercase">{language.pending}</h2>
+        <PageTitle>{language.pending}</PageTitle>
         <div className="list-header">
           <p className="capitalize">{language.email}</p>
           <p className="capitalize">{language.organization}</p>
