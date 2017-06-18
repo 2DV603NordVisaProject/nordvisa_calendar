@@ -17,6 +17,8 @@ import java.util.List;
 @Component
 public class AuthorizationChecker {
     @Autowired
+    private CurrentUser currentUser;
+    @Autowired
     private UserDAO dao;
 
     /**
@@ -27,23 +29,18 @@ public class AuthorizationChecker {
      * @return      True if the current user can manage the other user. False if not
      */
     public boolean currentUserCanManage(String id) {
-        CurrentUser currentUser = new CurrentUser();
         String email = currentUser.getEmailAddress();
-        return dao.getUserByEmail(email).canManage(dao.getUserById(id));
+        User user = dao.getUserByEmail(email);
+        User target = dao.getUserById(id);
+
+        return user != null && target != null && user.canManage(target);
     }
 
     public List<String> getAllUserIds() {
         ArrayList<User> users;
-
-        try {
-            users = dao.getAllUsers();
-        } catch (Exception expt) {
-            System.err.println("Could not retrieve users.");
-
-            return null;
-        }
-
         List<String> ids = new ArrayList<>();
+
+        users = dao.getAllUsers();
 
         for(User user : users) {
             ids.add(user.getId());
