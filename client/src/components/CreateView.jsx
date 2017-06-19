@@ -8,6 +8,8 @@ import EventsMap from './EventsMap';
 import './CreateView.css';
 import PageTitle from './PageTitle';
 import Button from './Button';
+import SubTitle from './SubTitle';
+import ViewContainer from './ViewContainer';
 
 
 class CreateView extends Component {
@@ -239,18 +241,18 @@ class CreateView extends Component {
 
     if (this.state.progress === 'preview' || this.state.progress === 'view') {
       return (
-        <div className="view preview">
+        <ViewContainer className="preview">
           <PageTitle>{language.createEvent}</PageTitle>
           <div className="box">
             {
-              this.state.progress === 'preview' ? <h3 className="capitalize">{language.previewEvent}</h3> : <h3 className="capitalize">{language.viewEvent}</h3>
+              this.state.progress === 'preview' ? <SubTitle style={{ textTransform: 'capitalize' }}>{language.previewEvent}</SubTitle> : <SubTitle style={{ textTransform: 'capitalize' }}>{language.viewEvent}</SubTitle>
             }
             <h4 className="preview-text">{this.state.fields.name}</h4>
             <p className="preview-text">{this.state.fields.location} - {this.state.fields.date} - {this.state.fields.startTime} - {this.state.fields.endTime}</p>
             {
               this.state.fields.path === '' ? '' : <div className="img-container" style={this.state.progress === 'view' ? { backgroundImage: `url("${resourceURI}/${this.state.fields.path}/${this.state.fields.img}")` } : { backgroundImage: `url(${this.state.fields.img})` }} />
             }
-            <h4 className="preview-text capitalize">{language.description}:</h4>
+            <h4 className="preview-text" style={{ textTransform: 'capitalize' }}>{language.description}:</h4>
             <div className="desc">
               <p>{this.state.fields.desc}</p>
             </div>
@@ -274,16 +276,16 @@ class CreateView extends Component {
               <Button onClick={this.onEditClick}>{language.edit}</Button>
             </div>
           </div>
-        </div>
+        </ViewContainer>
       );
     }
     return (
-      <div className="view create-event">
+      <ViewContainer className="create-event">
         <PageTitle>{language.createEvent}</PageTitle>
         <div className="box">
-          <h3 className="capitalize">{language.newEvent}</h3>
+          <SubTitle className="capitalize">{language.newEvent}</SubTitle>
           <form onSubmit={this.onFormSubmit}>
-            <label htmlFor="name" className="capitalize">{language.name}:</label>
+            <label htmlFor="name" style={{ textTransform: 'capitalize' }}>{language.name}:</label>
             <input
               name="name"
               type="text"
@@ -291,14 +293,14 @@ class CreateView extends Component {
               onChange={this.onInputChange}
             />
             <br />
-            <label htmlFor="date" className="capitalize">{language.date}:</label>
+            <label htmlFor="date" style={{ textTransform: 'capitalize' }}>{language.date}:</label>
             <input
               type="date"
               name="date"
               value={this.state.fields.date}
               onChange={this.onInputChange}
             />
-            <label htmlFor="time" className="capitalize">{language.time}:</label>
+            <label htmlFor="time" style={{ textTransform: 'capitalize' }}>{language.time}:</label>
             <input
               name="startTime"
               type="time"
@@ -315,7 +317,7 @@ class CreateView extends Component {
               className="time-form end-time"
             />
             <div className="recurring">
-              <label htmlFor="recurring" className="capitalize">{language.recurring}:</label>
+              <label htmlFor="recurring" style={{ textTransform: 'capitalize' }}>{language.recurring}:</label>
               <input
                 name="recurring"
                 type="checkbox"
@@ -325,26 +327,26 @@ class CreateView extends Component {
               />
             </div>
             <div className="is-recurring hidden">
-              <label htmlFor="recursuntil" className="capitalize">{language.recursUntil}:</label>
+              <label htmlFor="recursuntil" style={{ textTransform: 'capitalize' }}>{language.recursUntil}:</label>
               <input
                 type="date"
                 name="recursuntil"
                 value={this.state.fields.recursuntil}
                 onChange={this.onInputChange}
               />
-              <label htmlFor="recurs" className="capitalize">{language.recurs}:</label>
+              <label htmlFor="recurs" style={{ textTransform: 'capitalize' }}>{language.recurs}:</label>
               <select
                 className="capitalize"
                 name="recurs"
                 value={this.state.fields.recurs}
                 onChange={this.onInputChange}
               >
-                <option selected className="capitalize" value="0">{language.weekly}</option>
+                <option selected style={{ textTransform: 'capitalize' }} value="0">{language.weekly}</option>
                 <option className="capitalize" value="1">{language.monthly}</option>
                 <option className="capitalize" value="2">{language.yearly}</option>
               </select>
             </div>
-            <label htmlFor="location" className="capitalize">{language.location}:</label>
+            <label htmlFor="location" style={{ textTransform: 'capitalize' }}>{language.location}:</label>
             <input
               name="location"
               type="text"
@@ -352,13 +354,13 @@ class CreateView extends Component {
               onChange={this.onInputChange}
             />
             <br />
-            <label htmlFor="desc" className="capitalize">{language.description}:</label>
+            <label htmlFor="desc" style={{ textTransform: 'capitalize' }}>{language.description}:</label>
             <textarea
               name="desc"
               value={this.state.fields.desc}
               onChange={this.onInputChange}
             />
-            <label htmlFor="img" className="capitalize">{language.image}:</label>
+            <label htmlFor="img" style={{ textTransform: 'capitalize' }}>{language.image}:</label>
             <input
               type="file"
               name="img"
@@ -376,7 +378,7 @@ class CreateView extends Component {
             }
           </form>
         </div>
-      </div>
+      </ViewContainer>
     );
   }
 }

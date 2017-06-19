@@ -15,10 +15,10 @@ const Registration = (props, context) => (
         </p>
       </div>
       <div className="approve-action">
-        <select onChange={props.onInputChange} className="capitalize small-form" name={props.registration.id}>
-          <option className="capitalize">{context.language.PendingRegistrationsView.action}</option>
-          <option className="capitalize small-form" value="approve">{context.language.PendingRegistrationsView.approve}</option>
-          <option className="capitalize small-form" value="deny">{context.language.PendingRegistrationsView.deny}</option>
+        <select onChange={props.onInputChange} className="small-form" style={{ textTransform: 'capitalize' }} name={props.registration.id}>
+          <option>{context.language.PendingRegistrationsView.action}</option>
+          <option className="small-form" value="approve">{context.language.PendingRegistrationsView.approve}</option>
+          <option className="small-form" value="deny">{context.language.PendingRegistrationsView.deny}</option>
         </select>
       </div>
     </div>

@@ -8,6 +8,7 @@ import PageTitle from './PageTitle';
 import Button from './Button';
 import CountrySelect from './CountrySelect';
 import GeneratedOutput from './GeneratedOutput';
+import ViewContainer from './ViewContainer';
 
 
 class WidgetView extends Component {
@@ -88,7 +89,7 @@ class WidgetView extends Component {
     const language = this.context.language.WidgetView;
 
     return (
-      <div className="lightbox widget-view">
+      <ViewContainer size="small" className="widget-view">
         <PageTitle>{language.generateWidgetCode}</PageTitle>
         <form>
           <CountrySelect onInputChange={this.onInputChange} region={this.state.fields.region} />
@@ -105,7 +106,7 @@ class WidgetView extends Component {
           headCode={this.state.headCode}
           bodyCode={this.state.bodyCode}
         />
-      </div>
+      </ViewContainer>
     );
   }
 }

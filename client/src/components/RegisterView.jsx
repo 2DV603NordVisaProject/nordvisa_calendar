@@ -9,6 +9,7 @@ import Client from '../Client';
 import Loader from './Loader';
 import PageTitle from './PageTitle';
 import Button from './Button';
+import ViewContainer from './ViewContainer';
 
 class RegisterView extends Component {
   constructor() {
@@ -141,45 +142,46 @@ class RegisterView extends Component {
       );
     }
     return (
-      <div className="lightbox register">
+      <ViewContainer size="small" className="register">
         <PageTitle>{language.register}</PageTitle>
         <form className="center" onSubmit={this.onFormSubmit}>
-          <label htmlFor="email" className="capitalize">{language.email}:</label>
+          <label htmlFor="email" style={{ textTransform: 'capitalize' }}>{language.email}:</label>
           <input
             name="email"
             type="text"
             value={this.state.fields.email}
             onChange={this.onInputChange}
           />
-          <label htmlFor="password" className="capitalize">{language.password}:</label>
+          <label htmlFor="password" style={{ textTransform: 'capitalize' }}>{language.password}:</label>
           <input
             name="password"
             value={this.state.fields.password}
             onChange={this.onInputChange}
             type="password"
           />
-          <label htmlFor="confirmpassword" className="capitalize">{language.confirmPassword}:</label>
+          <label htmlFor="confirmpassword" style={{ textTransform: 'capitalize' }}>{language.confirmPassword}:</label>
           <input
             name="confirmpassword"
             value={this.state.fields.confirmpassword}
             onChange={this.onInputChange}
             type="password"
           />
-          <label htmlFor="org" className="capitalize">{language.organization}:</label>
+          <label htmlFor="org" style={{ textTransform: 'capitalize' }}>{language.organization}:</label>
           <select
             name="org"
+            style={{ textTransform: 'capitalize' }}
             onChange={this.onInputChange}
             value={this.state.fields.org}
             defaultValue=""
           >
             {
-                this.state.organizations.map(org => <option className="capitalize" value={org}>{org}</option>)
+                this.state.organizations.map(org => <option value={org}>{org}</option>)
               }
             <option value="new">New Organization</option>
             <option value="">No Organization</option>
           </select>
           <div id="on-select-change" className={this.state.newOrg}>
-            <label htmlFor="neworg" className="capitalize">{language.newOrganization}:</label>
+            <label htmlFor="neworg" style={{ textTransform: 'capitalize' }}>{language.newOrganization}:</label>
             <input
               name="neworg"
               value={this.state.fields.neworg}
@@ -194,7 +196,7 @@ class RegisterView extends Component {
           <ErrorList errors={this.state.fieldErrors} />
           <Button form>{language.registerBtn}</Button>
         </form>
-      </div>
+      </ViewContainer>
     );
   }
 }

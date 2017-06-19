@@ -7,6 +7,7 @@ import ConfirmMessage from './ConfirmMessage';
 import ErrorList from './ErrorList';
 import PageTitle from './PageTitle';
 import Button from './Button';
+import ViewContainer from './ViewContainer';
 
 class MembersView extends Component {
   constructor() {
@@ -122,7 +123,7 @@ class MembersView extends Component {
     const language = this.context.language.MembersView;
 
     return (
-      <div className="members view">
+      <ViewContainer className="members">
         <PageTitle>{language.members}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
           <MembersList members={this.state.members} onChange={this.onInputChange} />
@@ -130,7 +131,7 @@ class MembersView extends Component {
           <Button form>{language.save}</Button>
         </form>
         <ConfirmMessage popup={this.state.popup} onClick={this.onConfirmClick} />
-      </div>
+      </ViewContainer>
     );
   }
 }

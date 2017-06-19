@@ -5,6 +5,7 @@ import RegistrationsList from './RegistrationsList';
 import Client from '../Client';
 import PageTitle from './PageTitle';
 import Button from './Button';
+import ViewContainer from './ViewContainer';
 
 class PendingRegistrationsView extends Component {
   constructor() {
@@ -119,12 +120,12 @@ class PendingRegistrationsView extends Component {
     const language = this.context.language.PendingRegistrationsView;
 
     return (
-      <div className="view pending-view">
+      <ViewContainer className="pending-view">
         <PageTitle>{language.pending}</PageTitle>
-        <div className="list-header">
-          <p className="capitalize">{language.email}</p>
-          <p className="capitalize">{language.organization}</p>
-          <p className="capitalize">{language.approve}</p>
+        <div className="list-header" style={{ textTransform: 'capitalize' }}>
+          <p>{language.email}</p>
+          <p>{language.organization}</p>
+          <p>{language.approve}</p>
         </div>
         <form onSubmit={this.onFormSubmit}>
           <RegistrationsList
@@ -133,7 +134,7 @@ class PendingRegistrationsView extends Component {
           />
           <Button form>{language.approve}</Button>
         </form>
-      </div>
+      </ViewContainer>
     );
   }
 }

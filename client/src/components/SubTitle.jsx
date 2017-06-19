@@ -13,3 +13,5 @@ SubTitle.defaultProps = {
 SubTitle.propTypes = {
   children: PropTypes.string,
 };
+
+export default SubTitle;

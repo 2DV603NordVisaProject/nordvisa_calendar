@@ -11,6 +11,10 @@
   margin: 0;
 }
 
+.list-header {
+  text-transform: capitalize;
+}
+
 .members form {
   width: 100%;
 }

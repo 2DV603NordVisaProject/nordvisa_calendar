@@ -5,6 +5,7 @@ import EventsList from './EventsList';
 import Client from '../Client';
 import ConfirmMessage from './ConfirmMessage';
 import PageTitle from './PageTitle';
+import ViewContainer from './ViewContainer';
 
 class MyEventsView extends Component {
   constructor(props) {
@@ -67,11 +68,11 @@ class MyEventsView extends Component {
     const language = this.context.language.MyEventsView;
 
     return (
-      <div className="view">
+      <ViewContainer>
         <PageTitle>{language.myEvents}</PageTitle>
         <EventsList events={this.state.events} delete={this.handleDeleteClick} />
         <ConfirmMessage popup={this.state.popup} onClick={this.onYesClick} />
-      </div>
+      </ViewContainer>
     );
   }
 }

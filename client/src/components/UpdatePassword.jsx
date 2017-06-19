@@ -94,26 +94,32 @@ class UpdatePassword extends Component {
 
   render() {
     const language = this.context.language.MyAccountView;
+    const style = {
+      border: '1px solid grey',
+      maxWidth: '600px',
+      borderRadius: '3px',
+      margin: '0 auto 20px',
+    };
 
     return (
-      <div className="box">
+      <div style={style}>
         <SubTitle>{language.updatePassword}</SubTitle>
         <form onSubmit={this.onFormSubmit}>
-          <label htmlFor="oldpassword" className="capitalize">{language.oldPassword}:</label>
+          <label htmlFor="oldpassword" style={{ textTransform: 'capitalize' }}>{language.oldPassword}:</label>
           <input
             type="password"
             name="oldpassword"
             value={this.state.fields.oldpassword}
             onChange={this.onInputChange}
           />
-          <label htmlFor="newpassword" className="capitalize">{language.newPassword}:</label>
+          <label htmlFor="newpassword" style={{ textTransform: 'capitalize' }}>{language.newPassword}:</label>
           <input
             type="password"
             name="newpassword"
             value={this.state.fields.newpassword}
             onChange={this.onInputChange}
           />
-          <label htmlFor="confirmpassword" className="capitalize">{language.confirmPassword}:</label>
+          <label htmlFor="confirmpassword" style={{ textTransform: 'capitalize' }}>{language.confirmPassword}:</label>
           <input
             type="password"
             name="confirmpassword"

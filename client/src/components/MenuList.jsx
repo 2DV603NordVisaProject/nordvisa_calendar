@@ -5,9 +5,12 @@ import Client from '../Client';
 
 const MenuList = (props, context) => {
   const language = context.language.MenuList;
+  const style = {
+    textTransform: 'capitalize',
+  };
 
   return (
-    <ul>
+    <ul style={style}>
       {
         Client.getUserLevel() > 1 ? (
           <div>

@@ -19,6 +19,13 @@ input[type="date"] {
   overflow: auto;
 }
 
+.box {
+  border: 1px solid grey;
+  max-width: 600px;
+  border-radius: 3px;
+  margin: 0 auto 20px;
+}
+
 .create-event input[type=text], .create-event input[type=file] {
   margin: 0 0 0 10px;
   float: left;

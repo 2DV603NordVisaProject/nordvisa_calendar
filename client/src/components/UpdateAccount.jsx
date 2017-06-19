@@ -97,16 +97,22 @@ class UpdateAccount extends Component {
 
   render() {
     const language = this.context.language.MyAccountView;
+    const style = {
+      border: '1px solid grey',
+      maxWidth: '600px',
+      borderRadius: '3px',
+      margin: '0 auto 20px',
+    };
 
     return (
-      <div className="box">
+      <div style={style}>
         <SubTitle>{language.updateDetails}</SubTitle>
         <form onSubmit={this.onFormSubmit}>
-          <label htmlFor="email" className="capitalize">{language.email}:</label>
+          <label htmlFor="email" style={{ textTransform: 'capitalize' }}>{language.email}:</label>
           <input type="text" name="email" value={this.state.fields.email} onChange={this.onInputChange} />
-          <label htmlFor="org" className="capitalize">{language.organization}:</label>
+          <label htmlFor="org" style={{ textTransform: 'capitalize' }}>{language.organization}:</label>
           <select
-            className="capitalize"
+            style={{ textTransform: 'capitalize' }}
             name="org"
             onChange={this.onInputChange}
             value={this.state.fields.org}
@@ -119,7 +125,7 @@ class UpdateAccount extends Component {
             <option value="" className="capitalize">{language.noOrganization}</option>
           </select>
           <div id="on-select-change" className="hidden">
-            <label htmlFor="neworg">{language.newOrganization}:</label>
+            <label htmlFor="neworg" style={{ textTransform: 'capitalize' }}>{language.newOrganization}:</label>
             <input
               name="neworg"
               value={this.state.fields.neworg}

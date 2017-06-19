@@ -9,6 +9,7 @@ import Client from '../Client';
 import Loader from './Loader';
 import PageTitle from './PageTitle';
 import Button from './Button';
+import ViewContainer from './ViewContainer';
 
 
 class LoginView extends Component {
@@ -107,17 +108,17 @@ class LoginView extends Component {
       );
     }
     return (
-      <div className="lightbox login">
+      <ViewContainer size="small" className="login">
         <PageTitle>{language.LoginView.login}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
-          <label htmlFor="email" className="capitalize">{language.LoginView.email}:</label>
+          <label htmlFor="email" style={{ textTransform: 'capitalize' }}>{language.LoginView.email}:</label>
           <input
             name="email"
             value={this.state.fields.email}
             onChange={this.onInputChange}
             type="text"
           />
-          <label htmlFor="password" className="capitalize">{language.LoginView.password}:</label>
+          <label htmlFor="password" style={{ textTransform: 'capitalize' }}>{language.LoginView.password}:</label>
           <input
             name="password"
             onChange={this.onInputChange}
@@ -127,8 +128,8 @@ class LoginView extends Component {
           <ErrorList errors={this.state.fieldErrors} />
           <Button form>{language.LoginView.login}</Button>
         </form>
-        <Link to="/recover-password" className="capitalize">{language.LoginView.forgot}</Link>
-      </div>
+        <Link to="/recover-password" style={{ textTransform: 'capitalize' }}>{language.LoginView.forgot}</Link>
+      </ViewContainer>
     );
   }
 }

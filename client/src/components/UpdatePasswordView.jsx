@@ -4,6 +4,7 @@ import ErrorList from './ErrorList';
 import Client from '../Client';
 import PageTitle from './PageTitle';
 import Button from './Button';
+import ViewContainer from './ViewContainer';
 
 
 class UpdatePasswordView extends Component {
@@ -74,7 +75,7 @@ class UpdatePasswordView extends Component {
     const language = this.context.language.UpdatePasswordView;
 
     return (
-      <div className="lightbox login">
+      <ViewContainer size="small" className="login">
         <PageTitle>{language.updatePassword}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
           <label htmlFor="password" className="capitalize">{language.newPassword}:</label>
@@ -84,7 +85,7 @@ class UpdatePasswordView extends Component {
           <ErrorList errors={this.state.fieldErrors} />
           <Button form>{language.save}</Button>
         </form>
-      </div>
+      </ViewContainer>
     );
   }
 }

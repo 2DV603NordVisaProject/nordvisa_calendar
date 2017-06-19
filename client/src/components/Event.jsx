@@ -7,9 +7,9 @@ const Event = (props, context) => (
     <div className="event-item">
       <p>{props.event.name}</p>
       <div className="item-action-container">
-        <a className="error-text clickable capitalize" href="" name={props.event.id} onClick={props.delete}>{context.language.MyEventsView.delete}</a>
-        <Link to={`/user/event/edit/${props.event.id}`} className="success-text capitalize">{context.language.MyEventsView.edit}</Link>
-        <Link to={`/user/event/view/${props.event.id}`} className="capitalize">{context.language.MyEventsView.view}</Link>
+        <a className="error-text clickable" style={{ textTransform: 'capitalize' }} href="" name={props.event.id} onClick={props.delete}>{context.language.MyEventsView.delete}</a>
+        <Link to={`/user/event/edit/${props.event.id}`} className="success-text" style={{ textTransform: 'capitalize' }}>{context.language.MyEventsView.edit}</Link>
+        <Link to={`/user/event/view/${props.event.id}`} style={{ textTransform: 'capitalize' }}>{context.language.MyEventsView.view}</Link>
       </div>
     </div>
   </li>

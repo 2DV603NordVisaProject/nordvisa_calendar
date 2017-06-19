@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 
 const LanguageSelect = (props, context) => {
   const language = context.language.TopBar;
+  const style = {
+    textTransform: 'capitalize',
+  };
   return (
-    <select defaultValue="en" onChange={props.onChange} className="capitalize">
-      <option value="sv" className="capitalize">{language.swedish}</option>
-      <option value="en" className="capitalize">{language.english}</option>
-      <option value="no" className="capitalize">{language.norwegian}</option>
-      <option value="da" className="capitalize">{language.danish}</option>
-      <option value="is" className="capitalize">{language.icelandic}</option>
+    <select defaultValue="en" onChange={props.onChange} style={style}>
+      <option value="sv">{language.swedish}</option>
+      <option value="en">{language.english}</option>
+      <option value="no">{language.norwegian}</option>
+      <option value="da">{language.danish}</option>
+      <option value="is">{language.icelandic}</option>
     </select>
   );
 };

@@ -9,7 +9,7 @@ const Member = (props, context) => (
         <p>{props.member.email}</p>
       </div>
       <div className="access-select">
-        <select className="select-full capitalize" onChange={props.onChange} name={props.member.id} defaultValue={props.member.role}>
+        <select className="select-full" style={{ textTransform: 'capitalize' }} onChange={props.onChange} name={props.member.id} defaultValue={props.member.role}>
           <option value="USER" className="capitalize" disabled={props.member.role === 'SUPER_ADMIN'}>{context.language.MembersView.user}</option>
           <option value="ADMIN" className="capitalize" disabled={props.member.role === 'SUPER_ADMIN'}>{context.language.MembersView.admin}</option>
           <option value="SUPER_ADMIN" className="capitalize">{context.language.MembersView.superadmin}</option>

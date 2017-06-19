@@ -2,3 +2,7 @@
     text-align: center;
     white-space: nowrap;
 }
+
+.long-error {
+  margin: 10px 0 0 -80px;
+}

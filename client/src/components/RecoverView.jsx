@@ -6,6 +6,7 @@ import ErrorList from './ErrorList';
 import Client from '../Client';
 import PageTitle from './PageTitle';
 import Button from './Button';
+import ViewContainer from './ViewContainer';
 
 
 class RecoverView extends Component {
@@ -73,10 +74,10 @@ class RecoverView extends Component {
       );
     }
     return (
-      <div className="lightbox login">
+      <ViewContainer size="small" className="login">
         <PageTitle>{language.recover}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
-          <label htmlFor="email" className="capitalize">{language.email}:</label>
+          <label htmlFor="email" style={{ textTransform: 'capitalize' }}>{language.email}:</label>
           <input
             name="email"
             type="text"
@@ -86,7 +87,7 @@ class RecoverView extends Component {
           <ErrorList errors={this.state.fieldErrors} />
           <Button form>{language.request}</Button>
         </form>
-      </div>
+      </ViewContainer>
     );
   }
 }

@@ -5,62 +5,34 @@ import ViewContainer from '../src/components/ViewContainer';
 describe('ViewContainer', () => {
   let wrapper;
 
-  beforeEach(() => {
-    wrapper = shallow(<ViewContainer />);
-  });
+  describe('with defaultProps', () => {
+    beforeEach(() => {
+      wrapper = shallow(<ViewContainer><div>hello world</div></ViewContainer>);
+    });
 
-  it('should be defined', () => {
-    expect(wrapper).toBeDefined();
-  });
+    it('should be defined', () => {
+      expect(wrapper).toBeDefined();
+    });
 
-  it('should be rednered', () => {
-    expect(wrapper.find('div').length).toBeGreaterThan(0);
-  });
+    it('should renders', () => {
+      expect(wrapper.find('div').length).toBeGreaterThan(0);
+    });
 
-  it('should have login route', () => {
-    expect(wrapper.find({ pattern: '/login' }).length).toBe(1);
-  });
+    it('size prop should be defined', () => {
+      expect(wrapper.props().size).toBeDefined();
+    });
 
-  it('should have logout route', () => {
-    expect(wrapper.find({ pattern: '/logout' }).length).toBe(1);
+    it('children prop should be defined', () => {
+      expect(wrapper.props().children).toBeDefined();
+    });
   });
+  describe('witout defaultProps', () => {
+    beforeEach(() => {
+      wrapper = shallow(<ViewContainer size="small"><div>hello world</div></ViewContainer>);
+    });
 
-  it('should have register route', () => {
-    expect(wrapper.find({ pattern: '/register' }).length).toBe(1);
-  });
-
-  it('should have recover password route', () => {
-    expect(wrapper.find({ pattern: '/recover-password' }).length).toBe(1);
-  });
-
-  it('should have update password route', () => {
-    expect(wrapper.find({ pattern: '/update-password/:id' }).length).toBe(1);
-  });
-
-  it('should have generate widget route', () => {
-    expect(wrapper.find({ pattern: '/generate-widget' }).length).toBe(1);
-  });
-  it('should have my account route', () => {
-    expect(wrapper.find({ pattern: '/user/account' }).length).toBe(1);
-  });
-
-  it('should have my event route', () => {
-    expect(wrapper.find({ pattern: '/user/event' }).length).toBe(1);
-  });
-
-  it('should have create event route', () => {
-    expect(wrapper.find({ pattern: '/user/event/create' }).length).toBe(1);
-  });
-
-  it('should have view event route', () => {
-    expect(wrapper.find({ pattern: '/user/event/view/:id' }).length).toBe(1);
-  });
-
-  it('should have members route', () => {
-    expect(wrapper.find({ pattern: '/admin/members' }).length).toBe(1);
-  });
-
-  it('should have pending registrations route', () => {
-    expect(wrapper.find({ pattern: '/admin/pending-registrations' }).length).toBe(1);
+    it("size prop should be set to 'small'", () => {
+      expect(wrapper.props().size).toBe('small');
+    });
   });
 });
