@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './ConfirmMessage.css';
+import Button from './Button';
 
 class ConfirmMessage extends Component {
   constructor() {
@@ -35,8 +36,8 @@ class ConfirmMessage extends Component {
         <div className="confirm-message">
           <p>{this.props.popup.msg}</p>
           <div className="answer">
-            <button className="btn-success" onClick={this.onYesClick}>yes</button>
-            <button className="btn-error" onClick={this.onNoClick}>no</button>
+            <Button theme="success" onClick={this.onYesClick}>yes</Button>
+            <Button theme="error" onClick={this.onNoClick}>no</Button>
           </div>
         </div>
       );

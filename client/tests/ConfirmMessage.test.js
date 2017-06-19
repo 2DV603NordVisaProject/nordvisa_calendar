@@ -1,6 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import ConfirmMessage from '../src/components/ConfirmMessage';
+import Button from '../src/components/Button';
 
 describe('ConfirmMessage', () => {
   let wrapper;
@@ -33,6 +34,10 @@ describe('ConfirmMessage', () => {
 
     it('should render', () => {
       expect(wrapper.find('div').length).toBeGreaterThan(0);
+    });
+
+    it('should have two Button-components', () => {
+      expect(wrapper.find(Button).length).toBe(2);
     });
 
     it("should receive pop object as prop 'popup'", () => {

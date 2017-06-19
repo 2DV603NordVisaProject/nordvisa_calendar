@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Client from '../Client';
+import Button from './Button';
 
 
 class UpdatePassword extends Component {
@@ -119,7 +120,7 @@ class UpdatePassword extends Component {
             onChange={this.onInputChange}
           />
           <ErrorList errors={this.state.fieldErrors} />
-          <input type="submit" value={language.save} className="btn-primary" />
+          <Button form>{language.save}</Button>
         </form>
       </div>
     );

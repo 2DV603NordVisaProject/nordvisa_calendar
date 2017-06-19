@@ -5,6 +5,7 @@ import ErrorList from './ErrorList';
 import ProvinceSelect from './ProvinceSelect';
 import Client from '../Client';
 import PageTitle from './PageTitle';
+import Button from './Button';
 
 
 class WidgetView extends Component {
@@ -108,7 +109,7 @@ class WidgetView extends Component {
             />
           </div>
           <ErrorList errors={this.state.fieldErrors} />
-          <button className="btn-primary" onClick={this.onFormSubmit}>{language.generate}</button>
+          <Button onClick={this.onFormSubmit}>{language.generate}</Button>
         </form>
         {
           this.state.isGenerated ? (

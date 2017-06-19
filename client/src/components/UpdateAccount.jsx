@@ -3,6 +3,7 @@ import { isEmail } from 'validator';
 import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Client from '../Client';
+import Button from './Button';
 
 class UpdateAccount extends Component {
   constructor() {
@@ -126,7 +127,7 @@ class UpdateAccount extends Component {
             />
           </div>
           <ErrorList errors={this.state.fieldErrors} />
-          <input type="submit" value={language.save} className="btn-primary" />
+          <Button form>{language.save}</Button>
         </form>
       </div>
     );

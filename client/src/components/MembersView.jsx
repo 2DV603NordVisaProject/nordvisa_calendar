@@ -6,6 +6,7 @@ import MembersList from './MembersList';
 import ConfirmMessage from './ConfirmMessage';
 import ErrorList from './ErrorList';
 import PageTitle from './PageTitle';
+import Button from './Button';
 
 class MembersView extends Component {
   constructor() {
@@ -126,7 +127,7 @@ class MembersView extends Component {
         <form onSubmit={this.onFormSubmit}>
           <MembersList members={this.state.members} onChange={this.onInputChange} />
           <ErrorList errors={this.state.fieldErrors} />
-          <input type="submit" value={language.save} className="btn-primary" />
+          <Button form>{language.save}</Button>
         </form>
         <ConfirmMessage popup={this.state.popup} onClick={this.onConfirmClick} />
       </div>

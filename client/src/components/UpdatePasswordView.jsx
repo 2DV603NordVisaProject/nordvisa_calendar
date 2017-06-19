@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Client from '../Client';
 import PageTitle from './PageTitle';
+import Button from './Button';
 
 
 class UpdatePasswordView extends Component {
@@ -81,7 +82,7 @@ class UpdatePasswordView extends Component {
           <label htmlFor="passwordConfirmation" className="capitalize">{language.confirmPassword}:</label>
           <input name="passwordConfirmation" type="password" onChange={this.onInputChange} />
           <ErrorList errors={this.state.fieldErrors} />
-          <input type="submit" className="btn-primary" value={language.save} />
+          <Button form>{language.save}</Button>
         </form>
       </div>
     );

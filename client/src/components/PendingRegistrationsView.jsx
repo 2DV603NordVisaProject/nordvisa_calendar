@@ -4,6 +4,7 @@ import './PendingRegistrationsView.css';
 import RegistrationsList from './RegistrationsList';
 import Client from '../Client';
 import PageTitle from './PageTitle';
+import Button from './Button';
 
 class PendingRegistrationsView extends Component {
   constructor() {
@@ -130,7 +131,7 @@ class PendingRegistrationsView extends Component {
             registrations={this.state.registrations}
             onInputChange={this.onInputChange}
           />
-          <input type="submit" className="btn-primary" value={language.approve} />
+          <Button form>{language.approve}</Button>
         </form>
       </div>
     );

@@ -4,11 +4,7 @@ import UpdatePasswordView from '../src/components/UpdatePasswordView';
 import ErrorList from '../src/components/ErrorList';
 import en from '../src/i18n/en';
 import PageTitle from '../src/components/PageTitle';
-
-/*
-- updates states on input.
-- sends id as prop.
- */
+import Button from '../src/components/Button';
 
 describe('UpdatePasswordView', () => {
   let wrapper;
@@ -29,6 +25,10 @@ describe('UpdatePasswordView', () => {
 
   it('should contain a PageTitle-component', () => {
     expect(wrapper.find(PageTitle).length).toBe(1);
+  });
+
+  it('should contain Button-components', () => {
+    expect(wrapper.find(Button).length).toBe(1);
   });
 
   it('should render 2 input', () => {

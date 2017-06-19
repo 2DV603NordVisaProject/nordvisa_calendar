@@ -8,6 +8,7 @@ import ErrorList from './ErrorList';
 import Client from '../Client';
 import Loader from './Loader';
 import PageTitle from './PageTitle';
+import Button from './Button';
 
 
 class LoginView extends Component {
@@ -124,7 +125,7 @@ class LoginView extends Component {
             type="password"
           />
           <ErrorList errors={this.state.fieldErrors} />
-          <input type="submit" className="btn-primary" value={language.LoginView.login} />
+          <Button form>{language.LoginView.login}</Button>
         </form>
         <Link to="/recover-password" className="capitalize">{language.LoginView.forgot}</Link>
       </div>

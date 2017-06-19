@@ -7,6 +7,7 @@ import Client from '../Client';
 import EventsMap from './EventsMap';
 import './CreateView.css';
 import PageTitle from './PageTitle';
+import Button from './Button';
 
 
 class CreateView extends Component {
@@ -268,9 +269,9 @@ class CreateView extends Component {
 
             <div className="action-container">
               {
-                this.state.progress === 'preview' ? <button className="btn-primary" onClick={this.onSaveClick}>{language.save}</button> : ''
+                this.state.progress === 'preview' ? <Button onClick={this.onSaveClick}>{language.save}</Button> : ''
               }
-              <button className="btn-primary" onClick={this.onEditClick}>{language.edit}</button>
+              <Button onClick={this.onEditClick}>{language.edit}</Button>
             </div>
           </div>
         </div>
@@ -365,7 +366,7 @@ class CreateView extends Component {
               onChange={this.onInputChange}
             />
             <ErrorList className={this.state.progress === 'saved' ? 'success' : ''} errors={this.state.fieldErrors} />
-            <input type="submit" value={language.preview} className="btn-primary" />
+            <Button form>{language.preview}</Button>
             {
               this.state.comeFrom === 'event'
               ? this.state.progress === 'saved'

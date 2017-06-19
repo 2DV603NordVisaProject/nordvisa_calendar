@@ -31,11 +31,11 @@
   margin: 0 25px
 }
 
-.error {
+.error-text {
   color: red;
 }
 
-.success {
+.success-text {
   color: green;
 }
 

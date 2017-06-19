@@ -8,6 +8,7 @@ import ErrorList from './ErrorList';
 import Client from '../Client';
 import Loader from './Loader';
 import PageTitle from './PageTitle';
+import Button from './Button';
 
 class RegisterView extends Component {
   constructor() {
@@ -191,11 +192,7 @@ class RegisterView extends Component {
             verifyCallback={this.callback}
           />
           <ErrorList errors={this.state.fieldErrors} />
-          <input
-            type="submit"
-            value={language.registerBtn}
-            className="btn-primary"
-          />
+          <Button form>{language.registerBtn}</Button>
         </form>
       </div>
     );

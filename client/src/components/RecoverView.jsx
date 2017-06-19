@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Client from '../Client';
 import PageTitle from './PageTitle';
+import Button from './Button';
 
 
 class RecoverView extends Component {
@@ -83,7 +84,7 @@ class RecoverView extends Component {
             onChange={this.onInputChange}
           />
           <ErrorList errors={this.state.fieldErrors} />
-          <input type="submit" value={language.request} className="btn-primary uppercase" />
+          <Button form>{language.request}</Button>
         </form>
       </div>
     );
