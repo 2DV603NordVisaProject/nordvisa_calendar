@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Client from '../Client';
 import Button from './Button';
+import SubTitle from './SubTitle';
 
 class UpdateAccount extends Component {
   constructor() {
@@ -99,7 +100,7 @@ class UpdateAccount extends Component {
 
     return (
       <div className="box">
-        <h3 className="capitalize">{language.updateDetails}</h3>
+        <SubTitle>{language.updateDetails}</SubTitle>
         <form onSubmit={this.onFormSubmit}>
           <label htmlFor="email" className="capitalize">{language.email}:</label>
           <input type="text" name="email" value={this.state.fields.email} onChange={this.onInputChange} />

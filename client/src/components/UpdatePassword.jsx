@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Client from '../Client';
 import Button from './Button';
+import SubTitle from './SubTitle';
 
 
 class UpdatePassword extends Component {
@@ -96,7 +97,7 @@ class UpdatePassword extends Component {
 
     return (
       <div className="box">
-        <h3 className="capitalize">{language.updatePassword}</h3>
+        <SubTitle>{language.updatePassword}</SubTitle>
         <form onSubmit={this.onFormSubmit}>
           <label htmlFor="oldpassword" className="capitalize">{language.oldPassword}:</label>
           <input
