@@ -32,6 +32,8 @@ class UserInformationValidator {
     private String recaptchaUrl;
     @Value("${captchaSecret}")
     private String recaptchaRes;
+    @Value("${devMode}")
+    private boolean devMode;
 
     /**
      * Validates the content of a RegistraitonDTO.
@@ -121,7 +123,7 @@ class UserInformationValidator {
         RecaptchaResponseDTO responseDTO;
 
         // TODO: Remove this backdoor, make dev mode boolean in properties file
-        if(recaptchaRes.equals("secret_key")) {
+        if(devMode) {
             responseDTO = new RecaptchaResponseDTO();
             responseDTO.setSuccess(true);
         }

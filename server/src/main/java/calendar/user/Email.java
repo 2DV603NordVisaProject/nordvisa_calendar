@@ -1,7 +1,11 @@
 package calendar.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
+import java.net.InetAddress;
 
 /**
  * Class Email
@@ -13,12 +17,15 @@ import org.springframework.stereotype.Component;
  */
 @Component
 class Email {
-    @Value("${base_url}")
-    private String baseUrl; //Base url for the website
+    @Autowired
+    private Environment env;
+
     @Value("${smtp.host}")
     private String smtpHost;
     @Value("${smtp.sender}")
     private String smtpSender;
+    @Value("${devMode}")
+    private boolean devMode;
 
     /**
      * Send a verification email to the specified email. The email will contain a link which will
@@ -29,8 +36,8 @@ class Email {
      * @param email The email address which the email should be sent to.
      */
     void sendVerificationEmail(String id, String email) {
-        System.out.println("Sent to (" + email + ")http://" + baseUrl + "/api/visitor/verify_email?id=" + id);
-        String link = "http://" + baseUrl + "/api/visitor/verify_email?id=" + id;
+        System.out.println("Sent to (" + email + ")http://" + getURI() + "/api/visitor/verify_email?id=" + id);
+        String link = "http://" + getURI() + "/api/visitor/verify_email?id=" + id;
         String title = "Verify Email";
         String message = "Hello!\n Someone has created an account for this account. If this was " +
                 "not you then just ignore this message. If it was you then click the link bellow" +
@@ -47,7 +54,7 @@ class Email {
      * @param email The email address which the email should be sent to
      */
     void sendPasswordResetEmail(String id, String email) {
-        String link = "http://" + baseUrl + "/update-password/" + id;
+        String link = "http://" + getURI() + "/update-password/" + id;
         String title = "Password recovery";
         String message = "Hello!\n Someone has requested a password recovery on this email. If this" +
                 "was not you then just ignore this message. If not then click the link bellow. " +
@@ -83,8 +90,28 @@ class Email {
     }
 
     private void sendMessage(String to, String title, String message) {
+    }
+
+    private void printMessage(String to, String title, String message) {
+        System.out.println("-------------------------------EMAIL---------------------------------");
         System.out.println("Sent to " + to);
         System.out.println(title);
         System.out.println(message);
+        System.out.println("---------------------------------------------------------------------");
+    }
+
+    private void sendEmail(String to, String title, String message) {
+
+    }
+
+    private String getURI() {
+        String host = InetAddress.getLoopbackAddress().getHostName();
+        String port = env.getProperty("local.server.port");
+
+        if(!port.equals("80")) {
+            host = host + ":" + port;
+        }
+
+        return host;
     }
 }
