@@ -24,8 +24,6 @@ class Email {
     private String smtpHost;
     @Value("${smtp.sender}")
     private String smtpSender;
-    @Value("${devMode}")
-    private boolean devMode;
 
     /**
      * Send a verification email to the specified email. The email will contain a link which will
@@ -39,7 +37,7 @@ class Email {
         System.out.println("Sent to (" + email + ")http://" + getURI() + "/api/visitor/verify_email?id=" + id);
         String link = "http://" + getURI() + "/api/visitor/verify_email?id=" + id;
         String title = "Verify Email";
-        String message = "Hello!\n Someone has created an account for this account. If this was " +
+        String message = "Hello!\nSomeone has created an account for this account. If this was " +
                 "not you then just ignore this message. If it was you then click the link bellow" +
                 "\n\n" + link;
         sendMessage(email, title, message);
@@ -56,7 +54,7 @@ class Email {
     void sendPasswordResetEmail(String id, String email) {
         String link = "http://" + getURI() + "/update-password/" + id;
         String title = "Password recovery";
-        String message = "Hello!\n Someone has requested a password recovery on this email. If this" +
+        String message = "Hello!\nSomeone has requested a password recovery on this email. If this" +
                 "was not you then just ignore this message. If not then click the link bellow. " +
                 "\n\n" + link;
         sendMessage(email, title, message);
@@ -71,7 +69,7 @@ class Email {
      */
     void sendSuccessEmail(String email, String type) {
         String title = "Your " + type + " was successful";
-        String message = "Hello!\n Your " + type + " was accepted by an administrator";
+        String message = "Hello!\nYour " + type + " was accepted by an administrator";
         sendMessage(email, title, message);
     }
 
@@ -85,14 +83,22 @@ class Email {
 
     void sendDenialEmail(String email, String type) {
         String title = "Your " + type + " was denied";
-        String message = "Hello!\n Your " + type + " was denied by an administrator";
+        String message = "Hello!\nYour " + type + " was denied by an administrator";
         sendMessage(email, title, message);
     }
 
     private void sendMessage(String to, String title, String message) {
+        if(configOk()) {
+            System.out.println("DEV MODE");
+            printMessage(to, title, message);
+        } else {
+            System.out.println("NON DEV MODE");
+            sendEmail(to, title, message);
+        }
     }
 
     private void printMessage(String to, String title, String message) {
+        System.out.println("SMTP_HOST: " + smtpHost);
         System.out.println("-------------------------------EMAIL---------------------------------");
         System.out.println("Sent to " + to);
         System.out.println(title);
@@ -101,7 +107,7 @@ class Email {
     }
 
     private void sendEmail(String to, String title, String message) {
-
+        System.out.println("EMAIL IS NOT IMPLEMENTED YOU LOOSER!");
     }
 
     private String getURI() {
@@ -113,5 +119,9 @@ class Email {
         }
 
         return host;
+    }
+
+    private boolean configOk() {
+        return !smtpHost.equals("") && !smtpSender.equals("");
     }
 }

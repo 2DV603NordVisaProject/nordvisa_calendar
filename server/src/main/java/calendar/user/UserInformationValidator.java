@@ -32,8 +32,6 @@ class UserInformationValidator {
     private String recaptchaUrl;
     @Value("${captchaSecret}")
     private String recaptchaRes;
-    @Value("${devMode}")
-    private boolean devMode;
 
     /**
      * Validates the content of a RegistraitonDTO.
@@ -122,10 +120,12 @@ class UserInformationValidator {
     RecaptchaResponseDTO validateRecaptcha(String secret) throws Exception {
         RecaptchaResponseDTO responseDTO;
 
-        // TODO: Remove this backdoor, make dev mode boolean in properties file
-        if(devMode) {
+        if(recaptchaRes.equals("")) {
             responseDTO = new RecaptchaResponseDTO();
             responseDTO.setSuccess(true);
+            System.err.println("WARNING! Recaptcha secret is missing from configuration! The " +
+                    "application will continue working as it should but registrations are not " +
+                    "validated as humans to the google server.");
         }
         else {
             try {
