@@ -91,12 +91,11 @@ class WidgetView extends Component {
         <PageTitle>{language.generateWidgetCode}</PageTitle>
         <form>
           <CountrySelect onInputChange={this.onInputChange} region={this.state.fields.region} />
-          <div className={this.state.showProvince ? '' : 'hidden'}>
-            <ProvinceSelect
-              region={this.state.fields.region}
-              onChange={this.onInputChange}
-            />
-          </div>
+          <ProvinceSelect
+            region={this.state.fields.region}
+            onChange={this.onInputChange}
+            showProvince={this.state.showProvince}
+          />
           <ErrorList errors={this.state.fieldErrors} />
           <Button onClick={this.onFormSubmit}>{language.generate}</Button>
         </form>
