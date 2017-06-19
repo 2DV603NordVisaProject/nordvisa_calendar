@@ -7,6 +7,7 @@ import Client from '../Client';
 import PageTitle from './PageTitle';
 import Button from './Button';
 import CountrySelect from './CountrySelect';
+import GeneratedOutput from './GeneratedOutput';
 
 
 class WidgetView extends Component {
@@ -99,18 +100,11 @@ class WidgetView extends Component {
           <ErrorList errors={this.state.fieldErrors} />
           <Button onClick={this.onFormSubmit}>{language.generate}</Button>
         </form>
-        {
-          this.state.isGenerated ? (
-            <div className="code-container">
-              <p>{language.headCode}:</p>
-              <textarea className="widget-code" defaultValue={this.state.headCode} disabled />
-              <p>{language.bodyCode}:</p>
-              <textarea className="widget-code" defaultValue={this.state.bodyCode} disabled />
-            </div>
-          ) : (
-            <div />
-          )
-        }
+        <GeneratedOutput
+          isGenerated={this.state.isGenerated}
+          headCode={this.state.headCode}
+          bodyCode={this.state.bodyCode}
+        />
       </div>
     );
   }
