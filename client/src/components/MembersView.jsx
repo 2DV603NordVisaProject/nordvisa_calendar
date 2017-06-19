@@ -15,6 +15,8 @@ class MembersView extends Component {
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
+    this.onNoClick = this.onNoClick.bind(this);
+    this.onConfirmClick = this.onConfirmClick.bind(this);
   }
   state = {
     members: [],
@@ -118,6 +120,12 @@ class MembersView extends Component {
     this.forceUpdate();
   }
 
+  onNoClick() {
+    const popup = this.state.popup;
+    popup.pop = false;
+    this.setState({ popup });
+  }
+
   render() {
     console.log(this);
     const language = this.context.language.MembersView;
@@ -130,7 +138,15 @@ class MembersView extends Component {
           <ErrorList errors={this.state.fieldErrors} />
           <Button form>{language.save}</Button>
         </form>
-        <ConfirmMessage popup={this.state.popup} onClick={this.onConfirmClick} />
+        {
+          this.state.popup.pop
+          ? <ConfirmMessage
+            popup={this.state.popup}
+            onYesClick={this.onConfirmClick}
+            onNoClick={this.onNoClick}
+          />
+          : null
+        }
       </ViewContainer>
     );
   }

@@ -13,6 +13,7 @@ class MyEventsView extends Component {
 
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.onYesClick = this.onYesClick.bind(this);
+    this.onNoClick = this.onNoClick.bind(this);
   }
   state = {
     events: [],
@@ -44,7 +45,15 @@ class MyEventsView extends Component {
     Client.post(eventToDelete, uri);
 
     const events = this.state.events.filter(event => event.id !== this.state.toDelete);
-    this.setState({ events });
+    const popup = this.state.popup;
+    popup.pop = false;
+    this.setState({ events, popup });
+  }
+
+  onNoClick() {
+    const popup = this.state.popup;
+    popup.pop = false;
+    this.setState({ popup });
   }
 
   handleDeleteClick(evt) {
@@ -71,7 +80,15 @@ class MyEventsView extends Component {
       <ViewContainer>
         <PageTitle>{language.myEvents}</PageTitle>
         <EventsList events={this.state.events} delete={this.handleDeleteClick} />
-        <ConfirmMessage popup={this.state.popup} onClick={this.onYesClick} />
+        {
+          this.state.popup.pop
+          ? <ConfirmMessage
+            popup={this.state.popup}
+            onYesClick={this.onYesClick}
+            onNoClick={this.onNoClick}
+          />
+          : null
+        }
       </ViewContainer>
     );
   }

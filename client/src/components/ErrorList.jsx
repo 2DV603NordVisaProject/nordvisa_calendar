@@ -6,7 +6,7 @@ const ErrorList = props => (
   <ul className="error-list">
     {
     props.errors.map(error => (
-      <li className={error.length > 40 ? 'long-error error capitalize' : 'error capitalize'} key={null}>{error}</li>
+      <li style={{ textTransform: 'capitalize' }} className={error.length > 40 ? 'long-error error-text' : 'error-text'} key={null}>{error}</li>
     ))
   }
   </ul>
