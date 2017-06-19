@@ -6,6 +6,7 @@ import ProvinceSelect from './ProvinceSelect';
 import Client from '../Client';
 import PageTitle from './PageTitle';
 import Button from './Button';
+import CountrySelect from './CountrySelect';
 
 
 class WidgetView extends Component {
@@ -89,19 +90,7 @@ class WidgetView extends Component {
       <div className="lightbox widget-view">
         <PageTitle>{language.generateWidgetCode}</PageTitle>
         <form>
-          <select
-            className="capitalize"
-            name="region"
-            onChange={this.onInputChange}
-            defaultValue={this.state.fields.region}
-          >
-            <option value="" className="capitalize">{language.chooseRegion}</option>
-            <option value="all" className="capitalize">{language.allNordic}</option>
-            <option value="sweden" className="capitalize">{language.sweden}</option>
-            <option value="norway" className="capitalize">{language.norway}</option>
-            <option value="denmark" className="capitalize">{language.denmark}</option>
-            <option value="iceland" className="capitalize">{language.iceland}</option>
-          </select>
+          <CountrySelect onInputChange={this.onInputChange} region={this.state.fields.region} />
           <div className={this.state.showProvince ? '' : 'hidden'}>
             <ProvinceSelect
               region={this.state.fields.region}
