@@ -1,15 +1,16 @@
-spring.http.multipart.max-file-size=1024KB
-spring.http.multipart.max-request-size=1024KB
+# Example application.properties
 
-server.port=8080
-
+```
 captchaUrl=https://www.google.com/recaptcha/api/siteverify
-captchaSecret=
+captchaSecret=jiougfdj89fgd8ufg8gf8trt
+```
 
-enableMail=false
+## Gmail Example
+```
+spring.mail.enabled=true
 spring.mail.host=smtp.gmail.com
-spring.mail.username=
-spring.mail.password=
+spring.mail.username=example@gmail.com
+spring.mail.password=shhMyPassword
 spring.mail.port=587
 spring.mail.properties.mail.smtp.auth = true;
 spring.mail.properties.mail.smtp.starttls.enable = true
@@ -17,3 +18,4 @@ spring.mail.properties.mail.smtp.ssl.enable = false
 spring.mail.properties.mail.socketFactory.port=25
 spring.mail.properties.mail.socketFactory.class=javax.net.ssl.SSLSocketFactory
 spring.mail.properties.mail.socketFactory.fallback=false
+```

@@ -3,7 +3,10 @@ package calendar.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
+import org.springframework.mail.SimpleMailMessage;
 
 import java.net.InetAddress;
 
@@ -19,11 +22,15 @@ import java.net.InetAddress;
 class Email {
     @Autowired
     private Environment env;
+    @Autowired
+    private MailSender sender;
 
-    @Value("${smtp.host}")
-    private String smtpHost;
-    @Value("${smtp.sender}")
-    private String smtpSender;
+    @Value("${enableMail}")
+    private boolean mailEnabled;
+//    @Value("${smtp.host}")
+//    private String smtpHost;
+//    @Value("${smtp.sender}")
+//    private String smtpSender;
 
     /**
      * Send a verification email to the specified email. The email will contain a link which will
@@ -34,7 +41,6 @@ class Email {
      * @param email The email address which the email should be sent to.
      */
     void sendVerificationEmail(String id, String email) {
-        System.out.println("Sent to (" + email + ")http://" + getURI() + "/api/visitor/verify_email?id=" + id);
         String link = "http://" + getURI() + "/api/visitor/verify_email?id=" + id;
         String title = "Verify Email";
         String message = "Hello!\nSomeone has created an account for this account. If this was " +
@@ -88,17 +94,14 @@ class Email {
     }
 
     private void sendMessage(String to, String title, String message) {
-        if(configOk()) {
-            System.out.println("DEV MODE");
-            printMessage(to, title, message);
-        } else {
-            System.out.println("NON DEV MODE");
+        if(mailEnabled) {
             sendEmail(to, title, message);
+        } else {
+            printMessage(to, title, message);
         }
     }
 
     private void printMessage(String to, String title, String message) {
-        System.out.println("SMTP_HOST: " + smtpHost);
         System.out.println("-------------------------------EMAIL---------------------------------");
         System.out.println("Sent to " + to);
         System.out.println(title);
@@ -106,8 +109,13 @@ class Email {
         System.out.println("---------------------------------------------------------------------");
     }
 
-    private void sendEmail(String to, String title, String message) {
-        System.out.println("EMAIL IS NOT IMPLEMENTED YOU LOOSER!");
+    private void sendEmail(String to, String title, String message) throws MailException {
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(to);
+        email.setSubject(title);
+        email.setText(message);
+
+        sender.send(email);
     }
 
     private String getURI() {
@@ -119,9 +127,5 @@ class Email {
         }
 
         return host;
-    }
-
-    private boolean configOk() {
-        return !smtpHost.equals("") && !smtpSender.equals("");
     }
 }

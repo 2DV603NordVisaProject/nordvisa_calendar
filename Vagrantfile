@@ -10,6 +10,8 @@ Vagrant.configure(2) do |config|
 
     config.vm.network "forwarded_port", guest: 8080, host: 8080
     config.vm.network "forwarded_port", guest: 27017, host: 27017
+	config.vm.network "forwarded_port", guest: 25, host: 25
+	config.vm.network "forwarded_port", guest: 587, host: 587
 
     config.vm.provision "shell", privileged: true, inline: <<-SHELL
         apt-get update
