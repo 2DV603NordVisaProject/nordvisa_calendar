@@ -122,11 +122,6 @@ class PendingRegistrationsView extends Component {
     return (
       <ViewContainer className="pending-view">
         <PageTitle>{language.pending}</PageTitle>
-        <div className="list-header" style={{ textTransform: 'capitalize' }}>
-          <p>{language.email}</p>
-          <p>{language.organization}</p>
-          <p>{language.approve}</p>
-        </div>
         <form onSubmit={this.onFormSubmit}>
           <RegistrationsList
             registrations={this.state.registrations}
