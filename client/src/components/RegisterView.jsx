@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import Redirect from 'react-router/Redirect';
-import Recaptcha from 'react-gcaptcha';
 import PropTypes from 'prop-types';
 import { isEmail } from 'validator';
 import './RegisterView.css';
-import ErrorList from './ErrorList';
 import Client from '../Client';
 import Loader from './Loader';
 import PageTitle from './PageTitle';
-import Button from './Button';
 import ViewContainer from './ViewContainer';
+import RegisterForm from './RegisterForm';
 
 class RegisterView extends Component {
   constructor() {
@@ -28,7 +26,6 @@ class RegisterView extends Component {
       recaptcha: '',
     },
     organizations: [],
-    newOrg: 'hidden',
     fieldErrors: [],
     loading: false,
     redirect: false,
@@ -144,58 +141,14 @@ class RegisterView extends Component {
     return (
       <ViewContainer size="small" className="register">
         <PageTitle>{language.register}</PageTitle>
-        <form className="center" onSubmit={this.onFormSubmit}>
-          <label htmlFor="email" style={{ textTransform: 'capitalize' }}>{language.email}:</label>
-          <input
-            name="email"
-            type="text"
-            value={this.state.fields.email}
-            onChange={this.onInputChange}
-          />
-          <label htmlFor="password" style={{ textTransform: 'capitalize' }}>{language.password}:</label>
-          <input
-            name="password"
-            value={this.state.fields.password}
-            onChange={this.onInputChange}
-            type="password"
-          />
-          <label htmlFor="confirmpassword" style={{ textTransform: 'capitalize' }}>{language.confirmPassword}:</label>
-          <input
-            name="confirmpassword"
-            value={this.state.fields.confirmpassword}
-            onChange={this.onInputChange}
-            type="password"
-          />
-          <label htmlFor="org" style={{ textTransform: 'capitalize' }}>{language.organization}:</label>
-          <select
-            name="org"
-            style={{ textTransform: 'capitalize' }}
-            onChange={this.onInputChange}
-            value={this.state.fields.org}
-            defaultValue=""
-          >
-            {
-                this.state.organizations.map(org => <option value={org}>{org}</option>)
-              }
-            <option value="new">New Organization</option>
-            <option value="">No Organization</option>
-          </select>
-          <div id="on-select-change" className={this.state.newOrg}>
-            <label htmlFor="neworg" style={{ textTransform: 'capitalize' }}>{language.newOrganization}:</label>
-            <input
-              name="neworg"
-              value={this.state.fields.neworg}
-              onChange={this.onInputChange}
-              type="text"
-            />
-          </div>
-          <Recaptcha
-            sitekey="6Le13yAUAAAAAC4D1Ml81bW3WlGN83bZo4FzHU7Z"
-            verifyCallback={this.callback}
-          />
-          <ErrorList errors={this.state.fieldErrors} />
-          <Button form>{language.registerBtn}</Button>
-        </form>
+        <RegisterForm
+          onFormSubmit={this.onFormSubmit}
+          onInputChange={this.onInputChange}
+          callback={this.callback}
+          fields={this.state.fields}
+          fieldErrors={this.state.fieldErrors}
+          organizations={this.state.organizations}
+        />
       </ViewContainer>
     );
   }
