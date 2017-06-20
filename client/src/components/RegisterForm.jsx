@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Recaptcha from 'react-gcaptcha';
 import Button from './Button';
 import ErrorList from './ErrorList';
+import OrganizationSelect from './OrganizationSelect';
 
 
 const RegisterForm = ({ onFormSubmit,
@@ -31,29 +32,11 @@ const RegisterForm = ({ onFormSubmit,
         onChange={onInputChange}
         type="password"
       />
-      <label htmlFor="org" style={{ textTransform: 'capitalize' }}>{language.organization}:</label>
-      <select
-        name="org"
-        style={{ textTransform: 'capitalize' }}
-        onChange={onInputChange}
-        value={fields.org}
-        defaultValue=""
-      >
-        {
-            organizations.map(org => <option value={org}>{org}</option>)
-          }
-        <option value="new">New Organization</option>
-        <option value="">No Organization</option>
-      </select>
-      <div id="on-select-change" className={fields.org === 'new' ? '' : 'hidden'}>
-        <label htmlFor="neworg" style={{ textTransform: 'capitalize' }}>{language.newOrganization}:</label>
-        <input
-          name="neworg"
-          value={fields.neworg}
-          onChange={onInputChange}
-          type="text"
-        />
-      </div>
+      <OrganizationSelect
+        onInputChange={onInputChange}
+        fields={fields}
+        organizations={organizations}
+      />
       <Recaptcha
         sitekey="6Le13yAUAAAAAC4D1Ml81bW3WlGN83bZo4FzHU7Z"
         verifyCallback={callback}
@@ -70,7 +53,13 @@ RegisterForm.contextTypes = {
 
 RegisterForm.propTypes = {
   onFormSubmit: PropTypes.func.isRequired,
-  fields: PropTypes.shape({}).isRequired,
+  fields: PropTypes.shape({
+    email: PropTypes.string,
+    password: PropTypes.string,
+    confirmPassword: PropTypes.string,
+    org: PropTypes.string,
+    newOrg: PropTypes.string,
+  }).isRequired,
   callback: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   organizations: PropTypes.arrayOf(

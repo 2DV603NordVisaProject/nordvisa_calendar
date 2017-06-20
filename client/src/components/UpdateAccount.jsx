@@ -5,6 +5,7 @@ import ErrorList from './ErrorList';
 import Client from '../Client';
 import Button from './Button';
 import SubTitle from './SubTitle';
+import OrganizationSelect from './OrganizationSelect';
 
 class UpdateAccount extends Component {
   constructor() {
@@ -110,29 +111,11 @@ class UpdateAccount extends Component {
         <form onSubmit={this.onFormSubmit}>
           <label htmlFor="email" style={{ textTransform: 'capitalize' }}>{language.email}:</label>
           <input type="text" name="email" value={this.state.fields.email} onChange={this.onInputChange} />
-          <label htmlFor="org" style={{ textTransform: 'capitalize' }}>{language.organization}:</label>
-          <select
-            style={{ textTransform: 'capitalize' }}
-            name="org"
-            onChange={this.onInputChange}
-            value={this.state.fields.org}
-            defaultValue=""
-          >
-            {
-              this.state.organizations.map(org => <option className="capitalize" value={org}>{org}</option>)
-            }
-            <option value="new" className="capitalize">{language.newOrganization}</option>
-            <option value="" className="capitalize">{language.noOrganization}</option>
-          </select>
-          <div id="on-select-change" className="hidden">
-            <label htmlFor="neworg" style={{ textTransform: 'capitalize' }}>{language.newOrganization}:</label>
-            <input
-              name="neworg"
-              value={this.state.fields.neworg}
-              onChange={this.onInputChange}
-              type="text"
-            />
-          </div>
+          <OrganizationSelect
+            onInputChange={this.onInputChange}
+            fields={this.state.fields}
+            organizations={this.state.organizations}
+          />
           <ErrorList errors={this.state.fieldErrors} />
           <Button form>{language.save}</Button>
         </form>
