@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 import { isEmail } from 'validator';
 import Redirect from 'react-router/Redirect';
 import './LoginView.css';
-import ErrorList from './ErrorList';
 import Client from '../Client';
 import Loader from './Loader';
 import PageTitle from './PageTitle';
-import Button from './Button';
 import ViewContainer from './ViewContainer';
+import LoginForm from './LoginForm';
 
 
 class LoginView extends Component {
@@ -110,24 +109,12 @@ class LoginView extends Component {
     return (
       <ViewContainer size="small" className="login">
         <PageTitle>{language.LoginView.login}</PageTitle>
-        <form onSubmit={this.onFormSubmit}>
-          <label htmlFor="email" style={{ textTransform: 'capitalize' }}>{language.LoginView.email}:</label>
-          <input
-            name="email"
-            value={this.state.fields.email}
-            onChange={this.onInputChange}
-            type="text"
-          />
-          <label htmlFor="password" style={{ textTransform: 'capitalize' }}>{language.LoginView.password}:</label>
-          <input
-            name="password"
-            onChange={this.onInputChange}
-            value={this.state.fields.password}
-            type="password"
-          />
-          <ErrorList errors={this.state.fieldErrors} />
-          <Button form>{language.LoginView.login}</Button>
-        </form>
+        <LoginForm
+          onFormSubmit={this.onFormSubmit}
+          onInputChange={this.onInputChange}
+          fields={this.state.fields}
+          fieldErrors={this.state.fieldErrors}
+        />
         <Link to="/recover-password" style={{ textTransform: 'capitalize' }}>{language.LoginView.forgot}</Link>
       </ViewContainer>
     );
