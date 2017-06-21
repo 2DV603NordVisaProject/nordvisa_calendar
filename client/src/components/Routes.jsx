@@ -9,7 +9,7 @@ import RecoverView from './RecoverView';
 import UpdatePasswordView from './UpdatePasswordView';
 import MyAccountView from './MyAccountView';
 import MembersView from './MembersView';
-import CreateView from './CreateView';
+import EventContainer from './EventContainer';
 import MyEventsView from './MyEventsView';
 import WidgetView from './WidgetView';
 import PendingRegistrationsView from './PendingRegistrationsView';
@@ -47,14 +47,14 @@ const ViewContainer = () => (
     />
     <Match pattern="/generate-widget" component={WidgetView} />
     <MatchWhenLoggedIn pattern="/user/account" component={MyAccountView} />
-    <MatchWhenLoggedIn pattern="/user/event/create" component={CreateView} />
+    <MatchWhenLoggedIn pattern="/user/event/create" component={EventContainer} />
     <MatchWhenLoggedIn exactly pattern="/user/event" component={MyEventsView} />
     <Match
       pattern="/user/event/edit/:id"
       render={({ params }) => {
         if (Client.isLogedIn()) {
           return (
-            <CreateView id={params.id} progress="edit" />
+            <EventContainer id={params.id} progress="edit" />
           );
         }
         return (
@@ -68,7 +68,7 @@ const ViewContainer = () => (
       render={({ params }) => {
         if (Client.isLogedIn()) {
           return (
-            <CreateView id={params.id} progress="view" />
+            <EventContainer id={params.id} progress="view" />
           );
         }
         return (

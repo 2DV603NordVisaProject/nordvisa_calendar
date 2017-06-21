@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import Redirect from 'react-router/Redirect';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
-import ErrorList from './ErrorList';
 import Client from '../Client';
-import EventsMap from './EventsMap';
-import './CreateView.css';
-import PageTitle from './PageTitle';
-import Button from './Button';
-import SubTitle from './SubTitle';
-import ViewContainer from './ViewContainer';
+import './EventContainer.css';
+import ViewEventView from './ViewEventView';
+import CreateEventView from './CreateEventView';
 
 
 class CreateView extends Component {
@@ -136,6 +132,7 @@ class CreateView extends Component {
     const file = this.state.fields.file;
     if (file) {
       Client.uploadImage(file).then((res) => {
+        console.log(file);
         if (Object.prototype.hasOwnProperty.call(res, 'message')) {
           let err = '';
           if (res.message === '415') {
@@ -171,9 +168,7 @@ class CreateView extends Component {
     const fields = this.state.fields;
     const uri = '/api/event/create';
     const editUri = '/api/event/update';
-    console.log(`${fields.date} ${fields.startTime}`);
     const date = Moment(`${fields.date} ${fields.startTime}`).valueOf();
-    console.log(date);
     const duration = Moment(`${fields.date} ${fields.endTime}`).valueOf() - Moment(`${fields.date} ${fields.startTime}`).valueOf();
     const eventObj = {
       id: fields.id,
@@ -192,8 +187,6 @@ class CreateView extends Component {
       eventObj.recursUntil = Moment(fields.recursuntil).valueOf();
       eventObj.recursEvery = fields.recurs;
     }
-
-    console.log(eventObj);
 
     if (this.state.comeFrom === 'event') {
       Client.post(eventObj, editUri).then(res => console.log(res));
@@ -231,7 +224,6 @@ class CreateView extends Component {
 
   render() {
     const resourceURI = '/api/upload';
-    const language = this.context.language.CreateView;
 
     if (this.state.redirect) {
       return (
@@ -241,144 +233,25 @@ class CreateView extends Component {
 
     if (this.state.progress === 'preview' || this.state.progress === 'view') {
       return (
-        <ViewContainer className="preview">
-          <PageTitle>{language.createEvent}</PageTitle>
-          <div className="box">
-            {
-              this.state.progress === 'preview' ? <SubTitle style={{ textTransform: 'capitalize' }}>{language.previewEvent}</SubTitle> : <SubTitle style={{ textTransform: 'capitalize' }}>{language.viewEvent}</SubTitle>
-            }
-            <h4 className="preview-text">{this.state.fields.name}</h4>
-            <p className="preview-text">{this.state.fields.location} - {this.state.fields.date} - {this.state.fields.startTime} - {this.state.fields.endTime}</p>
-            {
-              this.state.fields.path === '' ? '' : <div className="img-container" style={this.state.progress === 'view' ? { backgroundImage: `url("${resourceURI}/${this.state.fields.path}/${this.state.fields.img}")` } : { backgroundImage: `url(${this.state.fields.img})` }} />
-            }
-            <h4 className="preview-text" style={{ textTransform: 'capitalize' }}>{language.description}:</h4>
-            <div className="desc">
-              <p>{this.state.fields.desc}</p>
-            </div>
-            {
-              Object.prototype.hasOwnProperty.call(this.state.event, 'location') ? (
-                <div className="maps">
-                  <EventsMap
-                    events={[this.state.event]}
-                    center={{
-                      lat: this.state.event.location.coordinates.coordinates[1],
-                      lng: this.state.event.location.coordinates.coordinates[0],
-                    }}
-                  />
-                </div>) : ''
-            }
-
-            <div className="action-container">
-              {
-                this.state.progress === 'preview' ? <Button onClick={this.onSaveClick}>{language.save}</Button> : ''
-              }
-              <Button onClick={this.onEditClick}>{language.edit}</Button>
-            </div>
-          </div>
-        </ViewContainer>
+        <ViewEventView
+          fields={this.state.fields}
+          progress={this.state.progress}
+          onEditClick={this.onEditClick}
+          onSaveClick={this.onSaveClick}
+          event={this.state.event}
+          resourceURI={resourceURI}
+        />
       );
     }
     return (
-      <ViewContainer className="create-event">
-        <PageTitle>{language.createEvent}</PageTitle>
-        <div className="box">
-          <SubTitle className="capitalize">{language.newEvent}</SubTitle>
-          <form onSubmit={this.onFormSubmit}>
-            <label htmlFor="name" style={{ textTransform: 'capitalize' }}>{language.name}:</label>
-            <input
-              name="name"
-              type="text"
-              value={this.state.fields.name}
-              onChange={this.onInputChange}
-            />
-            <br />
-            <label htmlFor="date" style={{ textTransform: 'capitalize' }}>{language.date}:</label>
-            <input
-              type="date"
-              name="date"
-              value={this.state.fields.date}
-              onChange={this.onInputChange}
-            />
-            <label htmlFor="time" style={{ textTransform: 'capitalize' }}>{language.time}:</label>
-            <input
-              name="startTime"
-              type="time"
-              value={this.state.fields.startTime}
-              onChange={this.onInputChange}
-              className="time-form"
-            />
-            <input
-              name="endTime"
-              type="time"
-              value={this.state.fields.endTime}
-              onChange={this.onInputChange}
-              placeholder="16.30..."
-              className="time-form end-time"
-            />
-            <div className="recurring">
-              <label htmlFor="recurring" style={{ textTransform: 'capitalize' }}>{language.recurring}:</label>
-              <input
-                name="recurring"
-                type="checkbox"
-                className="approve"
-                checked={this.state.fields.recurring}
-                onChange={this.onInputChange}
-              />
-            </div>
-            <div className="is-recurring hidden">
-              <label htmlFor="recursuntil" style={{ textTransform: 'capitalize' }}>{language.recursUntil}:</label>
-              <input
-                type="date"
-                name="recursuntil"
-                value={this.state.fields.recursuntil}
-                onChange={this.onInputChange}
-              />
-              <label htmlFor="recurs" style={{ textTransform: 'capitalize' }}>{language.recurs}:</label>
-              <select
-                className="capitalize"
-                name="recurs"
-                value={this.state.fields.recurs}
-                onChange={this.onInputChange}
-              >
-                <option selected style={{ textTransform: 'capitalize' }} value="0">{language.weekly}</option>
-                <option className="capitalize" value="1">{language.monthly}</option>
-                <option className="capitalize" value="2">{language.yearly}</option>
-              </select>
-            </div>
-            <label htmlFor="location" style={{ textTransform: 'capitalize' }}>{language.location}:</label>
-            <input
-              name="location"
-              type="text"
-              value={this.state.fields.location}
-              onChange={this.onInputChange}
-            />
-            <br />
-            <label htmlFor="desc" style={{ textTransform: 'capitalize' }}>{language.description}:</label>
-            <textarea
-              name="desc"
-              value={this.state.fields.desc}
-              onChange={this.onInputChange}
-            />
-            <label htmlFor="img" style={{ textTransform: 'capitalize' }}>{language.image}:</label>
-            <input
-              type="file"
-              name="img"
-              accept="image/jpeg,image/png"
-              onChange={this.onInputChange}
-            />
-            <ErrorList className={this.state.progress === 'saved' ? 'success' : ''} errors={this.state.fieldErrors} />
-            <Button form>{language.preview}</Button>
-            {
-              this.state.comeFrom === 'event'
-              ? this.state.progress === 'saved'
-                ? <Redirect to="/user/event" />
-                : null
-              : null
-            }
-          </form>
-        </div>
-      </ViewContainer>
+      <CreateEventView
+        comeFrom={this.state.comeFrom}
+        progress={this.state.progress}
+        onFormSubmit={this.onFormSubmit}
+        fields={this.state.fields}
+        onInputChange={this.onInputChange}
+        fieldErrors={this.state.fieldErrors}
+      />
     );
   }
 }
