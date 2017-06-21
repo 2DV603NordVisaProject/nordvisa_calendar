@@ -3,7 +3,6 @@ package calendar.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
-import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,14 +26,10 @@ class Email {
 
     @Value("${enableMail}")
     private boolean mailEnabled;
-//    @Value("${smtp.host}")
-//    private String smtpHost;
-//    @Value("${smtp.sender}")
-//    private String smtpSender;
 
     /**
      * Send a verification email to the specified email. The email will contain a link which will
-     * take the user to a webpage which validates their email address since only the person with
+     * take the user to a web page which validates their email address since only the person with
      * access to that email address should be able to access this link.
      *
      * @param id    The url id which is unique for this email
@@ -43,8 +38,8 @@ class Email {
     void sendVerificationEmail(String id, String email) {
         String link = "http://" + getURI() + "/api/visitor/verify_email?id=" + id;
         String title = "Verify Email";
-        String message = "Hello!\nSomeone has created an account for this account. If this was " +
-                "not you then just ignore this message. If it was you then click the link bellow" +
+        String message = "Hello!\nSomeone has created an account for this email address. If this was " +
+                "not you then just ignore this message. If it was you then click the link bellow." +
                 "\n\n" + link;
         sendMessage(email, title, message);
     }
@@ -60,8 +55,8 @@ class Email {
     void sendPasswordResetEmail(String id, String email) {
         String link = "http://" + getURI() + "/update-password/" + id;
         String title = "Password recovery";
-        String message = "Hello!\nSomeone has requested a password recovery on this email. If this" +
-                "was not you then just ignore this message. If not then click the link bellow. " +
+        String message = "Hello!\nSomeone has requested a password recovery on this email address. If this " +
+                "was not you then just ignore this message. If not then click the link bellow." +
                 "\n\n" + link;
         sendMessage(email, title, message);
     }
@@ -102,14 +97,12 @@ class Email {
     }
 
     private void printMessage(String to, String title, String message) {
-        System.out.println("-------------------------------EMAIL---------------------------------");
         System.out.println("Sent to " + to);
         System.out.println(title);
         System.out.println(message);
-        System.out.println("---------------------------------------------------------------------");
     }
 
-    private void sendEmail(String to, String title, String message) throws MailException {
+    private void sendEmail(String to, String title, String message) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(to);
         email.setSubject(title);

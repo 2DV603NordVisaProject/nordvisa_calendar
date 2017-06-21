@@ -59,9 +59,9 @@ public class UserTest {
         assertEquals(0, user.getValidateEmailLink().getTimestamp());
 
         assertTrue(DateTime.now().isAfter(user.getCreatedAt()));
-        assertTrue(DateTime.now().minusSeconds(1).isBefore(user.getCreatedAt()));
+        assertTrue(DateTime.now().minusMinutes(1).isBefore(user.getCreatedAt()));
         assertTrue(DateTime.now().isAfter(user.getUpdatedAt()));
-        assertTrue(DateTime.now().minusSeconds(1).isBefore(user.getUpdatedAt()));
+        assertTrue(DateTime.now().minusMinutes(1).isBefore(user.getUpdatedAt()));
 
         assertNotNull(user.getOrganization());
         assertEquals("_", user.getOrganization().getChangePending());
@@ -96,9 +96,9 @@ public class UserTest {
         assertEquals(0, user.getValidateEmailLink().getTimestamp());
 
         assertTrue(DateTime.now().isAfter(user.getCreatedAt()));
-        assertTrue(DateTime.now().minusSeconds(1).isBefore(user.getCreatedAt()));
+        assertTrue(DateTime.now().minusMinutes(1).isBefore(user.getCreatedAt()));
         assertTrue(DateTime.now().isAfter(user.getUpdatedAt()));
-        assertTrue(DateTime.now().minusSeconds(1).isBefore(user.getUpdatedAt()));
+        assertTrue(DateTime.now().minusMinutes(1).isBefore(user.getUpdatedAt()));
 
         assertNotNull(user.getOrganization());
         assertEquals("org", user.getOrganization().getChangePending());

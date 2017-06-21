@@ -28,6 +28,8 @@ import java.io.IOException;
 /**
  * Class WebSecurityConfig
  *
+ * // TODO: Image upload does not work!
+ *
  * @author Axel Nilsson (axnion)
  */
 @Configuration
