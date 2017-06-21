@@ -34,6 +34,7 @@ class CreateView extends Component {
       event: {},
       comeFrom: '',
       redirect: false,
+      showRecursInput: false,
     };
 
     this.onSaveClick = this.onSaveClick.bind(this);
@@ -106,8 +107,7 @@ class CreateView extends Component {
     if (event.target.name === 'recurring') {
       fields[event.target.name] = event.target.checked;
       if (event.target.checked === true) {
-        document.querySelector('.recurring').classList.add('hidden');
-        document.querySelector('.is-recurring').classList.remove('hidden');
+        this.setState({ showRecursInput: true });
       }
     }
 
@@ -116,7 +116,6 @@ class CreateView extends Component {
       const fileName = event.target.value.split('\\');
       fields.imgName = fileName[fileName.length - 1];
       fields.file = event.target.files[0];
-      console.log(fields);
     }
     this.setState({ fields });
   }
@@ -251,6 +250,7 @@ class CreateView extends Component {
         fields={this.state.fields}
         onInputChange={this.onInputChange}
         fieldErrors={this.state.fieldErrors}
+        showRecursInput={this.state.showRecursInput}
       />
     );
   }

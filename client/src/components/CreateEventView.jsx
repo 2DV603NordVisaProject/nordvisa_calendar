@@ -6,9 +6,10 @@ import PageTitle from './PageTitle';
 import SubTitle from './SubTitle';
 import Button from './Button';
 import ErrorList from './ErrorList';
+import RecursInput from './RecursInput';
 
 const CreateEventView = ({ comeFrom,
-  progress, onFormSubmit, fields, onInputChange, fieldErrors }, context) => {
+  progress, onFormSubmit, fields, onInputChange, fieldErrors, showRecursInput }, context) => {
   const language = context.language.CreateView;
   if (comeFrom === 'event' && progress === 'saved') {
     return <Redirect to="/user/event" />;
@@ -50,36 +51,11 @@ const CreateEventView = ({ comeFrom,
             placeholder="16.30..."
             className="time-form end-time"
           />
-          <div className="recurring">
-            <label htmlFor="recurring" style={{ textTransform: 'capitalize' }}>{language.recurring}:</label>
-            <input
-              name="recurring"
-              type="checkbox"
-              className="approve"
-              checked={fields.recurring}
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="is-recurring hidden">
-            <label htmlFor="recursuntil" style={{ textTransform: 'capitalize' }}>{language.recursUntil}:</label>
-            <input
-              type="date"
-              name="recursuntil"
-              value={fields.recursuntil}
-              onChange={onInputChange}
-            />
-            <label htmlFor="recurs" style={{ textTransform: 'capitalize' }}>{language.recurs}:</label>
-            <select
-              className="capitalize"
-              name="recurs"
-              value={fields.recurs}
-              onChange={onInputChange}
-            >
-              <option selected style={{ textTransform: 'capitalize' }} value="0">{language.weekly}</option>
-              <option className="capitalize" value="1">{language.monthly}</option>
-              <option className="capitalize" value="2">{language.yearly}</option>
-            </select>
-          </div>
+          <RecursInput
+            showRecursInput={showRecursInput}
+            fields={fields}
+            onInputChange={onInputChange}
+          />
           <label htmlFor="location" style={{ textTransform: 'capitalize' }}>{language.location}:</label>
           <input
             name="location"
@@ -109,6 +85,10 @@ const CreateEventView = ({ comeFrom,
   );
 };
 
+CreateEventView.defaultProps = {
+  showRecursInput: false,
+};
+
 CreateEventView.contextTypes = {
   language: PropTypes.object,
 };
@@ -132,6 +112,7 @@ CreateEventView.propTypes = {
     location: PropTypes.string,
     desc: PropTypes.string,
   }).isRequired,
+  showRecursInput: PropTypes.boolean,
 };
 
 export default CreateEventView;
