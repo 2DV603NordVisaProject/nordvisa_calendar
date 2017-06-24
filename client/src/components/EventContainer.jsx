@@ -7,6 +7,20 @@ import './EventContainer.css';
 import ViewEventView from './ViewEventView';
 import CreateEventView from './CreateEventView';
 
+const propTypes = {
+  progress: PropTypes.string,
+  id: PropTypes.number,
+};
+
+const defaultProps = {
+  progress: '',
+  id: null,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 
 class CreateView extends Component {
   constructor() {
@@ -256,18 +270,9 @@ class CreateView extends Component {
   }
 }
 
-CreateView.defaultProps = {
-  progress: '',
-  id: null,
-};
+CreateView.propTypes = propTypes;
+CreateView.defaultProps = defaultProps;
+CreateView.contextTypes = contextTypes;
 
-CreateView.contextTypes = {
-  language: PropTypes.object,
-};
-
-CreateView.propTypes = {
-  progress: PropTypes.string,
-  id: PropTypes.number,
-};
 
 export default CreateView;
