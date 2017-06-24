@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  onInputChange: PropTypes.func.isRequired,
+  region: PropTypes.string.isRequired,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 const CountrySelect = ({ onInputChange, region }, context) => {
   const language = context.language.WidgetView;
   return (
@@ -20,13 +29,7 @@ const CountrySelect = ({ onInputChange, region }, context) => {
   );
 };
 
-CountrySelect.propTypes = {
-  onInputChange: PropTypes.func.isRequired,
-  region: PropTypes.string.isRequired,
-};
-
-CountrySelect.contextTypes = {
-  language: PropTypes.object,
-};
+CountrySelect.propTypes = propTypes;
+CountrySelect.contextTypes = contextTypes;
 
 export default CountrySelect;
