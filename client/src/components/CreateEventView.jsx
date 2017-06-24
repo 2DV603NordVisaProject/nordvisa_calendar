@@ -8,6 +8,36 @@ import Button from './Button';
 import ErrorList from './ErrorList';
 import RecursInput from './RecursInput';
 
+const propTypes = {
+  comeFrom: PropTypes.string.isRequired,
+  progress: PropTypes.string.isRequired,
+  onFormSubmit: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  fieldErrors: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  fields: PropTypes.shape({
+    name: PropTypes.string,
+    date: PropTypes.string,
+    startTime: PropTypes.string,
+    endTime: PropTypes.string,
+    recurring: PropTypes.string,
+    recurs: PropTypes.string,
+    recursuntil: PropTypes.string,
+    location: PropTypes.string,
+    desc: PropTypes.string,
+  }).isRequired,
+  showRecursInput: PropTypes.boolean,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
+
+const defaultProps = {
+  showRecursInput: false,
+};
+
 const CreateEventView = ({
   comeFrom,
   progress,
@@ -17,7 +47,8 @@ const CreateEventView = ({
   fieldErrors,
   showRecursInput,
   },
-  context) => {
+  context,
+  ) => {
   const language = context.language.CreateView;
   if (comeFrom === 'event' && progress === 'saved') {
     return <Redirect to="/user/event" />;
@@ -93,31 +124,8 @@ const CreateEventView = ({
   );
 };
 
-
-CreateEventView.contextTypes = {
-  language: PropTypes.object,
-};
-
-CreateEventView.propTypes = {
-  comeFrom: PropTypes.string.isRequired,
-  progress: PropTypes.string.isRequired,
-  onFormSubmit: PropTypes.func.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  fieldErrors: PropTypes.arrayOf(
-    PropTypes.string,
-  ).isRequired,
-  fields: PropTypes.shape({
-    name: PropTypes.string,
-    date: PropTypes.string,
-    startTime: PropTypes.string,
-    endTime: PropTypes.string,
-    recurring: PropTypes.string,
-    recurs: PropTypes.string,
-    recursuntil: PropTypes.string,
-    location: PropTypes.string,
-    desc: PropTypes.string,
-  }).isRequired,
-  showRecursInput: PropTypes.boolean,
-};
+CreateEventView.propTypes = propTypes;
+CreateEventView.contextTypes = contextTypes;
+CreateEventView.defaultProps = defaultProps;
 
 export default CreateEventView;
