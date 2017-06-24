@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './ErrorList.css';
 
-const ErrorList = props => (
+const ErrorList = ({ errors }) => (
   <ul className="error-list">
     {
-    props.errors.map(error => (
+    errors.map(error => (
       <li style={{ textTransform: 'capitalize' }} className={error.length > 40 ? 'long-error error-text' : 'error-text'} key={null}>{error}</li>
     ))
   }
