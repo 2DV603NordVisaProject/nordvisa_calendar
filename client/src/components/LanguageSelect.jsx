@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const LanguageSelect = (props, context) => {
+const LanguageSelect = ({ onChange }, context) => {
   const language = context.language.TopBar;
   const style = {
     textTransform: 'capitalize',
   };
   return (
-    <select defaultValue="en" onChange={props.onChange} style={style}>
+    <select defaultValue="en" onChange={onChange} style={style}>
       <option value="sv">{language.swedish}</option>
       <option value="en">{language.english}</option>
       <option value="no">{language.norwegian}</option>
