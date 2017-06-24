@@ -2,14 +2,14 @@ import React from 'react';
 import Link from 'react-router/Link';
 import PropTypes from 'prop-types';
 
-const Event = (props, context) => (
+const Event = ({event, delete}, context) => (
   <li>
     <div className="event-item">
-      <p>{props.event.name}</p>
+      <p>{event.name}</p>
       <div className="item-action-container">
-        <a className="error-text clickable" style={{ textTransform: 'capitalize' }} href="" name={props.event.id} onClick={props.delete}>{context.language.MyEventsView.delete}</a>
-        <Link to={`/user/event/edit/${props.event.id}`} className="success-text" style={{ textTransform: 'capitalize' }}>{context.language.MyEventsView.edit}</Link>
-        <Link to={`/user/event/view/${props.event.id}`} style={{ textTransform: 'capitalize' }}>{context.language.MyEventsView.view}</Link>
+        <a className="error-text clickable" style={{ textTransform: 'capitalize' }} href="" name={event.id} onClick={delete}>{context.language.MyEventsView.delete}</a>
+        <Link to={`/user/event/edit/${event.id}`} className="success-text" style={{ textTransform: 'capitalize' }}>{context.language.MyEventsView.edit}</Link>
+        <Link to={`/user/event/view/${event.id}`} style={{ textTransform: 'capitalize' }}>{context.language.MyEventsView.view}</Link>
       </div>
     </div>
   </li>
