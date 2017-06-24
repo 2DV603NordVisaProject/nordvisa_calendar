@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  onChange: PropTypes.func.isRequired,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 const LanguageSelect = ({ onChange }, context) => {
   const language = context.language.TopBar;
   const style = {
@@ -17,12 +25,7 @@ const LanguageSelect = ({ onChange }, context) => {
   );
 };
 
-LanguageSelect.propTypes = {
-  onChange: PropTypes.func.isRequired,
-};
-
-LanguageSelect.contextTypes = {
-  language: PropTypes.object,
-};
+LanguageSelect.propTypes = propTypes;
+LanguageSelect.contextTypes = contextTypes;
 
 export default LanguageSelect;
