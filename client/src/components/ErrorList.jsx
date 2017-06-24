@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './ErrorList.css';
 
+const propTypes = {
+  errors: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+};
+
 const ErrorList = ({ errors }) => (
   <ul className="error-list">
     {
@@ -12,11 +18,5 @@ const ErrorList = ({ errors }) => (
   </ul>
 );
 
-ErrorList.propTypes = {
-  errors: PropTypes.arrayOf(
-    PropTypes.string,
-  ).isRequired,
-};
-
-
+ErrorList.propTypes = propTypes;
 export default ErrorList;
