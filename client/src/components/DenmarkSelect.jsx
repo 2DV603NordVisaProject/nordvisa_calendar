@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const DenmarkSelect = (props, context) => {
+const DenmarkSelect = ({ onChange, showProvince }, context) => {
   const language = context.language.WidgetView;
 
   return (
-    <div className={props.showProvince ? '' : 'hidden'}>
-      <select defaultValue="" name="province" onChange={props.onChange} className="capitalize">
+    <div className={showProvince ? '' : 'hidden'}>
+      <select defaultValue="" name="province" onChange={onChange} className="capitalize">
         <option value="" className="capitalize">{language.chooseProvince}</option>
         <option value="" className="capitalize">{language.none}</option>
         <option value="nordjylland">Nordjylland</option>
