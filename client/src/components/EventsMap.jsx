@@ -3,10 +3,10 @@ import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import MapMarker from './MapMarker';
 
-const EventsMap = props => (
+const EventsMap = ({ events, center, zoom }) => (
   <GoogleMapReact
-    defaultCenter={props.center}
-    defaultZoom={props.zoom}
+    defaultCenter={center}
+    defaultZoom={zoom}
     bootstrapURLKeys={{
       key: 'AIzaSyDIKbno4BEY3C76YjjHOvYfDc1kYEAYd4w',
       language: 'en',
@@ -14,7 +14,7 @@ const EventsMap = props => (
   >
 
     {
-        props.events.map(event => (
+        events.map(event => (
           <MapMarker
             lat={event.location.coordinates.coordinates[1]}
             lng={event.location.coordinates.coordinates[0]}
