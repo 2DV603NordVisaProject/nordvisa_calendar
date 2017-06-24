@@ -8,8 +8,16 @@ import Button from './Button';
 import ErrorList from './ErrorList';
 import RecursInput from './RecursInput';
 
-const CreateEventView = ({ comeFrom,
-  progress, onFormSubmit, fields, onInputChange, fieldErrors, showRecursInput }, context) => {
+const CreateEventView = ({
+  comeFrom,
+  progress,
+  onFormSubmit,
+  fields,
+  onInputChange,
+  fieldErrors,
+  showRecursInput,
+  },
+  context) => {
   const language = context.language.CreateView;
   if (comeFrom === 'event' && progress === 'saved') {
     return <Redirect to="/user/event" />;
