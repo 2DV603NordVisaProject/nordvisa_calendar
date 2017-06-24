@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Button from './Button';
 
-const LoginForm = (props, context) => {
+const LoginForm = ({ onInputChange, fieldErrors, onFormSubmit, fields }, context) => {
   const language = context.language.LoginView;
   return (
-    <form onSubmit={props.onFormSubmit}>
+    <form onSubmit={onFormSubmit}>
       <label htmlFor="email" style={{ textTransform: 'capitalize' }}>{language.email}:</label>
       <input
         name="email"
-        value={props.fields.email}
-        onChange={props.onInputChange}
+        value={fields.email}
+        onChange={onInputChange}
         type="text"
       />
       <label htmlFor="password" style={{ textTransform: 'capitalize' }}>{language.password}:</label>
       <input
         name="password"
-        onChange={props.onInputChange}
-        value={props.fields.password}
+        onChange={onInputChange}
+        value={fields.password}
         type="password"
       />
-      <ErrorList errors={props.fieldErrors} />
+      <ErrorList errors={fieldErrors} />
       <Button form>{language.login}</Button>
     </form>
   );
