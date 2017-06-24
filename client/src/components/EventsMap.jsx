@@ -3,6 +3,22 @@ import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import MapMarker from './MapMarker';
 
+const propTypes = {
+  center: PropTypes.shape({
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+  }),
+  zoom: PropTypes.number,
+  events: PropTypes.arrayOf(
+    PropTypes.object,
+  ).isRequired,
+};
+
+const defaultProps = {
+  center: { lat: 59.329323, lng: 18.068581 },
+  zoom: 11,
+};
+
 const EventsMap = ({ events, center, zoom }) => (
   <GoogleMapReact
     defaultCenter={center}
@@ -24,20 +40,7 @@ const EventsMap = ({ events, center, zoom }) => (
   </GoogleMapReact>
 );
 
-EventsMap.defaultProps = {
-  center: { lat: 59.329323, lng: 18.068581 },
-  zoom: 11,
-};
-
-EventsMap.propTypes = {
-  center: PropTypes.shape({
-    lat: PropTypes.number,
-    lng: PropTypes.number,
-  }),
-  zoom: PropTypes.number,
-  events: PropTypes.arrayOf(
-    PropTypes.object,
-  ).isRequired,
-};
+EventsMap.propTypes = propTypes;
+EventsMap.defaultProps = defaultProps;
 
 export default EventsMap;
