@@ -3,6 +3,22 @@ import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Button from './Button';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
+
+const propTypes = {
+  onFormSubmit: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  fields: PropTypes.shape({
+    email: PropTypes.string,
+    password: PropTypes.string.isRequired,
+  }).isRequired,
+  fieldErrors: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+};
+
 const LoginForm = ({ onInputChange, fieldErrors, onFormSubmit, fields }, context) => {
   const language = context.language.LoginView;
   return (
@@ -27,20 +43,7 @@ const LoginForm = ({ onInputChange, fieldErrors, onFormSubmit, fields }, context
   );
 };
 
-LoginForm.contextTypes = {
-  language: PropTypes.object,
-};
-
-LoginForm.propTypes = {
-  onFormSubmit: PropTypes.func.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  fields: PropTypes.shape({
-    email: PropTypes.string,
-    password: PropTypes.string.isRequired,
-  }).isRequired,
-  fieldErrors: PropTypes.arrayOf(
-    PropTypes.string,
-  ).isRequired,
-};
+LoginForm.propTypes = propTypes;
+LoginForm.contextTypes = contextTypes;
 
 export default LoginForm;
