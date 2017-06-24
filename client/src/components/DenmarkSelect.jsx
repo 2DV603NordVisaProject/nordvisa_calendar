@@ -35,3 +35,5 @@ const DenmarkSelect = ({ onChange, showProvince }, context) => {
 DenmarkSelect.propTypes = propTypes;
 DenmarkSelect.contextTypes = contextTypes;
 DenmarkSelect.defaultProps = defaultProps;
+
+export default DenmarkSelect;

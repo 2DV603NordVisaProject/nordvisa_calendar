@@ -53,3 +53,5 @@ const IcelandSelect = ({ showProvince, onChange }, context) => {
 IcelandSelect.propTypes = propTypes;
 IcelandSelect.contextTypes = contextTypes;
 IcelandSelect.defaultProps = defaultProps;
+
+export default IcelandSelect;
