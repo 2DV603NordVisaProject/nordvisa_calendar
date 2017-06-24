@@ -2,6 +2,18 @@ import React from 'react';
 import Link from 'react-router/Link';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  event: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+  }).isRequired,
+  delete: PropTypes.func.isRequired,
+}
+
+const contextTypes = {
+  language: PropTypes.object,
+}
+
 const Event = ({event, delete}, context) => (
   <li>
     <div className="event-item">
@@ -15,17 +27,7 @@ const Event = ({event, delete}, context) => (
   </li>
 );
 
-
-Event.contextTypes = {
-  language: PropTypes.object,
-};
-
-Event.propTypes = {
-  event: PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-  }).isRequired,
-  delete: PropTypes.func.isRequired,
-};
+Event.propTypes = propTypes;
+Event.contextTypes = contextTypes;
 
 export default Event;
