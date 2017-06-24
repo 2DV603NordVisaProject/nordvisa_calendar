@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CountrySelect = (props, context) => {
+const CountrySelect = ({ onInputChange, region }, context) => {
   const language = context.language.WidgetView;
   return (
     <select
       style={{ textTransform: 'capitalize' }}
       name="region"
-      onChange={props.onInputChange}
-      defaultValue={props.region}
+      onChange={onInputChange}
+      defaultValue={region}
     >
       <option value="">{language.chooseRegion}</option>
       <option value="all">{language.allNordic}</option>
