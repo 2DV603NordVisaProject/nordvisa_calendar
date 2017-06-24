@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 import './ConfirmMessage.css';
 import Button from './Button';
 
+const propTypes = {
+  popup: PropTypes.shape({
+    pop: PropTypes.boolean,
+    msg: PropTypes.string,
+  }).isRequired,
+  onYesClick: PropTypes.func.isRequired,
+  onNoClick: PropTypes.func.isRequired,
+};
+
 const ConfirmMessage = ({ popup, onYesClick, onNoClick }) => (
   <div className="confirm-message">
     <p>{popup.msg}</p>
@@ -13,13 +22,6 @@ const ConfirmMessage = ({ popup, onYesClick, onNoClick }) => (
   </div>
   );
 
-ConfirmMessage.propTypes = {
-  popup: PropTypes.shape({
-    pop: PropTypes.boolean,
-    msg: PropTypes.string,
-  }).isRequired,
-  onYesClick: PropTypes.func.isRequired,
-  onNoClick: PropTypes.func.isRequired,
-};
+ConfirmMessage.propTypes = propTypes;
 
 export default ConfirmMessage;
