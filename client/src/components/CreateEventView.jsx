@@ -85,9 +85,6 @@ const CreateEventView = ({ comeFrom,
   );
 };
 
-CreateEventView.defaultProps = {
-  showRecursInput: false,
-};
 
 CreateEventView.contextTypes = {
   language: PropTypes.object,
