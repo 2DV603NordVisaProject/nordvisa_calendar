@@ -33,7 +33,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  margin: 11px 0px 0px -12px;
+  margin: 11px 0 0 -12px;
   transform: rotateX(55deg);
   z-index: -2;
 }
