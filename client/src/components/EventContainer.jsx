@@ -97,8 +97,6 @@ class CreateView extends Component {
 
           this.setState({ progress, fields, comeFrom: 'event' });
         });
-    } else {
-      fields = this.state.fields;
     }
 
     Client.get(uri)
