@@ -1,6 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  onInputChange: PropTypes.func.isRequired,
+  fields: PropTypes.shape({
+    org: PropTypes.string,
+    newOrg: PropTypes.string,
+  }).isRequired,
+  organizations: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 const OrganizationSelect = ({ onInputChange, fields, organizations }, context) => {
   const language = context.language.RegisterView;
   return (
@@ -32,19 +47,7 @@ const OrganizationSelect = ({ onInputChange, fields, organizations }, context) =
   );
 };
 
-OrganizationSelect.contextTypes = {
-  language: PropTypes.object,
-};
-
-OrganizationSelect.propTypes = {
-  onInputChange: PropTypes.func.isRequired,
-  fields: PropTypes.shape({
-    org: PropTypes.string,
-    newOrg: PropTypes.string,
-  }).isRequired,
-  organizations: PropTypes.arrayOf(
-    PropTypes.string,
-  ).isRequired,
-};
+OrganizationSelect.propTypes = propTypes;
+OrganizationSelect.contextTypes = contextTypes;
 
 export default OrganizationSelect;
