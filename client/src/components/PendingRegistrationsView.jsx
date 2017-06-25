@@ -20,8 +20,6 @@ class PendingRegistrationsView extends Component {
   }
   state = {
     registrations: [],
-    approve: [],
-    deny: [],
   }
 
   componentDidMount() {
@@ -67,8 +65,8 @@ class PendingRegistrationsView extends Component {
   onFormSubmit(event) {
     event.preventDefault();
     const uri = '/api/admin/registrations';
-    const approve = this.state.approve;
-    const deny = this.state.deny;
+    const approve = [];
+    const deny = [];
     const oldRegistrations = this.state.registrations;
 
     // Remove registrations from users who have been denied or approved.
@@ -112,8 +110,6 @@ class PendingRegistrationsView extends Component {
       Client.post(obj, uri);
     }
 
-    this.setState({ approve });
-    this.setState({ deny });
     this.setState({ registrations });
     console.log(registrations);
     this.forceUpdate();
