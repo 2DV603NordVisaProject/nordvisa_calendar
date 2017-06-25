@@ -47,10 +47,8 @@ class RegisterView extends Component {
 
 
   onInputChange(event) {
-    const value = event.target.value;
-    const name = event.target.name;
     const fields = this.state.fields;
-    fields[name] = value;
+    fields[event.target.name] = event.target.value;
     this.setState({ fields });
   }
 
