@@ -64,7 +64,6 @@ class RegisterView extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-    this.setState({ fieldErrors: [] });
     let fieldErrors = this.validate(this.state.fields);
     this.setState({ fieldErrors });
 
