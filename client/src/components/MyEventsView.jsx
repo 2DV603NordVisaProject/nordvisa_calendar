@@ -7,6 +7,10 @@ import ConfirmMessage from './ConfirmMessage';
 import PageTitle from './PageTitle';
 import ViewContainer from './ViewContainer';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 class MyEventsView extends Component {
   constructor(props) {
     super(props);
@@ -94,8 +98,6 @@ class MyEventsView extends Component {
   }
 }
 
-MyEventsView.contextTypes = {
-  language: PropTypes.object,
-};
+MyEventsView.contextTypes = contextTypes;
 
 export default MyEventsView;
