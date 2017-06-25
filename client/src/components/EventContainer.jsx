@@ -171,7 +171,7 @@ class CreateView extends Component {
   onSaveClick(event) {
     event.preventDefault();
 
-    const fields = this.state.fields;
+    const fields = Object.assign({}, this.state.fields);
     const uri = '/api/event/create';
     const editUri = '/api/event/update';
     const date = Moment(`${fields.date} ${fields.startTime}`).valueOf();
