@@ -96,8 +96,6 @@ class CreateView extends Component {
           };
 
           this.setState({ progress, fields, comeFrom: 'event' });
-
-          console.log(this.state);
         });
     } else {
       fields = this.state.fields;
