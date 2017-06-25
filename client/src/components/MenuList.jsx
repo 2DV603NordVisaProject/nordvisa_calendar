@@ -7,6 +7,10 @@ const contextTypes = {
   language: PropTypes.object,
 };
 
+const propTypes = {
+  onMenuLinkClick: PropTypes.func.isRequired,
+};
+
 const MenuList = ({ onMenuLinkClick }, context) => {
   const language = context.language.MenuList;
   const style = {
@@ -46,7 +50,7 @@ const MenuList = ({ onMenuLinkClick }, context) => {
   );
 };
 
-
+MenuList.propTypes = propTypes;
 MenuList.contextTypes = contextTypes;
 
 export default MenuList;
