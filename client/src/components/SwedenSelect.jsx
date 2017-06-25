@@ -50,3 +50,5 @@ SwedenSelect.propTypes = {
   showProvince: PropTypes.boolean,
   onChange: PropTypes.func.isRequired,
 };
+
+export default SwedenSelect;
