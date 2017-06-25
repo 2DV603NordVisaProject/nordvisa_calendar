@@ -7,6 +7,10 @@ import Button from './Button';
 import SubTitle from './SubTitle';
 import OrganizationSelect from './OrganizationSelect';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 class UpdateAccount extends Component {
   constructor() {
     super();
@@ -124,8 +128,6 @@ class UpdateAccount extends Component {
   }
 }
 
-UpdateAccount.contextTypes = {
-  language: PropTypes.object,
-};
+UpdateAccount.contextTypes = contextTypes;
 
 export default UpdateAccount;
