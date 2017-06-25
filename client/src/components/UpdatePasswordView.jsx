@@ -6,6 +6,13 @@ import PageTitle from './PageTitle';
 import Button from './Button';
 import ViewContainer from './ViewContainer';
 
+const propTypes = {
+  id: PropTypes.string.isRequired,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
 
 class UpdatePasswordView extends Component {
   constructor() {
@@ -41,7 +48,13 @@ class UpdatePasswordView extends Component {
 
     const uri = '/api/visitor/recover_password';
     console.log(this.state.fields);
-    Client.post(this.state.fields, uri)
+    Client.post(this.state.fieldUpdatePasswordView.propTypes = {
+  id: PropTypes.string.isRequired,
+};
+
+UpdatePasswordView.contextTypes = {
+  language: PropTypes.object,
+};s, uri)
       .then((res) => {
         if (Object.prototype.hasOwnProperty.call(res, 'message')) {
           fieldErrors.push(res.message);
@@ -90,12 +103,7 @@ class UpdatePasswordView extends Component {
   }
 }
 
-UpdatePasswordView.contextTypes = {
-  language: PropTypes.object,
-};
-
-UpdatePasswordView.propTypes = {
-  id: PropTypes.string.isRequired,
-};
+UpdatePasswordView.propTypes = propsTypes;
+UpdatePasswordView.contextTypes = contextTypes;
 
 export default UpdatePasswordView;
