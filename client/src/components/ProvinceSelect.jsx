@@ -5,22 +5,22 @@ import NorwaySelect from './NorwaySelect';
 import DenmarkSelect from './DenmarkSelect';
 import IcelandSelect from './IcelandSelect';
 
-const ProvinceSelect = (props) => {
-  if (props.region === 'sweden') {
+const ProvinceSelect = ({ onChange, showProvince, region }) => {
+  if (region === 'sweden') {
     return (
-      <SwedenSelect onChange={props.onChange} showProvince={props.showProvince} />
+      <SwedenSelect onChange={onChange} showProvince={showProvince} />
     );
-  } else if (props.region === 'norway') {
+  } else if (region === 'norway') {
     return (
-      <NorwaySelect onChange={props.onChange} showProvince={props.showProvince} />
+      <NorwaySelect onChange={onChange} showProvince={showProvince} />
     );
-  } else if (props.region === 'iceland') {
+  } else if (region === 'iceland') {
     return (
-      <IcelandSelect onChange={props.onChange} showProvince={props.showProvince} />
+      <IcelandSelect onChange={onChange} showProvince={showProvince} />
     );
-  } else if (props.region === 'denmark') {
+  } else if (region === 'denmark') {
     return (
-      <DenmarkSelect onChange={props.onChange} showProvince={props.showProvince} />
+      <DenmarkSelect onChange={onChange} showProvince={showProvince} />
     );
   }
   return (
