@@ -10,6 +10,15 @@ import PageTitle from './PageTitle';
 import ViewContainer from './ViewContainer';
 import LoginForm from './LoginForm';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
+
+const propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.string,
+  }).isRequired,
+};
 
 class LoginView extends Component {
   constructor() {
@@ -121,14 +130,7 @@ class LoginView extends Component {
   }
 }
 
-LoginView.contextTypes = {
-  language: PropTypes.object,
-};
-
-LoginView.propTypes = {
-  location: PropTypes.shape({
-    state: PropTypes.string,
-  }).isRequired,
-};
+LoginView.propTypes = propTypes;
+LoginView.contextTypes = contextTypes;
 
 export default LoginView;
