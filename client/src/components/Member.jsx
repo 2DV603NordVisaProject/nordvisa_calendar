@@ -1,6 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
+
+const propTypes = {
+  onChange: PropTypes.func.isRequired,
+  member: PropTypes.shape({
+    id: PropTypes.string,
+    email: PropTypes.string,
+    role: PropTypes.string,
+  }).isRequired,
+};
 
 const Member = ({ member, onChange }, context) => (
   <li>
@@ -20,18 +32,7 @@ const Member = ({ member, onChange }, context) => (
   </li>
 );
 
-
-Member.contextTypes = {
-  language: PropTypes.object,
-};
-
-Member.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  member: PropTypes.shape({
-    id: PropTypes.string,
-    email: PropTypes.string,
-    role: PropTypes.string,
-  }).isRequired,
-};
+Member.propTypes = propTypes;
+Member.contextTypes = contextTypes;
 
 export default Member;
