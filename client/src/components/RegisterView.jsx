@@ -89,14 +89,7 @@ class RegisterView extends Component {
         this.setState({ fieldErrors });
       } else {
         this.setState({ redirect: true });
-        this.setState({ fields: {
-          email: '',
-          password: '',
-          confirmpassword: '',
-          org: '',
-          neworg: '',
-          recaptcha: '',
-        } });
+        this.setState({ fields: {} });
       }
     });
   }
