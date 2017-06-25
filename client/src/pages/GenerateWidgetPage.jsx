@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './WidgetView.css';
-import ErrorList from './ErrorList';
-import ProvinceSelect from './ProvinceSelect';
+import './GenerateWidgetPage.css';
+import ErrorList from '../components/ErrorList';
+import ProvinceSelect from '../components/ProvinceSelect';
 import Client from '../Client';
-import PageTitle from './PageTitle';
-import Button from './Button';
-import CountrySelect from './CountrySelect';
-import GeneratedOutput from './GeneratedOutput';
-import ViewContainer from './ViewContainer';
+import PageTitle from '../components/PageTitle';
+import Button from '../components/Button';
+import CountrySelect from '../components/CountrySelect';
+import GeneratedOutput from '../components/GeneratedOutput';
+import ViewContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
 };
 
-class WidgetView extends Component {
+class GenerateWidgetPage extends Component {
 
   constructor() {
     super();
@@ -114,6 +114,6 @@ class WidgetView extends Component {
   }
 }
 
-WidgetView.contextTypes = contextTypes;
+GenerateWidgetPage.contextTypes = contextTypes;
 
-export default WidgetView;
+export default GenerateWidgetPage;

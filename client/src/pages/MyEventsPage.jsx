@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './MyEventsView.css';
-import EventsList from './EventsList';
+import './MyEventsPage.css';
+import EventsList from '../components/EventsList';
 import Client from '../Client';
-import ConfirmMessage from './ConfirmMessage';
-import PageTitle from './PageTitle';
-import ViewContainer from './ViewContainer';
+import ConfirmMessage from '../components/ConfirmMessage';
+import PageTitle from '../components/PageTitle';
+import ViewContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
 };
 
-class MyEventsView extends Component {
+class MyEventsPage extends Component {
   constructor(props) {
     super(props);
 
@@ -98,6 +98,6 @@ class MyEventsView extends Component {
   }
 }
 
-MyEventsView.contextTypes = contextTypes;
+MyEventsPage.contextTypes = contextTypes;
 
-export default MyEventsView;
+export default MyEventsPage;

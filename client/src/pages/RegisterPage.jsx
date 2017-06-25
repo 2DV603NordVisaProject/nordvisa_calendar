@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import Redirect from 'react-router/Redirect';
 import PropTypes from 'prop-types';
 import { isEmail } from 'validator';
-import './RegisterView.css';
+import './RegisterPage.css';
 import Client from '../Client';
-import Loader from './Loader';
-import PageTitle from './PageTitle';
-import ViewContainer from './ViewContainer';
-import RegisterForm from './RegisterForm';
+import Loader from '../components/Loader';
+import PageTitle from '../components/PageTitle';
+import ViewContainer from '../components/PageContainer';
+import RegisterForm from '../components/RegisterForm';
 
 const contextTypes = {
   language: PropTypes.object,
 };
 
-class RegisterView extends Component {
+class RegisterPage extends Component {
   constructor() {
     super();
 
@@ -138,6 +138,6 @@ class RegisterView extends Component {
   }
 }
 
-RegisterView.contextTypes = contextTypes;
+RegisterPage.contextTypes = contextTypes;
 
-export default RegisterView;
+export default RegisterPage;

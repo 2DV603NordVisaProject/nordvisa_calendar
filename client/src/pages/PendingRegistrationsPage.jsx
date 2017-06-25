@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './PendingRegistrationsView.css';
-import RegistrationsList from './RegistrationsList';
+import './PendingRegistrationsPage.css';
+import RegistrationsList from '../components/RegistrationsList';
 import Client from '../Client';
-import PageTitle from './PageTitle';
-import Button from './Button';
-import ViewContainer from './ViewContainer';
+import PageTitle from '../components/PageTitle';
+import Button from '../components/Button';
+import ViewContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
 };
 
-class PendingRegistrationsView extends Component {
+class PendingRegistrationsPage extends Component {
   constructor() {
     super();
 
@@ -133,6 +133,6 @@ class PendingRegistrationsView extends Component {
   }
 }
 
-PendingRegistrationsView.contextTypes = contextTypes;
+PendingRegistrationsPage.contextTypes = contextTypes;
 
-export default PendingRegistrationsView;
+export default PendingRegistrationsPage;

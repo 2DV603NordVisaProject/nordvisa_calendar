@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'react-router/BrowserRouter';
 import TopBar from './components/TopBar';
-import Routes from './components/Routes';
+import Routes from './routes/Routes';
 import sv from './i18n/sv';
 import en from './i18n/en';
 import no from './i18n/no';

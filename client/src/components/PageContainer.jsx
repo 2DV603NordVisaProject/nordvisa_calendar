@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './ViewContainer.css';
+import './PageContainer.css';
 
 const propTypes = {
   children: PropTypes.element.isRequired,
@@ -11,11 +11,11 @@ const defaultProps = {
   size: 'large',
 };
 
-const ViewContainer = ({ size, children, className }) => (
+const PageContainer = ({ size, children, className }) => (
   <div className={`${size} ${className}`}>{children}</div>
 );
 
-ViewContainer.propTypes = propTypes;
-ViewContainer.defaultProps = defaultProps;
+PageContainer.propTypes = propTypes;
+PageContainer.defaultProps = defaultProps;
 
-export default ViewContainer;
+export default PageContainer;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PageTitle from './PageTitle';
 import Button from './Button';
-import ViewContainer from './ViewContainer';
+import ViewContainer from './PageContainer';
 import EventsMap from './EventsMap';
 import SubTitle from './SubTitle';
 

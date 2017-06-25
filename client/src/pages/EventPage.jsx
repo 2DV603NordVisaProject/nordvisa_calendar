@@ -3,9 +3,9 @@ import Redirect from 'react-router/Redirect';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import Client from '../Client';
-import './EventContainer.css';
-import ViewEventView from './ViewEventView';
-import CreateEventView from './CreateEventView';
+import './EventPage.css';
+import ViewEventView from '../components/ViewEventView';
+import CreateEventView from '../components/CreateEventView';
 
 const propTypes = {
   progress: PropTypes.string,
@@ -22,7 +22,7 @@ const contextTypes = {
 };
 
 
-class CreateView extends Component {
+class EventPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -261,9 +261,9 @@ class CreateView extends Component {
   }
 }
 
-CreateView.propTypes = propTypes;
-CreateView.defaultProps = defaultProps;
-CreateView.contextTypes = contextTypes;
+EventPage.propTypes = propTypes;
+EventPage.defaultProps = defaultProps;
+EventPage.contextTypes = contextTypes;
 
 
-export default CreateView;
+export default EventPage;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ErrorList from './ErrorList';
+import ErrorList from '../components/ErrorList';
 import Client from '../Client';
-import PageTitle from './PageTitle';
-import Button from './Button';
-import ViewContainer from './ViewContainer';
+import PageTitle from '../components/PageTitle';
+import Button from '../components/Button';
+import ViewContainer from '../components/PageContainer';
 
 const propTypes = {
   id: PropTypes.string.isRequired,
@@ -14,7 +14,7 @@ const contextTypes = {
   language: PropTypes.object,
 };
 
-class UpdatePasswordView extends Component {
+class ChangePasswordPage extends Component {
   constructor() {
     super();
 
@@ -97,7 +97,7 @@ class UpdatePasswordView extends Component {
   }
 }
 
-UpdatePasswordView.contextTypes = contextTypes;
-UpdatePasswordView.propTypes = propTypes;
+ChangePasswordPage.contextTypes = contextTypes;
+ChangePasswordPage.propTypes = propTypes;
 
-export default UpdatePasswordView;
+export default ChangePasswordPage;

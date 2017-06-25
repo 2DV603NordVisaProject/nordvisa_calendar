@@ -3,12 +3,12 @@ import Link from 'react-router/Link';
 import PropTypes from 'prop-types';
 import { isEmail } from 'validator';
 import Redirect from 'react-router/Redirect';
-import './LoginView.css';
+import './LoginPage.css';
 import Client from '../Client';
-import Loader from './Loader';
-import PageTitle from './PageTitle';
-import ViewContainer from './ViewContainer';
-import LoginForm from './LoginForm';
+import Loader from '../components/Loader';
+import PageTitle from '../components/PageTitle';
+import ViewContainer from '../components/PageContainer';
+import LoginForm from '../components/LoginForm';
 
 const contextTypes = {
   language: PropTypes.object,
@@ -20,7 +20,7 @@ const propTypes = {
   }).isRequired,
 };
 
-class LoginView extends Component {
+class LoginPage extends Component {
   constructor() {
     super();
 
@@ -127,7 +127,7 @@ class LoginView extends Component {
   }
 }
 
-LoginView.propTypes = propTypes;
-LoginView.contextTypes = contextTypes;
+LoginPage.propTypes = propTypes;
+LoginPage.contextTypes = contextTypes;
 
-export default LoginView;
+export default LoginPage;

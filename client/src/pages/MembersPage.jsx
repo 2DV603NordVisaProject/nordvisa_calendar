@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './MembersView.css';
+import './MembersPage.css';
 import Client from '../Client';
-import MembersList from './MembersList';
-import ConfirmMessage from './ConfirmMessage';
-import ErrorList from './ErrorList';
-import PageTitle from './PageTitle';
-import Button from './Button';
-import ViewContainer from './ViewContainer';
+import MembersList from '../components/MembersList';
+import ConfirmMessage from '../components/ConfirmMessage';
+import ErrorList from '../components/ErrorList';
+import PageTitle from '../components/PageTitle';
+import Button from '../components/Button';
+import ViewContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
 };
 
-class MembersView extends Component {
+class MembersPage extends Component {
   constructor() {
     super();
 
@@ -156,6 +156,6 @@ class MembersView extends Component {
   }
 }
 
-MembersView.contextTypes = contextTypes;
+MembersPage.contextTypes = contextTypes;
 
-export default MembersView;
+export default MembersPage;

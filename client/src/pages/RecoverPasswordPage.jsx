@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import Redirect from 'react-router/Redirect';
 import { isEmail } from 'validator';
 import PropTypes from 'prop-types';
-import ErrorList from './ErrorList';
+import ErrorList from '../components/ErrorList';
 import Client from '../Client';
-import PageTitle from './PageTitle';
-import Button from './Button';
-import ViewContainer from './ViewContainer';
+import PageTitle from '../components/PageTitle';
+import Button from '../components/Button';
+import ViewContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
 };
 
-class RecoverView extends Component {
+class RecoverPasswordPage extends Component {
   constructor() {
     super();
 
@@ -89,6 +89,6 @@ class RecoverView extends Component {
   }
 }
 
-RecoverView.contextTypes = contextTypes;
+RecoverPasswordPage.contextTypes = contextTypes;
 
-export default RecoverView;
+export default RecoverPasswordPage;
