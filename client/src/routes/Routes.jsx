@@ -3,23 +3,23 @@ import Miss from 'react-router/Miss';
 import Match from 'react-router/Match';
 import Redirect from 'react-router/Redirect';
 import './Routes.css';
-import LoginView from '../pages/LoginPage';
-import RegisterView from '../pages/RegisterPage';
-import RecoverView from '../pages/RecoverPasswordPage';
-import UpdatePasswordView from '../pages/ChangePasswordPage';
-import MyAccountView from '../pages/MyAccountPage';
-import MembersView from '../pages/MembersPage';
-import EventContainer from '../pages/EventPage';
-import MyEventsView from '../pages/MyEventsPage';
-import WidgetView from '../pages/GenerateWidgetPage';
-import PendingRegistrationsView from '../pages/PendingRegistrationsPage';
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
+import RecoverPasswordPage from '../pages/RecoverPasswordPage';
+import ChangePasswordPage from '../pages/ChangePasswordPage';
+import MyAccountPage from '../pages/MyAccountPage';
+import MembersPage from '../pages/MembersPage';
+import EventPage from '../pages/EventPage';
+import MyEventsPage from '../pages/MyEventsPage';
+import GenerateWidgetPage from '../pages/GenerateWidgetPage';
+import PendingRegistrationsPage from '../pages/PendingRegistrationsPage';
 import Logout from '../components/Logout';
-import MatchWhenLoggedIn from './MatchWhenLoggedIn';
-import MatchWhenAdmin from './MatchWhenAdmin';
+import MatchWhenLoggedIn from '../routes/MatchWhenLoggedIn';
+import MatchWhenAdmin from '../routes/MatchWhenAdmin';
 import Client from '../Client';
 
 
-const ViewContainer = () => (
+const Routes = () => (
   <div className="view-container">
     <Miss render={({ location }) => (
       <div className="lightbox" style={{ margin: '80px auto' }}>
@@ -35,26 +35,26 @@ const ViewContainer = () => (
         <Redirect to="/login" />
     )}
     />
-    <Match pattern="/login" component={LoginView} />
+    <Match pattern="/login" component={LoginPage} />
     <Match pattern="/logout" component={Logout} />
-    <Match pattern="/register" component={RegisterView} />
-    <Match pattern="/recover-password" component={RecoverView} />
+    <Match pattern="/register" component={RegisterPage} />
+    <Match pattern="/recover-password" component={RecoverPasswordPage} />
     <Match
       pattern="/update-password/:id"
       render={({ params }) => (
-        <UpdatePasswordView id={params.id} />
+        <ChangePasswordPage id={params.id} />
         )}
     />
-    <Match pattern="/generate-widget" component={WidgetView} />
-    <MatchWhenLoggedIn pattern="/user/account" component={MyAccountView} />
-    <MatchWhenLoggedIn pattern="/user/event/create" component={EventContainer} />
-    <MatchWhenLoggedIn exactly pattern="/user/event" component={MyEventsView} />
+    <Match pattern="/generate-widget" component={GenerateWidgetPage} />
+    <MatchWhenLoggedIn pattern="/user/account" component={MyAccountPage} />
+    <MatchWhenLoggedIn pattern="/user/event/create" component={EventPage} />
+    <MatchWhenLoggedIn exactly pattern="/user/event" component={MyEventsPage} />
     <Match
       pattern="/user/event/edit/:id"
       render={({ params }) => {
         if (Client.isLogedIn()) {
           return (
-            <EventContainer id={params.id} progress="edit" />
+            <EventPage id={params.id} progress="edit" />
           );
         }
         return (
@@ -68,7 +68,7 @@ const ViewContainer = () => (
       render={({ params }) => {
         if (Client.isLogedIn()) {
           return (
-            <EventContainer id={params.id} progress="view" />
+            <EventPage id={params.id} progress="view" />
           );
         }
         return (
@@ -76,9 +76,9 @@ const ViewContainer = () => (
         );
       }}
     />
-    <MatchWhenAdmin pattern="/admin/members" component={MembersView} />
-    <MatchWhenAdmin pattern="/admin/pending-registrations" component={PendingRegistrationsView} />
+    <MatchWhenAdmin pattern="/admin/members" component={MembersPage} />
+    <MatchWhenAdmin pattern="/admin/pending-registrations" component={PendingRegistrationsPage} />
   </div>
 );
 
-export default ViewContainer;
+export default Routes;
