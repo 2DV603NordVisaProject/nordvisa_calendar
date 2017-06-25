@@ -39,7 +39,7 @@ class LoginView extends Component {
   }
 
 
-  componentDidMount() {
+  componentWillMount() {
     const fieldErrors = [...this.state.fieldErrors];
 
     if (this.props.location.state) {
