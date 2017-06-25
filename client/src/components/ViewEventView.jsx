@@ -6,8 +6,14 @@ import ViewContainer from './ViewContainer';
 import EventsMap from './EventsMap';
 import SubTitle from './SubTitle';
 
-const ViewEventView = ({ fields,
-  progress, onEditClick, onSaveClick, event, resourceURI }, context) => {
+const ViewEventView = ({
+  fields,
+  progress,
+  onEditClick,
+  onSaveClick,
+  event,
+  resourceURI,
+  }, context) => {
   const language = context.language.CreateView;
   return (
     <ViewContainer className="preview">
