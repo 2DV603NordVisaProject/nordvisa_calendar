@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Member from './Member';
 
-const MembersList = (props, context) => (
+const MembersList = ({ members, onChange }, context) => (
   <div className="members-list">
     <div className="list-header">
       <p className="capitalize">{context.language.MembersView.email}</p>
@@ -10,8 +10,8 @@ const MembersList = (props, context) => (
     </div>
     <ul>
       {
-        props.members.map(member => (
-          <Member key={member.id} member={member} onChange={props.onChange} />
+        members.map(member => (
+          <Member key={member.id} member={member} onChange={onChange} />
         ))
       }
     </ul>
