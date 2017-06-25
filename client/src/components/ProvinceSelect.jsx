@@ -5,6 +5,16 @@ import NorwaySelect from './NorwaySelect';
 import DenmarkSelect from './DenmarkSelect';
 import IcelandSelect from './IcelandSelect';
 
+const propTypes = {
+  onChange: PropTypes.func.isRequired,
+  region: PropTypes.string.isRequired,
+  showProvince: PropTypes.boolean,
+};
+
+const defaultProps = {
+  showProvince: false,
+};
+
 const ProvinceSelect = ({ onChange, showProvince, region }) => {
   if (region === 'sweden') {
     return (
@@ -28,14 +38,7 @@ const ProvinceSelect = ({ onChange, showProvince, region }) => {
   );
 };
 
-ProvinceSelect.defaultProps = {
-  showProvince: false,
-};
-
-ProvinceSelect.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  region: PropTypes.string.isRequired,
-  showProvince: PropTypes.boolean,
-};
+ProvinceSelect.propTypes = propTypes;
+ProvinceSelect.defaultProps = defaultProps;
 
 export default ProvinceSelect;
