@@ -40,7 +40,7 @@ class LoginView extends Component {
 
 
   componentDidMount() {
-    const fieldErrors = this.state.fieldErrors;
+    const fieldErrors = [...this.state.fieldErrors];
 
     if (this.props.location.state) {
       if (this.props.location.state.referrer === '/register') {
@@ -60,8 +60,6 @@ class LoginView extends Component {
 
     const fieldErrors = this.validate(this.state.fields);
     this.setState({ fieldErrors });
-
-    // Return on Errors
     if (fieldErrors.length) return;
 
     const user = {
@@ -69,9 +67,8 @@ class LoginView extends Component {
       password: this.state.fields.password,
     };
 
-    // TODO Might change
     this.performLogin(user);
-    this.setState({ fields: { email: '', password: '' } });
+    this.setState({ fields: {} });
   }
 
   onInputChange(event) {
