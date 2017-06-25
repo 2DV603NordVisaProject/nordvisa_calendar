@@ -32,7 +32,7 @@ class MembersView extends Component {
       onYesClick: this.onYesClick,
     },
   }
-  componentWillMount() {
+  componentDidMount() {
     const uri = '/api/admin/manageableUsers';
 
     Client.get(uri)

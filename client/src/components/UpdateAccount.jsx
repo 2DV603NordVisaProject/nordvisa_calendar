@@ -30,7 +30,7 @@ class UpdateAccount extends Component {
     fieldErrors: [],
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const uri = '/api/user/current';
     Client.get(uri)
       .then((user) => {

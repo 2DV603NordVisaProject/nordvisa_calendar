@@ -24,7 +24,7 @@ class PendingRegistrationsView extends Component {
     deny: [],
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const uri = '/api/admin/registrations';
     Client.get(uri)
       .then((registrations) => {

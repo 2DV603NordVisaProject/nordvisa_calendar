@@ -35,7 +35,7 @@ class RegisterView extends Component {
     redirect: false,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const uri = '/api/visitor/organizations';
     Client.get(uri)
       .then((organizations) => {

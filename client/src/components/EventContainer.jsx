@@ -57,7 +57,7 @@ class CreateView extends Component {
     this.onEditClick = this.onEditClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const uri = '/api/user/current';
 
     let fields = {};

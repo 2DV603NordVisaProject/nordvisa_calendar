@@ -29,7 +29,7 @@ class MyEventsView extends Component {
   }
 
 
-  componentWillMount() {
+  componentDidMount() {
     const uri = '/api/event/get_manageable';
     Client.get(uri)
       .then((events) => {

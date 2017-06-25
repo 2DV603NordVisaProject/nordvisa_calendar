@@ -37,7 +37,7 @@ class WidgetView extends Component {
   }
 
 
-  componentWillMount() {
+  componentDidMount() {
     const uri = '/api/token';
     Client.get(uri)
       .then((res) => {
