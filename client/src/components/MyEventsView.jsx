@@ -49,13 +49,13 @@ class MyEventsView extends Component {
     Client.post(eventToDelete, uri);
 
     const events = this.state.events.filter(event => event.id !== this.state.toDelete);
-    const popup = this.state.popup;
+    const popup = Object.assign({}, this.state.popup);
     popup.pop = false;
     this.setState({ events, popup });
   }
 
   onNoClick() {
-    const popup = this.state.popup;
+    const popup = Object.assign({}, this.state.popup);
     popup.pop = false;
     this.setState({ popup });
   }
