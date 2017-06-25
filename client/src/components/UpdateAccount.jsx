@@ -50,19 +50,9 @@ class UpdateAccount extends Component {
   }
 
   onInputChange(event) {
-    const value = event.target.value;
-    const name = event.target.name;
     const fields = Object.assign({}, this.state.fields);
-    fields[name] = value;
+    fields[event.target.name] = event.target.value;
     this.setState({ fields });
-
-    const hiddenForm = document.querySelector('#on-select-change');
-
-    if (this.state.fields.org === 'new') {
-      hiddenForm.classList.remove('hidden');
-    } else {
-      hiddenForm.classList.add('hidden');
-    }
   }
 
   onFormSubmit(event) {

@@ -34,7 +34,7 @@ const OrganizationSelect = ({ onInputChange, fields, organizations }, context) =
         <option value="new">New Organization</option>
         <option value="">No Organization</option>
       </select>
-      <div id="on-select-change" className={fields.org === 'new' ? '' : 'hidden'}>
+      <div className={fields.org === 'new' ? '' : 'hidden'}>
         <label htmlFor="neworg" style={{ textTransform: 'capitalize' }}>{language.newOrganization}:</label>
         <input
           name="neworg"
