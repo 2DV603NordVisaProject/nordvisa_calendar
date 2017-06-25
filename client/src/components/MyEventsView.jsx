@@ -83,7 +83,7 @@ class MyEventsView extends Component {
     return (
       <ViewContainer>
         <PageTitle>{language.myEvents}</PageTitle>
-        <EventsList events={this.state.events} delete={this.handleDeleteClick} />
+        <EventsList events={this.state.events} onDeleteClick={this.handleDeleteClick} />
         {
           this.state.popup.pop
           ? <ConfirmMessage

@@ -4,14 +4,14 @@ import Event from './Event';
 
 const propTypes = {
   events: PropTypes.arrayOf(PropTypes.object).isRequired,
-  delete: PropTypes.func.isRequired,
-}
+  onDeleteClick: PropTypes.func.isRequired,
+};
 
 const contextTypes = {
   language: PropTypes.object,
-}
+};
 
-const EventsList = ({ events, delete }, context) => (
+const EventsList = ({ events, onDeleteClick }, context) => (
   <div className="event-list">
     <div className="list-header">
       <p className="capitalize">{context.language.MyEventsView.events}</p>
@@ -19,7 +19,7 @@ const EventsList = ({ events, delete }, context) => (
     <ul>
       {
         events.map(event => (
-          <Event key={event.id} event={event} delete={delete} />
+          <Event key={event.id} event={event} onDeleteClick={onDeleteClick} />
         ))
       }
     </ul>
