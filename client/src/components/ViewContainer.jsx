@@ -11,8 +11,8 @@ const defaultProps = {
   size: 'large',
 };
 
-const ViewContainer = props => (
-  <div className={`${props.size} ${props.className}`}>{props.children}</div>
+const ViewContainer = ({ size, children, className }) => (
+  <div className={`${size} ${className}`}>{children}</div>
 );
 
 ViewContainer.propTypes = propTypes;
