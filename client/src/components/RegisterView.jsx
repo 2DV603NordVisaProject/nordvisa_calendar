@@ -9,6 +9,10 @@ import PageTitle from './PageTitle';
 import ViewContainer from './ViewContainer';
 import RegisterForm from './RegisterForm';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 class RegisterView extends Component {
   constructor() {
     super();
@@ -154,8 +158,6 @@ class RegisterView extends Component {
   }
 }
 
-RegisterView.contextTypes = {
-  language: PropTypes.object,
-};
+RegisterView.contextTypes = contextTypes;
 
 export default RegisterView;
