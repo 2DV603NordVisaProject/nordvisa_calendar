@@ -67,7 +67,7 @@ class PendingRegistrationsView extends Component {
     const uri = '/api/admin/registrations';
     const approve = [];
     const deny = [];
-    const oldRegistrations = this.state.registrations;
+    const oldRegistrations = [...this.state.registrations];
 
     // Remove registrations from users who have been denied or approved.
     const registrations = [];
