@@ -32,7 +32,7 @@ class UpdatePasswordView extends Component {
   }
 
   onInputChange(event) {
-    const fields = this.state.fields;
+    const fields = Object.assign({}, this.state.fields);
     fields[event.target.name] = event.target.value;
     this.setState({ fields });
   }
@@ -47,7 +47,7 @@ class UpdatePasswordView extends Component {
     if (fieldErrors.length) return;
 
     const uri = '/api/visitor/recover_password';
-    console.log(this.state.fields);
+
     Client.post(this.state.fields, uri)
       .then((res) => {
         if (Object.prototype.hasOwnProperty.call(res, 'message')) {
