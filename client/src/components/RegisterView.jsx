@@ -87,7 +87,6 @@ class RegisterView extends Component {
       if (Object.prototype.hasOwnProperty.call(res, 'message')) {
         fieldErrors.push(res.message);
         this.setState({ fieldErrors });
-        this.forceUpdate();
       } else {
         this.setState({ redirect: true });
         this.setState({ fields: {
