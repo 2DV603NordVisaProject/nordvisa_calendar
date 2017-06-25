@@ -5,7 +5,7 @@ import RegistrationsList from '../components/RegistrationsList';
 import Client from '../Client';
 import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
-import ViewContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
@@ -120,7 +120,7 @@ class PendingRegistrationsPage extends Component {
     const language = this.context.language.PendingRegistrationsView;
 
     return (
-      <ViewContainer className="pending-view">
+      <PageContainer className="pending-view">
         <PageTitle>{language.pending}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
           <RegistrationsList
@@ -129,7 +129,7 @@ class PendingRegistrationsPage extends Component {
           />
           <Button form>{language.approve}</Button>
         </form>
-      </ViewContainer>
+      </PageContainer>
     );
   }
 }

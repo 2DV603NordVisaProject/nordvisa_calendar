@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import UpdatePassword from '../components/UpdatePassword';
 import UpdateAccount from '../components/UpdateAccount';
 import PageTitle from '../components/PageTitle';
-import ViewContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
@@ -13,11 +13,11 @@ const MyAccountPage = (props, context) => {
   const language = context.language.MyAccountView;
 
   return (
-    <ViewContainer>
+    <PageContainer>
       <PageTitle>{language.myAccount}</PageTitle>
       <UpdateAccount />
       <UpdatePassword />
-    </ViewContainer>
+    </PageContainer>
   );
 };
 

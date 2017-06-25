@@ -6,7 +6,7 @@ import ErrorList from '../components/ErrorList';
 import Client from '../Client';
 import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
-import ViewContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
@@ -71,7 +71,7 @@ class RecoverPasswordPage extends Component {
       );
     }
     return (
-      <ViewContainer size="small" className="login">
+      <PageContainer size="small" className="login">
         <PageTitle>{language.recover}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
           <label htmlFor="email" style={{ textTransform: 'capitalize' }}>{language.email}:</label>
@@ -84,7 +84,7 @@ class RecoverPasswordPage extends Component {
           <ErrorList errors={this.state.fieldErrors} />
           <Button form>{language.request}</Button>
         </form>
-      </ViewContainer>
+      </PageContainer>
     );
   }
 }

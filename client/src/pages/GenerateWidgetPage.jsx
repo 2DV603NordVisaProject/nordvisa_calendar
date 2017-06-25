@@ -8,7 +8,7 @@ import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
 import CountrySelect from '../components/CountrySelect';
 import GeneratedOutput from '../components/GeneratedOutput';
-import ViewContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
@@ -92,7 +92,7 @@ class GenerateWidgetPage extends Component {
     const language = this.context.language.WidgetView;
 
     return (
-      <ViewContainer size="small" className="widget-view">
+      <PageContainer size="small" className="widget-view">
         <PageTitle>{language.generateWidgetCode}</PageTitle>
         <form>
           <CountrySelect onInputChange={this.onInputChange} region={this.state.fields.region} />
@@ -109,7 +109,7 @@ class GenerateWidgetPage extends Component {
           headCode={this.state.headCode}
           bodyCode={this.state.bodyCode}
         />
-      </ViewContainer>
+      </PageContainer>
     );
   }
 }

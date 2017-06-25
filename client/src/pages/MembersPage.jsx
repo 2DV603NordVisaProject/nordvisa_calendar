@@ -7,7 +7,7 @@ import ConfirmMessage from '../components/ConfirmMessage';
 import ErrorList from '../components/ErrorList';
 import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
-import ViewContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
@@ -135,7 +135,7 @@ class MembersPage extends Component {
     const language = this.context.language.MembersView;
 
     return (
-      <ViewContainer className="members">
+      <PageContainer className="members">
         <PageTitle>{language.members}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
           <MembersList members={this.state.members} onChange={this.onInputChange} />
@@ -151,7 +151,7 @@ class MembersPage extends Component {
           />
           : null
         }
-      </ViewContainer>
+      </PageContainer>
     );
   }
 }

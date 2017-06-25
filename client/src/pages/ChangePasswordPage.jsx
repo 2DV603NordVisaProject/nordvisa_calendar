@@ -4,7 +4,7 @@ import ErrorList from '../components/ErrorList';
 import Client from '../Client';
 import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
-import ViewContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer';
 
 const propTypes = {
   id: PropTypes.string.isRequired,
@@ -82,7 +82,7 @@ class ChangePasswordPage extends Component {
     const language = this.context.language.UpdatePasswordView;
 
     return (
-      <ViewContainer size="small" className="login">
+      <PageContainer size="small" className="login">
         <PageTitle>{language.updatePassword}</PageTitle>
         <form onSubmit={this.onFormSubmit}>
           <label htmlFor="password" className="capitalize">{language.newPassword}:</label>
@@ -92,7 +92,7 @@ class ChangePasswordPage extends Component {
           <ErrorList errors={this.state.fieldErrors} />
           <Button form>{language.save}</Button>
         </form>
-      </ViewContainer>
+      </PageContainer>
     );
   }
 }

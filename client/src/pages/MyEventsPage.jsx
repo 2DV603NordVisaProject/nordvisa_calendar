@@ -5,7 +5,7 @@ import EventsList from '../components/EventsList';
 import Client from '../Client';
 import ConfirmMessage from '../components/ConfirmMessage';
 import PageTitle from '../components/PageTitle';
-import ViewContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer';
 
 const contextTypes = {
   language: PropTypes.object,
@@ -81,7 +81,7 @@ class MyEventsPage extends Component {
     const language = this.context.language.MyEventsView;
 
     return (
-      <ViewContainer>
+      <PageContainer>
         <PageTitle>{language.myEvents}</PageTitle>
         <EventsList events={this.state.events} onDeleteClick={this.handleDeleteClick} />
         {
@@ -93,7 +93,7 @@ class MyEventsPage extends Component {
           />
           : null
         }
-      </ViewContainer>
+      </PageContainer>
     );
   }
 }

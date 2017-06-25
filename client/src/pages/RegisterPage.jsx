@@ -6,7 +6,7 @@ import './RegisterPage.css';
 import Client from '../Client';
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
-import ViewContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer';
 import RegisterForm from '../components/RegisterForm';
 
 const contextTypes = {
@@ -123,7 +123,7 @@ class RegisterPage extends Component {
       );
     }
     return (
-      <ViewContainer size="small" className="register">
+      <PageContainer size="small" className="register">
         <PageTitle>{language.register}</PageTitle>
         <RegisterForm
           onFormSubmit={this.onFormSubmit}
@@ -133,7 +133,7 @@ class RegisterPage extends Component {
           fieldErrors={this.state.fieldErrors}
           organizations={this.state.organizations}
         />
-      </ViewContainer>
+      </PageContainer>
     );
   }
 }

@@ -7,7 +7,7 @@ import './LoginPage.css';
 import Client from '../Client';
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
-import ViewContainer from '../components/PageContainer';
+import PageContainer from '../components/PageContainer';
 import LoginForm from '../components/LoginForm';
 
 const contextTypes = {
@@ -113,7 +113,7 @@ class LoginPage extends Component {
       );
     }
     return (
-      <ViewContainer size="small" className="login">
+      <PageContainer size="small" className="login">
         <PageTitle>{language.LoginView.login}</PageTitle>
         <LoginForm
           onFormSubmit={this.onFormSubmit}
@@ -122,7 +122,7 @@ class LoginPage extends Component {
           fieldErrors={this.state.fieldErrors}
         />
         <Link to="/recover-password" style={{ textTransform: 'capitalize' }}>{language.LoginView.forgot}</Link>
-      </ViewContainer>
+      </PageContainer>
     );
   }
 }
