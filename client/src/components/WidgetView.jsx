@@ -10,6 +10,9 @@ import CountrySelect from './CountrySelect';
 import GeneratedOutput from './GeneratedOutput';
 import ViewContainer from './ViewContainer';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
 
 class WidgetView extends Component {
 
@@ -111,8 +114,6 @@ class WidgetView extends Component {
   }
 }
 
-WidgetView.contextTypes = {
-  language: PropTypes.object,
-};
+WidgetView.contextTypes = contextTypes;
 
 export default WidgetView;
