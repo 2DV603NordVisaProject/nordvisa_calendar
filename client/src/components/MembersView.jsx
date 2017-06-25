@@ -9,6 +9,10 @@ import PageTitle from './PageTitle';
 import Button from './Button';
 import ViewContainer from './ViewContainer';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 class MembersView extends Component {
   constructor() {
     super();
@@ -152,8 +156,6 @@ class MembersView extends Component {
   }
 }
 
-MembersView.contextTypes = {
-  language: PropTypes.object,
-};
+MembersView.contextTypes = contextTypes;
 
 export default MembersView;
