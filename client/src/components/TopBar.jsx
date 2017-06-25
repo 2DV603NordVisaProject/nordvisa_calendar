@@ -5,13 +5,13 @@ import './TopBar.css';
 import ResponsiveMenu from './ResponsiveMenu';
 import LanguageSelect from './LanguageSelect';
 
-const TopBar = props => (
+const TopBar = ({ onLanguageChange }) => (
   <div className="topbar">
     <div className="brand">
       <Link to="/user/event">Event Dashboard</Link>
     </div>
     <ResponsiveMenu />
-    <LanguageSelect onChange={props.onLanguageChange} />
+    <LanguageSelect onChange={onLanguageChange} />
   </div>
   );
 
