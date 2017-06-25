@@ -199,8 +199,7 @@ class CreateView extends Component {
       Client.post(eventObj, uri).then(res => console.log(res));
     }
 
-    const fieldErrors = [];
-    fieldErrors.push(this.context.language.Errors.eventSaved);
+    const fieldErrors = [this.context.language.Errors.eventSaved];
     this.setState({ fieldErrors });
     this.setState({ progress: 'saved', redirect: true });
     this.setState({ fields: {
