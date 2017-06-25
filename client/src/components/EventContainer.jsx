@@ -109,7 +109,7 @@ class CreateView extends Component {
 
 
   onInputChange(event) {
-    const fields = this.state.fields;
+    const fields = Object.assign({}, this.state.fields);
     fields[event.target.name] = event.target.value;
 
     if (event.target.name === 'recurring') {
@@ -154,10 +154,9 @@ class CreateView extends Component {
           return;
         }
 
-        const fields = this.state.fields;
+        const fields = Object.assign({}, this.state.fields);
         fields.path = res.path;
-        this.setState({ fields });
-        this.setState({ progress: 'preview' });
+        this.setState({ fields, progress: 'preview' });
       });
     } else {
       this.setState({ progress: 'preview' });
