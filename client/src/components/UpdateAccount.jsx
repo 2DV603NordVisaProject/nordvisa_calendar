@@ -34,12 +34,11 @@ class UpdateAccount extends Component {
     const uri = '/api/user/current';
     Client.get(uri)
       .then((user) => {
-        const fields = {
+        const fields = Object.assign({}, this.state.fields, {
           id: user.id,
           email: user.email,
           org: user.organization,
-          neworg: '',
-        };
+        });
         this.setState({ fields });
       });
 
@@ -53,7 +52,7 @@ class UpdateAccount extends Component {
   onInputChange(event) {
     const value = event.target.value;
     const name = event.target.name;
-    const fields = this.state.fields;
+    const fields = Object.assign({}, this.state.fields);
     fields[name] = value;
     this.setState({ fields });
 
