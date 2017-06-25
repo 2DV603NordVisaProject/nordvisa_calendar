@@ -5,6 +5,10 @@ import './TopBar.css';
 import ResponsiveMenu from './ResponsiveMenu';
 import LanguageSelect from './LanguageSelect';
 
+const propTypes = {
+  onLanguageChange: PropTypes.func.isRequired,
+};
+
 const TopBar = ({ onLanguageChange }) => (
   <div className="topbar">
     <div className="brand">
@@ -15,8 +19,6 @@ const TopBar = ({ onLanguageChange }) => (
   </div>
   );
 
-TopBar.propTypes = {
-  onLanguageChange: PropTypes.func.isRequired,
-};
+TopBar.propTypes = propTypes;
 
 export default TopBar;
