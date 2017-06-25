@@ -60,7 +60,7 @@ class MembersView extends Component {
   }
 
   onInputChange(event) {
-    const updated = this.state.updated;
+    const updated = [...this.state.updated];
     const members = this.state.members.filter((member) => {
       if (event.target.name === member.id) {
         updated.push({
@@ -80,7 +80,7 @@ class MembersView extends Component {
   }
 
   onConfirmClick() {
-    let updated = this.state.updated;
+    let updated = [...this.state.updated];
 
     while (updated.length > 0) {
       const user = updated.shift();
@@ -125,7 +125,7 @@ class MembersView extends Component {
   }
 
   onNoClick() {
-    const popup = this.state.popup;
+    const popup = Object.assign({}, this.state.popup);
     popup.pop = false;
     this.setState({ popup });
   }
