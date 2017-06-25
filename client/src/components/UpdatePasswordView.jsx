@@ -48,13 +48,7 @@ class UpdatePasswordView extends Component {
 
     const uri = '/api/visitor/recover_password';
     console.log(this.state.fields);
-    Client.post(this.state.fieldUpdatePasswordView.propTypes = {
-  id: PropTypes.string.isRequired,
-};
-
-UpdatePasswordView.contextTypes = {
-  language: PropTypes.object,
-};s, uri)
+    Client.post(this.state.fields, uri)
       .then((res) => {
         if (Object.prototype.hasOwnProperty.call(res, 'message')) {
           fieldErrors.push(res.message);
@@ -103,7 +97,7 @@ UpdatePasswordView.contextTypes = {
   }
 }
 
-UpdatePasswordView.propTypes = propsTypes;
 UpdatePasswordView.contextTypes = contextTypes;
+UpdatePasswordView.propTypes = propTypes;
 
 export default UpdatePasswordView;
