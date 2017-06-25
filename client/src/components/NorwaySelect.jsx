@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const NorwaySelect = (props, context) => {
+const NorwaySelect = ({ showProvince, onChange }, context) => {
   const language = context.language.WidgetView;
 
   return (
-    <div className={props.showProvince ? '' : 'hidden'}>
-      <select name="province" defaultValue="" onChange={props.onChange} className="capitalize">
+    <div className={showProvince ? '' : 'hidden'}>
+      <select name="province" defaultValue="" onChange={onChange} className="capitalize">
         <option value="" className="capitalize">{language.chooseProvince}</option>
         <option value="" className="capitalize">{language.none}</option>
         <option value="agder">Agder</option>
@@ -53,3 +53,5 @@ NorwaySelect.propTypes = {
   showProvince: PropTypes.boolean,
   onChange: PropTypes.func.isRequired,
 };
+
+export default NorwaySelect;
