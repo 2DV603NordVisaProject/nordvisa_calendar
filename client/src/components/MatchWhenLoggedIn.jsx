@@ -4,6 +4,9 @@ import Redirect from 'react-router/Redirect';
 import PropTypes from 'prop-types';
 import Client from '../Client';
 
+const propTypes = {
+  component: PropTypes.element.isRequired,
+};
 
 const MatchWhenLoggedIn = ({ component: Component, ...rest }) => (
   <Match
@@ -21,8 +24,6 @@ const MatchWhenLoggedIn = ({ component: Component, ...rest }) => (
   />
 );
 
-MatchWhenLoggedIn.propTypes = {
-  component: PropTypes.element.isRequired,
-};
+MatchWhenLoggedIn.propTypes = propTypes;
 
 export default MatchWhenLoggedIn;
