@@ -95,8 +95,6 @@ class CreateView extends Component {
             createdBy: event.createdBy,
           };
 
-          console.log(fields);
-
           this.setState({ progress, fields, comeFrom: 'event' });
 
           console.log(this.state);
