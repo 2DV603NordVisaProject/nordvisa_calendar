@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Registration from './Registration';
 
-const RegistrationsList = (props, context) => {
+const RegistrationsList = ({ registrations, onInputChange }, context) => {
   const language = context.language.PendingRegistrationsView;
 
   return (
@@ -14,11 +14,11 @@ const RegistrationsList = (props, context) => {
       </div>
       <ul>
         {
-      props.registrations.map(registration => (
+      registrations.map(registration => (
         <Registration
           key={registration.id}
           registration={registration}
-          onInputChange={props.onInputChange}
+          onInputChange={onInputChange}
         />
       ))
     }
