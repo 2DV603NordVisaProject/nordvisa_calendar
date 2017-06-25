@@ -52,14 +52,6 @@ class RegisterView extends Component {
     const fields = this.state.fields;
     fields[name] = value;
     this.setState({ fields });
-
-    if (this.state.fields.org === 'new') {
-      const newOrg = '';
-      this.setState({ newOrg });
-    } else {
-      const newOrg = 'hidden';
-      this.setState({ newOrg });
-    }
   }
 
   onFormSubmit(event) {
