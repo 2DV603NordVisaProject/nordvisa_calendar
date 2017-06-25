@@ -6,6 +6,29 @@ import ViewContainer from './ViewContainer';
 import EventsMap from './EventsMap';
 import SubTitle from './SubTitle';
 
+const propTypes = {
+  fields: PropTypes.shape({
+    name: PropTypes.string,
+    date: PropTypes.string,
+    startTime: PropTypes.string,
+    endTime: PropTypes.string,
+    path: PropTypes.string,
+    img: PropTypes.string,
+    desc: PropTypes.string,
+  }).isRequired,
+  progress: PropTypes.string.isRequired,
+  onEditClick: PropTypes.func.isRequired,
+  onSaveClick: PropTypes.func.isRequired,
+  event: PropTypes.shape({
+    location: PropTypes.object,
+  }).isRequired,
+  resourceURI: PropTypes.string.isRequired,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 const ViewEventView = ({
   fields,
   progress,
@@ -55,27 +78,7 @@ const ViewEventView = ({
   );
 };
 
-ViewEventView.contextTypes = {
-  language: PropTypes.object,
-};
-
-ViewEventView.propTypes = {
-  fields: PropTypes.shape({
-    name: PropTypes.string,
-    date: PropTypes.string,
-    startTime: PropTypes.string,
-    endTime: PropTypes.string,
-    path: PropTypes.string,
-    img: PropTypes.string,
-    desc: PropTypes.string,
-  }).isRequired,
-  progress: PropTypes.string.isRequired,
-  onEditClick: PropTypes.func.isRequired,
-  onSaveClick: PropTypes.func.isRequired,
-  event: PropTypes.shape({
-    location: PropTypes.object,
-  }).isRequired,
-  resourceURI: PropTypes.string.isRequired,
-};
+ViewEventView.propTypes = propTypes;
+ViewEventView.contextTypes = contextTypes;
 
 export default ViewEventView;
