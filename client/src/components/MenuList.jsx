@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import Link from 'react-router/Link';
 import Client from '../Client';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 const MenuList = (props, context) => {
   const language = context.language.MenuList;
   const style = {
@@ -43,8 +47,6 @@ const MenuList = (props, context) => {
 };
 
 
-MenuList.contextTypes = {
-  language: PropTypes.object,
-};
+MenuList.contextTypes = contextTypes;
 
 export default MenuList;
