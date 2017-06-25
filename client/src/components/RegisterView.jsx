@@ -64,7 +64,7 @@ class RegisterView extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-    let fieldErrors = this.validate(this.state.fields);
+    const fieldErrors = this.validate(this.state.fields);
     this.setState({ fieldErrors });
 
 
@@ -85,7 +85,6 @@ class RegisterView extends Component {
     Client.post(user, uri).then((res) => {
       this.setState({ loading: false });
       if (Object.prototype.hasOwnProperty.call(res, 'message')) {
-        fieldErrors = [];
         fieldErrors.push(res.message);
         this.setState({ fieldErrors });
         this.forceUpdate();
