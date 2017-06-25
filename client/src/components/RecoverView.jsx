@@ -8,6 +8,9 @@ import PageTitle from './PageTitle';
 import Button from './Button';
 import ViewContainer from './ViewContainer';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
 
 class RecoverView extends Component {
   constructor() {
@@ -92,8 +95,6 @@ class RecoverView extends Component {
   }
 }
 
-RecoverView.contextTypes = {
-  language: PropTypes.object,
-};
+RecoverView.contextTypes = contextTypes;
 
 export default RecoverView;
