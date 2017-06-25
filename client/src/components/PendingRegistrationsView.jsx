@@ -28,7 +28,6 @@ class PendingRegistrationsView extends Component {
     const uri = '/api/admin/registrations';
     Client.get(uri)
       .then((registrations) => {
-        console.log(registrations);
         if (Array.isArray(registrations)) {
           this.setState({ registrations });
         }
