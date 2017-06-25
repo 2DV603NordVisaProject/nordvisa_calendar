@@ -41,10 +41,7 @@ class RecoverView extends Component {
     Client.post(this.state.fields, uri)
       .then(() => {
         fieldErrors = ['Email sent!'];
-        this.setState({ fieldErrors,
-          fields: {
-            email: '',
-          } });
+        this.setState({ fieldErrors, fields: {} });
       });
 
 
