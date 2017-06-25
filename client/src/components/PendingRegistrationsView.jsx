@@ -7,6 +7,10 @@ import PageTitle from './PageTitle';
 import Button from './Button';
 import ViewContainer from './ViewContainer';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 class PendingRegistrationsView extends Component {
   constructor() {
     super();
@@ -134,8 +138,6 @@ class PendingRegistrationsView extends Component {
   }
 }
 
-PendingRegistrationsView.contextTypes = {
-  language: PropTypes.object,
-};
+PendingRegistrationsView.contextTypes = contextTypes;
 
 export default PendingRegistrationsView;
