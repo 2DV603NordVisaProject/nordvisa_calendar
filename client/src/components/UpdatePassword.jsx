@@ -29,12 +29,8 @@ class UpdatePassword extends Component {
     const uri = '/api/user/current';
     Client.get(uri)
       .then((user) => {
-        const fields = {
-          id: user.id,
-          oldpassword: '',
-          newpassword: '',
-          confirmpassword: '',
-        };
+        const fields = Object.assing({}, this.state.fields);
+        fields.id = user.id;
         this.setState({ fields });
       });
   }
@@ -65,11 +61,7 @@ class UpdatePassword extends Component {
           fieldErrors.push('Password updated!');
           this.setState({ fieldErrors });
 
-          this.setState({ fields: {
-            oldpassword: '',
-            newpassword: '',
-            confirmpassword: '',
-          } });
+          this.setState({ fields: {} });
         }
       });
   }
@@ -77,7 +69,7 @@ class UpdatePassword extends Component {
   onInputChange(event) {
     const value = event.target.value;
     const name = event.target.name;
-    const fields = this.state.fields;
+    const fields = Object.assign({}, this.state.fields);
     fields[name] = value;
     this.setState({ fields });
   }
