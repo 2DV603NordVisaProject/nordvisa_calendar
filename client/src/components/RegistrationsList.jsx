@@ -2,6 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Registration from './Registration';
 
+const propTypes = {
+  registrations: PropTypes.arrayOf(
+    PropTypes.object,
+  ).isRequired,
+  onInputChange: PropTypes.func.isRequired,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 const RegistrationsList = ({ registrations, onInputChange }, context) => {
   const language = context.language.PendingRegistrationsView;
 
@@ -27,15 +38,7 @@ const RegistrationsList = ({ registrations, onInputChange }, context) => {
   );
 };
 
-RegistrationsList.contextTypes = {
-  language: PropTypes.object,
-};
-
-RegistrationsList.propTypes = {
-  registrations: PropTypes.arrayOf(
-    PropTypes.object,
-  ).isRequired,
-  onInputChange: PropTypes.func.isRequired,
-};
+RegistrationsList.propTypes = propTypes;
+RegistrationsList.contextTypes = contextTypes;
 
 export default RegistrationsList;
