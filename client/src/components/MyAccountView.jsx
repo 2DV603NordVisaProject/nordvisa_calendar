@@ -5,6 +5,10 @@ import UpdateAccount from './UpdateAccount';
 import PageTitle from './PageTitle';
 import ViewContainer from './ViewContainer';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 const MyAccountView = (props, context) => {
   const language = context.language.MyAccountView;
 
@@ -17,8 +21,6 @@ const MyAccountView = (props, context) => {
   );
 };
 
-MyAccountView.contextTypes = {
-  language: PropTypes.object,
-};
+MyAccountView.contextTypes = contextTypes;
 
 export default MyAccountView;
