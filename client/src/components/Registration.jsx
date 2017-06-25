@@ -1,6 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  registration: PropTypes.shape({
+    organization: PropTypes.string,
+    email: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
+  onInputChange: PropTypes.func.isRequired,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 const Registration = ({ registration, onInputChange }, context) => (
   <li>
     <div className="pending-item">
@@ -25,17 +38,7 @@ const Registration = ({ registration, onInputChange }, context) => (
   </li>
 );
 
-Registration.contextTypes = {
-  language: PropTypes.object,
-};
-
-Registration.propTypes = {
-  registration: PropTypes.shape({
-    organization: PropTypes.string,
-    email: PropTypes.string,
-    id: PropTypes.string,
-  }).isRequired,
-  onInputChange: PropTypes.func.isRequired,
-};
+Registration.propTypes = propTypes;
+Registration.contextTypes = contextTypes;
 
 export default Registration;
