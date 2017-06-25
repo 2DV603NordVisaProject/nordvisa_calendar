@@ -5,6 +5,9 @@ import Client from '../Client';
 import Button from './Button';
 import SubTitle from './SubTitle';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
 
 class UpdatePassword extends Component {
   constructor() {
@@ -133,9 +136,7 @@ class UpdatePassword extends Component {
     );
   }
 }
-UpdatePassword.contextTypes = {
-  language: PropTypes.object,
-};
 
+UpdatePassword.contextTypes = contextTypes;
 
 export default UpdatePassword;
