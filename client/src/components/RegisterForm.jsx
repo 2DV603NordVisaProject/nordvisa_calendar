@@ -5,6 +5,28 @@ import Button from './Button';
 import ErrorList from './ErrorList';
 import OrganizationSelect from './OrganizationSelect';
 
+const propTypes = {
+  onFormSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.shape({
+    email: PropTypes.string,
+    password: PropTypes.string,
+    confirmPassword: PropTypes.string,
+    org: PropTypes.string,
+    newOrg: PropTypes.string,
+  }).isRequired,
+  callback: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  organizations: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  fieldErrors: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
 
 const RegisterForm = ({
   onFormSubmit,
@@ -53,27 +75,7 @@ const RegisterForm = ({
   );
 };
 
-RegisterForm.contextTypes = {
-  language: PropTypes.object,
-};
-
-RegisterForm.propTypes = {
-  onFormSubmit: PropTypes.func.isRequired,
-  fields: PropTypes.shape({
-    email: PropTypes.string,
-    password: PropTypes.string,
-    confirmPassword: PropTypes.string,
-    org: PropTypes.string,
-    newOrg: PropTypes.string,
-  }).isRequired,
-  callback: PropTypes.func.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  organizations: PropTypes.arrayOf(
-    PropTypes.string,
-  ).isRequired,
-  fieldErrors: PropTypes.arrayOf(
-    PropTypes.string,
-  ).isRequired,
-};
+RegisterForm.propTypes = propTypes;
+RegisterForm.contextTypes = contextTypes;
 
 export default RegisterForm;
