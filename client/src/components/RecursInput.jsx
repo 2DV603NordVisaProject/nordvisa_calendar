@@ -1,6 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  fields: PropTypes.shape({
+    reccuring: PropTypes.string,
+    recursuntil: PropTypes.string,
+    recurs: PropTypes.string,
+  }).isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  showRecursInput: PropTypes.boolean,
+};
+
+const defaultProps = {
+  showRecursInput: false,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 const RecursInput = ({ fields, onInputChange, showRecursInput }, context) => {
   const language = context.language.CreateView;
   return (
@@ -39,22 +57,8 @@ const RecursInput = ({ fields, onInputChange, showRecursInput }, context) => {
   );
 };
 
-RecursInput.defaultProps = {
-  showRecursInput: false,
-};
-
-RecursInput.propTypes = {
-  fields: PropTypes.shape({
-    reccuring: PropTypes.string,
-    recursuntil: PropTypes.string,
-    recurs: PropTypes.string,
-  }).isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  showRecursInput: PropTypes.boolean,
-};
-
-RecursInput.contextTypes = {
-  language: PropTypes.object,
-};
+RecursInput.propTypes = propTypes;
+RecursInput.defaultProps = defaultProps;
+RecursInput.contextTypes = contextTypes;
 
 export default RecursInput;
