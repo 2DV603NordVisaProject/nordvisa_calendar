@@ -139,7 +139,6 @@ class CreateView extends Component {
     const file = this.state.fields.file;
     if (file) {
       Client.uploadImage(file).then((res) => {
-        console.log(file);
         if (Object.prototype.hasOwnProperty.call(res, 'message')) {
           let err = '';
           if (res.message === '415') {
