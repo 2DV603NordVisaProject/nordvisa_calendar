@@ -95,7 +95,7 @@ class RegisterView extends Component {
   }
 
   callback = (key) => {
-    const fields = this.state.fields;
+    const fields = Object.assign({}, this.state.fields);
     fields.recaptcha = key;
     this.setState(fields);
   }
