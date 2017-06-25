@@ -6,8 +6,14 @@ import ErrorList from './ErrorList';
 import OrganizationSelect from './OrganizationSelect';
 
 
-const RegisterForm = ({ onFormSubmit,
-  fields, fieldErrors, onInputChange, callback, organizations }, context) => {
+const RegisterForm = ({
+  onFormSubmit,
+  fields,
+  fieldErrors,
+  onInputChange,
+  callback,
+  organizations,
+  }, context) => {
   const language = context.language.RegisterView;
   return (
     <form className="center" onSubmit={onFormSubmit}>
