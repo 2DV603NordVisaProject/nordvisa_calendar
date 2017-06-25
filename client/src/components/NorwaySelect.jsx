@@ -1,6 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  showProvince: PropTypes.boolean,
+  onChange: PropTypes.func.isRequired,
+};
+
+const defaultProps = {
+  showProvince: false,
+};
+
+const contextTypes = {
+  language: PropTypes.object,
+};
+
 const NorwaySelect = ({ showProvince, onChange }, context) => {
   const language = context.language.WidgetView;
 
@@ -41,17 +54,8 @@ const NorwaySelect = ({ showProvince, onChange }, context) => {
   );
 };
 
-NorwaySelect.contextTypes = {
-  language: PropTypes.object,
-};
-
-NorwaySelect.defaultProps = {
-  showProvince: false,
-};
-
-NorwaySelect.propTypes = {
-  showProvince: PropTypes.boolean,
-  onChange: PropTypes.func.isRequired,
-};
+NorwaySelect.propTypes = propTypes;
+NorwaySelect.defaultProps = defaultProps;
+NorwaySelect.contextTypes = contextTypes;
 
 export default NorwaySelect;
