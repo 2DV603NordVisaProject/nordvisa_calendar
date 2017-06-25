@@ -63,7 +63,7 @@ class WidgetView extends Component {
   }
 
   onInputChange(event) {
-    const fields = this.state.fields;
+    const fields = Object.assign({}, this.state.fields);
     fields[event.target.name] = event.target.value;
     this.setState({ fields });
 
