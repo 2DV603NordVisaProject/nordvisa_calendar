@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import Button from '../src/components/Button';
 
 describe('Button', () => {
@@ -19,7 +19,7 @@ describe('Button', () => {
       expect(wrapper.find('input').length).toBe(1);
     });
     it('prop children should be "login"', () => {
-      expect(wrapper.props().children).toBe('login');
+      expect(wrapper.props().value).toBe('login');
     });
 
     it('class should be set to error', () => {
@@ -29,7 +29,7 @@ describe('Button', () => {
 
   describe('props are default', () => {
     beforeEach(() => {
-      wrapper = shallow(<Button onClick={onClick} />);
+      wrapper = mount(<Button onClick={onClick} />);
     });
 
     it('should be defined', () => {
@@ -53,6 +53,7 @@ describe('Button', () => {
     });
 
     describe('user clicks the button', () => {
+      wrapper = mount(<Button onClick={onClick} />);
       const btn = wrapper.find('button').first();
 
       beforeEach(() => {
