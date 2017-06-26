@@ -30,11 +30,17 @@ describe('CountrySelect', () => {
     expect(select.props().defaultValue).toBe(region);
   });
 
+  it('should have six options', () => {
+    const options = wrapper.find('option');
+    expect(options.length).toBe(6);
+  });
+
   it('should have onInputChange prop', () => {
     expect(wrapper.props().onInputChange).toBeDefined();
   });
 
   describe('user change option', () => {
+    wrapper = mount(<CountrySelect onInputChange={onInputChange} region={region} />, { context });
     const input = wrapper.find('select').first();
     const value = 'sweden';
 
