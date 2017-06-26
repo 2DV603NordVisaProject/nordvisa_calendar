@@ -7,21 +7,6 @@ describe('ConfirmMessage', () => {
   let wrapper;
   const onClick = jest.fn();
 
-  describe('prop "popup.pop" is false ', () => {
-    const popup = { pop: false };
-    beforeEach(() => {
-      wrapper = mount(<ConfirmMessage popup={popup} onClick={onClick} />);
-    });
-
-    it('should be defined', () => {
-      expect(wrapper).toBeDefined();
-    });
-
-    it('should  not render', () => {
-      expect(wrapper.find('div').length).toBe(0);
-    });
-  });
-
   describe('prop "popup.pop" is true', () => {
     const popup = { pop: true };
     beforeEach(() => {
