@@ -19,6 +19,7 @@ class RegisterPage extends Component {
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.callback = this.callback.bind(this);
   }
   state = {
     fields: {
@@ -84,10 +85,9 @@ class RegisterPage extends Component {
     });
   }
 
-  callback = (key) => {
-    const fields = Object.assign({}, this.state.fields);
-    fields.recaptcha = key;
-    this.setState(fields);
+  callback(key) {
+    const fields = Object.assign({}, this.state.fields, { recaptcha: key });
+    this.setState({ fields });
   }
 
   validate(fields) {
