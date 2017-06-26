@@ -1,21 +1,22 @@
-/*
-- Should be defined
-- Should render
-- registration and onInputChange prop
-- right amount fo registration
- */
 import React from 'react';
 import { shallow } from 'enzyme';
 import RegistrationsList from '../src/components/RegistrationsList';
 import Registration from '../src/components/Registration';
+import en from '../src/i18n/en';
 
 describe('RegistrationsList', () => {
   let wrapper;
   const registrations = [1, 2];
   const onInputChange = jest.fn();
+  const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<RegistrationsList registrations={registrations} onInputChange={onInputChange} />);
+    wrapper = shallow(<RegistrationsList
+      registrations={registrations}
+      onInputChange={onInputChange}
+    />,
+      { context },
+    );
   });
 
   it('should be defined', () => {

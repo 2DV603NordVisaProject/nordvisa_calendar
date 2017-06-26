@@ -1,14 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CountrySelect from '../src/components/CountrySelect';
+import en from '../src/i18n/en';
 
 describe('CountrySelect', () => {
   let wrapper;
   const region = '';
   const onInputChange = jest.fn();
+  const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<CountrySelect onInputChange={onInputChange} region={region} />);
+    wrapper = shallow(<CountrySelect onInputChange={onInputChange} region={region} />, { context });
   });
 
   it('should be defined', () => {
