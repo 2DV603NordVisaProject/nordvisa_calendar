@@ -1,26 +1,25 @@
-- should be defined
-- should render
-- default children should work
-- children sent should work
+import React from 'react';
+import { shallow } from 'enzyme';
+import SubTitle from '../src/components/SubTitle';
 
 describe('SubTitle', () => {
   let wrapper;
 
   describe('Without child', () => {
     beforeEach(() => {
-      wrapper = shallow(<SubTitle/>);
+      wrapper = shallow(<SubTitle />);
     });
 
-    it("should be defined", () => {
+    it('should be defined', () => {
       expect(wrapper).toBeDefined();
     });
 
-    it("should render", () => {
-      expect(wrapper.find("h3").length).toBe(1);
+    it('should render', () => {
+      expect(wrapper.find('h3').length).toBe(1);
     });
 
-    it("defaultProp for children should be set", () => {
-      expect(wrapper.props().children).toBe("Sub Title");
+    it('defaultProp for children should be set', () => {
+      expect(wrapper.props().children).toBe('Sub Title');
     });
   });
 
@@ -29,16 +28,16 @@ describe('SubTitle', () => {
       wrapper = shallow(<SubTitle>Hello World</SubTitle>);
     });
 
-    it("should be defined", () => {
+    it('should be defined', () => {
       expect(wrapper).toBeDefined();
     });
 
-    it("should render", () => {
-      expect(wrapper.find("h3").length).toBe(1);
+    it('should render', () => {
+      expect(wrapper.find('h3').length).toBe(1);
     });
 
-    it("defaultProp for children should be set", () => {
-      expect(wrapper.props().children).toBe("Hello World");
+    it('defaultProp for children should be set', () => {
+      expect(wrapper.props().children).toBe('Hello World');
     });
   });
 });

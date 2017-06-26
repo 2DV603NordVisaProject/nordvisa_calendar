@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MembersView from '../src/components/MembersView';
+import MembersPage from '../src/pages/MembersPage';
 import PageTitle from '../src/components/PageTitle';
 import en from '../src/i18n/en';
 import Button from '../src/components/Button';
@@ -10,7 +10,7 @@ describe('MembersView', () => {
   const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<MembersView />, { context });
+    wrapper = shallow(<MembersPage />, { context });
   });
 
   it('should contain PageTitle-component', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import UpdatePasswordView from '../src/components/UpdatePasswordView';
+import ChangePasswordPage from '../src/pages/ChangePasswordPage';
 import ErrorList from '../src/components/ErrorList';
 import en from '../src/i18n/en';
 import PageTitle from '../src/components/PageTitle';
@@ -12,7 +12,7 @@ describe('UpdatePasswordView', () => {
   const id = '12345';
 
   beforeEach(() => {
-    wrapper = shallow(<UpdatePasswordView id={id} />, { context });
+    wrapper = shallow(<ChangePasswordPage id={id} />, { context });
   });
 
   it('should be defined', () => {

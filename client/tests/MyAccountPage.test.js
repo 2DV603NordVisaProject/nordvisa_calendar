@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MyAccountView from '../src/components/MyAccountView';
+import MyAccountView from '../src/pages/MyAccountPage';
 import UpdateAccount from '../src/components/UpdateAccount';
 import UpdatePassword from '../src/components/UpdatePassword';
 import PageTitle from '../src/components/PageTitle';

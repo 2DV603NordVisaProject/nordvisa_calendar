@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Routes from '../src/components/Routes';
+import Routes from '../src/routes/Routes';
 
 describe('ViewContainer', () => {
   let wrapper;

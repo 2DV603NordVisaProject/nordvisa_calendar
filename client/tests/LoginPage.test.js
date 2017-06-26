@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import LoginView from '../src/components/LoginView';
+import LoginPage from '../src/pages/LoginPage';
 import en from '../src/i18n/en';
 import helpers from './helpers';
 import PageTitle from '../src/components/PageTitle';
@@ -16,7 +16,7 @@ describe('LoginView', () => {
   const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<LoginView location={location} />, { context });
+    wrapper = shallow(<LoginPage location={location} />, { context });
   });
 
   it('should be defined', () => {

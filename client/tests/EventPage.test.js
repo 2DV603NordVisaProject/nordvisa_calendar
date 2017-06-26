@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import RecoverView from '../src/components/RecoverView';
+import EventPage from '../src/pages/EventPage';
 import PageTitle from '../src/components/PageTitle';
 import en from '../src/i18n/en';
 import Button from '../src/components/Button';
 
-describe('RecoverView', () => {
+describe('CreateView', () => {
   let wrapper;
   const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<RecoverView />, { context });
+    wrapper = shallow(<EventPage />, { context });
   });
 
   it('should contain PageTitle-component', () => {

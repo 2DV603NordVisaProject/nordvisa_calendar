@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import en from '../src/i18n/en';
-import WidgetView from '../src/components/WidgetView';
+import GenerateWidgetPage from '../src/pages/GenerateWidgetPage';
 import ProvinceSelect from '../src/components/ProvinceSelect';
 import PageTitle from '../src/components/PageTitle';
 
@@ -12,7 +12,7 @@ describe('WidgetView', () => {
   const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<WidgetView />, { context });
+    wrapper = shallow(<GenerateWidgetPage />, { context });
   });
 
   it('should render component', () => {

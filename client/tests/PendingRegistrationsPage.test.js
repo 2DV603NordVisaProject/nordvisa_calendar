@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PendingRegistrationsView from '../src/components/PendingRegistrationsView';
+import PendingRegistrationsPage from '../src/pages/PendingRegistrationsPage';
 import PageTitle from '../src/components/PageTitle';
 import en from '../src/i18n/en';
 import Button from '../src/components/Button';
@@ -10,7 +10,7 @@ describe('PendingRegistrationView', () => {
   const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<PendingRegistrationsView />, { context });
+    wrapper = shallow(<PendingRegistrationsPage />, { context });
   });
 
   it('should contain PageTitle-component', () => {

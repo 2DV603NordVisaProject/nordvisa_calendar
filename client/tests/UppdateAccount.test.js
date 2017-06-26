@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import UpdateAccount from '../src/components/UpdateAccount';
 import en from '../src/i18n/en';
+import Button from '../src/components/Button';
 
 describe('UpdateAccount', () => {
   let wrapper;

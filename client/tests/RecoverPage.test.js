@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import RegisterView from '../src/components/RegisterView';
+import RecoverPasswordPage from '../src/pages/RecoverPasswordPage';
 import PageTitle from '../src/components/PageTitle';
 import en from '../src/i18n/en';
 import Button from '../src/components/Button';
 
-describe('RegisterView', () => {
+describe('RecoverView', () => {
   let wrapper;
   const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<RegisterView />, { context });
+    wrapper = shallow(<RecoverPasswordPage />, { context });
   });
 
   it('should contain PageTitle-component', () => {
