@@ -10,7 +10,7 @@ describe('RegisterView', () => {
   const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<RegisterPages />, { context });
+    wrapper = shallow(<RegisterPage />, { context });
   });
 
   it('should contain PageTitle-component', () => {
