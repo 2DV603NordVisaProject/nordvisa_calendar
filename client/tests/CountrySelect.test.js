@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import CountrySelect from '../src/components/CountrySelect';
 import en from '../src/i18n/en';
 
@@ -10,7 +10,7 @@ describe('CountrySelect', () => {
   const context = { language: en };
 
   beforeEach(() => {
-    wrapper = shallow(<CountrySelect onInputChange={onInputChange} region={region} />, { context });
+    wrapper = mount(<CountrySelect onInputChange={onInputChange} region={region} />, { context });
   });
 
   it('should be defined', () => {
@@ -23,6 +23,11 @@ describe('CountrySelect', () => {
 
   it('should receive region prop', () => {
     expect(wrapper.props().region).toBe('');
+  });
+
+  it('should have prop region set as a defaultValue', () => {
+    const select = wrapper.find('select').first();
+    expect(select.props().defaultValue).toBe(region);
   });
 
   it('should have onInputChange prop', () => {
