@@ -9,9 +9,14 @@ describe('ConfirmMessage', () => {
   const onNoClick = jest.fn();
 
   describe('prop "popup.pop" is true', () => {
-    const popup = { pop: true };
+    const popup = { msg: 'hello world' };
     beforeEach(() => {
-      wrapper = mount(<ConfirmMessage popup={popup} onYesClick={onYesClick} onNoClick={onNoClick} />);
+      wrapper = mount(<ConfirmMessage
+        popup={popup}
+        onYesClick={onYesClick}
+        onNoClick={onNoClick}
+      />,
+    );
     });
 
     it('should be defined', () => {
@@ -20,6 +25,11 @@ describe('ConfirmMessage', () => {
 
     it('should render', () => {
       expect(wrapper.find('div').length).toBeGreaterThan(0);
+    });
+
+    it('should display the text from prop popup.msg', () => {
+      const childText = wrapper.find('p').first().text();
+      expect(childText).toBe(popup.msg);
     });
 
     it('should have two Button-components', () => {
