@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
+import GoogleMapReact from 'google-map-react';
 import EventsMap from '../src/components/EventsMap';
 
 describe('EventsMap', () => {
@@ -48,8 +49,8 @@ describe('EventsMap', () => {
     });
 
     it('should contain GoogleMapReact', () => {
-      const GoogleMapReact = wrapper.find('GoogleMapReact').length;
-      expect(GoogleMapReact).toBe(1);
+      const googleMapReact = wrapper.find(GoogleMapReact).length;
+      expect(googleMapReact).toBe(1);
     });
   });
   describe('with props', () => {
