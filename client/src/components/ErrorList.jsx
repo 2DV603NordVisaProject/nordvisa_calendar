@@ -11,8 +11,8 @@ const propTypes = {
 const ErrorList = ({ errors }) => (
   <ul className="error-list">
     {
-    errors.map(error => (
-      <li style={{ textTransform: 'capitalize' }} className={error.length > 40 ? 'long-error error-text' : 'error-text'} key={null}>{error}</li>
+    errors.map((error, i) => (
+      <li style={{ textTransform: 'capitalize' }} className={error.length > 40 ? 'long-error error-text' : 'error-text'} key={i}>{error}</li>
     ))
   }
   </ul>
