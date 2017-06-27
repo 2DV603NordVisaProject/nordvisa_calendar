@@ -14,7 +14,7 @@ describe('Loader', () => {
   });
 
   it('should render', () => {
-    expect(wrapper.find('div').length).toBeGreaterThan(1);
+    expect(wrapper.find('div').length).toBeGreaterThan(0);
   });
 
   it('should have loader', () => {
