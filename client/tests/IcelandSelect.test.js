@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DenmarkSelect from '../src/components/DenmarkSelect';
+import IcelandSelect from '../src/components/IcelandSelect';
 import en from '../src/i18n/en';
 
 describe('DenmarkSelect', () => {
@@ -10,7 +10,7 @@ describe('DenmarkSelect', () => {
 
   describe('showProvince prop is false', () => {
     beforeEach(() => {
-      wrapper = shallow(<DenmarkSelect
+      wrapper = shallow(<IcelandSelect
         showProvince={false}
         onChange={onChange}
       />,
@@ -29,7 +29,7 @@ describe('DenmarkSelect', () => {
 
   describe('showProvince prop is true', () => {
     beforeEach(() => {
-      wrapper = shallow(<DenmarkSelect
+      wrapper = shallow(<IcelandSelect
         onChange={onChange}
         showProvince
       />,
@@ -46,14 +46,14 @@ describe('DenmarkSelect', () => {
     });
 
     describe('user change option', () => {
-      wrapper = shallow(<DenmarkSelect
+      wrapper = shallow(<IcelandSelect
         onChange={onChange}
         showProvince
       />,
         { context },
       );
       const input = wrapper.find('select').first();
-      const value = 'nordjylland';
+      const value = 'arnessysla';
 
       beforeEach(() => {
         input.simulate('change', {
