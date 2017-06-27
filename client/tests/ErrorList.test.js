@@ -19,7 +19,7 @@ describe('ErrorList', () => {
   });
 
   it('should contain error message', () => {
-    const error = wrapper.find('li').at(2);
+    const error = wrapper.find('li').at(1);
     expect(error.text()).toBe(errors[1]);
   });
 
