@@ -17,8 +17,8 @@ const propTypes = {
 const IcelandSelect = ({ showProvince, onChange }, context) => {
   const language = context.language.WidgetView;
 
-  return (
-    <div className={showProvince ? '' : 'hidden'}>
+  if (showProvince) {
+    return (
       <select name="province" defaultValue="" onChange={onChange} className="capitalize">
         <option value="" className="capitalize">{language.chooseProvince}</option>
         <option value="" className="capitalize">{language.none}</option>
@@ -46,8 +46,10 @@ const IcelandSelect = ({ showProvince, onChange }, context) => {
         <option value="vesturisafjaroarsysla">Vestur-Ísafjarðarsýsla</option>
         <option value="vesturskaftafellssysla">Vestur-Skaftafellssýsla</option>
       </select>
-    </div>
-  );
+    );
+  }
+
+  return null;
 };
 
 IcelandSelect.propTypes = propTypes;
