@@ -26,4 +26,21 @@ describe('ErrorList', () => {
   it('should print all error message', () => {
     expect(wrapper.find('li').length).toBe(2);
   });
+
+  it('should not have any long errors', () => {
+    expect(wrapper.find('.long-error').length).toBe(0);
+  });
+
+  describe('added long error', () => {
+    const longErrors = [];
+    longErrors.push('a very very long sample error that has a very very long message!');
+
+    beforeEach(() => {
+      wrapper = shallow(<ErrorList errors={longErrors} />);
+    });
+
+    it('should have any long errors', () => {
+      expect(wrapper.find('.long-error').length).toBe(1);
+    });
+  });
 });
