@@ -11,7 +11,7 @@ describe('EventsList', () => {
   const onDelete = jest.fn();
 
   beforeEach(() => {
-    wrapper = shallow(<EventsList events={events} delete={onDelete} />, { context });
+    wrapper = shallow(<EventsList events={events} onDeleteClick={onDelete} />, { context });
   });
 
   it('should be defined', () => {
@@ -33,6 +33,6 @@ describe('EventsList', () => {
 
   it('should send Event an delete prop', () => {
     const event = wrapper.find('Event').first();
-    expect(event.props().delete).toBeDefined();
+    expect(event.props().onDeleteClick).toBeDefined();
   });
 });
