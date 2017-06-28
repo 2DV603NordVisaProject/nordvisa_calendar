@@ -5,6 +5,7 @@ import UpdateAccount from '../src/components/UpdateAccount';
 import UpdatePassword from '../src/components/UpdatePassword';
 import PageTitle from '../src/components/PageTitle';
 import en from '../src/i18n/en';
+import PageContainer from '../src/components/PageContainer';
 
 describe('MyAccountView', () => {
   let wrapper;
@@ -19,7 +20,7 @@ describe('MyAccountView', () => {
   });
 
   it('should be rendered', () => {
-    expect(wrapper.find('div').length).toBeGreaterThan(0);
+    expect(wrapper.find(PageContainer).length).toBeGreaterThan(0);
   });
 
   it('should contain a PageTitle-component', () => {

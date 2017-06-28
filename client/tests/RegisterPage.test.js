@@ -3,9 +3,9 @@ import { shallow } from 'enzyme';
 import RegisterPage from '../src/pages/RegisterPage';
 import PageTitle from '../src/components/PageTitle';
 import en from '../src/i18n/en';
-import Button from '../src/components/Button';
+import RegisterForm from '../src/components/RegisterForm';
 
-describe('RegisterView', () => {
+describe('RegisterPage', () => {
   let wrapper;
   const context = { language: en };
 
@@ -17,7 +17,7 @@ describe('RegisterView', () => {
     expect(wrapper.find(PageTitle).length).toBe(1);
   });
 
-  it('should contain Button-components', () => {
-    expect(wrapper.find(Button).length).toBe(1);
+  it('should contain RegisterForm-components', () => {
+    expect(wrapper.find(RegisterForm).length).toBe(1);
   });
 });
