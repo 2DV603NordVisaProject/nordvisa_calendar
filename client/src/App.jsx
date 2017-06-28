@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'react-router/BrowserRouter';
 import TopBar from './components/TopBar';
-import ViewContainer from './components/ViewContainer';
+import Routes from './routes/Routes';
 import sv from './i18n/sv';
 import en from './i18n/en';
 import no from './i18n/no';
@@ -36,7 +36,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <TopBar onLanguageChange={this.onLanguageChange} />
-          <ViewContainer />
+          <Routes />
         </div>
       </Router>
     );

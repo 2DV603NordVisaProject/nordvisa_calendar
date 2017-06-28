@@ -6,6 +6,10 @@
   transition: 0.4s;
 }
 
+.menu-btn:focus {
+  outline: none;
+}
+
 .responsive-menu{
 	display: none;
 }

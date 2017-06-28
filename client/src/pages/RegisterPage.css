@@ -1,0 +1,17 @@
+.register {
+  margin: 80px auto;
+}
+
+#g-recaptcha {
+  margin: 20px 0 0 -45px;
+  width: 300px;
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.small-form {
+  width: 100px;
+}

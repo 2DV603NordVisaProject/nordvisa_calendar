@@ -17,6 +17,10 @@ describe('Members', () => {
     wrapper = shallow(<Member onChange={onChange} member={member} />, { context });
   });
 
+  it('should be defined', () => {
+    expect(wrapper).toBeDefined();
+  });
+
   it('should render component container', () => {
     expect(wrapper.find('li').length).toBe(1);
   });

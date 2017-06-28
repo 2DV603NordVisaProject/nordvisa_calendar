@@ -1,12 +1,12 @@
-/*
-- Region conditional
-- Is defined
-- Is rendered
- */
 import React from 'react';
 import { shallow } from 'enzyme';
 import en from '../src/i18n/en';
 import ProvinceSelect from '../src/components/ProvinceSelect';
+import NorwaySelect from '../src/components/NorwaySelect';
+import DenmarkSelect from '../src/components/DenmarkSelect';
+import SwedenSelect from '../src/components/SwedenSelect';
+import IcelandSelect from '../src/components/IcelandSelect';
+
 
 describe('ProvinceSelect', () => {
   let wrapper;
@@ -25,8 +25,8 @@ describe('ProvinceSelect', () => {
       wrapper = shallow(<ProvinceSelect region="sweden" />, { context });
     });
 
-    it('should show dropdown', () => {
-      expect(wrapper.find('select').length).toBe(1);
+    it('should render SwedenSelect', () => {
+      expect(wrapper.find(SwedenSelect).length).toBe(1);
     });
   });
 
@@ -35,8 +35,8 @@ describe('ProvinceSelect', () => {
       wrapper = shallow(<ProvinceSelect region="norway" />, { context });
     });
 
-    it('should show dropdown', () => {
-      expect(wrapper.find('select').length).toBe(1);
+    it('should render NorwaySelect', () => {
+      expect(wrapper.find(NorwaySelect).length).toBe(1);
     });
   });
 
@@ -45,8 +45,8 @@ describe('ProvinceSelect', () => {
       wrapper = shallow(<ProvinceSelect region="denmark" />, { context });
     });
 
-    it('should show dropdown', () => {
-      expect(wrapper.find('select').length).toBe(1);
+    it('should render DenmarkSelect', () => {
+      expect(wrapper.find(DenmarkSelect).length).toBe(1);
     });
   });
 
@@ -55,8 +55,8 @@ describe('ProvinceSelect', () => {
       wrapper = shallow(<ProvinceSelect region="iceland" />, { context });
     });
 
-    it('should show dropdown', () => {
-      expect(wrapper.find('select').length).toBe(1);
+    it('should render IcelandSelect', () => {
+      expect(wrapper.find(IcelandSelect).length).toBe(1);
     });
   });
 });

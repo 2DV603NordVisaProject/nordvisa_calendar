@@ -2,7 +2,7 @@
 [![Code Coverage](https://img.shields.io/codecov/c/github/2DV603NordVisaProject/nordvisa_calendar.svg)](https://codecov.io/gh/2DV603NordVisaProject/nordvisa_calendar)
 # Nordvisa Calendar
 ## About
-This is an open source event management application created as a project at Linnaeus University for the course 2DV603 in collaboration with NordVisa.
+This is an open source event management application created created in collaboration with NordVisa. The purpose of the application is to be able to manage and share event information in an easy way between organizations. 
 
 The application is divided into two parts, the administrative dashboard and the widget. The administrative dashboard is where authorized users can view, create, update, and delete location based events. The dashboard also has a feature rich user management system for handling users in the system. The widget can be embedded into any websites to display events within a specified area.
 

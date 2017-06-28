@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ErrorList from './ErrorList';
 import Client from '../Client';
+import Button from './Button';
+import SubTitle from './SubTitle';
 
+const contextTypes = {
+  language: PropTypes.object,
+};
 
 class UpdatePassword extends Component {
   constructor() {
@@ -20,16 +25,12 @@ class UpdatePassword extends Component {
     fieldErrors: [],
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const uri = '/api/user/current';
     Client.get(uri)
       .then((user) => {
-        const fields = {
-          id: user.id,
-          oldpassword: '',
-          newpassword: '',
-          confirmpassword: '',
-        };
+        const fields = Object.assing({}, this.state.fields);
+        fields.id = user.id;
         this.setState({ fields });
       });
   }
@@ -60,11 +61,7 @@ class UpdatePassword extends Component {
           fieldErrors.push('Password updated!');
           this.setState({ fieldErrors });
 
-          this.setState({ fields: {
-            oldpassword: '',
-            newpassword: '',
-            confirmpassword: '',
-          } });
+          this.setState({ fields: {} });
         }
       });
   }
@@ -72,7 +69,7 @@ class UpdatePassword extends Component {
   onInputChange(event) {
     const value = event.target.value;
     const name = event.target.name;
-    const fields = this.state.fields;
+    const fields = Object.assign({}, this.state.fields);
     fields[name] = value;
     this.setState({ fields });
   }
@@ -92,26 +89,32 @@ class UpdatePassword extends Component {
 
   render() {
     const language = this.context.language.MyAccountView;
+    const style = {
+      border: '1px solid grey',
+      maxWidth: '600px',
+      borderRadius: '3px',
+      margin: '0 auto 20px',
+    };
 
     return (
-      <div className="box">
-        <h3 className="capitalize">{language.updatePassword}</h3>
+      <div style={style}>
+        <SubTitle>{language.updatePassword}</SubTitle>
         <form onSubmit={this.onFormSubmit}>
-          <label htmlFor="oldpassword" className="capitalize">{language.oldPassword}:</label>
+          <label htmlFor="oldpassword" style={{ textTransform: 'capitalize' }}>{language.oldPassword}:</label>
           <input
             type="password"
             name="oldpassword"
             value={this.state.fields.oldpassword}
             onChange={this.onInputChange}
           />
-          <label htmlFor="newpassword" className="capitalize">{language.newPassword}:</label>
+          <label htmlFor="newpassword" style={{ textTransform: 'capitalize' }}>{language.newPassword}:</label>
           <input
             type="password"
             name="newpassword"
             value={this.state.fields.newpassword}
             onChange={this.onInputChange}
           />
-          <label htmlFor="confirmpassword" className="capitalize">{language.confirmPassword}:</label>
+          <label htmlFor="confirmpassword" style={{ textTransform: 'capitalize' }}>{language.confirmPassword}:</label>
           <input
             type="password"
             name="confirmpassword"
@@ -119,15 +122,13 @@ class UpdatePassword extends Component {
             onChange={this.onInputChange}
           />
           <ErrorList errors={this.state.fieldErrors} />
-          <input type="submit" value={language.save} className="btn-primary" />
+          <Button form>{language.save}</Button>
         </form>
       </div>
     );
   }
 }
-UpdatePassword.contextTypes = {
-  language: PropTypes.object,
-};
 
+UpdatePassword.contextTypes = contextTypes;
 
 export default UpdatePassword;

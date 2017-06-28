@@ -14,28 +14,12 @@ a:hover {
   text-decoration: underline;
 }
 
-.long-error {
-  margin: 10px 0 0 -80px;
-}
-
 a {
   text-decoration: none;
   color: #0d47a1;
   text-align: center;
   display: block;
   margin: 10px 0 0;
-}
-
-.small-form {
-  width: 100px;
-}
-
-.uppercase {
-  text-transform: uppercase;
-}
-
-.capitalize {
-  text-transform: capitalize;
 }
 
 input:focus {
@@ -62,55 +46,6 @@ input {
   font-family: 'Poppins', sans-serif;
   font-size: 16px;
   width: 180px;
-}
-
-.clickable {
-  cursor: pointer;
-}
-
-.btn-primary {
-  width: auto;
-  padding: 0 15px;
-  background: #0d47a1;
-  border: none;
-  height: 30px;
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-  margin: 15px auto;
-  display: block;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.btn-error {
-  width: auto;
-  padding: 0 15px;
-  background: red;
-  border: none;
-  height: 30px;
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-  margin: 15px auto;
-  display: block;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.btn-success {
-  width: auto;
-  padding: 0 15px;
-  background: green;
-  border: none;
-  height: 30px;
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-  margin: 15px auto;
-  display: block;
-  text-transform: uppercase;
-  cursor: pointer;
 }
 
 h2 {
@@ -145,49 +80,10 @@ textarea {
   height: 150px;
 }
 
-
-.lightbox {
-  background: #fff;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-  max-width: 450px;
-  min-height: 200px;
-  padding: 25px 25px 10px;
-}
-
 form {
   width: 200px;
   margin: 0 auto;
 }
-
-.lightbox h2 {
-  margin: 0 0 10px;
-}
-
-.hidden {
-  display: none;
-}
-
-.box {
-  border: 1px solid grey;
-  max-width: 600px;
-  border-radius: 3px;
-  margin: 0 auto 20px;
-}
-
-.error404 {
-  margin: 80px auto;
-}
-
-.view {
-  max-width: 900px;
-  margin: 25px auto;
-  background: #fff;
-  border-radius: 3px;
-  height: 100%;
-  border: 1px solid lightgrey;
-  padding: 20px;
-}6
 
 ul {
   list-style-type: none;

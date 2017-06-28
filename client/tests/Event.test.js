@@ -14,11 +14,15 @@ describe('Event', () => {
   const onDelete = jest.fn();
 
   beforeEach(() => {
-    wrapper = shallow(<Event delete={onDelete} event={event} />, { context });
+    wrapper = shallow(<Event onDeleteClick={onDelete} event={event} />, { context });
   });
 
   it('should render component', () => {
     expect(wrapper.find('li').length).toBe(1);
+  });
+
+  it('should be defined', () => {
+    expect(Event).toBeDefined();
   });
 
   it('should have edit link', () => {
@@ -51,7 +55,7 @@ describe('Event', () => {
       });
     });
 
-    it('should send id as value onClick', () => {
+    it('should call onDeleteClick prop onClick wit event.id as arg', () => {
       const invocationArgs = onDelete.mock.calls[0];
       expect(invocationArgs[0].target.name).toBe(event.id);
     });

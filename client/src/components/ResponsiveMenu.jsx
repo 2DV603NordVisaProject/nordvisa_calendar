@@ -8,6 +8,7 @@ class ResponsiveMenu extends Component {
     super();
 
     this.onCollapseMenuClick = this.onCollapseMenuClick.bind(this);
+    this.handleMenuLinkClick = this.handleMenuLinkClick.bind(this);
   }
 
 
@@ -31,6 +32,11 @@ class ResponsiveMenu extends Component {
     this.setState({ menu: { isCollapsed } });
   }
 
+  handleMenuLinkClick(event) {
+    event.preventDefault();
+    this.setState({ menu: { isCollapsed: false } });
+  }
+
   render() {
     return (
       <div>
@@ -40,7 +46,7 @@ class ResponsiveMenu extends Component {
           <div className="bar3" />
         </div>
         <div className={this.state.menu.isCollapsed ? 'responsive-menu expand' : 'responsive-menu'}>
-          <MenuList />
+          <MenuList onMenuLinkClick={this.handleMenuLinkClick} />
         </div>
       </div>
     );

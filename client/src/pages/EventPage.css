@@ -1,0 +1,138 @@
+input[type="date"] {
+  float: left;
+  margin: 0 380px 0 10px;
+  display: block;
+}
+
+.create-event form {
+  width: 100%;
+}
+
+.is-recurring select {
+  float: left;
+  margin: 0 10px;
+  width: 170px;
+}
+
+.is-recurring {
+  width: 100%;
+  overflow: auto;
+}
+
+.box {
+  border: 1px solid grey;
+  max-width: 600px;
+  border-radius: 3px;
+  margin: 0 auto 20px;
+}
+
+.create-event input[type=text], .create-event input[type=file] {
+  margin: 0 0 0 10px;
+  float: left;
+  display: block;
+  width: 300px;
+}
+
+.create-event label {
+  display: block;
+}
+
+.create-event .error-list {
+  margin: 40px 0;
+}
+
+.create-event textarea {
+  margin: 0 0 0 10px;
+}
+
+.react-date-field__input {
+  width: 10px;
+}
+
+.react-date-field--theme-default {
+  border: 1px solid darkgray;
+  margin: 0 0 0 10px;
+}
+
+.react-date-field--theme-default input[type=text] {
+  width: 110px;
+}
+
+.create-event input[type=submit] {
+  margin: 35px auto;
+}
+
+h4 {
+  margin: 0;
+  color: #0d47a1;
+}
+
+.preview-text {
+  margin: 0 30px;
+}
+
+p.preview-text {
+  font-size: 12px;
+}
+
+.img-container {
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+  height: 300px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.desc {
+  border: 1px solid lightgrey;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.desc p {
+  margin: 10px;
+}
+
+.maps {
+  border: 1px solid;
+  margin: 20px auto;
+  width: 90%;
+  height: 300px;
+}
+
+.action-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.create-event input[type=time] {
+  width: 80px;
+  float: left;
+  display: block;
+  margin: 0 0 0 10px;
+}
+
+.end-time {
+  margin: 0 400px 0 10px;
+}
+
+@media (max-width: 475px) {
+  .create-event textarea {
+    width: 90%;
+  }
+  .create-event form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 375px) {
+  .create-event input[type=text], .create-event input[type=file] {
+    width: 90%;
+  }
+  .react-date-field--theme-default {
+    width: 90%;
+  }
+}
