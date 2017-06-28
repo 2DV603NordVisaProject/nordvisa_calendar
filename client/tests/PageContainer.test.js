@@ -1,13 +1,13 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import ViewContainer from '../src/components/PageContainer';
 
-describe('ViewContainer', () => {
+describe('PageContainer', () => {
   let wrapper;
 
   describe('with defaultProps', () => {
     beforeEach(() => {
-      wrapper = shallow(<ViewContainer><div>hello world</div></ViewContainer>);
+      wrapper = mount(<ViewContainer><div>hello world</div></ViewContainer>);
     });
 
     it('should be defined', () => {
@@ -28,7 +28,7 @@ describe('ViewContainer', () => {
   });
   describe('witout defaultProps', () => {
     beforeEach(() => {
-      wrapper = shallow(<ViewContainer size="small"><div>hello world</div></ViewContainer>);
+      wrapper = mount(<ViewContainer size="small"><div>hello world</div></ViewContainer>);
     });
 
     it("size prop should be set to 'small'", () => {

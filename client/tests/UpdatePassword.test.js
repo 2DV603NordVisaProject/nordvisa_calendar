@@ -33,8 +33,8 @@ describe('UpdatePassword', () => {
     expect(wrapper.find('form').length).toBe(1);
   });
 
-  it('should have 4 input', () => {
-    expect(wrapper.find('input').length).toBe(4);
+  it('should have 3 input', () => {
+    expect(wrapper.find('input').length).toBe(3);
   });
 
   describe('user enters password', () => {

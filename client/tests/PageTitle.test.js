@@ -23,6 +23,7 @@ describe('PageTitle', () => {
   });
 
   it('should display title-text', () => {
-    expect(wrapper.containsMatchingElement(`<h2>${title}</h2>`)).toBe(true);
+    const text = wrapper.find('h2').first().text();
+    expect(text).toBe(title);
   });
 });

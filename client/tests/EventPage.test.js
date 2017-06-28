@@ -5,7 +5,7 @@ import PageTitle from '../src/components/PageTitle';
 import en from '../src/i18n/en';
 import Button from '../src/components/Button';
 
-describe('CreateView', () => {
+describe('EventPage', () => {
   let wrapper;
   const context = { language: en };
 
@@ -13,11 +13,7 @@ describe('CreateView', () => {
     wrapper = shallow(<EventPage />, { context });
   });
 
-  it('should contain PageTitle-component', () => {
-    expect(wrapper.find(PageTitle).length).toBe(1);
-  });
-
-  it('should contain Button-components', () => {
-    expect(wrapper.find(Button).length).toBe(1);
+  it('should be defined', () => {
+    expect(wrapper).toBeDefined();
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Logout from '../src/components/Logout';
 
 describe('Logout', () => {
@@ -9,7 +9,7 @@ describe('Logout', () => {
   };
 
   beforeEach(() => {
-    wrapper = shallow(<Logout />);
+    wrapper = mount(<Logout />);
   });
 
   afterEach(() => {
