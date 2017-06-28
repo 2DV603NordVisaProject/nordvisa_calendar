@@ -17,8 +17,8 @@ const contextTypes = {
 const NorwaySelect = ({ showProvince, onChange }, context) => {
   const language = context.language.WidgetView;
 
-  return (
-    <div className={showProvince ? '' : 'hidden'}>
+  if (showProvince) {
+    return (
       <select name="province" defaultValue="" onChange={onChange} className="capitalize">
         <option value="" className="capitalize">{language.chooseProvince}</option>
         <option value="" className="capitalize">{language.none}</option>
@@ -50,8 +50,9 @@ const NorwaySelect = ({ showProvince, onChange }, context) => {
         <option value="vesteralen">Vesterålen</option>
         <option value="osterdalen">Østerdalen</option>
       </select>
-    </div>
-  );
+    );
+  }
+  return null;
 };
 
 NorwaySelect.propTypes = propTypes;
