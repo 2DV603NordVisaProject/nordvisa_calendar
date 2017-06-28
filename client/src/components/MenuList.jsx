@@ -26,7 +26,7 @@ const MenuList = ({ onMenuLinkClick }, context) => {
             <li onClick={onMenuLinkClick}><Link to="/admin/pending-registrations" className="menu-link">{language.pendingReg}</Link></li>
           </div>
         ) : (
-          <div />
+          null
         )
       }
       {
