@@ -15,7 +15,7 @@ matrix:
           - $HOME/.gradle/caches/
           - $HOME/.gradle/wrapper/
       after_success:
-        bash <(curl -s https://codecov.io/bash) -cF java
+        # bash <(curl -s https://codecov.io/bash) -cF java
     - language: node_js
       node_js:
         - "node"
@@ -28,7 +28,8 @@ matrix:
         directories:
           - "node_modules"
       script:
-        - jest
+        - npm test
+        - npm run coverage
         - codecov
       after_success:
         bash <(curl -s https://codecov.io/bash) -cF javascript
