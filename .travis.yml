@@ -30,9 +30,9 @@ matrix:
       script:
         - npm test
         - npm run coverage
-        - codecov
-      after_success:
-        bash <(curl -s https://codecov.io/bash) -cF javascript
+        - sudo codecov
+    #   after_success:
+        # bash <(curl -s https://codecov.io/bash) -cF javascript
 
 notifications:
     email: false
