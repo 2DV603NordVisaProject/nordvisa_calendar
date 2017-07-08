@@ -25,6 +25,7 @@ matrix:
         - cd client
         - npm install
         - npm install -g codecov
+        - npm install istanbul-lib-instrument
       cache:
         directories:
           - "node_modules"
