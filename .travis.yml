@@ -19,11 +19,10 @@ matrix:
     - language: node_js
       node_js:
         - "node"
-      install:
-      - npm install -g codecov
       before_script:
         - cd client
         - npm install
+        - sudo npm install -g codecov
       cache:
         directories:
           - "node_modules"
