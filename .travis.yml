@@ -17,14 +17,13 @@ matrix:
           - $HOME/.gradle/caches/
           - $HOME/.gradle/wrapper/
       after_success:
-        bash <(curl -s https://codecov.io/bash) -cF java
+        bash <(curl -s https://codecov.io/bash) -cF server
     - language: node_js
       node_js:
         - "node"
       before_script:
         - cd client
         - npm install
-        - npm install -g codecov
         - npm install istanbul-lib-instrument
       cache:
         directories:
@@ -32,9 +31,9 @@ matrix:
       script:
         - npm test
         - npm run coverage
-        - codecov
-    #   after_success:
-        # bash <(curl -s https://codecov.io/bash) -cF javascript
+      after_success:
+        bash <(curl -s https://codecov.io/bash) -cF client
+
 
 notifications:
     email: false
