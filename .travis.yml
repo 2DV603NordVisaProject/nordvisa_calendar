@@ -24,14 +24,14 @@ matrix:
       before_script:
         - cd client
         - npm install
-        - sudo npm install -g codecov
+        - npm install -g codecov
       cache:
         directories:
           - "node_modules"
       script:
         - npm test
         - npm run coverage
-        - sudo codecov
+        - codecov
     #   after_success:
         # bash <(curl -s https://codecov.io/bash) -cF javascript
 
