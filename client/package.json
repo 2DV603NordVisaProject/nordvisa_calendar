@@ -38,5 +38,10 @@
     "coverage": "react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:8080",
+
+  "jest": {
+  "coverageDirectory": "./coverage/",
+  "collectCoverage": true
+  }
 }
