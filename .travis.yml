@@ -27,8 +27,9 @@ matrix:
           - "node_modules"
       script:
         - npm test
-    #   after_success:
-    #     bash <(curl -s https://codecov.io/bash) -cF javascript
+        - npm coverage
+      after_success:
+        bash <(curl -s https://codecov.io/bash) -cF javascript
 
 notifications:
     email: false
