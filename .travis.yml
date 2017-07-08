@@ -19,6 +19,8 @@ matrix:
     - language: node_js
       node_js:
         - "node"
+      install:
+      - npm install -g codecov
       before_script:
         - cd client
         - npm install
@@ -28,6 +30,7 @@ matrix:
       script:
         - npm test
         - npm run coverage
+        - codecov
       after_success:
         bash <(curl -s https://codecov.io/bash) -cF javascript
 
