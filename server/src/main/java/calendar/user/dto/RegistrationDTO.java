@@ -1,7 +1,5 @@
 package calendar.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * Class RegistrationDTO
  *
