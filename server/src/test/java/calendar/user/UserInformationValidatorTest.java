@@ -314,6 +314,21 @@ public class UserInformationValidatorTest {
     }
 
     @Test
+    public void validateRecaptchaSecretNotSet() throws Exception {
+        String url = "http://someurl.com";
+        String secret = "";
+        String secretFromClient = "SSSSSSSSSSSSHHHH!!!";
+        ReflectionTestUtils.setField(sut, "recaptchaUrl", url);
+        ReflectionTestUtils.setField(sut, "recaptchaRes", secret);
+
+        RecaptchaResponseDTO response = sut.validateRecaptcha(secretFromClient);
+
+        assertTrue(response.isSuccess());
+
+        verify(rest, never()).postForEntity(any(), any(), any());
+    }
+
+    @Test
     public void validateRecaptchaConnectionError() {
         String url = "http://someurl.com";
         String secret = "shhhhhh";
