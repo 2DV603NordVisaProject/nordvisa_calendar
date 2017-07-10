@@ -14,6 +14,7 @@ public class TokenValidator {
     private TokenDAO dao;
 
     public boolean validate(String tokenKey) {
+        // TODO: Remove this horrible backdoor :P
         if(tokenKey.equals("dashboard")) {
             return true;
         }

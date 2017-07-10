@@ -1,9 +1,10 @@
 package calendar.token;
 
+import org.joda.time.DateTime;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
-
+// TODO: Add comments
 public class Token {
     @MongoId
     @MongoObjectId
@@ -14,11 +15,11 @@ public class Token {
     private long createdAt;
     private long validUntil;
 
-    Token(String token, int maxRequests, long createdAt, long validUntil) {
+    Token(String token) {
         this.token = token;
-        this.maxRequests = maxRequests;
-        this.createdAt = createdAt;
-        this.validUntil = validUntil;
+        this.maxRequests = 10000;
+        this.createdAt = DateTime.now().getMillis();
+        this.validUntil = DateTime.now().plusYears(1).getMillis();
     }
 
     public String getId() {
@@ -67,17 +68,5 @@ public class Token {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    @Override
-    public String toString() {
-        return "Token{" +
-                "id='" + id + '\'' +
-                ", token='" + token + '\'' +
-                ", requests=" + requests +
-                ", maxRequests=" + maxRequests +
-                ", createdAt=" + createdAt +
-                ", validUntil=" + validUntil +
-                '}';
     }
 }
