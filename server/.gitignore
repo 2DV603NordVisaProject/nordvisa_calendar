@@ -1,0 +1,7 @@
+# vs code
+.settings
+.classpath
+.project
+
+# Builds and bins
+/bin

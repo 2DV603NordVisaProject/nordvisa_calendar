@@ -1,6 +1,7 @@
 .gradle
 .idea
 .vagrant
+.vscode
 
 gradle
 gradlew
