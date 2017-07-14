@@ -8,6 +8,7 @@ import calendar.event.exceptions.Error;
 import calendar.event.exceptions.MissingTokenException;
 import calendar.user.AuthorizationChecker;
 import calendar.token.TokenValidator;
+import calendar.user.CurrentUser;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,12 +76,13 @@ public class EventController {
                                  @RequestParam(required = false) Long toDate,
                                  @RequestParam(required = false) String token) {
 
+        CurrentUser currentUser = new CurrentUser();
 
         if (token == null) {
             throw new MissingTokenException("Unauthorized access");
         }
 
-        if (!tokenValidator.validate(token)) {
+        if (!tokenValidator.validate(token) && currentUser.getEmailAddress() == null) {
             throw new MissingTokenException("Unauthorized access");
         }
 

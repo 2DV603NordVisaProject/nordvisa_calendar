@@ -39,9 +39,8 @@
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:8080",
-
   "jest": {
-  "coverageDirectory": "./coverage/",
-  "collectCoverage": true
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   }
 }
