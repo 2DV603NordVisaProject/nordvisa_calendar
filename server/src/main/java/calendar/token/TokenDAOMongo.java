@@ -18,7 +18,7 @@ class TokenDAOMongo implements TokenDAO {
 
     public Token get(String strToken) {
         MongoCollection collection = client.getClient().getCollection("tokens");
-        return collection.findOne("{token: \"" + strToken + " \"}").as(Token.class);
+        return collection.findOne("{token: \"" + strToken + "\"}").as(Token.class);
     }
 
     public void update(Token token) {

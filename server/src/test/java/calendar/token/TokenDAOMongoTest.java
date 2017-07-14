@@ -61,7 +61,7 @@ public class TokenDAOMongoTest {
         Token results = sut.get(strToken);
 
         assertEquals(token, results);
-        verify(collection, times(1)).findOne("{token: " + strToken + "}");
+        verify(collection, times(1)).findOne("{token: \"" + strToken + "\"}");
     }
 
     @Test
