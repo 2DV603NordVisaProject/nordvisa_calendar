@@ -65,7 +65,7 @@ class EventPage extends Component {
     if (this.props.progress) {
       const progress = this.props.progress;
 
-      const eventUri = `/api/event/get?id=${this.props.id}&token=dashboard`;
+      const eventUri = `/api/event/get?id=${this.props.id}`;
       Client.get(eventUri)
         .then((events) => {
           event = events[0];

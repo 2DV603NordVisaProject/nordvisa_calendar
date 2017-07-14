@@ -76,13 +76,13 @@ public class EventController {
                                  @RequestParam(required = false) Long toDate,
                                  @RequestParam(required = false) String token) {
 
-        CurrentUser currentUser = new CurrentUser();
+        String currentUser = new CurrentUser().getEmailAddress();
 
-        if (token == null) {
+        if (token == null && currentUser == null) {
             throw new MissingTokenException("Unauthorized access");
         }
 
-        if (!tokenValidator.validate(token) && currentUser.getEmailAddress() == null) {
+        if (!tokenValidator.validate(token) && currentUser == null) {
             throw new MissingTokenException("Unauthorized access");
         }
 
