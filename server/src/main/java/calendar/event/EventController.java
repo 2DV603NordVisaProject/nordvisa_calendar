@@ -46,6 +46,9 @@ public class EventController {
     private TokenValidator tokenValidator;
     @Autowired
     private AuthorizationChecker auth;
+    @Autowired
+    private CurrentUser currentUser;
+
     //private TokenValidator tokenValidator = new TokenValidator();
     //private AuthorizationChecker auth = new AuthorizationChecker();
 
@@ -76,13 +79,13 @@ public class EventController {
                                  @RequestParam(required = false) Long toDate,
                                  @RequestParam(required = false) String token) {
 
-        String currentUser = new CurrentUser().getEmailAddress();
+        String user = currentUser.getEmailAddress();
 
-        if (token == null && currentUser == null) {
+        if (token == null && user == null) {
             throw new MissingTokenException("Unauthorized access");
         }
 
-        if (!tokenValidator.validate(token) && currentUser == null) {
+        if (!tokenValidator.validate(token) && user == null) {
             throw new MissingTokenException("Unauthorized access");
         }
 

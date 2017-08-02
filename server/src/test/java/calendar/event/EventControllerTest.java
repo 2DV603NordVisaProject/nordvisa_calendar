@@ -2,6 +2,8 @@ package calendar.event;
 
 import calendar.Application;
 import calendar.token.TokenValidator;
+import calendar.user.CurrentUser;
+
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,22 +24,18 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @EnableAutoConfiguration
 public class EventControllerTest {
-
     @Mock
     private EventDAO dao;
-
     @Mock
     private Event event;
-
     @Mock
     private TokenValidator tokenValidator;
-
     @Mock
     private EventLocation eventLocation;
-
     @Mock
     private EventLocationCoordinates eventLocationCoordinates;
-
+    @Mock 
+    private CurrentUser currentUser;
     @InjectMocks
     private EventController sut;
 
