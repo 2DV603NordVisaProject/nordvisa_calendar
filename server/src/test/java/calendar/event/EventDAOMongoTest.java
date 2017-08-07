@@ -17,6 +17,7 @@ import org.jongo.Find;
 import org.jongo.FindOne;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
+import org.jongo.MongoCursor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,5 +79,25 @@ public class EventDAOMongoTest {
         assertEquals(event, res.get(0));
 
         verify(collection).findOne(id);
+    }
+
+    @Test
+    public void getEventsTest() {
+        Find find = mock(Find.class);
+        Event event1 = mock(Event.class);
+        Event event2 = mock(Event.class);
+        MongoCursor cursor = mock(MongoCursor.class);
+        
+
+        when(collection.find()).thenReturn(find);
+        when(find.as(Event.class)).thenReturn(cursor);
+        when(cursor.hasNext()).thenReturn(true, true, false);
+        when(cursor.next()).thenReturn(event1, event2);
+
+        List<Event> res = sut.getEvents();
+
+        assertEquals(2, res.size());
+        assertEquals(event1, res.get(0));
+        assertEquals(event2, res.get(1));
     }
 }
