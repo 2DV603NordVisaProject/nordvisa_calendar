@@ -100,4 +100,104 @@ public class EventDAOMongoTest {
         assertEquals(event1, res.get(0));
         assertEquals(event2, res.get(1));
     }
+
+    @Test
+    public void getEventsFromCountyTest() {
+        Find find = mock(Find.class);
+        Event event1 = mock(Event.class);
+        Event event2 = mock(Event.class);
+        MongoCursor cursor = mock(MongoCursor.class);
+
+        when(collection.find(anyString(), anyString())).thenReturn(find);
+        when(find.as(Event.class)).thenReturn(cursor);
+        when(cursor.hasNext()).thenReturn(true, true, false);
+        when(cursor.next()).thenReturn(event1, event2);
+
+        List<Event> res = sut.getEventsFromCounty("sweden");
+
+        assertEquals(2, res.size());
+        assertEquals(event1, res.get(0));
+        assertEquals(event2, res.get(1));
+
+        verify(collection).find("{ location.county: # }", "sweden");
+    }
+
+    @Test
+    public void getEventsFromCountryTest() {
+        Find find = mock(Find.class);
+        Event event1 = mock(Event.class);
+        Event event2 = mock(Event.class);
+        MongoCursor cursor = mock(MongoCursor.class);
+
+        when(collection.find(anyString(), anyString())).thenReturn(find);
+        when(find.as(Event.class)).thenReturn(cursor);
+        when(cursor.hasNext()).thenReturn(true, true, false);
+        when(cursor.next()).thenReturn(event1, event2);
+
+        List<Event> res = sut.getEventsFromCountry("sweden");
+
+        assertEquals(2, res.size());
+        assertEquals(event1, res.get(0));
+        assertEquals(event2, res.get(1));
+
+        verify(collection).find("{ location.country: # }", "sweden");
+    }
+
+    @Test
+    public void getEventsWithinDatesTest() {
+        Find find = mock(Find.class);
+        Event event1 = mock(Event.class);
+        Event event2 = mock(Event.class);
+        MongoCursor cursor = mock(MongoCursor.class);
+
+        when(collection.find(anyString(), anyDouble(), anyDouble(), anyDouble())).thenReturn(find);
+        when(find.as(Event.class)).thenReturn(cursor);
+        when(cursor.hasNext()).thenReturn(true, true, false);
+        when(cursor.next()).thenReturn(event1, event2);
+
+        List<Event> res = sut.getEventsWithinRadius(150.0, 120.0, 500.0);
+
+        assertEquals(2, res.size());
+        assertEquals(event1, res.get(0));
+        assertEquals(event2, res.get(1));
+
+        verify(collection).find("{ location.coordinates: { " +
+                "$near: { " +
+                "$geometry: { " +
+                "type: 'Point', " +
+                "coordinates: [ #, # ] }, " +
+                "$maxDistance: # } } }", 150.0, 120.0, 500000.0);
+    }
+
+    @Test
+    public void getEventsByUserIdTest() {
+        Find find = mock(Find.class);
+        Event event1 = mock(Event.class);
+        Event event2 = mock(Event.class);
+        MongoCursor cursor = mock(MongoCursor.class);
+
+        when(collection.find(anyString(), anyString())).thenReturn(find);
+        when(find.as(Event.class)).thenReturn(cursor);
+        when(cursor.hasNext()).thenReturn(true, true, false);
+        when(cursor.next()).thenReturn(event1, event2);
+
+        List<Event> res = sut.getEventsByUserId("id");
+
+        assertEquals(2, res.size());
+        assertEquals(event1, res.get(0));
+        assertEquals(event2, res.get(1));
+
+        verify(collection).find("{createdBy: #}", "id");
+    }
+
+    @Test
+    public void createEventTest() {
+        Event event = mock(Event.class);
+
+        Event res = sut.createEvent(event);
+
+        verify(collection).ensureIndex("{ location.coordinates: '2dsphere' }");
+        verify(collection).insert(eq(event));
+        assertEquals(event, res);
+    }
 }

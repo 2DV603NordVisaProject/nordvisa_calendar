@@ -129,7 +129,7 @@ public class EventDAOMongo implements EventDAO {
      */
     public List<Event> getEventsByUserId(String id) {
         MongoCollection collection = db.getClient().getCollection("events");
-        return cursorToArray(collection.find("{createdBy: \"" + id + "\"}").as(Event.class));
+        return cursorToArray(collection.find("{createdBy: #}", id).as(Event.class));
     }
 
     /**
