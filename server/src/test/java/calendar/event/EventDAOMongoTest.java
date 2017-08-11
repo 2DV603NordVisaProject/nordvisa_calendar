@@ -1,5 +1,9 @@
 package calendar.event;
 
+import com.sun.mail.iap.Argument;
+import org.joda.time.DateTime;
+import org.jongo.*;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,11 +17,6 @@ import static org.mockito.Mockito.*;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.jongo.Find;
-import org.jongo.FindOne;
-import org.jongo.Jongo;
-import org.jongo.MongoCollection;
-import org.jongo.MongoCursor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -199,5 +198,52 @@ public class EventDAOMongoTest {
         verify(collection).ensureIndex("{ location.coordinates: '2dsphere' }");
         verify(collection).insert(eq(event));
         assertEquals(event, res);
+    }
+
+    @Test
+    public void deleteEventTest() {
+        String id = "507f191e810c19729de860ea";
+
+        sut.deleteEvent(id);
+
+        ArgumentCaptor<ObjectId> argumentCaptor = ArgumentCaptor.forClass(ObjectId.class);
+        verify(collection).remove(argumentCaptor.capture());
+
+        ObjectId objId = argumentCaptor.getValue();
+
+        assertEquals(id, objId.toHexString());
+    }
+
+    @Test
+    public void updateEventTest() {
+        String creator = "Test Person";
+        long time = 123456789;
+        String id = "507f191e810c19729de860ea";
+
+        Event newEvent = mock(Event.class);
+        Event oldEvent = mock(Event.class);
+        FindOne findOne = mock(FindOne.class);
+        Update update = mock(Update.class);
+
+        when(oldEvent.getCreatedBy()).thenReturn(creator);
+        when(oldEvent.getCreatedAt()).thenReturn(time);
+        when(newEvent.getId()).thenReturn(id);
+        when(collection.findOne(any(ObjectId.class))).thenReturn(findOne);
+        when(findOne.as(Event.class)).thenReturn(oldEvent);
+        when(collection.update(any(ObjectId.class))).thenReturn(update);
+
+        long before = DateTime.now().getMillis();
+        Event saved = sut.updateEvent(newEvent);
+        long after = DateTime.now().getMillis();
+
+        assertEquals(newEvent, saved);
+        verify(newEvent, times(1)).setCreatedBy(creator);
+        verify(newEvent, times(1)).setCreatedAt(time);
+        verify(update, times(1)).with(newEvent);
+
+        ArgumentCaptor<ObjectId> objIdCaptor = ArgumentCaptor.forClass(ObjectId.class);
+        verify(collection, times(1)).update(objIdCaptor.capture());
+        ObjectId objId = objIdCaptor.getValue();
+        assertEquals(id, objId.toHexString());
     }
 }
